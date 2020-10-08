@@ -10,6 +10,10 @@ public class MessageVO implements Serializable{
 	private String messageContent;
 	private Timestamp messageTime;		
 	private Integer messageCount;
+	
+	public MessageVO() {
+		
+	}
 	public String getMessageNo() {
 		return messageNo;
 	}

@@ -7,6 +7,8 @@ public class ChatroomVO implements java.io.Serializable {
 	private String chatroomname;
 	private Integer chatroomtype;
 	
+	public ChatroomVO(){	
+	}
 	public String getChatroomno() {
 		return chatroomno;
 	}

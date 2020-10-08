@@ -8,6 +8,8 @@ public class ChatroommemberVO implements Serializable{
 	private String chatroomno;
 	private String userno;
 	
+	public ChatroommemberVO(){	
+	}
 	public String getChatroommemberno() {
 		return chatroommemberno;
 	}
