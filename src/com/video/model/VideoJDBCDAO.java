@@ -253,45 +253,45 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 		return list;
 	}
 	
-//	public static void main(String[] args) {
-//
-//		VideoJDBCDAO dao = new VideoJDBCDAO();
-//
-//		// 新增
-//		VideoVO videoVO1 = new VideoVO();
-//		videoVO1.setTimetableNo("TT000001");
-//		videoVO1.setVideoName("2020-07-02 早上");
-//		dao.insert(videoVO1);
-//
-//		// 修改
-//		VideoVO videoVO1 = new VideoVO();
-//		videoVO1.setVideoNo("4");
-//		videoVO1.setTimetableNo("TT000001");
-//		videoVO1.setVideoName("2020-07-02 下午");
-//		dao.update(videoVO1);
-//
-//		// 刪除
-//		dao.delete("3");
-//
-//		// 查詢
-//		VideoVO videoVO1 = dao.findByPrimaryKey("4");
-//		System.out.print(videoVO1);
-//		System.out.println("---------------------");
-//		System.out.print(videoVO1.getVideoNo() + ",");
-//		System.out.print(videoVO1.getTimetableNo() + ",");
-//		System.out.print(videoVO1.getVideoName() + ",");
-//		System.out.print(videoVO1.getVideo() + ",");
-//		System.out.println("---------------------");
-//
-//		// 查詢
-//		List<VideoVO> list = dao.getAll();
-//		for (VideoVO videoVO1 : list) {
-//			System.out.print(videoVO1.getVideoNo() + ",");
-//			System.out.print(videoVO1.getTimetableNo() + ",");
-//			System.out.print(videoVO1.getVideoName() + ",");
-//			System.out.print(videoVO1.getVideo() + ",");
-//			System.out.println("------");
-//			System.out.println(videoVO1);
-//		}
-//	}
+	public static void main(String[] args) {
+
+		VideoJDBCDAO dao = new VideoJDBCDAO();
+
+		// 新增
+		VideoVO videoVO1 = new VideoVO();
+		videoVO1.setTimetableNo("TT000001");
+		videoVO1.setVideoName("2020-07-02 早上");
+		dao.insert(videoVO1);
+
+		// 修改
+		VideoVO videoVO2 = new VideoVO();
+		videoVO2.setVideoNo("4");
+		videoVO2.setTimetableNo("TT000001");
+		videoVO2.setVideoName("2020-07-02 下午");
+		dao.update(videoVO2);
+
+		// 刪除
+		dao.delete("3");
+
+		// 查詢
+		VideoVO videoVO3 = dao.findByPrimaryKey("4");
+		System.out.print(videoVO3);
+		System.out.println("---------------------");
+		System.out.print(videoVO3.getVideoNo() + ",");
+		System.out.print(videoVO3.getTimetableNo() + ",");
+		System.out.print(videoVO3.getVideoName() + ",");
+		System.out.print(videoVO3.getVideo() + ",");
+		System.out.println("---------------------");
+
+		// 查詢
+		List<VideoVO> list = dao.getAll();
+		for (VideoVO videoVO4 : list) {
+			System.out.print(videoVO4.getVideoNo() + ",");
+			System.out.print(videoVO4.getTimetableNo() + ",");
+			System.out.print(videoVO4.getVideoName() + ",");
+			System.out.print(videoVO4.getVideo() + ",");
+			System.out.println("------");
+			System.out.println(videoVO4);
+		}
+	}
 }

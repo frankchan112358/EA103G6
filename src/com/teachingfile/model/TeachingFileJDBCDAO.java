@@ -253,46 +253,46 @@ public class TeachingFileJDBCDAO implements TeachingFileDAO_interface{
 		return list;
 	}
 	
-//	public static void main(String[] args) {
-//
-//		TeachingFileJDBCDAO dao = new TeachingFileJDBCDAO();
-//
-//		// 新增
-//		TeachingFileVO teachingFileVO1 = new TeachingFileVO();
-//		teachingFileVO1.setTimetableNo("TT000001");
-//		teachingFileVO1.setTeachingFileName("JavaScript講義");
-//		dao.insert(teachingFileVO1);
-//
-//		// 修改
-//		TeachingFileVO teachingFileVO1 = new TeachingFileVO();
-//		teachingFileVO1.setTeachingFileNo("2");
-//		teachingFileVO1.setTimetableNo("TT000001");
-//		teachingFileVO1.setTeachingFileName("JavaScript講義");
-//		dao.update(teachingFileVO1);
-//
-//		// 刪除
-//		dao.delete("3");
-//
-//		// 查詢
-//		TeachingFileVO teachingFileVO1 = dao.findByPrimaryKey("4");
-//		System.out.print(teachingFileVO1);
-//		System.out.println("---------------------");
-//		System.out.print(teachingFileVO1.getTeachingFileNo() + ",");
-//		System.out.print(teachingFileVO1.getTimetableNo() + ",");
-//		System.out.print(teachingFileVO1.getTeachingFileName() + ",");
-//		System.out.print(teachingFileVO1.getTeachingFile() + ",");
-//		System.out.println("---------------------");
-//
-//		// 查詢
-//		List<TeachingFileVO> list = dao.getAll();
-//		for (TeachingFileVO teachingFileVO1 : list) {
-//			System.out.print(teachingFileVO1.getTeachingFileNo() + ",");
-//			System.out.print(teachingFileVO1.getTimetableNo() + ",");
-//			System.out.print(teachingFileVO1.getTeachingFileName() + ",");
-//			System.out.print(teachingFileVO1.getTeachingFile() + ",");
-//			System.out.println("------");
-//			System.out.println(teachingFileVO1);
-//
-//		}
-//	}
+	public static void main(String[] args) {
+
+		TeachingFileJDBCDAO dao = new TeachingFileJDBCDAO();
+
+		// 新增
+		TeachingFileVO teachingFileVO1 = new TeachingFileVO();
+		teachingFileVO1.setTimetableNo("TT000001");
+		teachingFileVO1.setTeachingFileName("JavaScript講義");
+		dao.insert(teachingFileVO1);
+
+		// 修改
+		TeachingFileVO teachingFileVO2 = new TeachingFileVO();
+		teachingFileVO2.setTeachingFileNo("2");
+		teachingFileVO2.setTimetableNo("TT000001");
+		teachingFileVO2.setTeachingFileName("JavaScript講義");
+		dao.update(teachingFileVO2);
+
+		// 刪除
+		dao.delete("3");
+
+		// 查詢
+		TeachingFileVO teachingFileVO3 = dao.findByPrimaryKey("4");
+		System.out.print(teachingFileVO3);
+		System.out.println("---------------------");
+		System.out.print(teachingFileVO3.getTeachingFileNo() + ",");
+		System.out.print(teachingFileVO3.getTimetableNo() + ",");
+		System.out.print(teachingFileVO3.getTeachingFileName() + ",");
+		System.out.print(teachingFileVO3.getTeachingFile() + ",");
+		System.out.println("---------------------");
+
+		// 查詢
+		List<TeachingFileVO> list = dao.getAll();
+		for (TeachingFileVO teachingFileVO4 : list) {
+			System.out.print(teachingFileVO4.getTeachingFileNo() + ",");
+			System.out.print(teachingFileVO4.getTimetableNo() + ",");
+			System.out.print(teachingFileVO4.getTeachingFileName() + ",");
+			System.out.print(teachingFileVO4.getTeachingFile() + ",");
+			System.out.println("------");
+			System.out.println(teachingFileVO4);
+
+		}
+	}
 }

@@ -253,48 +253,48 @@ public class VideoLogJDBCDAO implements VideoLogDAO_interface{
 		return list;
 	}
 	
-//	public static void main(String[] args) {
-//
-//		VideoLogJDBCDAO dao = new VideoLogJDBCDAO();
-//
-//		// 新增
-//		VideoLogVO videoLogVO1 = new VideoLogVO();
-//		videoLogVO1.setVideoNo("2");
-//		videoLogVO1.setWatchTime(130);
-//		videoLogVO1.setStatus(1);
-//		dao.insert(videoLogVO1);
-//
-//		// 修改
-//		VideoLogVO videoLogVO1 = new VideoLogVO();
-//		videoLogVO1.setVideoNo("2");
-//		videoLogVO1.setWatchTime(200);
-//		videoLogVO1.setStatus(0);
-//		videoLogVO1.setVideoLogNo("2");
-//		dao.update(videoLogVO1);
-//
-//		// 刪除
-//		dao.delete("3");
-//
-//		// 查詢
-//		VideoLogVO videoLogVO1 = dao.findByPrimaryKey("4");
-//		System.out.print(videoLogVO1);
-//		System.out.println("---------------------");
-//		System.out.print(videoLogVO1.getVideoLogNo() + ",");
-//		System.out.print(videoLogVO1.getVideoNo() + ",");
-//		System.out.print(videoLogVO1.getWatchTime() + ",");
-//		System.out.print(videoLogVO1.getStatus() + ",");
-//		System.out.println("---------------------");
-//
-//		// 查詢
-//		List<VideoLogVO> list = dao.getAll();
-//		for (VideoLogVO videoLogVO1 : list) {
-//			System.out.print(videoLogVO1);
-//			System.out.println("---------------------");
-//			System.out.print(videoLogVO1.getVideoLogNo() + ",");
-//			System.out.print(videoLogVO1.getVideoNo() + ",");
-//			System.out.print(videoLogVO1.getWatchTime() + ",");
-//			System.out.print(videoLogVO1.getStatus() + ",");
-//			System.out.println("---------------------");
-//		}
-//	}
+	public static void main(String[] args) {
+
+		VideoLogJDBCDAO dao = new VideoLogJDBCDAO();
+
+		// 新增
+		VideoLogVO videoLogVO1 = new VideoLogVO();
+		videoLogVO1.setVideoNo("2");
+		videoLogVO1.setWatchTime(130);
+		videoLogVO1.setStatus(1);
+		dao.insert(videoLogVO1);
+
+		// 修改
+		VideoLogVO videoLogVO2 = new VideoLogVO();
+		videoLogVO2.setVideoNo("2");
+		videoLogVO2.setWatchTime(200);
+		videoLogVO2.setStatus(0);
+		videoLogVO2.setVideoLogNo("2");
+		dao.update(videoLogVO2);
+
+		// 刪除
+		dao.delete("3");
+
+		// 查詢
+		VideoLogVO videoLogVO3 = dao.findByPrimaryKey("4");
+		System.out.print(videoLogVO3);
+		System.out.println("---------------------");
+		System.out.print(videoLogVO3.getVideoLogNo() + ",");
+		System.out.print(videoLogVO3.getVideoNo() + ",");
+		System.out.print(videoLogVO3.getWatchTime() + ",");
+		System.out.print(videoLogVO3.getStatus() + ",");
+		System.out.println("---------------------");
+
+		// 查詢
+		List<VideoLogVO> list = dao.getAll();
+		for (VideoLogVO videoLogVO4 : list) {
+			System.out.print(videoLogVO4);
+			System.out.println("---------------------");
+			System.out.print(videoLogVO4.getVideoLogNo() + ",");
+			System.out.print(videoLogVO4.getVideoNo() + ",");
+			System.out.print(videoLogVO4.getWatchTime() + ",");
+			System.out.print(videoLogVO4.getStatus() + ",");
+			System.out.println("---------------------");
+		}
+	}
 }
