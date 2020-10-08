@@ -3,7 +3,7 @@ package com.notify.model;
 import java.sql.Timestamp;
 
 public class NotifyVO implements java.io.Serializable{
-	private static final long serialVersionUID = 1L;
+	
 	private String userNo;
 	private String notifyContent;
 	private Timestamp notifyDate;

@@ -1,7 +1,7 @@
 package com.userpermission.model;
 
 public class UserPermissionVO implements java.io.Serializable{
-	private static final long serialVersionUID = 1L;
+	
 	private String userNo;
 	private String permissionNo;
 	private Integer readable;

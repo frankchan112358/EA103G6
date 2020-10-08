@@ -50,4 +50,13 @@
 	<servlet-name>VideoLogServlet</servlet-name>
 	<url-pattern>/videoLog/videoLog.do</url-pattern>
   </servlet-mapping>
+  
+  	 	<servlet>
+		<servlet-name>UserServlet</servlet-name>
+		<servlet-class>com.user.controller.UserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/user.do</url-pattern>
+	</servlet-mapping>
 </web-app>

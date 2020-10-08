@@ -31,8 +31,16 @@ public class EmpService {
 		return empVO;
 	}
 	
-	public EmpVO getOneTeacher(String empNo) {
+	public void deleteEmp(String empNo) {
+		dao.delete(empNo);
+	}
+	
+	public EmpVO getOneEmp(String empNo) {
 		return dao.findByPrimaryKey(empNo);
+	}
+	
+	public EmpVO getOneEmpByUserNo(String empNo) {
+		return dao.findByUserNo(empNo);
 	}
 	
 	public List<EmpVO> getAll(){
