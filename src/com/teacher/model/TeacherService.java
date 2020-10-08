@@ -42,6 +42,13 @@ public class TeacherService {
 	public TeacherVO getOneTeacher(String teacherNo) {
 		return dao.findByPrimaryKey(teacherNo);
 	}
+	public TeacherVO getOneTeacherByUserNo(String userNo) {
+		return dao.findByUserNo(userNo);
+	}
+	
+	public void deleteTeacher(String teacherNo) {
+		dao.delete(teacherNo);
+	}
 	
 	public List<TeacherVO> getAll(){
 		return dao.getAll();

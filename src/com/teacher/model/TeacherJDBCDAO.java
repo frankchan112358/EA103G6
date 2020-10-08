@@ -19,7 +19,9 @@ public class TeacherJDBCDAO implements TeacherDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO TEACHER(TEACHERNO,USERNO,TEACHERNAME,SKILL,DESCRIPTION,TEACHERSTATUS) VALUES(TEACHER_SEQ.NEXTVAL,?,?,?,?,?)";
 	private static final String UPDATE = "UPDATE TEACHER SET USERNO=?,TEACHERNAME=?,SKILL=?,DESCRIPTION=?,TEACHERSTATUS=? WHERE TEACHERNO=?";
+	private static final String DELETE = "UPDATE TEACHER SET TEACHERSTATUS=0 WHERE TEACHERNO=?";
 	private static final String GET_ONE_STMT = "SELECT TEACHERNO,USERNO,TEACHERNAME,SKILL,DESCRIPTION,TEACHERSTATUS FROM TEACHER WHERE TEACHERSTATUS>0 AND TEACHERNO=?";
+	private static final String GET_ONE_STMT_USERNO = "SELECT TEACHERNO,USERNO,TEACHERNAME,SKILL,DESCRIPTION,TEACHERSTATUS FROM TEACHER WHERE TEACHERSTATUS>0 AND USERNO=?";
 	private static final String GET_ALL_STMT = "SELECT TEACHERNO,USERNO,TEACHERNAME,SKILL,DESCRIPTION,TEACHERSTATUS FROM TEACHER WHERE TEACHERSTATUS>0";
 
 	@Override
@@ -251,6 +253,108 @@ public class TeacherJDBCDAO implements TeacherDAO_interface {
 		return list;
 	}
 
+	
+	@Override
+	public TeacherVO findByUserNo(String userNo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		TeacherVO teacherVO = null;
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_STMT_USERNO);
+
+			pstmt.setString(1, userNo);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				teacherVO = new TeacherVO();
+				teacherVO.setTeacherNo(rs.getString("TEACHERNO"));
+				teacherVO.setUserNo(rs.getString("USERNO"));
+				teacherVO.setTeacherName(rs.getString("TEACHERNAME"));
+				teacherVO.setSkill(rs.getString("SKILL"));
+				if (rs.getClob("DESCRIPTION") != null) {
+					Clob clob = rs.getClob("DESCRIPTION");
+					StringBuilder sb = new StringBuilder();
+					BufferedReader br = new BufferedReader(clob.getCharacterStream());
+					String str;
+					while ((str = br.readLine()) != null) {
+						sb.append(str);
+						sb.append("\n");
+					}
+					br.close();
+					teacherVO.setDescription(sb.toString());
+				} else {
+					teacherVO.setDescription(null);
+				}
+				teacherVO.setTeacherStatus(rs.getInt("TEACHERSTATUS"));
+
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (IOException se) {
+			throw new RuntimeException("A IOException error occured. " + se.getMessage());
+
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return teacherVO;
+	}
+	
+	@Override
+	public void delete(String teacherNo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(DELETE);
+
+			pstmt.setString(1, teacherNo);
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+	
 	public static void main(String[] args) {
 
 		// insert
@@ -290,19 +394,36 @@ public class TeacherJDBCDAO implements TeacherDAO_interface {
 //		System.out.println(teacherVO.getSkill());
 //		System.out.println(teacherVO.getDescription());
 //		System.out.println(teacherVO.getTeacherStatus());
+		
+		// findByUserNo
+//		TeacherJDBCDAO dao = new TeacherJDBCDAO();
+//		TeacherVO teacherVO = dao.findByUserNo("U000004");
+//		System.out.println(teacherVO.getTeacherNo());
+//		System.out.println(teacherVO.getUserNo());
+//		System.out.println(teacherVO.getTeacherName());
+//		System.out.println(teacherVO.getSkill());
+//		System.out.println(teacherVO.getDescription());
+//		System.out.println(teacherVO.getTeacherStatus());
 
 		// getAll
+//		TeacherJDBCDAO dao = new TeacherJDBCDAO();
+//		List<TeacherVO> list = dao.getAll();
+//		for (TeacherVO teacherVO : list) {
+//			System.out.println(teacherVO.getTeacherNo());
+//			System.out.println(teacherVO.getUserNo());
+//			System.out.println(teacherVO.getTeacherName());
+//			System.out.println(teacherVO.getSkill());
+//			System.out.println(teacherVO.getDescription());
+//			System.out.println(teacherVO.getTeacherStatus());
+//			System.out.println("");
+//			System.out.println("-------------------------------");
+//		}
+		
+		//delete
 		TeacherJDBCDAO dao = new TeacherJDBCDAO();
-		List<TeacherVO> list = dao.getAll();
-		for (TeacherVO teacherVO : list) {
-			System.out.println(teacherVO.getTeacherNo());
-			System.out.println(teacherVO.getUserNo());
-			System.out.println(teacherVO.getTeacherName());
-			System.out.println(teacherVO.getSkill());
-			System.out.println(teacherVO.getDescription());
-			System.out.println(teacherVO.getTeacherStatus());
-			System.out.println("");
-			System.out.println("-------------------------------");
-		}
+		dao.delete("T000001");
+		
 	}
+
+
 }
