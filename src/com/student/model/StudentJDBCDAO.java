@@ -307,15 +307,15 @@ public class StudentJDBCDAO {
 //		StudentVO studentVO1 = new StudentVO();
 //		studentVO1.setUserno("U000010");
 //		studentVO1.setBanjino("B001");
-//		studentVO1.setStudentname("閰鄒撖�");
+//		studentVO1.setStudentname("詹Q保");
 //		studentVO1.setFaceid("4");
 //		studentVO1.setFace(null);
-//		studentVO1.setStudentdescription("���QQQQQQQQ");
+//		studentVO1.setStudentdescription("我很QQQQQQQQ");
 //		studentVO1.setStudentstatus(1);
 //		dao.insert(studentVO1);
-//		System.out.println("�憓���");
+//		System.out.println("新增成功");
 //		dao.delete("S000003");
-//		System.out.println("������");
+//		System.out.println("刪除成功");
 //
 //		StudentVO studentVO3 = dao.findByPrimaryKey("S000002");
 //		System.out.print(studentVO3.getStudentno() + ",");
