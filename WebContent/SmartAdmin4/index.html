@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>
+        Work Join Learn 我就嫩
+    </title>
+    <meta name="description" content="Analytics Dashboard">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
+    <!-- Call App Mode on ios devices -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- Remove Tap Highlight on Windows Phone IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <!-- base css -->
+    <link id="vendorsbundle" rel="stylesheet" media="screen, print" href="css/vendors.bundle.css">
+    <link id="appbundle" rel="stylesheet" media="screen, print" href="css/app.bundle.css">
+    <link id="mytheme" rel="stylesheet" media="screen, print" href="#">
+    <link id="myskin" rel="stylesheet" media="screen, print" href="css/skins/skin-master.css">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
+    <link rel="mask-icon" href="img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="stylesheet" media="screen, print" href="css/miscellaneous/reactions/reactions.css">
+    <link rel="stylesheet" media="screen, print" href="css/miscellaneous/fullcalendar/fullcalendar.bundle.css">
+    <link rel="stylesheet" media="screen, print" href="css/miscellaneous/jqvmap/jqvmap.bundle.css">
+</head>
+<body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
+    <script>
+        var classHolder = document.getElementsByTagName("BODY")[0];
+    </script>
+    <!-- BEGIN Page Wrapper -->
+    <div class="page-wrapper">
+        <div class="page-inner">
+            <!-- BEGIN Left Aside -->
+            <aside class="page-sidebar">
+                <div class="page-logo">
+                    <a href="#" class="page-logo-link press-scale-down d-flex align-items-center position-relative" data-toggle="modal" data-target="#modal-shortcut">
+                        <i class="fal fa-thumbs-up" style="color: aliceblue;font-size: x-large;"></i>
+                        <span class="page-logo-text mr-1">Work Join Learn</span>
+                        <span class="position-absolute text-white opacity-50 small pos-top pos-right mr-2 mt-n2"></span>
+                    </a>
+                </div>
+                <!-- BEGIN PRIMARY NAVIGATION -->
+                <nav id="js-primary-nav" class="primary-nav" role="navigation">
+                    <div class="nav-filter">
+                        <div class="position-relative">
+                            <input type="text" id="nav_filter_input" placeholder="Filter menu" class="form-control" tabindex="0">
+                            <a href="#" onclick="return false;" class="btn-primary btn-search-close js-waves-off" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar">
+                                <i class="fal fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <ul id="js-nav-menu" class="nav-menu" style="justify-content:center;">
+                        <li>
+                            <a href="#" title="後台首頁">
+                                <i class="fal fa-chart-area"></i>
+                                <span class="nav-link-text">後台首頁</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="成員管理">
+                                <i class="fal fa-users"></i>
+                                <span class="nav-link-text">成員管理</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="#" title="學員管理">
+                                        <span class="nav-link-text">學員管理</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="講師管理">
+                                        <span class="nav-link-text">講師管理</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="導師管理">
+                                        <span class="nav-link-text">導師管理</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="權限管理">
+                                        <span class="nav-link-text">權限管理</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" title="養成班管理">
+                                <i class="fal fa-users-class"></i>
+                                <span class="nav-link-text">養成班管理</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="#" title="Java雲端">
+                                        <span class="nav-link-text">Java雲端</span>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="#" title="EA101">
+                                                <span class="nav-link-text">EA101</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" title="EA102">
+                                                <span class="nav-link-text">EA102</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" title="EA103">
+                                                <span class="nav-link-text">EA103</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#" title="前端設計">
+                                        <span class="nav-link-text">前端設計</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="大數據分析">
+                                        <span class="nav-link-text">大數據分析</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" title="課程管理">
+                                <i class="fal fa-book"></i>
+                                <span class="nav-link-text">課程管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="班種管理">
+                                <i class="fal fa-chalkboard-teacher"></i>
+                                <span class="nav-link-text">班種管理</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="#" title="Java雲端">
+                                        <span class="nav-link-text">Java雲端</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="前端設計">
+                                        <span class="nav-link-text">前端設計</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="大數據分析">
+                                        <span class="nav-link-text">大數據分析</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>                        
+                        <li>
+                            <a href="#" title="基本課程管理">
+                                <i class="fal fa-book-open"></i>
+                                <span class="nav-link-text">基本課程管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="帳號管理">
+                                <i class="fal fa-user-cog"></i>
+                                <span class="nav-link-text">帳號管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="訊息中心">
+                                <i class="fal fa-comments"></i>
+                                <span class="nav-link-text">訊息中心</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="通知中心">
+                                <i class="fal fa-bell"></i>
+                                <span class="nav-link-text">通知中心</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="filter-message js-filter-message bg-success-600"></div>
+                </nav>
+                <!-- END PRIMARY NAVIGATION -->
+                <!-- NAV FOOTER -->
+                <div class="nav-footer shadow-top">
+                    <a href="#" onclick="return false;" data-action="toggle" data-class="nav-function-minify" class="hidden-md-down">
+                        <i class="ni ni-chevron-right"></i>
+                        <i class="ni ni-chevron-right"></i>
+                    </a>
+                </div> <!-- END NAV FOOTER -->
+            </aside>
+            <!-- END Left Aside -->
+            <div class="page-content-wrapper">
+                <!-- BEGIN Page Header -->
+                <header class="page-header" role="banner">
+                    <!-- we need this logo when user switches to nav-function-top -->
+                    <div class="page-logo">
+                        <a href="#" class="page-logo-link press-scale-down d-flex align-items-center position-relative" data-toggle="modal" data-target="#modal-shortcut">
+                            <i class="fal fa-thumbs-up" style="color: aliceblue;font-size: x-large;"></i>
+                            <span class="page-logo-text mr-1">Work Join Learn</span>
+                            <span class="position-absolute text-white opacity-50 small pos-top pos-right mr-2 mt-n2"></span>
+                        </a>
+                    </div>
+                    <!-- DOC: nav menu layout change shortcut -->
+                    <div class="hidden-md-down dropdown-icon-menu position-relative">
+                        <a href="#" class="header-btn btn js-waves-off" data-action="toggle" data-class="nav-function-hidden" title="Hide Navigation">
+                            <i class="ni ni-menu"></i>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="#" class="btn js-waves-off" data-action="toggle" data-class="nav-function-minify" title="Minify Navigation">
+                                    <i class="ni ni-minify-nav"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn js-waves-off" data-action="toggle" data-class="nav-function-fixed" title="Lock Navigation">
+                                    <i class="ni ni-lock-nav"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- DOC: mobile button appears during mobile width -->
+                    <div class="hidden-lg-up">
+                        <a href="#" class="header-btn btn press-scale-down" data-action="toggle" data-class="mobile-nav-on">
+                            <i class="ni ni-menu"></i>
+                        </a>
+                    </div>
+                    <div class="ml-auto d-flex">
+                        <!-- app message -->
+                        <a href="#" class="header-icon" data-toggle="modal" data-target=".js-modal-messenger">
+                            <i class="fal fa-comments"></i>
+                            <span class="badge badge-icon">!</span>
+                        </a>
+                        <!-- app notification -->
+                        <div>
+                            <a href="#" class="header-icon" data-toggle="dropdown" title="You got 2 notifications">
+                                <i class="fal fa-bell"></i>
+                                <span class="badge badge-icon">2</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-animated dropdown-xl">
+                                <div class="dropdown-header bg-trans-gradient d-flex justify-content-center align-items-center rounded-top mb-2">
+                                    <h4 class="m-0 text-center color-white">
+                                        2 個未讀
+                                        <small class="mb-0 opacity-80">你的通知</small>
+                                    </h4>
+                                </div>
+                                <ul class="nav nav-tabs nav-tabs-clean" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link px-4 fs-md js-waves-on fw-500" data-toggle="tab" href="#tab-1">重要</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link px-4 fs-md js-waves-on fw-500" data-toggle="tab" href="#tab-2">未讀</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link px-4 fs-md js-waves-on fw-500" data-toggle="tab" href="#tab-3">已讀</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content tab-notification">
+                                    <div class="tab-pane" id="tab-1" role="tabpanel">
+                                        <div class="custom-scroll h-100">
+                                            <ul class="notification">
+                                                <li class="unread">
+                                                    <div class="d-flex align-items-center show-child-on-hover">
+                                                        <span class="d-flex flex-column flex-1">
+                                                            <span class="name d-flex align-items-center">Administrator <span class="badge badge-success fw-n ml-1">UPDATE</span></span>
+                                                            <span class="msg-a fs-sm">
+                                                                System updated to version <strong>4.5.1</strong> <a href="docs_buildnotes.html">(patch notes)</a>
+                                                            </span>
+                                                            <span class="fs-nano text-muted mt-1">5 mins ago</span>
+                                                        </span>
+                                                        <div class="show-on-hover-parent position-absolute pos-right pos-bottom p-3">
+                                                            <a href="#" class="text-muted" title="delete"><i class="fal fa-trash-alt"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tab-2" role="tabpanel">
+                                        <div class="custom-scroll h-100">
+                                            <ul class="notification">
+                                                <li class="unread">
+                                                    <div class="d-flex align-items-center show-child-on-hover">
+                                                        <span class="d-flex flex-column flex-1">
+                                                            <span class="name d-flex align-items-center">Administrator <span class="badge badge-success fw-n ml-1">UPDATE</span></span>
+                                                            <span class="msg-a fs-sm">
+                                                                System updated to version <strong>4.5.1</strong> <a href="docs_buildnotes.html">(patch notes)</a>
+                                                            </span>
+                                                            <span class="fs-nano text-muted mt-1">5 mins ago</span>
+                                                        </span>
+                                                        <div class="show-on-hover-parent position-absolute pos-right pos-bottom p-3">
+                                                            <a href="#" class="text-muted" title="delete"><i class="fal fa-trash-alt"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tab-3" role="tabpanel">
+                                        <div class="custom-scroll h-100">
+                                            <ul class="notification">
+                                                <li class="unread">
+                                                    <div class="d-flex align-items-center show-child-on-hover">
+                                                        <span class="d-flex flex-column flex-1">
+                                                            <span class="name d-flex align-items-center">Administrator <span class="badge badge-success fw-n ml-1">UPDATE</span></span>
+                                                            <span class="msg-a fs-sm">
+                                                                System updated to version <strong>4.5.1</strong> <a href="docs_buildnotes.html">(patch notes)</a>
+                                                            </span>
+                                                            <span class="fs-nano text-muted mt-1">5 mins ago</span>
+                                                        </span>
+                                                        <div class="show-on-hover-parent position-absolute pos-right pos-bottom p-3">
+                                                            <a href="#" class="text-muted" title="delete"><i class="fal fa-trash-alt"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="py-2 px-3 bg-faded d-block rounded-bottom text-right border-faded border-bottom-0 border-right-0 border-left-0">
+                                    <a href="#" class="fs-xs fw-500 ml-auto">觀看所有通知</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- app user menu -->
+                        <div>
+                            <a href="#" data-toggle="dropdown" class="header-icon d-flex align-items-center justify-content-center ml-2">
+                                <img src="img/demo/avatars/陳浩偉.png" class="profile-image rounded-circle" alt="陳浩偉">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-animated dropdown-lg">
+                                <div class="dropdown-header bg-trans-gradient d-flex flex-row py-4 rounded-top">
+                                    <div class="d-flex flex-row align-items-center mt-1 mb-1 color-white">
+                                        <span class="mr-2">
+                                            <img src="img/demo/avatars/陳浩偉.png" class="rounded-circle profile-image" alt="陳浩偉">
+                                        </span>
+                                        <div class="info-card-text">
+                                            <div class="fs-lg text-truncate text-truncate-lg">陳浩偉</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-divider m-0"></div>                                    
+                                <a href="#" class="dropdown-item fw-500 pt-3 pb-3">
+                                    <span data-i18n="drpdwn.settings">帳號設定</span>
+                                </a>
+                                <div class="dropdown-divider m-0"></div>
+                                <a href="#" class="dropdown-item fw-500 pt-3 pb-3">
+                                    <span data-i18n="drpdwn.page-logout">登出</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <!-- END Page Header -->
+                <!-- BEGIN Page Content -->
+                <!-- the #js-page-content id is needed for some plugins to initialize -->
+                <main id="js-page-content" role="main" class="page-content">
+                    <ol class="breadcrumb page-breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">養成班管理</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Java雲端</a></li>
+                        <li class="breadcrumb-item">EA103</li>
+                    </ol>
+                    <div class="subheader">
+                        <h1 class="subheader-title">
+                            <i class='subheader-icon fal fa-users-class'></i> EA103
+                        </h1>
+                        <div class="btn-group hidden-xl-up">
+                            <button type="button" class="btn btn-secondary dropdown-toggle btn-info" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fal fa-toolbox"></span>
+                                班級管理功能
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <button class="dropdown-item" type="button">課程管理</button>
+                                <button class="dropdown-item" type="button">課表管理</button>
+                                <button class="dropdown-item" type="button">請假管理</button>
+                                <button class="dropdown-item" type="button">出缺勤管理</button>
+                                <button class="dropdown-item" type="button">討論區管理</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="hidden-lg-down col-xl-2 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div id="panel-0" class="panel" data-panel-sortable data-panel-fullscreen data-panel-close data-panel-locked data-panel-refresh data-panel-reset data-panel-color>
+                                <div class="panel-hdr bg-info-500">
+                                    <h2>班級管理功能</h2>
+                                </div>
+                                <div class="panel-container show">
+                                    <div class="panel-content p-0">
+                                        <ul id="js_nested_list" class="nav-menu nav-menu-reset nav-menu-compact mb-sm-4 mb-md-0 rounded" data-nav-accordion="true">
+                                            <li>
+                                                <a href="#">
+                                                    <span class="text-info">課程管理</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <span class="text-info">課表管理</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <span class="text-info">請假管理</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <span class="text-info">出缺勤管理</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <span class="text-info">討論區管理</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                            <div id="panel-1" class="panel">
+                                <div class="panel-hdr bg-info-300 bg-info-gradient ">
+                                    <h2 class="js-get-date"></h2>
+                                </div>
+                                <div class="panel-container show">
+                                    <div class="panel-content">
+                                        <div id="calendar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                            <div id="panel-2" class="panel">
+                                <div class="panel-hdr bg-fusion-300 bg-info-gradient ">
+                                    <h2 class="text-white">公告編輯</h2>
+                                </div>
+                                <div class="panel-container show">
+                                    <div class="panel-content p-0">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <a href="#" title="班級公告">
+                                                    <span class="nav-link-text">班級公告</span>
+                                                </a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="#" title="班級公告">
+                                                    <span class="nav-link-text">班級公告</span>
+                                                </a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="#" title="班級公告">
+                                                    <span class="nav-link-text">班級公告</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="panel-3" class="panel">
+                                <div class="panel-hdr bg-success-300 bg-info-gradient">
+                                    <h2 class="text-white">請假核准</h2>
+                                </div>
+                                <div class="panel-container show">
+                                    <div class="panel-content p-0">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <a href="#" title="請假核准">
+                                                    <span class="nav-link-text">請假核准</span>
+                                                </a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="#" title="請假核准">
+                                                    <span class="nav-link-text">請假核准</span>
+                                                </a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="#" title="請假核准">
+                                                    <span class="nav-link-text">請假核准</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="panel-4" class="panel">
+                                <div class="panel-hdr bg-danger-300 bg-info-gradient ">
+                                    <h2 class="text-white">檢舉審核</h2>
+                                </div>
+                                <div class="panel-container show">
+                                    <div class="panel-content p-0">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <a href="#" title="檢舉審核">
+                                                    <span class="nav-link-text">檢舉審核</span>
+                                                </a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="#" title="檢舉審核">
+                                                    <span class="nav-link-text">檢舉審核</span>
+                                                </a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="#" title="檢舉審核">
+                                                    <span class="nav-link-text">檢舉審核</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <!-- this overlay is activated only when mobile menu is triggered -->
+                <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div> <!-- END Page Content -->
+                <!-- BEGIN Page Footer -->
+                <footer class="page-footer" role="contentinfo">
+                    <div class="d-flex align-items-center flex-1 text-muted">
+                        <span class="fw-700">2020 © Work Join Learn </span>
+                    </div>
+                    <div>
+                        <ul class="list-table m-0">
+                            <li><a href="intel_introduction.html" class="text-secondary fw-700">關於我們</a></li>
+                        </ul>
+                    </div>
+                </footer>
+                <!-- END Page Footer -->
+                <!-- BEGIN Color profile -->
+                <p id="js-color-profile" class="d-none"></p>
+                <!-- END Color profile -->
+            </div>
+        </div>
+    </div>
+    <!-- END Page Wrapper -->
+    <!-- BEGIN Quick Menu -->
+    <!-- to add more items, please make sure to change the variable '$menu-items: number;' in your _page-components-shortcut.scss -->
+    <nav class="shortcut-menu d-none d-sm-block">
+        <input type="checkbox" class="menu-open" name="menu-open" id="menu_open" />
+        <label for="menu_open" class="menu-open-button ">
+            <span class="app-shortcut-icon d-block"></span>
+        </label>
+        <a href="#" class="menu-item btn" data-toggle="tooltip" data-placement="left" title="返回頂部">
+            <i class="fal fa-arrow-up"></i>
+        </a>
+        <a href="page_login.html" class="menu-item btn" data-toggle="tooltip" data-placement="left" title="登出">
+            <i class="fal fa-sign-out"></i>
+        </a>
+        <a href="#" class="menu-item btn" data-action="app-fullscreen" data-toggle="tooltip" data-placement="left" title="全螢幕">
+            <i class="fal fa-expand"></i>
+        </a>
+    </nav>
+    <!-- END Quick Menu -->
+    <!-- BEGIN Messenger -->
+    <div class="modal fade js-modal-messenger modal-backdrop-transparent" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-right">
+            <div class="modal-content h-100">
+                <div class="dropdown-header bg-trans-gradient d-flex align-items-center w-100">
+                    <div class="d-flex flex-row align-items-center mt-1 mb-1 color-white">
+                        <span class="mr-2">
+                            <span class="rounded-circle profile-image d-block" style="background-image:url('img/demo/avatars/avatar-d.png'); background-size: cover;"></span>
+                        </span>
+                        <div class="info-card-text">
+                            <a href="javascript:void(0);" class="fs-lg text-truncate text-truncate-lg text-white" data-toggle="dropdown" aria-expanded="false">
+                                Tracey Chang
+                                <i class="fal fa-angle-down d-inline-block ml-1 text-white fs-md"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Send Email</a>
+                                <a class="dropdown-item" href="#">Create Appointment</a>
+                                <a class="dropdown-item" href="#">Block User</a>
+                            </div>
+                            <span class="text-truncate text-truncate-md opacity-80">IT Director</span>
+                        </div>
+                    </div>
+                    <button type="button" class="close text-white position-absolute pos-top pos-right p-2 m-1 mr-2" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body p-0 h-100 d-flex">
+                    <!-- BEGIN msgr-list -->
+                    <div class="msgr-list d-flex flex-column bg-faded border-faded border-top-0 border-right-0 border-bottom-0 position-absolute pos-top pos-bottom">
+                        <div>
+                            <div class="height-4 width-3 h3 m-0 d-flex justify-content-center flex-column color-primary-500 pl-3 mt-2">
+                                <i class="fal fa-search"></i>
+                            </div>
+                            <input type="text" class="form-control bg-white" id="msgr_listfilter_input" placeholder="Filter contacts" aria-label="FriendSearch" data-listfilter="#js-msgr-listfilter">
+                        </div>
+                        <div class="flex-1 h-100 custom-scroll">
+                            <div class="w-100">
+                                <ul id="js-msgr-listfilter" class="list-unstyled m-0">
+                                    <li>
+                                        <a href="#" class="d-table w-100 px-2 py-2 text-dark hover-white" data-filter-tags="tracey chang online">
+                                            <div class="d-table-cell align-middle status status-success status-sm ">
+                                                <span class="profile-image-md rounded-circle d-block" style="background-image:url('img/demo/avatars/avatar-d.png'); background-size: cover;"></span>
+                                            </div>
+                                            <div class="d-table-cell w-100 align-middle pl-2 pr-2">
+                                                <div class="text-truncate text-truncate-md">
+                                                    Tracey Chang
+                                                    <small class="d-block font-italic text-success fs-xs">
+                                                        Online
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="filter-message js-filter-message"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <a class="fs-xl d-flex align-items-center p-3">
+                                <i class="fal fa-cogs"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- END msgr-list -->
+                    <!-- BEGIN msgr -->
+                    <div class="msgr d-flex h-100 flex-column bg-white">
+                        <!-- BEGIN custom-scroll -->
+                        <div class="custom-scroll flex-1 h-100">
+                            <div id="chat_container" class="w-100 p-4">
+                                <!-- start .chat-segment -->
+                                <div class="chat-segment">
+                                    <div class="time-stamp text-center mb-2 fw-400">
+                                        Jun 19
+                                    </div>
+                                </div>
+                                <!--  end .chat-segment -->
+                                <!-- start .chat-segment -->
+                                <div class="chat-segment chat-segment-get chat-end">
+                                    <div class="chat-message">
+                                        <p>
+                                            Cheers
+                                        </p>
+                                    </div>
+                                </div>
+                                <!--  end .chat-segment -->
+                            </div>
+                        </div>
+                        <!-- END custom-scroll  -->
+                        <!-- BEGIN msgr__chatinput -->
+                        <div class="d-flex flex-column">
+                            <div class="border-faded border-right-0 border-bottom-0 border-left-0 flex-1 mr-3 ml-3 position-relative shadow-top">
+                                <div class="pt-3 pb-1 pr-0 pl-0 rounded-0" tabindex="-1">
+                                    <div id="msgr_input" contenteditable="true" data-placeholder="Type your message here..." class="height-10 form-content-editable"></div>
+                                </div>
+                            </div>
+                            <div class="height-8 px-3 d-flex flex-row align-items-center flex-wrap flex-shrink-0">
+                                <a href="javascript:void(0);" class="btn btn-icon fs-xl width-1 mr-1" data-toggle="tooltip" data-original-title="More options" data-placement="top">
+                                    <i class="fal fa-ellipsis-v-alt color-fusion-300"></i>
+                                </a>
+                                <a href="javascript:void(0);" class="btn btn-icon fs-xl mr-1" data-toggle="tooltip" data-original-title="Attach files" data-placement="top">
+                                    <i class="fal fa-paperclip color-fusion-300"></i>
+                                </a>
+                                <a href="javascript:void(0);" class="btn btn-icon fs-xl mr-1" data-toggle="tooltip" data-original-title="Insert photo" data-placement="top">
+                                    <i class="fal fa-camera color-fusion-300"></i>
+                                </a>
+                                <div class="ml-auto">
+                                    <a href="javascript:void(0);" class="btn btn-info">Send</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END msgr__chatinput -->
+                    </div>
+                    <!-- END msgr -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Messenger -->
+    <script src="js/vendors.bundle.js"></script>
+    <script src="js/app.bundle.js"></script>
+    <script type="text/javascript">
+        /* Activate smart panels */
+        $('#js-page-content').smartPanel();
+    </script>
+    <!-- The order of scripts is irrelevant. Please check out the plugin pages for more details about these plugins below: -->
+    <script src="js/dependency/moment/moment.js"></script>
+    <script src="js/miscellaneous/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="js/statistics/sparkline/sparkline.bundle.js"></script>
+    <script src="js/statistics/easypiechart/easypiechart.bundle.js"></script>
+    <script src="js/statistics/flot/flot.bundle.js"></script>
+    <script src="js/miscellaneous/jqvmap/jqvmap.bundle.js"></script>
+    <script>
+        $(document).ready(function()
+        {
+            /*calendar */
+            var todayDate = moment().startOf('day');
+            var YM = todayDate.format('YYYY-MM');
+            var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
+            var TODAY = todayDate.format('YYYY-MM-DD');
+            var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
+
+
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: ['dayGrid', 'list', 'timeGrid', 'interaction', 'bootstrap'],
+                themeSystem: 'bootstrap',
+                timeZone: 'UTC',
+                //dateAlignment: "month", //week, month
+                buttonText: {
+                    today: '今天',
+                    month: '月',
+                    week: '周',
+                    day: '天',
+                    list: '清單'
+                },
+                eventTimeFormat: {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    meridiem: 'short'
+                },
+                navLinks: true,
+                header: {
+                    left: 'title',
+                    center: '',
+                    right: 'today prev,next'
+                },
+                footer: {
+                    left: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
+                    center: '',
+                    right: ''
+                },
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                events: [{
+                        title: 'EA103 305 HTML 董董',
+                        start: YM + '-14T13:30:00',
+                        end: YM + '-14T17:00:00',
+                        className: "bg-danger border-danger"
+                    },
+                    {
+                        title: 'EA103 305 早上 Java 吳冠宏',
+                        start: YM + '-02T09:00:00',
+                        end: YM + '-02T12:00:00',
+                        className: "bg-primary text-white"
+                    },
+                    {
+                        title: 'EA103 305 下午 Java 吳冠宏',
+                        start: YM + '-08T13:30:00',
+                        end: YM + '-08T17:00:00',
+                        className: "bg-primary text-white"
+                    },
+                    {
+                        title: 'EA103 305 早上 Servlet 吳永誌',
+                        start: YM + '-10T09:00:00',
+                        end: YM + '-10T12:0:00',
+                        className: "bg-success border-success text-white"
+                    },
+                    {
+                        title: 'EA103 305 早上 Servlet 吳永誌',
+                        start: TODAY + 'T09:00:00',
+                        end: TODAY + 'T12:0:00',
+                        className: "bg-success border-success "
+                    },
+                    {
+                        title: 'Meeting',
+                        start: TODAY + 'T12:15:00',
+                        end: TODAY + 'T13:30:00',
+                        className: "bg-white text-info  border-info"
+                    },
+                    {
+                        title: 'EA103 305 下午 Ajax 戰神',
+                        start: TODAY + 'T14:00:00',
+                        end: TODAY + 'T17:30:00',
+                        className: "bg-warning text-white border-warning"
+                    },
+                ],
+                viewSkeletonRender: function() {
+                    $('.fc-toolbar .btn-default').addClass('btn-sm');
+                    $('.fc-header-toolbar h2').addClass('fs-md');
+                    $('#calendar').addClass('fc-reset-order')
+                },
+
+            });
+
+            calendar.render();
+        });
+</script>
+</body>
+</html>
