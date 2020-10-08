@@ -26,7 +26,7 @@ public class TimetableService {
 	}
 	
 	public TimetableVO updateTimetable(String timetableNo, String courseNo, String classroomNo, Integer timetablePeriod, Date timetableDate, String teachingLog) {
-		
+
 		TimetableVO timetableVO = new TimetableVO();
 		
 		timetableVO.setTimetableNo(timetableNo);

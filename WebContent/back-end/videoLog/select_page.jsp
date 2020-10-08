@@ -48,7 +48,7 @@
 
 <ul>
 	<li><a href='listAllVideoLog.jsp'>List</a> all VideoLog<br><br></li>
-	
+
 	<li><FORM METHOD="post" ACTION="<%=request.getContextPath() %>/videoLog/videoLog.do">
 		<b>請輸入影片觀看紀錄編號(如1):</b>
 		<input type="text" name="videoLogNo">
@@ -56,9 +56,9 @@
 		<input type="submit" value="送出">
 	</FORM>
 	</li>
-	
+
 	<jsp:useBean id="videoLogSvc" scope="page" class="com.videolog.model.VideoLogService"/>
-	
+
 	<li>
 	<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/videoLog/videoLog.do">
 		<b>請選擇觀看影片記錄編號:</b>
@@ -71,7 +71,7 @@
 		<input type="submit" value="送出">
 	</FORM>
 	</li>
-	
+
 	<li>
 		<form METHOD="post" ACTION="<%=request.getContextPath() %>/videoLog/videoLog.do">
 		<b>請選擇影片編號:</b>
@@ -92,4 +92,4 @@
 	<li><a href="addVideoLog.jsp">Add</a> a new videoLog.</li>
 </ul>
 </body>
-</html>
+</html> 
