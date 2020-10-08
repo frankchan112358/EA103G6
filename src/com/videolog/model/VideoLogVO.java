@@ -7,6 +7,8 @@ public class VideoLogVO implements java.io.Serializable{
 	private Integer watchTime;
 	private Integer status;
 	
+	public VideoLogVO() {}
+	
 	public String getVideoLogNo() {
 		return videoLogNo;
 	}
