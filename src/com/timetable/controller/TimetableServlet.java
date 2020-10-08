@@ -43,7 +43,7 @@ public class TimetableServlet extends HttpServlet {
 				}
 				if (!errorMsgs.isEmpty() ) {
 					RequestDispatcher failureView = 
-							req.getRequestDispatcher("/timetable/select_page.jsp");
+							req.getRequestDispatcher("/back-end/timetable/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				} 
@@ -55,20 +55,20 @@ public class TimetableServlet extends HttpServlet {
 				}
 				
 				if (! errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/timetable/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/timetable/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 				req.setAttribute("timetableVO", timetableVO);
-				String url = "/timetable/listOneTimetable.jsp";
+				String url = "/back-end/timetable/listOneTimetable.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = 
-						req.getRequestDispatcher("/timetable/select_page.jsp");
+						req.getRequestDispatcher("/back-end/timetable/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		} 
@@ -86,13 +86,13 @@ public class TimetableServlet extends HttpServlet {
 				TimetableVO timetableVO = timetableSvc.getOneTimetable(timetableNo);
 				
 				req.setAttribute("timetableVO", timetableVO);
-				String url = "/timetable/update_timetable_input.jsp";
+				String url = "/back-end/timetable/update_timetable_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/timetable/listAllTimetable.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/timetable/listAllTimetable.jsp");
 				failureView.forward(req, res);
 			}
 		} 
@@ -144,22 +144,22 @@ public class TimetableServlet extends HttpServlet {
 				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("timetableVO", timetableVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/timetable/update_timetable_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/timetable/update_timetable_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 				TimetableService timetableSvc = new TimetableService();
 				timetableVO = timetableSvc.updateTimetable(timetableNo, courseNo, classroomNo, timetablePeriod, timetableDate, teachingLog);
-				
+
 				req.setAttribute("timetableVO", timetableVO);
-				String url = "/timetable/listOneTimetable.jsp";
+				String url = "/back-end/timetable/listAllTimetable.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/timetable/update_timetable_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/timetable/update_timetable_input.jsp");
 				failureView.forward(req,  res);
 			}
 		} 
@@ -217,7 +217,7 @@ public class TimetableServlet extends HttpServlet {
 				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("timetableVO", timetableVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/timetable/addTimetable.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/timetable/addTimetable.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -226,13 +226,13 @@ public class TimetableServlet extends HttpServlet {
 				timetableVO = timetableSvc.addTimetable(courseNo, classroomNo, timetablePeriod, timetableDate, teachingLog);
 
 				
-				String url = "/timetable/listAllTimetable.jsp";
+				String url = "/back-end/timetable/listAllTimetable.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch(Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/timetable/addTimetable.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/timetable/addTimetable.jsp");
 				failureView.forward(req, res); 
 			}
 		}
@@ -249,13 +249,13 @@ public class TimetableServlet extends HttpServlet {
 				TimetableService timetableSvc = new TimetableService();
 				timetableSvc.deleteTimetable(timetableNo);
 				
-				String url = "/timetable/listAllTimetable.jsp";
+				String url = "/back-end/timetable/listAllTimetable.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/timetable/listAllTimetable.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/timetable/listAllTimetable.jsp");
 				failureView.forward(req, res);
 			}
 		}

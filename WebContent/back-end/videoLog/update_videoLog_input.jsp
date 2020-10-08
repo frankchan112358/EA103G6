@@ -65,7 +65,7 @@
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="videoLog.do" name="form1">
+<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/videoLog/videoLog.do" name="form1">
 <table>
 	<tr>
 		<td>觀看影片紀錄編號:<font color=red><b>*</b></font></td>
