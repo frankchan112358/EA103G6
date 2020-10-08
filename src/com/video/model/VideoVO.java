@@ -8,6 +8,9 @@ public class VideoVO implements java.io.Serializable{
 	private String timetableNo;
 	private String videoName;
 	private byte[] video;
+	
+	public VideoVO() {}
+	
 	public String getVideoNo() {
 		return videoNo;
 	}

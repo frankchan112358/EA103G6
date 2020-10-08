@@ -7,6 +7,8 @@ public class TeachingFileVO implements java.io.Serializable{
 	private String teachingFileName;
 	private byte[] teachingFile;
 	
+	public TeachingFileVO() {}
+	
 	public String getTeachingFileNo() {
 		return teachingFileNo;
 	}

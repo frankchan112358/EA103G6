@@ -13,7 +13,7 @@ public class VideoLogService {
 	public VideoLogVO addVideoLog(String videoNo, Integer watchTime, Integer status) {
 		VideoLogVO videoLogVO = new VideoLogVO();
 		
-		videoLogVO.setVideoNo("videoNo");
+		videoLogVO.setVideoNo(videoNo);
 		videoLogVO.setWatchTime(watchTime);
 		videoLogVO.setStatus(status);
 		dao.insert(videoLogVO);
@@ -23,8 +23,8 @@ public class VideoLogService {
 
 	public VideoLogVO updateVideoLog(String videoLogNo, String videoNo, Integer watchTime, Integer status) {
 		VideoLogVO videoLogVO = new VideoLogVO();
-		videoLogVO.setVideoLogNo("videoLogNo");
-		videoLogVO.setVideoNo("videoLog");
+		videoLogVO.setVideoLogNo(videoLogNo);
+		videoLogVO.setVideoNo(videoNo);
 		videoLogVO.setWatchTime(watchTime);
 		videoLogVO.setStatus(status);
 		dao.update(videoLogVO);

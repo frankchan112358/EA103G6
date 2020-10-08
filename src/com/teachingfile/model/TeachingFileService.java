@@ -14,8 +14,8 @@ public class TeachingFileService {
 
 		TeachingFileVO teachingFileVO = new TeachingFileVO();
 
-		teachingFileVO.setTimetableNo("timetableNo");
-		teachingFileVO.setTeachingFileName("teachingFileName");
+		teachingFileVO.setTimetableNo(timetableNo);
+		teachingFileVO.setTeachingFileName(teachingFileName);
 		teachingFileVO.setTeachingFile(teachingFile);
 		dao.insert(teachingFileVO);
 

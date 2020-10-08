@@ -11,6 +11,8 @@ public class TimetableVO implements java.io.Serializable{
 	private Date timetableDate;
 	private String teachingLog;
 	
+	public TimetableVO() {}
+	
 	public String getTimetableNo() {
 		return timetableNo;
 	}

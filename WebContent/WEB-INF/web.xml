@@ -33,4 +33,21 @@
   	<servlet-name>LeaveServlet</servlet-name>
   	<url-pattern>/leave/leave.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+	<servlet-name>TimetableServlet</servlet-name>
+	<servlet-class>com.timetable.controller.TimetableServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>TimetableServlet</servlet-name>
+	<url-pattern>/timetable/timetable.do</url-pattern>
+  </servlet-mapping>
+	
+  <servlet>
+	<servlet-name>VideoLogServlet</servlet-name>
+	<servlet-class>com.videolog.controller.VideoLogServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>VideoLogServlet</servlet-name>
+	<url-pattern>/videoLog/videoLog.do</url-pattern>
+  </servlet-mapping>
 </web-app>
