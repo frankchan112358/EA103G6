@@ -14,6 +14,11 @@ public class CourseVO implements java.io.Serializable {
 	private Integer lesson;
 	private Date startDate;
 	private Date endDate;
+	
+	public CourseVO() {
+		super();
+	}
+
 	private Integer status;
 
 	public String getCourseNo() {
