@@ -12,6 +12,10 @@ public class StudentVO implements java.io.Serializable{
 	private InputStream face;
 	private String studentdescription;
 	private Integer studentstatus;
+	
+	public StudentVO(){	
+	}
+	
 	public String getStudentno() {
 		return studentno;
 	}
