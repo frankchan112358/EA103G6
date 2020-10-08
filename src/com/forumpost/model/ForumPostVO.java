@@ -12,6 +12,11 @@ public class ForumPostVO implements java.io.Serializable {
     private Timestamp updateTime;
 	private Timestamp createTime;
 	
+	
+
+	public ForumPostVO() {
+		super();
+	}
 
 	public String getForumPostNo() {
 		return forumPostNo;
