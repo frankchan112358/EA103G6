@@ -9,7 +9,7 @@ public class BasicCourseVO implements java.io.Serializable {
 
 	public BasicCourseVO() {
 		super();
-	}
+	} 
 
 	public String getBasicCourseNo() {
 		return basicCourseNo;
