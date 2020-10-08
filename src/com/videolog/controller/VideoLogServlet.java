@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.videoLog1.model.VideoLogService;
-import com.videoLog1.model.VideoLogVO;
+import com.videolog.model.VideoLogService;
+import com.videolog.model.VideoLogVO;
 
 @WebServlet("/VideoLogServlet")
 public class VideoLogServlet extends HttpServlet {
@@ -40,7 +40,7 @@ public class VideoLogServlet extends HttpServlet {
 					errorMsgs.add("請輸入觀看紀錄編號");
 				} 
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/videoLog/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/videoLog/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -52,19 +52,19 @@ public class VideoLogServlet extends HttpServlet {
 				}
 				
 				if (! errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/videoLog/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/videoLog/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 				req.setAttribute("videoLogVO", videoLogVO);
-				String url = "/videoLog/listOneVideoLog.jsp";
+				String url = "/back-end/videoLog/listOneVideoLog.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/videoLog/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/videoLog/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -82,13 +82,13 @@ public class VideoLogServlet extends HttpServlet {
 				VideoLogVO videoLogVO = videoLogSvc.getOneVideoLog(videoLogNo);
 				
 				req.setAttribute("videoLogVO", videoLogVO);
-				String url = "/videoLog/update_videoLog_input.jsp";
+				String url = "/back-end/videoLog/update_videoLog_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			}  catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/videoLog/listAllVideoLog.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/videoLog/listAllVideoLog.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -115,38 +115,41 @@ public class VideoLogServlet extends HttpServlet {
 				if (!watchTime.toString().trim().matches(watchTimeReg)) {
 					errorMsgs.add("觀看時間輸入格式錯誤");
 				}
+
 				
 				Integer status = Integer.parseInt(req.getParameter("status"));
 				String statusReg = "[0-1]{1}";
 				if (!status.toString().trim().matches(statusReg)) {
 					errorMsgs.add("觀看狀態輸入格式錯誤");
 				}
-				
+
 				
 				VideoLogVO videoLogVO = new VideoLogVO();
+				videoLogVO.setVideoLogNo(videoLogNo);
 				videoLogVO.setVideoNo(videoNo);
 				videoLogVO.setWatchTime(watchTime);
 				videoLogVO.setStatus(status);
 				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("videoLogVO", videoLogVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/videoLog/update_videoLog_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/videoLog/update_videoLog_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}
-				
+
 				VideoLogService videoLogSvc = new VideoLogService();
-				videoLogVO = videoLogSvc.updateVideoLog(videoLogNo, videoNoReg, watchTime, status);
+				videoLogVO = videoLogSvc.updateVideoLog(videoLogNo, videoNo, watchTime, status);
 				
 				req.setAttribute("videoLogVO", videoLogVO);
-				String url = "/videoLog/listOneVideoLog.jsp";
+				String url = "/back-end/videoLog/listOneVideoLog.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			
 			} catch (Exception e) {
 				errorMsgs.add("資料修改失敗: " + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/videoLog/update_videoLog_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/videoLog/update_videoLog_input.jsp");
 				failureView.forward(req, res);
+
 			}
 		}
 		
@@ -184,21 +187,21 @@ public class VideoLogServlet extends HttpServlet {
 				
 				if(!errorMsgs.isEmpty()) {
 					req.setAttribute("videoLogVO", videoLogVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/videoLog/addVideoLogt.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/videoLog/addVideoLog.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 				VideoLogService videoLogSvc = new VideoLogService();
-				videoLogVO = videoLogSvc.addVideoLog(videoNoReg, watchTime, status);
+				videoLogVO = videoLogSvc.addVideoLog(videoNo, watchTime, status);
 				
-				String url = "/videoLog/listAllVideoLog.jsp";
+				String url = "/back-end/videoLog/listAllVideoLog.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/videoLog/addVideoLog.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/videoLog/addVideoLog.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -215,13 +218,13 @@ public class VideoLogServlet extends HttpServlet {
 				VideoLogService videoLogSvc = new VideoLogService();
 				videoLogSvc.deleteVideoLog(videoLogNo);
 				
-				String url = "/videoLog/listAllVideoLog.jsp";
+				String url = "/back-end/videoLog/listAllVideoLog.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/videoLog/listAllVideoLog.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/videoLog/listAllVideoLog.jsp");
 				failureView.forward(req, res);
 			}
 		}
