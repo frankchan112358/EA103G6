@@ -2,7 +2,7 @@ package com.banji.model;
 
 import java.sql.Date;
 
-public class BanjiVO  implements java.io.Serializable{
+public class BanjiVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private String banjiNo;
 	private String empNo;
@@ -16,6 +16,8 @@ public class BanjiVO  implements java.io.Serializable{
 	private Integer status;
 	private String banjiContent;
 
+	public BanjiVO() {
+	}
 
 	public String getBanjiNo() {
 		return banjiNo;
