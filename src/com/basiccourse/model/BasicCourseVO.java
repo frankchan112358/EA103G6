@@ -7,6 +7,10 @@ public class BasicCourseVO implements java.io.Serializable {
 	private String basicCourseInfo;
 	private Integer lesson;
 
+	public BasicCourseVO() {
+		super();
+	}
+
 	public String getBasicCourseNo() {
 		return basicCourseNo;
 	}
