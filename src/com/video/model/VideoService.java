@@ -9,20 +9,19 @@ public class VideoService {
 		dao = new VideoDAO();
 	}
 	
-	public VideoVO addVideo( String timetableNo, String videoName,byte[] video) {
+	public VideoVO addVideo( String timetableNo, String videoName,String video) {
 
 		VideoVO videoVO = new VideoVO();
 
-		videoVO.setTimetableNo("timetableNo");
-		videoVO.setVideoName("videoName");
+		videoVO.setTimetableNo(timetableNo);
+		videoVO.setVideoName(videoName);
 		videoVO.setVideo(video);
 		dao.insert(videoVO);
 
 		return videoVO;
 	}
 
-	public VideoVO updateVideo(String videoNo, String timetableNo, String videoName,
-			byte[] video) {
+	public VideoVO updateVideo(String videoNo, String timetableNo, String videoName, String video) {
 
 		VideoVO videoVO = new VideoVO();
 

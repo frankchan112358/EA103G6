@@ -47,7 +47,7 @@ public class VideoDAO implements VideoDAO_interface{
 			
 			pstmt.setString(1, videoVO.getTimetableNo());
 			pstmt.setString(2, videoVO.getVideoName());
-			pstmt.setBytes(3, videoVO.getVideo());
+			pstmt.setString(3, videoVO.getVideo());
 
 			pstmt.executeUpdate();
 			
@@ -77,7 +77,7 @@ public class VideoDAO implements VideoDAO_interface{
 			
 			pstmt.setString(1, videoVO.getTimetableNo());
 			pstmt.setString(2, videoVO.getVideoName());
-			pstmt.setBytes(3, videoVO.getVideo());
+			pstmt.setString(3, videoVO.getVideo());
 			pstmt.setString(4, videoVO.getVideoNo());
 			
 			pstmt.executeUpdate();
@@ -160,7 +160,7 @@ public class VideoDAO implements VideoDAO_interface{
 				videoVO.setVideoNo(rs.getString("videoNo"));
 				videoVO.setTimetableNo(rs.getString("TimetableNo"));
 				videoVO.setVideoName(rs.getString("videoName"));
-				videoVO.setVideo(rs.getBytes("video"));				
+				videoVO.setVideo(rs.getString("video"));				
 			}
 
 		} catch (SQLException se) {
@@ -212,7 +212,7 @@ public class VideoDAO implements VideoDAO_interface{
 				videoVO.setVideoNo(rs.getString("videoNo"));
 				videoVO.setTimetableNo(rs.getString("timetableNo"));
 				videoVO.setVideoName(rs.getString("videoName"));
-				videoVO.setVideo(rs.getBytes("video"));
+				videoVO.setVideo(rs.getString("video"));
 				list.add(videoVO); 
 			}
 
