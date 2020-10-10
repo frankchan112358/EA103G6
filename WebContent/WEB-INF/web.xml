@@ -25,6 +25,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list> 
+  
   <servlet>
   	<servlet-name>LeaveServlet</servlet-name>
   	<servlet-class>com.leave.controller.LeaveServlet</servlet-class>
@@ -33,6 +34,7 @@
   	<servlet-name>LeaveServlet</servlet-name>
   	<url-pattern>/leave/leave.do</url-pattern>
   </servlet-mapping>
+  
   <servlet>
 	<servlet-name>TimetableServlet</servlet-name>
 	<servlet-class>com.timetable.controller.TimetableServlet</servlet-class>
@@ -51,12 +53,31 @@
 	<url-pattern>/videoLog/videoLog.do</url-pattern>
   </servlet-mapping>
   
-  	 	<servlet>
-		<servlet-name>UserServlet</servlet-name>
-		<servlet-class>com.user.controller.UserServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>UserServlet</servlet-name>
-		<url-pattern>/user.do</url-pattern>
-	</servlet-mapping>
+  <servlet>
+	<servlet-name>UserServlet</servlet-name>
+	<servlet-class>com.user.controller.UserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>UserServlet</servlet-name>
+	<url-pattern>/user.do</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+	<servlet-name>TestLoginServlet</servlet-name>
+	<servlet-class>com.test.controller.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>TestLoginServlet</servlet-name>
+	<url-pattern>/test/testlogin.do</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+	<servlet-name>TestLogoutServlet</servlet-name>
+	<servlet-class>com.test.controller.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>TestLogoutServlet</servlet-name>
+	<url-pattern>/test/testlogout.do</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

@@ -1,8 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<meta charset="utf-8">
-<title>
-    Work Join Learn 我就嫩
-</title>
+<meta name="description" content="FA Pro Brand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
 <!-- Call App Mode on ios devices -->
@@ -19,7 +15,3 @@
 <link rel="icon" type="image/png" sizes="32x32" href="<%=request.getContextPath() %>/SmartAdmin4/img/favicon/favicon-32x32.png">
 <link rel="mask-icon" href="<%=request.getContextPath() %>/SmartAdmin4/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
 <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/fa-brands.css">
-<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/fa-solid.css">
-<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/miscellaneous/reactions/reactions.css">
-<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/miscellaneous/fullcalendar/fullcalendar.bundle.css">
-<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/miscellaneous/jqvmap/jqvmap.bundle.css">

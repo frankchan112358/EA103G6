@@ -132,16 +132,16 @@
         <!-- app user menu -->
         <div>
             <a href="#" data-toggle="dropdown" class="header-icon d-flex align-items-center justify-content-center ml-2">
-                <img src="<%=request.getContextPath() %>/SmartAdmin4/img/demo/avatars/陳浩偉.png" class="profile-image rounded-circle" alt="陳浩偉">
+                <img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${userVO.userNo}" class="profile-image rounded-circle">
             </a>
             <div class="dropdown-menu dropdown-menu-animated dropdown-lg">
                 <div class="dropdown-header bg-trans-gradient d-flex flex-row py-4 rounded-top">
                     <div class="d-flex flex-row align-items-center mt-1 mb-1 color-white">
                         <span class="mr-2">
-                            <img src="<%=request.getContextPath() %>/SmartAdmin4/img/demo/avatars/陳浩偉.png" class="rounded-circle profile-image" alt="陳浩偉">
+                            <img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${userVO.userNo}" class="rounded-circle profile-image">
                         </span>
                         <div class="info-card-text">
-                            <div class="fs-lg text-truncate text-truncate-lg">陳浩偉</div>
+                            <div class="fs-lg text-truncate text-truncate-lg">${userVO.name }</div>
                         </div>
                     </div>
                 </div>
@@ -150,7 +150,7 @@
                     <span data-i18n="drpdwn.settings">帳號設定</span>
                 </a>
                 <div class="dropdown-divider m-0"></div>
-                <a href="#" class="dropdown-item fw-500 pt-3 pb-3">
+                <a href="<%=request.getContextPath() %>/test/testlogout.do" class="dropdown-item fw-500 pt-3 pb-3">
                     <span data-i18n="drpdwn.page-logout">登出</span>
                 </a>
             </div>
