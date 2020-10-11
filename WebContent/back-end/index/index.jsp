@@ -1,4 +1,12 @@
+<%@page import="com.user.model.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+Object userVO = session.getAttribute("userVO");
+if(userVO != null && ((UserVO)userVO).getType() == 0){
+	response.sendRedirect(request.getContextPath() + "/front-end/index/index.jsp");
+	return;
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,8 +35,7 @@
                         </h1>
                         <div class="btn-group hidden-xl-up">
                             <button type="button" class="btn btn-secondary dropdown-toggle btn-info" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fal fa-toolbox"></span>
-                                班級管理功能
+                                <i class="fal fa-toolbox"></i> 班級管理功能                                
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <button class="dropdown-item" type="button">課程管理</button>

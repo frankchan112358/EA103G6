@@ -1,5 +1,17 @@
+<%@page import="com.user.model.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+Object userVO = session.getAttribute("userVO");
+if(userVO!=null){
+	if(((UserVO)userVO).getType() == 0){
+		response.sendRedirect(request.getContextPath() + "/front-end/index/index.jsp");
+	}else{
+		response.sendRedirect(request.getContextPath() + "/back-end/index/index.jsp");
+	}
+	return;
+}
+%>
 <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService"></jsp:useBean>
 <jsp:useBean id="studentSvc" scope="page" class="com.student.model.StudentService"></jsp:useBean>
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService"></jsp:useBean>

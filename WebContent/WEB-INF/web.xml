@@ -25,7 +25,20 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list> 
-  
+  <filter>
+  	<filter-name>loginFilter</filter-name>
+  	<filter-class>com.test.filter.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>loginFilter</filter-name>
+  	<url-pattern>/back-end/index/index.jsp</url-pattern>
+  	<url-pattern>/front-end/index/index.jsp</url-pattern>
+ 	<dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
   <servlet>
   	<servlet-name>LeaveServlet</servlet-name>
   	<servlet-class>com.leave.controller.LeaveServlet</servlet-class>

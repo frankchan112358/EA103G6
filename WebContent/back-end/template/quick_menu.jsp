@@ -8,7 +8,7 @@
     <a href="#" class="menu-item btn" data-toggle="tooltip" data-placement="left" title="返回頂部">
         <i class="fal fa-arrow-up"></i>
     </a>
-    <a href="<%=request.getContextPath() %>/SmartAdmin4/page_login.html" class="menu-item btn" data-toggle="tooltip" data-placement="left" title="登出">
+    <a href="<%=request.getContextPath() %>/test/testlogout.do" class="menu-item btn" data-toggle="tooltip" data-placement="left" title="登出">
         <i class="fal fa-sign-out"></i>
     </a>
     <a href="#" class="menu-item btn" data-action="app-fullscreen" data-toggle="tooltip" data-placement="left" title="全螢幕">

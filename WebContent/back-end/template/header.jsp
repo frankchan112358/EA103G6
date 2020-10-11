@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <header class="page-header" role="banner">
     <!-- we need this logo when user switches to nav-function-top -->
     <div class="page-logo">
@@ -132,13 +133,23 @@
         <!-- app user menu -->
         <div>
             <a href="#" data-toggle="dropdown" class="header-icon d-flex align-items-center justify-content-center ml-2">
-                <img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${userVO.userNo}" class="profile-image rounded-circle">
+                <c:if test="${userVO.photo != null}" var="condition" scope="page">
+                    <img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${userVO.userNo}" class="rounded-circle profile-image">
+                </c:if>
+                <c:if test="${condition == false}">
+                    <img src="<%=request.getContextPath() %>/images/noPicture.png" class="rounded-circle profile-image">
+                </c:if>
             </a>
             <div class="dropdown-menu dropdown-menu-animated dropdown-lg">
                 <div class="dropdown-header bg-trans-gradient d-flex flex-row py-4 rounded-top">
                     <div class="d-flex flex-row align-items-center mt-1 mb-1 color-white">
                         <span class="mr-2">
-                            <img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${userVO.userNo}" class="rounded-circle profile-image">
+                        	<c:if test="${userVO.photo != null}" var="condition" scope="page">
+                     	    	<img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${userVO.userNo}" class="rounded-circle profile-image">
+                        	</c:if>
+							<c:if test="${condition == false}">
+								<img src="<%=request.getContextPath() %>/images/noPicture.png" class="rounded-circle profile-image">
+							</c:if>
                         </span>
                         <div class="info-card-text">
                             <div class="fs-lg text-truncate text-truncate-lg">${userVO.name }</div>
