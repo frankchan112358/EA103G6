@@ -826,7 +826,7 @@ INSERT INTO forumtopic (forumtopicno,banjino,forumtopicname,content,rule,posttem
 --  Insert into 討論區發文 forumpost
 --------------------------------------------------------
 INSERT INTO forumpost (forumpostno,forumtopicno,studentno,title,content,updatetime,createtime,isdelete) VALUES (FORUMPOST_SEQ.nextval,'1','S000001','Hello Java','Hello Java的code怎麼打',to_timestamp('2020-09-24 15:00:00','YYYY-MM-DD HH24:MI:SS'),to_timestamp('2020-09-23 20:20:20','YYYY-MM-DD HH24:MI:SS'),0);
-INSERT INTO forumpost (forumpostno,forumtopicno,studentno,title,content,updatetime,createtime,isdelete) VALUES (FORUMPOST_SEQ.nextval,'2','S000002','今日約跑','晚上10點學校操場',to_timestamp('2020-09-26 16:00:00','YYYY-MM-DD HH24:MI:SS'),to_timestamp('2020-09-24 21:20:20','YYYY-MM-DD HH24:MI:SS'),0);
+INSERT INTO forumpost (forumpostno,forumtopicno,studentno,title,content,updatetime,createtime,isdelete) VALUES (FORUMPOST_SEQ.nextval,'2','S000002','今日約跑步','晚上10點學校操場',to_timestamp('2020-09-26 16:00:00','YYYY-MM-DD HH24:MI:SS'),to_timestamp('2020-09-24 21:20:20','YYYY-MM-DD HH24:MI:SS'),0);
 INSERT INTO forumpost (forumpostno,forumtopicno,studentno,title,content,updatetime,createtime,isdelete) VALUES (FORUMPOST_SEQ.nextval,'3','S000003','下課吃竹香','Frank說要請客',to_timestamp('2020-09-27 18:00:00','YYYY-MM-DD HH24:MI:SS'),to_timestamp('2020-09-24 22:20:20','YYYY-MM-DD HH24:MI:SS'),0);
 --------------------------------------------------------
 --  Insert into 發文留言 forumcomment

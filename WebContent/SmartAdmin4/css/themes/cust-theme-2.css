@@ -745,10 +745,10 @@ html body {
 
 /* buttons used in the header section of the page */
 .header-btn[data-class='mobile-nav-on'] {
-  border-color: #fc077a;
-  background-color: #fd2087;
-  background-image: -webkit-gradient(linear, left bottom, left top, from(#fd2087), to(#e7026e));
-  background-image: linear-gradient(to top, #fd2087, #e7026e);
+  border-color: #82a82d;
+  background-color: #91bc32;
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#91bc32), to(#729428));
+  background-image: linear-gradient(to top, #91bc32, #729428);
   color: #fff; }
 
 /* dropdown btn */
