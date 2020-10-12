@@ -26,7 +26,7 @@ public class VideoLogDAO implements VideoLogDAO_interface{
 	private static final String INSERT_STMT =
 			"INSERT INTO videoLog (videoLogNo, videoNo, watchTime, status) VALUES (VIDEOLOG_SEQ.nextval, ?, ?, ?)";
 	private static final String GET_ALL_STMT =
-			"SELECT videoLogNo, videoNo, watchTime, status FROM videoLog order by videoLogNo";
+			"SELECT videoLogNo, videoNo, watchTime, status FROM videoLog order by to_number(videoLogNo)";
 	private static final String GET_ONE_STMT = 
 			"SELECT videoLogNo, videoNo, watchTime, status FROM videoLog where videoLogNo = ?";
 	private static final String DELETE = 

@@ -1,13 +1,11 @@
 package com.video.model;
 
-import java.util.Arrays;
-
 public class VideoVO implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	private String videoNo;
 	private String timetableNo;
 	private String videoName;
-	private byte[] video;
+	private String video;
 	
 	public VideoVO() {}
 	
@@ -29,16 +27,11 @@ public class VideoVO implements java.io.Serializable{
 	public void setVideoName(String videoName) {
 		this.videoName = videoName;
 	}
-	public byte[] getVideo() {
+	public String getVideo() {
 		return video;
 	}
-	public void setVideo(byte[] video) {
+	public void setVideo(String video) {
 		this.video = video;
 	}
-	@Override
-	public String toString() {
-		return "VideoVO [videoNo=" + videoNo + ", timetableNo=" + timetableNo + ", videoName=" + videoName + ", video="
-				+ Arrays.toString(video) + "]";
-	}
-	
+		
 }

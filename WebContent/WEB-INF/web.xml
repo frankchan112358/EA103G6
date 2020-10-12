@@ -74,6 +74,15 @@
 	<servlet-name>UserServlet</servlet-name>
 	<url-pattern>/user.do</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+	<servlet-name>VideoServlet</servlet-name>
+	<servlet-class>com.video.controller.VideoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>VideoServlet</servlet-name>
+	<url-pattern>/video/video.do</url-pattern>
+  </servlet-mapping>
 
   <servlet>
 	<servlet-name>TestLoginServlet</servlet-name>
