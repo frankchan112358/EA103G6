@@ -6,6 +6,9 @@ public class BanjiTypeCourseVO implements java.io.Serializable {
 	private String banjiTypeNo;
 	private String basicCourseNo;
 
+	public BanjiTypeCourseVO() {
+	}
+
 	public String getBanjiTypeCourseNo() {
 		return banjiTypeCourseNo;
 	}

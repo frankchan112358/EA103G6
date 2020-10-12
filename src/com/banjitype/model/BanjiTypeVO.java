@@ -9,6 +9,9 @@ public class BanjiTypeVO implements java.io.Serializable {
 	private String banjiTypeContent;
 	private Integer banjiTypeEnable;
 
+	public BanjiTypeVO() {
+	}
+
 	public String getBanjiTypeNo() {
 		return banjiTypeNo;
 	}

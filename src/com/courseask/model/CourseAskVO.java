@@ -12,6 +12,9 @@ public class CourseAskVO implements java.io.Serializable {
 	private Timestamp updateTime;
 	private Integer status;
 
+	public CourseAskVO() {
+	}
+
 	public String getCourseAskNo() {
 		return courseAskNo;
 	}

@@ -6,6 +6,9 @@ public class ClassroomVO implements java.io.Serializable {
 	private String classroomName;
 	private Integer numberOfStudent;
 
+	public ClassroomVO() {
+	}
+
 	public String getClassroomNo() {
 		return classroomNo;
 	}

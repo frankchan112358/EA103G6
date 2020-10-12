@@ -11,6 +11,9 @@ public class BanjiPostVO implements java.io.Serializable {
 	private Timestamp updateTime;
 	private Integer status;
 
+	public BanjiPostVO() {
+	}
+
 	public String getBanjiPostNo() {
 		return banjiPostNo;
 	}
@@ -58,5 +61,5 @@ public class BanjiPostVO implements java.io.Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
+
 }

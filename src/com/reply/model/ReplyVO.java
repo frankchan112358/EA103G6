@@ -11,6 +11,9 @@ public class ReplyVO implements java.io.Serializable {
 	private String replyContent;
 	private Timestamp updateTime;
 
+	public ReplyVO() {
+	}
+
 	public String getReplyNo() {
 		return replyNo;
 	}
