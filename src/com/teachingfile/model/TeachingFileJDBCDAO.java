@@ -17,7 +17,7 @@ public class TeachingFileJDBCDAO implements TeachingFileDAO_interface{
 	private static final String INSERT_STMT =
 			"INSERT INTO teachingFile (teachingFileNo, timetableNo, teachingFileName, teachingFile) VALUES (TEACHINGFILE_SEQ.nextval, ?, ?, ?)";
 	private static final String GET_ALL_STMT =
-			"SELECT teachingFileNo, timetableNo, teachingFileName, teachingFile FROM teachingFile order by teachingFileNo";
+			"SELECT teachingFileNo, timetableNo, teachingFileName, teachingFile FROM teachingFile order by to_number(teachingFileNo)";
 	private static final String GET_ONE_STMT = 
 			"SELECT teachingFileNo, timetableNo, teachingFileName, teachingFile FROM teachingFile where teachingFileNo = ?";
 	private static final String DELETE = 
