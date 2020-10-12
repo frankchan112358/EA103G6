@@ -68,6 +68,10 @@ h4 {
 			onclick="location.href='addbanji.jsp'"><br>
 	</div>
 
+<ul>
+<li><a href='<%=request.getContextPath()%>/back-end/banjiType/listAllBanjiType.jsp'>班種資料</a></li>
+</ul>
+
 	<h3>資料查詢:</h3>
 
 	<%-- 錯誤表列 --%>

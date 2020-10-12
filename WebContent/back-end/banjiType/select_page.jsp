@@ -67,6 +67,10 @@ h4 {
 		<input type="button" value="新增班種"
 			onclick="location.href='addBanjiType.jsp'"><br>
 	</div>
+	
+<ul>
+<li><a href='<%=request.getContextPath()%>/back-end/banji/listAllBanji.jsp'>班級資料</a></li>
+</ul>
 
 	<h3>資料查詢:</h3>
 

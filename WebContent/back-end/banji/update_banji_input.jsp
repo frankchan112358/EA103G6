@@ -58,7 +58,7 @@ td {
 			<td>
 				<h3>班級資料修改</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/banji/select_page.jsp">回首頁</a>
+					<a href="<%=request.getContextPath()%>/back-end/banji/select_page.jsp">回首頁</a>
 				</h4>
 			</td>
 		</tr>

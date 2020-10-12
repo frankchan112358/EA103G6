@@ -58,7 +58,7 @@ th, td {
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>班級資料新增</h3>
+				<h3>新增班級</h3>
 			</td>
 			<td>
 				<h4>
