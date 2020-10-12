@@ -44,4 +44,12 @@ public class EvaluationService {
 	public List<EvaluationVO> getAll() {
 		return dao.getAll();
 	}
+
+	public EvaluationQuestion[] getEvaluationQuestionAll() {
+		return EvaluationQuestion.values();
+	}
+
+	public String getEvaluationQuestionText(Integer num) {
+		return EvaluationQuestion.findByNum(num).getText();
+	}
 }

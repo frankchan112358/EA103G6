@@ -49,6 +49,24 @@
                 </a>
             </li>
             <li>
+                <a href="#" title="教學評鑑">
+                    <i class="fal fa-clipboard-check"></i>
+                    <span class="nav-link-text">教學評鑑</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#" title="教學評鑑總覽">
+                            <span class="nav-link-text">教學評鑑總覽</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=request.getContextPath() %>/front-end/evaluation/addEvaluation.jsp" title="新增教學評鑑">
+                            <span class="nav-link-text">新增教學評鑑</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
                 <a href="#" title="帳號管理">
                     <i class="fal fa-user-cog"></i>
                     <span class="nav-link-text">帳號管理</span>
