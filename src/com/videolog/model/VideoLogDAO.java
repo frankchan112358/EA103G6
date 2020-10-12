@@ -12,7 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class VideoLogDAO implements VideoLogDAO_interface{
+public class VideoLogDAO implements VideoLogDAO_interface {
 	private static DataSource ds = null;
 	static {
 		try {
@@ -23,35 +23,29 @@ public class VideoLogDAO implements VideoLogDAO_interface{
 		}
 	}
 
-	private static final String INSERT_STMT =
-			"INSERT INTO videoLog (videoLogNo, videoNo, watchTime, status) VALUES (VIDEOLOG_SEQ.nextval, ?, ?, ?)";
-	private static final String GET_ALL_STMT =
-			"SELECT videoLogNo, videoNo, watchTime, status FROM videoLog order by to_number(videoLogNo)";
-	private static final String GET_ONE_STMT = 
-			"SELECT videoLogNo, videoNo, watchTime, status FROM videoLog where videoLogNo = ?";
-	private static final String DELETE = 
-			"DELETE FROM videoLog where videoLogNo = ?";
-	private static final String UPDATE = 
-			"UPDATE videoLog set videoNo=?, watchTime=?, status=? where videoLogNo = ?";
-	
+	private static final String INSERT_STMT = "INSERT INTO videoLog (videoLogNo, videoNo, watchTime, status) VALUES (VIDEOLOG_SEQ.nextval, ?, ?, ?)";
+	private static final String GET_ALL_STMT = "SELECT videoLogNo, videoNo, watchTime, status FROM videoLog order by to_number(videoLogNo)";
+	private static final String GET_ONE_STMT = "SELECT videoLogNo, videoNo, watchTime, status FROM videoLog where videoLogNo = ?";
+	private static final String DELETE = "DELETE FROM videoLog where videoLogNo = ?";
+	private static final String UPDATE = "UPDATE videoLog set videoNo=?, watchTime=?, status=? where videoLogNo = ?";
+
 	@Override
 	public void insert(VideoLogVO videoLogVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
-			
+
 			pstmt.setString(1, videoLogVO.getVideoNo());
 			pstmt.setInt(2, videoLogVO.getWatchTime());
 			pstmt.setInt(3, videoLogVO.getStatus());
 
 			pstmt.executeUpdate();
-			
+
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured." 
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured." + se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -62,26 +56,25 @@ public class VideoLogDAO implements VideoLogDAO_interface{
 			}
 		}
 	}
-	
+
 	@Override
 	public void update(VideoLogVO videoLogVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
-			
+
 			pstmt.setString(1, videoLogVO.getVideoNo());
 			pstmt.setInt(2, videoLogVO.getWatchTime());
 			pstmt.setInt(3, videoLogVO.getStatus());
 			pstmt.setString(4, videoLogVO.getVideoLogNo());
-			
+
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured."
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured." + se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -115,8 +108,7 @@ public class VideoLogDAO implements VideoLogDAO_interface{
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -137,12 +129,12 @@ public class VideoLogDAO implements VideoLogDAO_interface{
 
 	@Override
 	public VideoLogVO findByPrimaryKey(String videoLogNo) {
-		
+
 		VideoLogVO videoLogVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 
 			con = ds.getConnection();
@@ -157,12 +149,11 @@ public class VideoLogDAO implements VideoLogDAO_interface{
 				videoLogVO.setVideoLogNo(rs.getString("videoLogNo"));
 				videoLogVO.setVideoNo(rs.getString("videoNo"));
 				videoLogVO.setWatchTime(rs.getInt("watchTime"));
-				videoLogVO.setStatus(rs.getInt("status"));				
+				videoLogVO.setStatus(rs.getInt("status"));
 			}
 
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (rs != null) {
 				try {
@@ -209,13 +200,12 @@ public class VideoLogDAO implements VideoLogDAO_interface{
 				videoLogVO.setVideoLogNo(rs.getString("videoLogNo"));
 				videoLogVO.setVideoNo(rs.getString("videoNo"));
 				videoLogVO.setWatchTime(rs.getInt("watchTime"));
-				videoLogVO.setStatus(rs.getInt("status"));	
-				list.add(videoLogVO); 
+				videoLogVO.setStatus(rs.getInt("status"));
+				list.add(videoLogVO);
 			}
 
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (rs != null) {
 				try {

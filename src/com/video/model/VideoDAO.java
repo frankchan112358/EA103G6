@@ -32,6 +32,8 @@ public class VideoDAO implements VideoDAO_interface{
 			"SELECT videoNo, timetableNo, videoName, video FROM video where videoNo = ?";
 	private static final String DELETE = 
 			"DELETE FROM video where videoNo = ?";
+	private static final String DELETE_VIDEOLOG = 
+			"DELETE FROM videoLog where videoNo = ?";
 	private static final String UPDATE = 
 			"UPDATE video set timetableNo=?, videoName=?, video=? where videoNo = ?";
 
@@ -112,7 +114,7 @@ public class VideoDAO implements VideoDAO_interface{
 
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
-
+			pstmt = con.prepareStatement(DELETE_VIDEOLOG);
 			pstmt.setString(1, videoNo);
 
 			pstmt.executeUpdate();
