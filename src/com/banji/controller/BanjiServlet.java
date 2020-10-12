@@ -31,7 +31,7 @@ public class BanjiServlet extends HttpServlet {
 					errorMsgs.add("請輸入班級編號");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/banji/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -42,17 +42,17 @@ public class BanjiServlet extends HttpServlet {
 					errorMsgs.add("查無資料");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/banji/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				req.setAttribute("banjiVO", banjiVO);
-				String url = "/banji/listOneBanji.jsp";
+				String url = "/back-end/banji/listOneBanji.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/banji/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/select_page.jsp");
 
 				failureView.forward(req, res);
 			}
@@ -68,7 +68,7 @@ public class BanjiServlet extends HttpServlet {
 					errorMsgs.add("請輸入班級編號");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/banji/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -77,12 +77,12 @@ public class BanjiServlet extends HttpServlet {
 
 				req.setAttribute("banjiVO", banjiVO);
 
-				String url = "/banji/update_banji_input.jsp";
+				String url = "/back-end/banji/update_banji_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/banji/listAllBanji.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/listAllBanji.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -180,7 +180,7 @@ public class BanjiServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("banjiVO", banjiVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/banji/update_banji_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/update_banji_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -189,7 +189,7 @@ public class BanjiServlet extends HttpServlet {
 						numberOfStudent, classroomNo, status, banjiContent);
 
 				req.setAttribute("banjiVO", banjiVO);
-				String url = "/banji/listOneBanji.jsp";
+				String url = "/back-end/banji/listOneBanji.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 
 				successView.forward(req, res);
@@ -197,7 +197,7 @@ public class BanjiServlet extends HttpServlet {
 			} catch (Exception e) {
 
 				errorMsgs.add("資料錯誤" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/banji/update_banji_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/update_banji_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -292,7 +292,7 @@ public class BanjiServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("banjiVO", banjiVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/banji/addbanji.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/addbanji.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -302,7 +302,7 @@ public class BanjiServlet extends HttpServlet {
 
 				req.setAttribute("banjiVO", banjiVO);
 
-				String url = "/banji/listOneBanji.jsp";
+				String url = "/back-end/banji/listOneBanji.jsp";
 
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 
@@ -310,7 +310,7 @@ public class BanjiServlet extends HttpServlet {
 			} catch (Exception e) {
 
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/banji/addbanji.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/addbanji.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -324,12 +324,12 @@ public class BanjiServlet extends HttpServlet {
 				BanjiService banjiSvc = new BanjiService();
 				banjiSvc.deleteBanji(banjiNo);
 
-				String url = "/banji/listAllBanji.jsp";
+				String url = "/back-end/banji/listAllBanji.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/banji/listAllBanji");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/listAllBanji");
 				failureView.forward(req, res);
 			}
 		}

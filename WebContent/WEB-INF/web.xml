@@ -60,6 +60,7 @@
 		<url-pattern>/timetable/timetable.do</url-pattern>
 	</servlet-mapping>
 
+<<<<<<< HEAD
 	<servlet>
 		<servlet-name>VideoLogServlet</servlet-name>
 		<servlet-class>com.videolog.controller.VideoLogServlet</servlet-class>
@@ -150,4 +151,31 @@
 		<url-pattern>/finalScore/finalScore.do</url-pattern>
 	</servlet-mapping>
 
+=======
+  <servlet>
+	<servlet-name>TestLogoutServlet</servlet-name>
+	<servlet-class>com.test.controller.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>TestLogoutServlet</servlet-name>
+	<url-pattern>/test/testlogout.do</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>BanjiServlet</servlet-name>
+    <servlet-class>com.banji.controller.BanjiServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BanjiServlet</servlet-name>
+    <url-pattern>/banji/banji.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>BanjiTypeServlet</servlet-name>
+    <servlet-class>com.banjitype.controller.BanjiTypeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BanjiTypeServlet</servlet-name>
+    <url-pattern>/banjiType/banjiType.do</url-pattern>
+  </servlet-mapping>
+>>>>>>> branch 'master' of https://github.com/frankchan112358/EA103G6.git
 </web-app>
