@@ -23,7 +23,7 @@ public class TimetableDAO implements TimetableDAO_interface{
 	}
 	
 	private static final String INSERT_STMT = "INSERT INTO TIMETABLE (timetableNo, courseNo, classroomNo, timetablePeriod, timetableDate, teachingLog) VALUES ('TT'||LPAD(to_char(TIMETABLE_SEQ.NEXTVAL), '6', '0'), ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT timetableNo, courseNo, classroomNo, timetablePeriod, timetableDate, teachingLog FROM timetable where isDelete=0 order by timetableNo ";
+	private static final String GET_ALL_STMT = "SELECT timetableNo, courseNo, classroomNo, timetablePeriod, timetableDate, teachingLog FROM timetable where isDelete=0 order by to_number(timetableNo) ";
 	private static final String GET_ONE_STMT = "SELECT timetableNo, courseNo, classroomNo, timetablePeriod, timetableDate, teachingLog FROM timetable where timetableNo = ? and isDelete=0";
 	private static final String DELETE = "UPDATE timetable set isDelete = 1 where timetableNo=?";
 	private static final String UPDATE = "UPDATE timetable set courseNo=?, classroomNo=?, timetablePeriod=?, timetableDate=?, teachingLog=? where timetableNo=? ";
