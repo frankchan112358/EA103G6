@@ -39,8 +39,8 @@ public class EmpService {
 		return dao.findByPrimaryKey(empNo);
 	}
 	
-	public EmpVO getOneEmpByUserNo(String empNo) {
-		return dao.findByUserNo(empNo);
+	public EmpVO getOneEmpByUserNo(String userNo) {
+		return dao.findByUserNo(userNo);
 	}
 	
 	public List<EmpVO> getAll(){
