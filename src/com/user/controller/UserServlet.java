@@ -105,9 +105,30 @@ public class UserServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("userVO", userVO);
-				String url = "/back-end/user/listOneUser.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
+//				String url = "/back-end/user/listOneUser.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);
+//				successView.forward(req, res);
+				
+				
+				if(userVO.getType().equals(0)) {
+					//暫無student Table
+				
+				}else if(userVO.getType().equals(1)) {
+					TeacherService teacherSvc =new TeacherService();
+					TeacherVO teacherVO=teacherSvc.getOneTeacherByUserNo(userNo);
+					req.setAttribute("teacherVO", teacherVO);
+					
+					RequestDispatcher successView = req.getRequestDispatcher("/back-end/teacher/listOneTeacher.jsp");
+					successView.forward(req, res);
+
+				}else {
+					EmpService empSvc =new EmpService();
+					EmpVO empVO=empSvc.getOneEmpByUserNo(userNo);
+					req.setAttribute("empVO", empVO);
+					
+					RequestDispatcher successView = req.getRequestDispatcher("/back-end/emp/listOneEmp.jsp");
+					successView.forward(req, res);
+				}
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
