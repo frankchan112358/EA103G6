@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>影片觀看紀錄新增資料 - addVideoLog.jsp</title>
+<title>影片新增資料 - addVideo.jsp</title>
 
 <style>
   table#table-1 {
@@ -47,7 +47,7 @@
 
 <table id="table-1">
 	<tr><td>
-		<h3>影片新增</h3></td><td>
+		<h3>影片新增 - addVideo</h3></td><td>
 		 <h4><a href="<%=request.getContextPath() %>/back-end/video/select_page.jsp"><img src="<%=request.getContextPath() %>/images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
@@ -70,7 +70,7 @@
 	<tr>
 		<td>課表編號:</td>
 		<td><input type="TEXT" name="timetableNo" size="45"
-			value="<%= (videoVO==null)? "2" : videoVO.getTimetableNo()%>"/></td>
+			value="<%= (videoVO==null)? "TT000002" : videoVO.getTimetableNo()%>"/></td>
 	</tr>
 	<tr>
 		<td>影片名稱:</td>
@@ -79,8 +79,7 @@
 	</tr>
 	<tr>
 		<td>影片上傳:</td>
-		<td><input type="file" name="upfile2">
-<!-- 		<input type="submit" value="上傳"></td> -->
+		<td><input type="file" name="upfile2" >
 	</tr>
 	
 </table>

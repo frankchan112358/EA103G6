@@ -65,7 +65,7 @@
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/video/video.do" name="form1">
+<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/video/video.do" NAME="form1" ENCTYPE="multipart/form-data">
 <table>
 	<tr>
 		<td>影片編號:<font color=red><b>*</b></font></td>

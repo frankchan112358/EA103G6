@@ -17,7 +17,7 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 	private static final String INSERT_STMT =
 			"INSERT INTO VIDEO (videoNo, timetableNo, videoName, video) VALUES (VIDEO_SEQ.nextval, ?, ?, ?)";
 	private static final String GET_ALL_STMT =
-			"SELECT videoNo, timetableNo, videoName, video FROM video order by videoNo";
+			"SELECT videoNo, timetableNo, videoName, video FROM video order by to_number(videoNo)";
 	private static final String GET_ONE_STMT = 
 			"SELECT videoNo, timetableNo, videoName, video FROM video where videoNo = ?";
 	private static final String DELETE = 
