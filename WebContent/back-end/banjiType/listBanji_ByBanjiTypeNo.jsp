@@ -6,11 +6,17 @@
 <jsp:useBean id="banjiTypeSvc" scope="page" class="com.banjitype.model.BanjiTypeService" />
 <jsp:useBean id="listBanji_ByBanjiTypeNo" scope="request" type="java.util.Set<BanjiVO>" />
 <jsp:useBean id="classroomSvc" scope="page" class="com.classroom.model.ClassroomService" />
+<jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
 <html>
 
-<head><title>班級種類 - listBanji_ByBanjiTypeNo.jsp</title>
+<head><title>班級種類</title>
 
 <style>
+body{
+background-color:#c8c8c8;
+font-family: DFKai-sb;
+}
+
   table#table-2 {
 	background-color: #CCCCFF;
     border: 2px solid black;
@@ -49,8 +55,8 @@
 <h4>此頁練習採用 EL 的寫法取值:</h4>
 <table id="table-2">
 	<tr><td>
-		 <h3>班級種類 - listBanji_ByBanjiTypeNo.jsp.jsp</h3>
-		 <h4><a href="<%=request.getContextPath()%>/back-end/banjiType/select_page.jsp">回首頁</a></h4>
+		 <h3>班級種類</h3>
+		 <h4><a href="<%=request.getContextPath()%>/back-end/banji/select_page.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
 
@@ -81,7 +87,7 @@
 	
 	<c:forEach var="banjiVO" items="${listBanji_ByBanjiTypeNo}" >
 		<tr>
-			<td>${banjiVO.empNo}</td>
+			<td>${empSvc.getOneEmp(banjiVO.getEmpNo()).empName}</td>
 			<td>${banjiTypeSvc.getOneBanjiType(banjiVO.banjiTypeNo).banjiTypeName}</td>
 			<td>${banjiVO.startDay}</td>
 			<td>${banjiVO.endDay}</td>

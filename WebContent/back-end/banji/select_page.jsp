@@ -114,13 +114,14 @@ h4 {
 
 		<li>
 			<FORM METHOD="post"
-				ACTION="<%=request.getContextPath()%>/banji/banji.do">
-				<b>查看班級:</b> <select size="1" name="banjiNo">
-					<c:forEach var="banjiVO" items="${banjiSvc.all}">
-						<option value="${banjiVO.banjiNo}">${banjiVO.banjiName}
+				ACTION="<%=request.getContextPath()%>/banjiType/banjiType.do">
+				<b>查看班級:</b> <select size="1" name="banjiTypeNo">
+					<c:forEach var="banjiTypeVO" items="${banjiTypeSvc.all}">
+						<option value="${banjiTypeVO.banjiTypeNo}">${banjiTypeVO.banjiTypeName}
 					</c:forEach>
-				</select> <input type="hidden" name="action" value="getOne_For_Display">
+				</select> 
 				<input type="submit" value="送出">
+				<input type="hidden" name="action" value="listBanji_ByBanjiTypeNo_A">
 			</FORM>
 		</li>
 

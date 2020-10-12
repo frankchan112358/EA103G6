@@ -22,7 +22,7 @@ public class BanjiTypeServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		String action = req.getParameter("action");
-
+		
 		if ("listBanji_ByBanjiTypeNo_A".equals(action) || "listBanji_ByBanjiTypeNo_B".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -40,13 +40,14 @@ public class BanjiTypeServlet extends HttpServlet {
 
 				String url = null;
 
-				if ("listBanji_ByBanjiTypeNo_A".equals(action))
+				if ("listBanji_ByBanjiTypeNo_A".equals(action)) 
 					url = "/back-end/banjiType/listBanji_ByBanjiTypeNo.jsp";
-				else if ("listBanji_ByBanjiTypeNo_B".equals(action))
+				else if 
+				("listBanji_ByBanjiTypeNo_B".equals(action))
 					url = "/back-end/banjiType/listAllBanjiType.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-
+				
 			} catch (Exception e) {
 
 				throw new ServletException();
@@ -78,9 +79,11 @@ public class BanjiTypeServlet extends HttpServlet {
 					return;
 				}
 				req.setAttribute("banjiTypeVO", banjiTypeVO);
+				
 				String url = "/back-end/banjiType/listOneBanjiType.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
+				
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banjiType/select_page.jsp");
