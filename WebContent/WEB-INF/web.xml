@@ -104,6 +104,51 @@
 		<servlet-name>TestLogoutServlet</servlet-name>
 		<url-pattern>/test/testlogout.do</url-pattern>
 	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>CourseServlet</servlet-name>
+		<servlet-class>com.course.controller.CourseServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CourseServlet</servlet-name>
+		<url-pattern>/course/course.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>BasicCourseServlet</servlet-name>
+		<servlet-class>com.basiccourse.controller.BasicCourseServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BasicCourseServlet</servlet-name>
+		<url-pattern>/basicCourse/basicCourse.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>TeachingPlanServlet</servlet-name>
+		<servlet-class>com.teachingplan.controller.TeachingPlanServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeachingPlanServlet</servlet-name>
+		<url-pattern>/teachingPlan/teachingPlan.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>CoursePostServlet</servlet-name>
+		<servlet-class>com.coursepost.controller.CoursePostServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CoursePostServlet</servlet-name>
+		<url-pattern>/coursePost/coursePost.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FinalScoreServlet</servlet-name>
+		<servlet-class>com.finalsocre.controller.FinalScoreServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FinalScoreServlet</servlet-name>
+		<url-pattern>/finalScore/finalScore.do</url-pattern>
+	</servlet-mapping>
 
 
 
