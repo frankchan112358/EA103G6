@@ -12,21 +12,22 @@ public class BanjiTypeService {
 		dao = new BanjiTypeJNDIDAO();
 	}
 
-	public BanjiTypeVO addBanjiType(String banjiTypeName, Integer classHours, String banjiTypeContent) {
+	public BanjiTypeVO addBanjiType(String banjiTypeName, Integer classHours, String banjiTypeContent,
+			Integer banjiTypeEnable) {
 
 		BanjiTypeVO banjiTypeVO = new BanjiTypeVO();
 
 		banjiTypeVO.setBanjiTypeName(banjiTypeName);
 		banjiTypeVO.setClassHours(classHours);
 		banjiTypeVO.setBanjiTypeContent(banjiTypeContent);
-
+		banjiTypeVO.setBanjiTypeEnable(banjiTypeEnable);
 		dao.insert(banjiTypeVO);
 
 		return banjiTypeVO;
 	}
 
 	public BanjiTypeVO updateBanjiType(String banjiTypeNo, String banjiTypeName, Integer classHours,
-			String banjiTypeContent) {
+			String banjiTypeContent, Integer banjiTypeEnable) {
 
 		BanjiTypeVO banjiTypeVO = new BanjiTypeVO();
 
@@ -34,7 +35,7 @@ public class BanjiTypeService {
 		banjiTypeVO.setBanjiTypeName(banjiTypeName);
 		banjiTypeVO.setClassHours(classHours);
 		banjiTypeVO.setBanjiTypeContent(banjiTypeContent);
-
+		banjiTypeVO.setBanjiTypeEnable(banjiTypeEnable);
 		dao.update(banjiTypeVO);
 
 		return banjiTypeVO;
@@ -52,7 +53,7 @@ public class BanjiTypeService {
 		return dao.getAll();
 	}
 
-	public Set<BanjiVO> getBanTypeByBanjiTypeNo(String banjiTypeNo) {
+	public Set<BanjiVO> getBanjiTypeByBanjiTypeNo(String banjiTypeNo) {
 		return dao.getBanTypeByBanjiTypeNo(banjiTypeNo);
 	}
 }
