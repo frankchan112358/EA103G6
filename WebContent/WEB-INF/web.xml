@@ -102,4 +102,20 @@
 	<url-pattern>/test/testlogout.do</url-pattern>
   </servlet-mapping>
   
+    <servlet>
+    <servlet-name>BanjiServlet</servlet-name>
+    <servlet-class>com.banji.controller.BanjiServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BanjiServlet</servlet-name>
+    <url-pattern>/banji/banji.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>BanjiTypeServlet</servlet-name>
+    <servlet-class>com.banjitype.controller.BanjiTypeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BanjiTypeServlet</servlet-name>
+    <url-pattern>/banjiType/banjiType.do</url-pattern>
+  </servlet-mapping>
 </web-app>
