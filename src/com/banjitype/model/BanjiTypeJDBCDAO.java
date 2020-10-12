@@ -12,17 +12,17 @@ public class BanjiTypeJDBCDAO implements BanjiTypeDAO_interface {
 	String passwd = "123456";
 
 	// 新增
-	private static final String INSERT_STMT = "INSERT INTO BANJITYPE(BANJITYPENO,BANJITYPENAME,CLASSHOURS,BANJITYPECONTENT) VALUES ('BT'||LPAD(to_char(BANJITYPE_SEQ.NEXTVAL),'3','0'),?,?,?)";
+	private static final String INSERT_STMT = "INSERT INTO BANJITYPE(BANJITYPENO,BANJITYPENAME,CLASSHOURS,BANJITYPECONTENT,BANJITYPEENABLE) VALUES ('BT'||LPAD(to_char(BANJITYPE_SEQ.NEXTVAL),'3','0'),?,?,?,?)";
 	// 查全部
-	private static final String GET_ALL_STMT = "SELECT BANJITYPENO,BANJITYPENAME,CLASSHOURS,BANJITYPECONTENT FROM BANJITYPE WHERE  BANJITYPEENABLE=1 ORDER BY BANJITYPENO";
+	private static final String GET_ALL_STMT = "SELECT BANJITYPENO,BANJITYPENAME,CLASSHOURS,BANJITYPECONTENT,BANJITYPEENABLE FROM BANJITYPE WHERE  BANJITYPEENABLE=1 ORDER BY BANJITYPENO";
 	// 查單個
-	private static final String GET_ONE_STMT = "SELECT BANJITYPENO,BANJITYPENAME,CLASSHOURS,BANJITYPECONTENT FROM BANJITYPE WHERE BANJITYPENO =?";
+	private static final String GET_ONE_STMT = "SELECT BANJITYPENO,BANJITYPENAME,CLASSHOURS,BANJITYPECONTENT,BANJITYPEENABLE FROM BANJITYPE WHERE BANJITYPENO =?";
 	// 查特別
 	private static final String GET_Banji_ByBanjiType_STMT = "SELECT BANJINO,EMPNO,BANJITYPENO,to_char(STARTDAY,'yyyy-mm-dd')STARTDAY,to_char(ENDDAY,'yyyy-mm-dd')ENDDAY,BANJINAME,CLASSHOURS,NUMBEROFSTUDENT,CLASSROOMNO,BANJICONTENT FROM BANJI  WHERE BANJITYPENO =? ORDER BY BANJINO";
 	// 刪除
 	private static final String DELETE = "UPDATE BANJITYPE SET BANJITYPEENABLE=0 WHERE BANJITYPENO=?";
 	// 修改
-	private static final String UPDATE = "UPDATE BANJITYPE SET BANJITYPENAME=?,CLASSHOURS=?,BANJITYPECONTENT=? WHERE BANJITYPENO=?";
+	private static final String UPDATE = "UPDATE BANJITYPE SET BANJITYPENAME=?,CLASSHOURS=?,BANJITYPECONTENT=?,BANJITYPEENABLE=? WHERE BANJITYPENO=?";
 
 	@Override
 	public void insert(BanjiTypeVO banjiTypeVO) {
@@ -37,6 +37,7 @@ public class BanjiTypeJDBCDAO implements BanjiTypeDAO_interface {
 			pstmt.setString(1, banjiTypeVO.getBanjiTypeName());
 			pstmt.setInt(2, banjiTypeVO.getClassHours());
 			pstmt.setString(3, banjiTypeVO.getBanjiTypeContent());
+			pstmt.setInt(4, banjiTypeVO.getBanjiTypeEnable());
 
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException e) {
@@ -76,7 +77,8 @@ public class BanjiTypeJDBCDAO implements BanjiTypeDAO_interface {
 			pstmt.setString(1, banjiTypeVO.getBanjiTypeName());
 			pstmt.setInt(2, banjiTypeVO.getClassHours());
 			pstmt.setString(3, banjiTypeVO.getBanjiTypeContent());
-			pstmt.setString(4, banjiTypeVO.getBanjiTypeNo());
+			pstmt.setInt(4, banjiTypeVO.getBanjiTypeEnable());
+			pstmt.setString(5, banjiTypeVO.getBanjiTypeNo());
 
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException e) {
@@ -162,6 +164,7 @@ public class BanjiTypeJDBCDAO implements BanjiTypeDAO_interface {
 				banjiTypeVO.setBanjiTypeName(rs.getString("banjiTypeName"));
 				banjiTypeVO.setClassHours(rs.getInt("classHours"));
 				banjiTypeVO.setBanjiTypeContent(rs.getString("banjiTypeContent"));
+				banjiTypeVO.setBanjiTypeEnable(rs.getInt("banjiTypeEnable"));
 			}
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -215,6 +218,7 @@ public class BanjiTypeJDBCDAO implements BanjiTypeDAO_interface {
 				banjiTypeVO.setBanjiTypeName(rs.getString("banjiTypeName"));
 				banjiTypeVO.setClassHours(rs.getInt("classHours"));
 				banjiTypeVO.setBanjiTypeContent(rs.getString("banjiTypeContent"));
+				banjiTypeVO.setBanjiTypeEnable(rs.getInt("banjiTypeEnable"));
 
 				list.add(banjiTypeVO);
 			}
@@ -363,6 +367,7 @@ public class BanjiTypeJDBCDAO implements BanjiTypeDAO_interface {
 		banjiTypeVO3.setBanjiTypeName("SMALLEGG班");
 		banjiTypeVO3.setClassHours(556);
 		banjiTypeVO3.setBanjiTypeContent("加入大巨蛋，擁有小巨蛋!!");
+		banjiTypeVO3.setBanjiTypeEnable(1);
 		banjiTypeVO3.setBanjiTypeNo("BT004");
 		dao.update(banjiTypeVO3);
 	}
