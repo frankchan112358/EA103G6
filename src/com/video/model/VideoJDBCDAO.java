@@ -22,6 +22,8 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 			"SELECT videoNo, timetableNo, videoName, video FROM video where videoNo = ?";
 	private static final String DELETE = 
 			"DELETE FROM video where videoNo = ?";
+	private static final String DELETE_VIDEOLOG = 
+			"DELETE FROM videoLog where videoNo = ?";
 	private static final String UPDATE = 
 			"UPDATE video set timetableNo=?, videoName=?, video=? where videoNo = ?";
 
@@ -109,6 +111,7 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(DELETE);
+			pstmt = con.prepareStatement(DELETE_VIDEOLOG);
 
 			pstmt.setString(1, videoNo);
 
@@ -147,7 +150,6 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 		ResultSet rs = null;
 		
 		try {
-
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
@@ -158,10 +160,11 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 
 			while (rs.next()) {
 				videoVO = new VideoVO();
+
 				videoVO.setVideoNo(rs.getString("videoNo"));
 				videoVO.setTimetableNo(rs.getString("TimetableNo"));
 				videoVO.setVideoName(rs.getString("videoName"));
-				videoVO.setVideo(rs.getString("video"));				
+				videoVO.setVideo(rs.getString("video"));	
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -260,18 +263,18 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 		// 新增
 		VideoVO videoVO1 = new VideoVO();
 		videoVO1.setTimetableNo("TT000001");
-		videoVO1.setVideoName("2020-07-02 早上");
+		videoVO1.setVideoName("2020-01-02 早上");
 		dao.insert(videoVO1);
 
 		// 修改
 		VideoVO videoVO2 = new VideoVO();
 		videoVO2.setVideoNo("4");
 		videoVO2.setTimetableNo("TT000001");
-		videoVO2.setVideoName("2020-07-02 下午");
+		videoVO2.setVideoName("2020-12-02 下午");
 		dao.update(videoVO2);
 
 		// 刪除
-		dao.delete("3");
+		dao.delete("1");
 
 		// 查詢
 		VideoVO videoVO3 = dao.findByPrimaryKey("4");
