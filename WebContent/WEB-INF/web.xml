@@ -60,7 +60,6 @@
 		<url-pattern>/timetable/timetable.do</url-pattern>
 	</servlet-mapping>
 
-<<<<<<< HEAD
 	<servlet>
 		<servlet-name>VideoLogServlet</servlet-name>
 		<servlet-class>com.videolog.controller.VideoLogServlet</servlet-class>
@@ -107,8 +106,6 @@
 	</servlet-mapping>
 
 
-
-=======
   <servlet>
 	<servlet-name>TestLogoutServlet</servlet-name>
 	<servlet-class>com.test.controller.LogoutServlet</servlet-class>
@@ -134,5 +131,5 @@
     <servlet-name>BanjiTypeServlet</servlet-name>
     <url-pattern>/banjiType/banjiType.do</url-pattern>
   </servlet-mapping>
->>>>>>> branch 'master' of https://github.com/frankchan112358/EA103G6.git
+  
 </web-app>
