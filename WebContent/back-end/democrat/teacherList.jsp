@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.user.model.*,com.emp.model.*"%>
+<%@ page import="com.user.model.*,com.teacher.model.*"%>
 <%@ page import="java.util.*"%>
 <%
 	UserService userSvc = new UserService();
 	List<UserVO> userList = userSvc.getAll();
 	
-	EmpService empSvc =new EmpService();
-	List<EmpVO> empList =empSvc.getAll();
+	TeacherService teacherSvc =new TeacherService();
+	List<TeacherVO> teacherList =teacherSvc.getAll();
 	
 	pageContext.setAttribute("userList", userList);
-	pageContext.setAttribute("empList", empList);
+	pageContext.setAttribute("teacherList", teacherList);
 	
 	
 %>
@@ -194,27 +194,29 @@
                                             <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                                                 <thead>
                                                     <tr>
-                                                        <th>導師編號</th>
+                                                        <th>講師編號</th>
                                                         <th>姓名</th>
                                                         <th>信箱</th>
                                                         <th>電話</th>
+                                                        <th>專長</th>
                                                         <th>狀態</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <c:forEach var="empVO" items="${empList}">
+                                                    <c:forEach var="teacherVO" items="${teacherList}">
                                                     <c:forEach var="userVO" items="${userList}">                                                                                                                                                     
-                                                    	<c:if test="${empVO.userNo eq userVO.userNo}">
+                                                    	<c:if test="${teacherVO.userNo eq userVO.userNo}">
                                                     		<tr onclick="location.href='<%=request.getContextPath()%>/user.do?action=getOne_For_Display&userNo=${userVO.userNo}';">
-                                                    		<td>${empVO.empNo}</td>
+                                                    		<td>${teacherVO.teacherNo}</td>
                                                     		<td>${userVO.name}</td>
                                                     		<td>${userVO.mail}</td>
                                                     		<td>${userVO.phone eq null?"暫無資料":userVO.phone}</td>
-                                                    		<td>
+                                                    		<td>${teacherVO.skill eq null?"暫無資料":teacherVO.skill}</td>
+                                                    		<td>                                                    	
                                                     		<c:choose>
-                                                    			<c:when test="${empVO.empStatus==0}">離職</c:when>
-                                                    			<c:when test="${empVO.empStatus==1}">在職</c:when>
-                                                    			<c:when test="${empVO.empStatus==2}">停職</c:when>
+                                                    			<c:when test="${teacherVO.teacherStatus==0}">離職</c:when>
+                                                    			<c:when test="${teacherVO.teacherStatus==1}">在職</c:when>
+                                                    			<c:when test="${teacherVO.teacherStatus==2}">停職</c:when>
                                                     		</c:choose>
                                                     		</td>
                                                     		</tr>
@@ -225,10 +227,11 @@
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>導師編號</th>
+                                                        <th>講師編號</th>
                                                         <th>姓名</th>
                                                         <th>信箱</th>
                                                         <th>電話</th>
+                                                        <th>專長</th>
                                                         <th>狀態</th>
                                                     </tr>
                                                 </tfoot>
