@@ -3,7 +3,6 @@ package com.course.model;
 import java.sql.Date;
 
 public class CourseVO implements java.io.Serializable {
-	private static final long serialVersionUID = 1L;
 	private String courseNo;
 	private String banjiNo;
 	private String teacherNo;
@@ -14,11 +13,6 @@ public class CourseVO implements java.io.Serializable {
 	private Integer lesson;
 	private Date startDate;
 	private Date endDate;
-	
-	public CourseVO() {
-		super();
-	}
-
 	private Integer status;
 
 	public String getCourseNo() {

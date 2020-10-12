@@ -3,7 +3,7 @@ package com.coursepost.model;
 import java.sql.Timestamp;
 
 public class CoursePostVO implements java.io.Serializable {
-	private static final long serialVersionUID = 1L;
+
 	private String coursePostNo;
 	private String courseNo;
 	private String title;

@@ -1,7 +1,7 @@
 package com.teachingplan.model;
 
 public class TeachingPlanVO implements java.io.Serializable {
-	private static final long serialVersionUID = 1L;
+
 	private String teachingPlanNo;
 	private String courseNo;
 	private Integer week;

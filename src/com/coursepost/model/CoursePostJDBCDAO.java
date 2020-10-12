@@ -274,6 +274,7 @@ public class CoursePostJDBCDAO implements CoursePostDAO_interface {
 		System.out.println(coursePostVO3.getPostContent());
 		System.out.println(coursePostVO3.getUpdateTime());
 
+		// 查詢
 		List<CoursePostVO> list = dao.getAll();
 		for (CoursePostVO acoursePost : list) {
 			System.out.println(acoursePost.getCoursePostNo());

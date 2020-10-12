@@ -10,8 +10,7 @@ public class TeachingPlanService {
 		dao = new TeachingPlanDAO();
 	}
 
-	public TeachingPlanVO addTeachingPlan(String teachingPlanNo, String courseNo, Integer week, Integer lesson,
-			String planContent) {
+	public TeachingPlanVO addTeachingPlan(String courseNo, Integer week, Integer lesson, String planContent) {
 
 		TeachingPlanVO teachingPlanVO = new TeachingPlanVO();
 

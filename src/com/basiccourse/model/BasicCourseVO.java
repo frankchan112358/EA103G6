@@ -1,15 +1,10 @@
 package com.basiccourse.model;
 
 public class BasicCourseVO implements java.io.Serializable {
-	private static final long serialVersionUID = 1L;
 	private String basicCourseNo;
 	private String basicCourseName;
 	private String basicCourseInfo;
 	private Integer lesson;
-
-	public BasicCourseVO() {
-		super();
-	} 
 
 	public String getBasicCourseNo() {
 		return basicCourseNo;
