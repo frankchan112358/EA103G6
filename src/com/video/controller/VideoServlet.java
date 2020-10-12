@@ -19,8 +19,6 @@ import javax.servlet.http.Part;
 
 import com.video.model.VideoService;
 import com.video.model.VideoVO;
-import com.videolog.model.VideoLogService;
-import com.videolog.model.VideoLogVO;
 
 @WebServlet("/VideoServlet")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024)
@@ -201,98 +199,53 @@ public class VideoServlet extends HttpServlet {
 			}
 		}
 
-		if ("insert".equals(action)) { // 來自addVideoLog.jsp的請求
-
-			// video儲存(影片存資料夾、路徑存DB、從DB取路徑、由路徑(資料夾)取檔案)
-			String Destination = "/video";
-			res.setContentType("text/html; charset=Big5");
-
-			PrintWriter out = res.getWriter();
-			System.out.println();
-			System.out.println("ContentType=" + req.getContentType()); // 測試用，取得影片的類型
-
-			String realPath = getServletContext().getRealPath(Destination);
-			System.out.println("realPath=" + realPath); // 測試用，儲存路徑
-
-			File fDestination = new File(realPath);
-			if (!fDestination.exists())
-				fDestination.mkdirs(); // 於 ContextPath 之下,自動建立目地目錄
-
-			Collection<Part> parts = req.getParts(); // Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
-			out.write("<h2> Total parts : " + parts.size() + "</h2>");
-
-			for (Part part : parts) {
-				String filename = getFileNameFromPart(part);
-				if (filename != null && part.getContentType() != null) {
-					out.println("<PRE>");
-					String name = part.getName();
-					String ContentType = part.getContentType();
-					long size = part.getSize();
-					File f = new File(fDestination, filename);
-
-					out.println("name: " + name);
-					out.println("filename: " + filename);
-					out.println("ContentType: " + ContentType);
-					out.println("size: " + size);
-					out.println("File: " + f);
-
-					// 利用File物件,寫入目地目錄,上傳成功
-					part.write(f.toString());
-
-					// 額外測試 InputStream 與 byte[] (幫將來model的VO預作準備)
-					InputStream in = part.getInputStream();
-					byte[] buf = new byte[in.available()];
-					in.read(buf);
-					in.close();
-					out.println("buffer length: " + buf.length);
-
-					// 額外測試秀圖
-					out.println("<br><img src=\"" + req.getContextPath() + Destination + "/" + filename + "\">");
-
-					out.println();
-					out.println("</PRE>");
-				}
-			}
-
+		if ("insert".equals(action)) { // 來自addVideojsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
 			try {
-
 				String timetableNo = req.getParameter("timetableNo");
-				String timetableReg = "[T]{2}[0-9]{6}";
 				if (timetableNo == null || timetableNo.trim().length() == 0) {
 					errorMsgs.add("課表編號: 請勿空白");
-				} else if (!timetableNo.trim().matches(timetableReg)) {
+				} else if (!timetableNo.trim().matches("[T]{2}[0-9]{6}")) {
 					errorMsgs.add("課表編號格式錯誤");
 				}
-
 				String videoName = req.getParameter("videoName");
 				if (videoName == null || videoName.trim().length() == 0) {
 					errorMsgs.add("影片名稱: 請勿空白");
 				}
-
-				String video = req.getParameter("f.toString()");
-
-				VideoVO videoVO = new VideoVO();
-				videoVO.setTimetableNo(timetableNo);
-				videoVO.setVideoName(videoName);
-				videoVO.setVideo(video);
-
+				Part video = req.getPart("upfile2"); // Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
+				if (!"video/mp4".equals(video.getContentType().toLowerCase())) {
+					errorMsgs.add("請上傳mp4格式影片");
+				}
 				if (!errorMsgs.isEmpty()) {
+					VideoVO videoVO = new VideoVO();
+					videoVO.setTimetableNo(timetableNo);
+					videoVO.setVideoName(videoName);
 					req.setAttribute("videoVO", videoVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/video/addVideo.jsp");
 					failureView.forward(req, res);
 					return;
 				}
+				
+				// video儲存(影片存資料夾、路徑存DB、從DB取路徑、由路徑(資料夾)取檔案)
+				String Destination = "/video";
+				String realPath = getServletContext().getRealPath(Destination);
+				File fDestination = new File(realPath);
+				if (!fDestination.exists())
+					fDestination.mkdirs();
 
+				String filename = new File(video.getSubmittedFileName()).getName();
+				File f = new File(fDestination, filename);
+				video.write(f.toString());
+				VideoVO videoVO = new VideoVO();
+				videoVO.setTimetableNo(timetableNo);
+				videoVO.setVideoName(videoName);
+				videoVO.setVideo(filename);
 				VideoService videoSvc = new VideoService();
-				videoVO = videoSvc.addVideo(timetableNo, videoName, video);
-
-				String url = "/back-end/videoLog/listAllVideoLog.jsp";
+				videoVO = videoSvc.addVideo(videoVO.getTimetableNo(), videoVO.getVideoName(), videoVO.getVideo());
+				String url = "/back-end/video/listAllVideo.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/video/addVideo.jsp");
@@ -300,6 +253,28 @@ public class VideoServlet extends HttpServlet {
 			}
 		}
 
+		if ("delete".equals(action)) {
+			System.out.println("258");
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				String videoNo = req.getParameter("videoNo");
+
+				VideoService videoSvc = new VideoService();
+				videoSvc.deleteVideo(videoNo);
+
+				String url = "/back-end/video/listAllVideo.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+			} catch (Exception e) {
+				errorMsgs.add("刪除資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/video/listAllVideo.jsp");
+				failureView.forward(req, res);
+			}
+		}
 	}
 
 	public String getFileNameFromPart(Part part) {
@@ -312,5 +287,4 @@ public class VideoServlet extends HttpServlet {
 		}
 		return filename;
 	}
-
 }
