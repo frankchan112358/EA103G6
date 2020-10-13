@@ -116,12 +116,12 @@ public class BanjiServlet extends HttpServlet {
 					errorMsgs.add("請輸入日期!");
 				}
 
-				int compare = endDay.compareTo(startDay);
-				if (compare < 0) {
-					errorMsgs.add("結訓日不可比開訓日早");
-				} else if (new Integer(compare).equals(0)) {
-					errorMsgs.add("結訓日不可與開訓日同日");
-				}
+//				int compare = endDay.compareTo(startDay);
+//				if (compare < 0) {
+//					errorMsgs.add("結訓日不可比開訓日早");
+//				} else if (new Integer(compare).equals(0)) {
+//					errorMsgs.add("結訓日不可與開訓日同日");
+//				}
 
 				String banjiName = req.getParameter("banjiName");
 				String banjiNameReg = "^[(\u4e00-\u9fd5)(a-zA-Z0-9_)]{2,10}$";
@@ -229,12 +229,12 @@ public class BanjiServlet extends HttpServlet {
 					errorMsgs.add("請輸入日期!");
 				}
 
-				int compare = endDay.compareTo(startDay);
-				if (compare < 0) {
-					errorMsgs.add("結訓日不可比開訓日早");
-				} else if (new Integer(compare).equals(0)) {
-					errorMsgs.add("結訓日不可與開訓日同日");
-				}
+//				int compare = endDay.compareTo(startDay);
+//				if (compare < 0) {
+//					errorMsgs.add("結訓日不可比開訓日早");
+//				} else if (new Integer(compare).equals(0)) {
+//					errorMsgs.add("結訓日不可與開訓日同日");
+//				}
 
 				String banjiName = req.getParameter("banjiName");
 				String banjiNameReg = "^[(\u4e00-\u9fd5)(a-zA-Z0-9_)]{2,10}$";
