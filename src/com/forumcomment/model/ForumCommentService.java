@@ -1,5 +1,6 @@
 package com.forumcomment.model;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -12,23 +13,23 @@ public class ForumCommentService {
 		dao = new ForumCommentJDBCDAO();
 	}
 
-	public ForumCommentVO addForumComment(String forumPostNo, String studentNo, String content,
-			java.sql.Timestamp updateTime, java.sql.Timestamp createTime) {
+	public ForumCommentVO addForumComment(String forumPostNo, String studentNo, String content
+			) {
 
 		ForumCommentVO forumCommentVO = new ForumCommentVO();
 
 		forumCommentVO.setForumPostNo(forumPostNo);
 		forumCommentVO.setStudentNo(studentNo);
 		forumCommentVO.setContent(content);
-		forumCommentVO.setUpdateTime(updateTime);
-		forumCommentVO.setCreateTime(createTime);
+		forumCommentVO.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		forumCommentVO.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		dao.insert(forumCommentVO);
 
 		return forumCommentVO;
 	}
 
-	public ForumCommentVO updateComment(String forumCommentNo,String forumPostNo, String studentNo, String content,
-			java.sql.Timestamp updateTime, java.sql.Timestamp createTime) {
+	public ForumCommentVO updateForumComment(String forumCommentNo,String forumPostNo, String studentNo, String content
+			) {
 
 		ForumCommentVO forumCommentVO = new ForumCommentVO();
 
@@ -36,24 +37,26 @@ public class ForumCommentService {
 		forumCommentVO.setForumPostNo(forumPostNo);
 		forumCommentVO.setStudentNo(studentNo);
 		forumCommentVO.setContent(content);
-		forumCommentVO.setUpdateTime(updateTime);
-		forumCommentVO.setCreateTime(createTime);
+		forumCommentVO.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+//		forumCommentVO.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		dao.update(forumCommentVO);
 
 		return forumCommentVO;
 	}
 
-	public void deleteForumPost(String forumCommentNO) {
+	public void deleteForumComment(String forumCommentNO) {
 		dao.delete(forumCommentNO);
 	}
 
-	public ForumCommentVO getOneForumPost(String forumCommentNO) {
+	public ForumCommentVO getOneForumComment(String forumCommentNO) {
 		return dao.findByPrimaryKey(forumCommentNO);
 	}
 
 	public List<ForumCommentVO> getAll() {
 		return dao.getAll();
 	}
+
+	
 }
 
 
