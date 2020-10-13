@@ -92,5 +92,14 @@
 	<servlet-name>TestLogoutServlet</servlet-name>
 	<url-pattern>/test/testlogout.do</url-pattern>
   </servlet-mapping>
-  
+
+  <servlet>
+	<servlet-name>AddEvaluation</servlet-name>
+	<servlet-class>com.evaluation.controller.AddEvaluation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>AddEvaluation</servlet-name>
+	<url-pattern>/evaluation/add</url-pattern>
+  </servlet-mapping>
+    
 </web-app>

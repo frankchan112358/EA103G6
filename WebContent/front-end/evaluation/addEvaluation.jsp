@@ -1,5 +1,6 @@
-<%@page import="com.evaluation.model.EvaluationQuestion"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/front-end/template/check.jsp" %>
+<%@page import="com.evaluation.model.EvaluationQuestion"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="evaluationSvc" scope="page" class="com.evaluation.model.EvaluationService" />
@@ -32,19 +33,20 @@
                     <div class="row">
                         <div class="col">
                             <div id="panel-1" class="panel">
-                                <form class="needs-validation" novalidate method="GET" action="">
+                                <form class="needs-validation" novalidate method="POST" action="<%=request.getContextPath()%>/evaluation/add">
                                     <div class="panel-hdr bg-primary-800 bg-success-gradient ">
                                         <h2 class="text-white">課程意見調查表</h2>
                                     </div>
                                     <div class="panel-container show">
                                         <div class="panel-content">
                                             <div class="form-group">
+                                                <input type="hidden" name="studentNo" value="${studentVO.studentno}"/>
                                                 <label class="form-label" for="selectCourse">課程</label>
                                                 <div class="input-group flex-nowrap">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fal fa-book fs-xl"></i></span>
                                                     </div>
-                                                    <select class="custom-select form-control" id="selectCourse">
+                                                    <select class="custom-select form-control" id="selectCourse" name="courseNo">
                                                         <c:forEach var="course" items="${courseSvc.all}">
                                                             <option value="${course.courseNo}">${course.courseName}</option>
                                                         </c:forEach>
