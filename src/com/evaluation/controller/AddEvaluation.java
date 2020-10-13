@@ -17,7 +17,7 @@ public class AddEvaluation extends HttpServlet {
 			String studentNo = req.getParameter("studentNo");
 			String courseNo = req.getParameter("courseNo");
 			EvaluationService evaluationSvc = new EvaluationService();
-			for (int i = 0; i <= EvaluationQuestion.values().length; i++) {
+			for (int i = 1; i <= EvaluationQuestion.values().length; i++) {
 				Integer question = i;
 				Integer answer = Integer.parseInt(req.getParameter("Q" + i));
 				evaluationSvc.addEvaluation(courseNo, studentNo, question, answer);
