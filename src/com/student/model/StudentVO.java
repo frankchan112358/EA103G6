@@ -4,47 +4,48 @@ import java.io.InputStream;
 
 public class StudentVO implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
-	private String studentno;
-	private String userno;
-	private String banjino;
-	private String studentname;
-	private String faceid;		
+	private String studentNo;
+	private String userNo;
+	private String banjiNo;
+	private String studentName;
+	private String faceId;		
 	private InputStream face;
-	private String studentdescription;
-	private Integer studentstatus;
+	private String studentDescription;
+	private Integer studentStatus;
 	
-	public StudentVO(){	
+	public StudentVO() {
+		
 	}
 	
-	public String getStudentno() {
-		return studentno;
+	public String getStudentNo() {
+		return studentNo;
 	}
-	public void setStudentno(String studentno) {
-		this.studentno = studentno;
+	public void setStudentNo(String studentNo) {
+		this.studentNo = studentNo;
 	}
-	public String getUserno() {
-		return userno;
+	public String getUserNo() {
+		return userNo;
 	}
-	public void setUserno(String userno) {
-		this.userno = userno;
+	public void setUserNo(String userNo) {
+		this.userNo = userNo;
 	}
-	public String getBanjino() {
-		return banjino;
+	public String getBanjiNo() {
+		return banjiNo;
 	}
-	public void setBanjino(String banjino) {
-		this.banjino = banjino;
+	public void setBanjiNo(String banjiNo) {
+		this.banjiNo = banjiNo;
 	}
-	public String getStudentname() {
-		return studentname;
+	public String getStudentName() {
+		return studentName;
 	}
-	public void setStudentname(String studentname) {
-		this.studentname = studentname;
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
 	}
-	public String getFaceid() {
-		return faceid;
+	public String getFaceId() {
+		return faceId;
 	}
-	public void setFaceid(String faceid) {
-		this.faceid = faceid;
+	public void setFaceId(String faceId) {
+		this.faceId = faceId;
 	}
 	public InputStream getFace() {
 		return face;
@@ -52,18 +53,20 @@ public class StudentVO implements java.io.Serializable{
 	public void setFace(InputStream face) {
 		this.face = face;
 	}
-	public String getStudentdescription() {
-		return studentdescription;
+	public String getStudentDescription() {
+		return studentDescription;
 	}
-	public void setStudentdescription(String studentdescription) {
-		this.studentdescription = studentdescription;
+	public void setStudentDescription(String studentDescription) {
+		this.studentDescription = studentDescription;
 	}
-	public Integer getStudentstatus() {
-		return studentstatus;
+	public Integer getStudentStatus() {
+		return studentStatus;
 	}
-	public void setStudentstatus(Integer studentstatus) {
-		this.studentstatus = studentstatus;
+	public void setStudentStatus(Integer studentStatus) {
+		this.studentStatus = studentStatus;
 	}
+	
+	
 	
 	
 

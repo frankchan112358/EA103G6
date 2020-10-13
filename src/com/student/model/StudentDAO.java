@@ -30,7 +30,7 @@ public class StudentDAO implements StudentDAO_interface {
 	private static final String UPDATE_NOPIC = "UPDATE student set userno=?,banjino=?,studentname=?, faceid=?, studentdescription=?, studentstatus=? where studentno = ?";
 	
 	@Override
-	public StudentVO findByPrimaryKey(String studentno) {
+	public StudentVO findByPrimaryKey(String studentNo) {
 		StudentVO studentVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -40,20 +40,20 @@ public class StudentDAO implements StudentDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
-			pstmt.setString(1, studentno);
+			pstmt.setString(1, studentNo);
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 
 				studentVO = new StudentVO();
-				studentVO.setStudentno(rs.getString("studentNo"));
-				studentVO.setUserno(rs.getString("userno"));
-				studentVO.setBanjino(rs.getString("banjino"));
-				studentVO.setStudentname(rs.getString("studentname"));
-				studentVO.setFaceid(rs.getString("faceid"));
-				studentVO.setStudentdescription(rs.getString("studentdescription"));
-				studentVO.setStudentstatus(rs.getInt("studentstatus"));
+				studentVO.setStudentNo(rs.getString("studentNo"));
+				studentVO.setUserNo(rs.getString("userNo"));
+				studentVO.setBanjiNo(rs.getString("banjiNo"));
+				studentVO.setStudentName(rs.getString("studentName"));
+				studentVO.setFaceId(rs.getString("faceId"));
+				studentVO.setStudentDescription(rs.getString("studentDescription"));
+				studentVO.setStudentStatus(rs.getInt("studentStatus"));
 				Blob face = rs.getBlob("face");
 				studentVO.setFace(null);
 				if (face == null) {
@@ -109,13 +109,13 @@ public class StudentDAO implements StudentDAO_interface {
 			while (rs.next()) {
 				
 				studentVO = new StudentVO();
-				studentVO.setStudentno(rs.getString("studentNo"));
-				studentVO.setUserno(rs.getString("userno"));
-				studentVO.setBanjino(rs.getString("banjino"));
-				studentVO.setStudentname(rs.getString("studentname"));
-				studentVO.setFaceid(rs.getString("faceid"));
-				studentVO.setStudentdescription(rs.getString("studentdescription"));
-				studentVO.setStudentstatus(rs.getInt("studentstatus"));
+				studentVO.setStudentNo(rs.getString("studentNo"));
+				studentVO.setUserNo(rs.getString("userNo"));
+				studentVO.setBanjiNo(rs.getString("banjiNo"));
+				studentVO.setStudentName(rs.getString("studentName"));
+				studentVO.setFaceId(rs.getString("faceId"));
+				studentVO.setStudentDescription(rs.getString("studentDescription"));
+				studentVO.setStudentStatus(rs.getInt("studentStatus"));
 				Blob face = rs.getBlob("face");
 				studentVO.setFace(null);
 				if (face == null) {
@@ -156,14 +156,14 @@ public class StudentDAO implements StudentDAO_interface {
 	}
 
 	@Override
-	public InputStream getPic(String studentno) {
+	public InputStream getPic(String studentNo) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		InputStream in = null;
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_PIC + studentno);
+			pstmt = con.prepareStatement(GET_PIC + studentNo);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -206,13 +206,13 @@ public class StudentDAO implements StudentDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 
-			pstmt.setString(1, studentVO.getUserno());
-			pstmt.setString(2, studentVO.getBanjino());
-			pstmt.setString(3, studentVO.getStudentname());
-			pstmt.setString(4, studentVO.getFaceid());
+			pstmt.setString(1, studentVO.getUserNo());
+			pstmt.setString(2, studentVO.getBanjiNo());
+			pstmt.setString(3, studentVO.getStudentName());
+			pstmt.setString(4, studentVO.getFaceId());
 			pstmt.setBinaryStream(5, studentVO.getFace());
-			pstmt.setString(6, studentVO.getStudentdescription());
-			pstmt.setInt(7, studentVO.getStudentstatus());
+			pstmt.setString(6, studentVO.getStudentDescription());
+			pstmt.setInt(7, studentVO.getStudentStatus());
 		
 			
 
@@ -253,23 +253,23 @@ public class StudentDAO implements StudentDAO_interface {
 
 			if (studentVO.getFace() == null) {
 				pstmt = con.prepareStatement(UPDATE_NOPIC);
-				pstmt.setString(1, studentVO.getUserno());
-				pstmt.setString(2, studentVO.getBanjino());
-				pstmt.setString(3, studentVO.getStudentname());
-				pstmt.setString(4, studentVO.getFaceid());
-				pstmt.setString(5, studentVO.getStudentdescription());
-				pstmt.setInt(6, studentVO.getStudentstatus());
-				pstmt.setString(7, studentVO.getStudentno());
+				pstmt.setString(1, studentVO.getUserNo());
+				pstmt.setString(2, studentVO.getBanjiNo());
+				pstmt.setString(3, studentVO.getStudentName());
+				pstmt.setString(4, studentVO.getFaceId());
+				pstmt.setString(5, studentVO.getStudentDescription());
+				pstmt.setInt(6, studentVO.getStudentStatus());
+				pstmt.setString(7, studentVO.getStudentNo());
 			} else {
 				pstmt = con.prepareStatement(UPDATE);
-				pstmt.setString(1, studentVO.getUserno());
-				pstmt.setString(2, studentVO.getBanjino());
-				pstmt.setString(3, studentVO.getStudentname());
-				pstmt.setString(4, studentVO.getFaceid());
+				pstmt.setString(1, studentVO.getUserNo());
+				pstmt.setString(2, studentVO.getBanjiNo());
+				pstmt.setString(3, studentVO.getStudentName());
+				pstmt.setString(4, studentVO.getFaceId());
 				pstmt.setBinaryStream(5, studentVO.getFace());
-				pstmt.setString(6, studentVO.getStudentdescription());
-				pstmt.setInt(7, studentVO.getStudentstatus());
-				pstmt.setString(7, studentVO.getStudentno());
+				pstmt.setString(6, studentVO.getStudentDescription());
+				pstmt.setInt(7, studentVO.getStudentStatus());
+				pstmt.setString(7, studentVO.getStudentNo());
 			}
 
 			pstmt.executeUpdate();
@@ -297,7 +297,7 @@ public class StudentDAO implements StudentDAO_interface {
 	}
 
 	@Override
-	public void delete(String studentno) {
+	public void delete(String studentNo) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -305,7 +305,7 @@ public class StudentDAO implements StudentDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
-			pstmt.setString(1, studentno);
+			pstmt.setString(1, studentNo);
 
 			pstmt.executeUpdate();
 

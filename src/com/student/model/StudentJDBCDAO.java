@@ -37,13 +37,13 @@ public class StudentJDBCDAO {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setString(1, studentVO.getUserno());
-			pstmt.setString(2, studentVO.getBanjino());
-			pstmt.setString(3, studentVO.getStudentname());
-			pstmt.setString(4, studentVO.getFaceid());
+			pstmt.setString(1, studentVO.getUserNo());
+			pstmt.setString(2, studentVO.getBanjiNo());
+			pstmt.setString(3, studentVO.getStudentName());
+			pstmt.setString(4, studentVO.getFaceId());
 			pstmt.setBinaryStream(5, studentVO.getFace());
-			pstmt.setString(6, studentVO.getStudentdescription());
-			pstmt.setInt(7, studentVO.getStudentstatus());
+			pstmt.setString(6, studentVO.getStudentDescription());
+			pstmt.setInt(7, studentVO.getStudentStatus());
 
 			pstmt.executeUpdate();
 
@@ -86,23 +86,23 @@ public class StudentJDBCDAO {
 
 			if (studentVO.getFace() == null) {
 				pstmt = con.prepareStatement(UPDATE_NOPIC);
-				pstmt.setString(1, studentVO.getUserno());
-				pstmt.setString(2, studentVO.getBanjino());
-				pstmt.setString(3, studentVO.getStudentname());
-				pstmt.setString(4, studentVO.getFaceid());
-				pstmt.setString(5, studentVO.getStudentdescription());
-				pstmt.setInt(6, studentVO.getStudentstatus());
-				pstmt.setString(7, studentVO.getStudentno());
+				pstmt.setString(1, studentVO.getUserNo());
+				pstmt.setString(2, studentVO.getBanjiNo());
+				pstmt.setString(3, studentVO.getStudentName());
+				pstmt.setString(4, studentVO.getFaceId());
+				pstmt.setString(5, studentVO.getStudentDescription());
+				pstmt.setInt(6, studentVO.getStudentStatus());
+				pstmt.setString(7, studentVO.getStudentNo());
 			} else {
 				pstmt = con.prepareStatement(UPDATE);
-				pstmt.setString(1, studentVO.getUserno());
-				pstmt.setString(2, studentVO.getBanjino());
-				pstmt.setString(3, studentVO.getStudentname());
-				pstmt.setString(4, studentVO.getFaceid());
+				pstmt.setString(1, studentVO.getUserNo());
+				pstmt.setString(2, studentVO.getBanjiNo());
+				pstmt.setString(3, studentVO.getStudentName());
+				pstmt.setString(4, studentVO.getFaceId());
 				pstmt.setBinaryStream(5, studentVO.getFace());
-				pstmt.setString(6, studentVO.getStudentdescription());
-				pstmt.setInt(7, studentVO.getStudentstatus());
-				pstmt.setString(7, studentVO.getStudentno());
+				pstmt.setString(6, studentVO.getStudentDescription());
+				pstmt.setInt(7, studentVO.getStudentStatus());
+				pstmt.setString(7, studentVO.getStudentNo());
 			}
 
 			pstmt.executeUpdate();
@@ -186,13 +186,13 @@ public class StudentJDBCDAO {
 			while (rs.next()) {
 
 				studentVO = new StudentVO();
-				studentVO.setStudentno(rs.getString("studentNo"));
-				studentVO.setUserno(rs.getString("userno"));
-				studentVO.setBanjino(rs.getString("banjino"));
-				studentVO.setStudentname(rs.getString("studentname"));
-				studentVO.setFaceid(rs.getString("faceid"));
-				studentVO.setStudentdescription(rs.getString("studentdescription"));
-				studentVO.setStudentstatus(rs.getInt("studentstatus"));
+				studentVO.setStudentNo(rs.getString("studentNo"));
+				studentVO.setUserNo(rs.getString("userno"));
+				studentVO.setBanjiNo(rs.getString("banjino"));
+				studentVO.setStudentName(rs.getString("studentname"));
+				studentVO.setFaceId(rs.getString("faceid"));
+				studentVO.setStudentDescription(rs.getString("studentdescription"));
+				studentVO.setStudentStatus(rs.getInt("studentstatus"));
 				Blob face = rs.getBlob("face");
 				studentVO.setFace(null);
 				if (face == null) {
@@ -254,13 +254,13 @@ public class StudentJDBCDAO {
 
 			while (rs.next()) {
 				studentVO = new StudentVO();
-				studentVO.setStudentno(rs.getString("studentNo"));
-				studentVO.setUserno(rs.getString("userno"));
-				studentVO.setBanjino(rs.getString("banjino"));
-				studentVO.setStudentname(rs.getString("studentname"));
-				studentVO.setFaceid(rs.getString("faceid"));
-				studentVO.setStudentdescription(rs.getString("studentdescription"));
-				studentVO.setStudentstatus(rs.getInt("studentstatus"));
+				studentVO.setStudentNo(rs.getString("studentNo"));
+				studentVO.setUserNo(rs.getString("userno"));
+				studentVO.setBanjiNo(rs.getString("banjino"));
+				studentVO.setStudentName(rs.getString("studentname"));
+				studentVO.setFaceId(rs.getString("faceid"));
+				studentVO.setStudentDescription(rs.getString("studentdescription"));
+				studentVO.setStudentStatus(rs.getInt("studentstatus"));
 				Blob face = rs.getBlob("face");
 				studentVO.setFace(null);
 				if (face == null) {
@@ -304,42 +304,42 @@ public class StudentJDBCDAO {
 
 		StudentJDBCDAO dao = new StudentJDBCDAO();
 
-//		StudentVO studentVO1 = new StudentVO();
-//		studentVO1.setUserno("U000010");
-//		studentVO1.setBanjino("B001");
-//		studentVO1.setStudentname("詹Q保");
-//		studentVO1.setFaceid("4");
-//		studentVO1.setFace(null);
-//		studentVO1.setStudentdescription("我很QQQQQQQQ");
-//		studentVO1.setStudentstatus(1);
-//		dao.insert(studentVO1);
-//		System.out.println("新增成功");
+		StudentVO studentVO1 = new StudentVO();
+		studentVO1.setUserNo("U000010");
+		studentVO1.setBanjiNo("B001");
+		studentVO1.setStudentName("閰鄒撖�");
+		studentVO1.setFaceId("4");
+		studentVO1.setFace(null);
+		studentVO1.setStudentDescription("���QQQQQQQQ");
+		studentVO1.setStudentStatus(1);
+		dao.insert(studentVO1);
+		System.out.println("�憓���");
 //		dao.delete("S000003");
-//		System.out.println("刪除成功");
-//
+//		System.out.println("������");
+
 //		StudentVO studentVO3 = dao.findByPrimaryKey("S000002");
-//		System.out.print(studentVO3.getStudentno() + ",");
-//		System.out.print(studentVO3.getUserno() + ",");
-//		System.out.print(studentVO3.getBanjino() + ",");
-//		System.out.print(studentVO3.getStudentname() + ",");
-//		System.out.print(studentVO3.getFaceid() + ",");
+//		System.out.print(studentVO3.getStudentNo() + ",");
+//		System.out.print(studentVO3.getUserNo() + ",");
+//		System.out.print(studentVO3.getBanjiNo() + ",");
+//		System.out.print(studentVO3.getStudentName() + ",");
+//		System.out.print(studentVO3.getFaceId() + ",");
 //		System.out.print(studentVO3.getFace() + ",");
-//		System.out.print(studentVO3.getStudentdescription() + ",");
-//		System.out.println(studentVO3.getStudentstatus());
+//		System.out.print(studentVO3.getStudentDescription() + ",");
+//		System.out.println(studentVO3.getStudentStatus());
 //		System.out.println("---------------------");
+		
+//		StudentVO studentVO4 = new StudentVO();
+//		studentVO4.setStudentNo("S000002");
+//		studentVO4.setUserNo("吳永志2");
+//		studentVO4.setBanjiNo("MANAGER2");
+//		studentVO4.setStudentName("123");
+//		studentVO4.setFace(null);
+//		studentVO4.setFaceId("789");
+//		studentVO4.setStudentDescription("456ssssssssssssssss");
+//		studentVO4.setStudentStatus(1);
+//		dao.update(studentVO4);
 //		
-		StudentVO studentVO4 = new StudentVO();
-		studentVO4.setStudentno("S000002");
-		studentVO4.setUserno("吳永志2");
-		studentVO4.setBanjino("MANAGER2");
-		studentVO4.setStudentname("123");
-		studentVO4.setFace(null);
-		studentVO4.setFaceid("789");
-		studentVO4.setStudentdescription("456ssssssssssssssss");
-		studentVO4.setStudentstatus(1);
-		dao.update(studentVO4);
-		
-		
+//		System.out.println("---------------------");
 		
 		
 //

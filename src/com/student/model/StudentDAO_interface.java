@@ -9,8 +9,8 @@ import com.student.model.StudentVO;
 public interface StudentDAO_interface {
 	public void insert(StudentVO studentVO);
     public void update(StudentVO studentVO);
-    public void delete(String studentno);
-	public StudentVO findByPrimaryKey(String studentno);
+    public void delete(String studentNo);
+	public StudentVO findByPrimaryKey(String studentNo);
     public List<StudentVO> getAll();
-    public InputStream getPic(String studentno);
+    public InputStream getPic(String studentNo);
 }
