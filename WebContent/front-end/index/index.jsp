@@ -1,12 +1,5 @@
-<%@page import="com.user.model.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-Object userVO = session.getAttribute("userVO");
-if(userVO != null && ((UserVO)userVO).getType() != 0){
-	response.sendRedirect(request.getContextPath() + "/back-end/index/index.jsp");
-	return;
-}
-%>
+<%@ include file="/front-end/template/check.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>

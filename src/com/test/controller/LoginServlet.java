@@ -55,6 +55,7 @@ public class LoginServlet extends HttpServlet {
 				UserVO userVO = (new UserService()).getOneUser(studentVO.getUserno());				
 				HttpSession session = req.getSession();
 				session.setAttribute("userVO", userVO);
+				session.setAttribute("studentVO", studentVO);
 				res.sendRedirect(req.getContextPath() + "/front-end/index/index.jsp");
 				return;
 			}
