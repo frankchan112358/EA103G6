@@ -168,6 +168,14 @@
 		<url-pattern>/finalScore/finalScore.do</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>StudentServlet</servlet-name>
+		<servlet-class>com.student.controller.StudentServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StudentServlet</servlet-name>
+		<url-pattern>/student/student.do</url-pattern>
+	</servlet-mapping>
 
 
 </web-app>
