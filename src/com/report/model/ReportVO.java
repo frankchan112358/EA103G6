@@ -11,6 +11,13 @@ public class ReportVO implements java.io.Serializable {
 	private Integer type;
 	private String description;
 	private Timestamp reportTime;
+	private Integer status;
+	
+	
+
+	public ReportVO() {
+		super();
+	}
 
 	public String getReportNo() {
 		return reportNo;
@@ -67,5 +74,15 @@ public class ReportVO implements java.io.Serializable {
 	public void setReportTime(Timestamp reportTime) {
 		this.reportTime = reportTime;
 	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	
+	
 
 }

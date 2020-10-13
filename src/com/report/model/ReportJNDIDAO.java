@@ -26,11 +26,12 @@ public class ReportJNDIDAO implements ReportDAO_interface {
 		}
 	}
 	
-	private static final String INSERT_STMT = "INSERT INTO report (reportno,forumpostno, forumcommentno, studentno, type, description , reporttime) VALUES (report_seq.NEXTVAL,?, ?,?, ?, ?, ?,?)";
-	private static final String GET_ALL_STMT = "SELECT reportno,forumpostno, forumcommentno, studentno, type, description , reporttime, FROM report where status = 0 order by reportno";
-	private static final String GET_ONE_STMT = "SELECT reportno,forumpostno, forumcommentno, studentno, type, description , reporttime, FROM report where reporttno = ?";
-	private static final String DELETE = "UPDATE report set status=1 where reportno = ?";
-	private static final String UPDATE = "UPDATE report set forumpostno=?, forumcommentno=?, studentno=?, type=?, description=?, reporttime=? where reporttno = ?";
+	private static final String INSERT_STMT = "INSERT INTO report (reportno,forumpostno, forumcommentno, studentno, type, description , reporttime,status) VALUES (report_seq.NEXTVAL,?, ?,?, ?, ?, ?, ?)";
+	private static final String GET_ALL_STMT = "SELECT reportno,forumpostno, forumcommentno, studentno, type, description , reporttime ,status FROM report order by to_number(reportno)";
+	private static final String GET_ONE_STMT = "SELECT reportno,forumpostno, forumcommentno, studentno, type, description , reporttime ,status FROM report where reportno = ?";
+	private static final String DELETE = "DELETE FROM report where reportno = ?";
+	private static final String UPDATE = "UPDATE report set forumpostno=?, forumcommentno=?, studentno=?, type=?, description=?, reporttime=? ,status=? where reportno = ?";
+
 
 	@Override
 	public void insert(ReportVO reportVO) {
@@ -48,6 +49,8 @@ public class ReportJNDIDAO implements ReportDAO_interface {
 			pstmt.setInt(4, reportVO.getType());
 			pstmt.setString(5, reportVO.getDescription());
 			pstmt.setTimestamp(6, reportVO.getReportTime());
+			pstmt.setInt(7, reportVO.getStatus());
+
 
 			pstmt.executeUpdate();
 
@@ -90,7 +93,8 @@ public class ReportJNDIDAO implements ReportDAO_interface {
 			pstmt.setInt(4, reportVO.getType());
 			pstmt.setString(5, reportVO.getDescription());
 			pstmt.setTimestamp(6, reportVO.getReportTime());
-			pstmt.setString(7, reportVO.getReportNo());
+			pstmt.setInt(7, reportVO.getStatus());
+			pstmt.setString(8, reportVO.getReportNo());
 
 			pstmt.executeUpdate();
 
@@ -180,6 +184,8 @@ public class ReportJNDIDAO implements ReportDAO_interface {
 				reportVO.setType(rs.getInt("type"));
 				reportVO.setDescription(rs.getString("description"));
 				reportVO.setReportTime(rs.getTimestamp("reportTime"));
+				reportVO.setStatus(rs.getInt("status"));
+
 
 			}
 
@@ -238,6 +244,8 @@ public class ReportJNDIDAO implements ReportDAO_interface {
 				reportVO.setType(rs.getInt("type"));
 				reportVO.setDescription(rs.getString("description"));
 				reportVO.setReportTime(rs.getTimestamp("reportTime"));
+				reportVO.setStatus(rs.getInt("status"));
+
 				list.add(reportVO);
 			}
 

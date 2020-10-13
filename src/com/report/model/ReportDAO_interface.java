@@ -7,7 +7,7 @@ public interface ReportDAO_interface {
 	public void insert(ReportVO reportVO);
     public void update(ReportVO reportVO);
     public void delete(String reportNo);
-    public ReportVO findByPrimaryKey(String reportVO);
+    public ReportVO findByPrimaryKey(String reportNo);
     public List<ReportVO> getAll();
 
 }

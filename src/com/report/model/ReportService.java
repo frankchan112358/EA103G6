@@ -3,6 +3,8 @@ package com.report.model;
 import java.util.List;
 
 
+
+
 public class ReportService {
 
 	private ReportDAO_interface dao;
@@ -12,7 +14,7 @@ public class ReportService {
 	}
 
 	public ReportVO addReport(String forumPostNo, String forumCommentNo, String studentNo, Integer type,
-			String description, java.sql.Timestamp reportTime) {
+			String description, java.sql.Timestamp reportTime, Integer status) {
 
 		ReportVO reportVO = new ReportVO();
 
@@ -22,13 +24,15 @@ public class ReportService {
 		reportVO.setType(type);
 		reportVO.setDescription(description);
 		reportVO.setReportTime(reportTime);
+		reportVO.setStatus(status);
+
 		dao.insert(reportVO);
 
 		return reportVO;
 	}
 
 	public ReportVO updateReport(String reportNo, String forumPostNo, String forumCommentNo, String studentNo, Integer type,
-			String description, java.sql.Timestamp reportTime) {
+			String description, java.sql.Timestamp reportTime, Integer status) {
 
 		ReportVO reportVO = new ReportVO();
 
@@ -39,6 +43,8 @@ public class ReportService {
 		reportVO.setType(type);
 		reportVO.setDescription(description);
 		reportVO.setReportTime(reportTime);
+		reportVO.setStatus(status);
+
 		dao.update(reportVO);
 
 		return reportVO;
@@ -54,5 +60,21 @@ public class ReportService {
 
 	public List<ReportVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public ReportType[] getReportTypeAll() {
+		return ReportType.values();
+	}
+
+	public ReportStatus[] getLeaveStatusAll() {
+		return ReportStatus.values();
+	}
+	
+	public String getReportTypeText(Integer num) {
+		return ReportType.findByNum(num).getText();
+	}
+	
+	public String getReportStatusText(Integer num) {
+		return ReportStatus.findByNum(num).getText();
 	}
 }
