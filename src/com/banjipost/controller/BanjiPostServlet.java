@@ -94,31 +94,24 @@ public class BanjiPostServlet extends HttpServlet {
 		}
 
 		if ("update".equals(action)) {
-			System.out.println("97");
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			System.out.println("100");
 
 			try {
 				String banjiPostNo = req.getParameter("banjiPostNo");
-				System.out.println("104");
 
 				String banjiNo = req.getParameter("banjiNo");
-				System.out.println("107");
 
 				String title = req.getParameter("title");
-				System.out.println("109" + title);
-				
 				if (title == null || title.trim().length() == 0) {
 					errorMsgs.add("公告標題請勿空白");
+					
 				}
-				System.out.println("115");
 				String banjiPostContent = req.getParameter("banjiPostContent");
-				if (title == null || title.trim().length() == 0) {
+				if (banjiPostContent == null || banjiPostContent.trim().length() == 0) {
 					errorMsgs.add("公告內容請勿空白");
 				}
 
-				System.out.println("121");
 				java.sql.Timestamp updateTime = new java.sql.Timestamp((new java.util.Date()).getTime());
 //				try {
 //					updateTime = java.sql.Timestamp.valueOf(req.getParameter("updateTime").trim());
@@ -136,32 +129,23 @@ public class BanjiPostServlet extends HttpServlet {
 
 				BanjiPostVO banjiPostVO = new BanjiPostVO();
 				banjiPostVO.setBanjiPostNo(banjiPostNo);
-				System.out.println("139");
 				banjiPostVO.setBanjiNo(banjiNo);
 				banjiPostVO.setTitle(title);
 				banjiPostVO.setBanjiPostContent(banjiPostContent);
 				banjiPostVO.setUpdateTime(updateTime);
 				banjiPostVO.setStatus(status);
-				System.out.println("145");
 
-				if (!errorMsgs.isEmpty()) {
-					
-					List<String> errorMsgss = new LinkedList<String>();
-					req.setAttribute("errorMsgs", errorMsgss);
-					
-					
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/back-end/banjiPost/update_banjiPost_input.jsp");
-//					failureView.forward(req, res);
-//					return;
+				if (!errorMsgs.isEmpty()) {		
+					req.setAttribute("banjiPostVO", banjiPostVO);
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banjiPost/update_banjiPost_input.jsp");
+					failureView.forward(req, res);
+					return;
 				}
 
-				System.out.println("154");
 				BanjiPostService banjiPostSvc = new BanjiPostService();
 				banjiPostVO = banjiPostSvc.updateBanjiPost(banjiPostNo, banjiNo, title, banjiPostContent, updateTime,
 						status);
-
-				System.out.println("159");
+				
 				req.setAttribute("banjiPostVO", banjiPostVO);
 				String url = "/back-end/banjiPost/listOneBanjiPost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -187,7 +171,7 @@ public class BanjiPostServlet extends HttpServlet {
 				}
 
 				String banjiPostContent = req.getParameter("banjiPostContent");
-				if (title == null || title.trim().length() == 0) {
+				if (banjiPostContent == null || banjiPostContent.trim().length() == 0) {
 					errorMsgs.add("公告內容請勿空白");
 				}
 

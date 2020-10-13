@@ -97,7 +97,7 @@ td {
 			<tr>
 				<td>公告內容:</td>
 				<td><textarea name="banjiPostContent"
-						style="resize: none; width: 300px; height: 150px;"><%=(banjiPostVO == null) ? "安安" : banjiPostVO.getBanjiPostContent()%></textarea></td>
+						style="resize: none; width: 300px; height: 150px;"><%=(banjiPostVO == null) ? "最近轉涼" : banjiPostVO.getBanjiPostContent()%></textarea></td>
 			</tr>
 			
 			<tr>
