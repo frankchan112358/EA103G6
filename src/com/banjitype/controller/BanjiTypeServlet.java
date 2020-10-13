@@ -22,7 +22,7 @@ public class BanjiTypeServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		String action = req.getParameter("action");
-		
+
 		if ("listBanji_ByBanjiTypeNo_A".equals(action) || "listBanji_ByBanjiTypeNo_B".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -40,14 +40,13 @@ public class BanjiTypeServlet extends HttpServlet {
 
 				String url = null;
 
-				if ("listBanji_ByBanjiTypeNo_A".equals(action)) 
+				if ("listBanji_ByBanjiTypeNo_A".equals(action))
 					url = "/back-end/banjiType/listBanji_ByBanjiTypeNo.jsp";
-				else if 
-				("listBanji_ByBanjiTypeNo_B".equals(action))
+				else if ("listBanji_ByBanjiTypeNo_B".equals(action))
 					url = "/back-end/banjiType/listAllBanjiType.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-				
+
 			} catch (Exception e) {
 
 				throw new ServletException();
@@ -59,8 +58,8 @@ public class BanjiTypeServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				String banjiTypeNo = req.getParameter("banjiTypeNo");
-				if (banjiTypeNo == null || (banjiTypeNo.trim()).length() == 0) {
+				String str = req.getParameter("banjiTypeNo");
+				if (str == null || (str.trim()).length() == 0) {
 					errorMsgs.add("請輸入班種編號");
 				}
 				if (!errorMsgs.isEmpty()) {
@@ -68,6 +67,19 @@ public class BanjiTypeServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
+				String banjiTypeNo = null;
+				try {
+					banjiTypeNo = str;
+				} catch (Exception e) {
+					errorMsgs.add("班種編號格式不正確");
+				}
+
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/select_page.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
 				BanjiTypeService banjiTypeSvc = new BanjiTypeService();
 				BanjiTypeVO banjiTypeVO = banjiTypeSvc.getOneBanjiType(banjiTypeNo);
 				if (banjiTypeVO == null) {
@@ -79,11 +91,11 @@ public class BanjiTypeServlet extends HttpServlet {
 					return;
 				}
 				req.setAttribute("banjiTypeVO", banjiTypeVO);
-				
+
 				String url = "/back-end/banjiType/listOneBanjiType.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-				
+
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banjiType/select_page.jsp");
@@ -149,7 +161,8 @@ public class BanjiTypeServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("banjiTypeVO", banjiTypeVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banjiType/update_BanjiType_input.jsp");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back-end/banjiType/update_BanjiType_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -164,7 +177,8 @@ public class BanjiTypeServlet extends HttpServlet {
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banjiType/update_BanjiType_input.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back-end/banjiType/update_BanjiType_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
