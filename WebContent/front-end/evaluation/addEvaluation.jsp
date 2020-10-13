@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="evaluationSvc" scope="page" class="com.evaluation.model.EvaluationService" />
+<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,22 +32,68 @@
                     <div class="row">
                         <div class="col">
                             <div id="panel-1" class="panel">
-                                <div class="panel-hdr bg-primary-800 bg-success-gradient ">
-                                    <h2 class="text-white">課程意見調查表</h2>
-                                </div>
-                                <div class="panel-container show">
-                                    <div class="panel-content">
-                                    	<c:forEach var="question" items="${evaluationSvc.getEvaluationQuestionAll()}">
-                                    		<h5 class="frame-heading fs-md m-0 mb-2">${question.text}</h5>
-                                    		<%for(int i=9;i>-1;i--) {%>
-                                                <div class="custom-control custom-radio custom-control-inline mb-3">                                                   
-                                                    <input type="radio" class="custom-control-input" id="Q${question.num}_<%=i %>" name="Q${question.num}" value="<%=i %>" />
-                                                    <label class="custom-control-label" for="Q${question.num}_<%=i %>"><%=i %></label>                                                
-                                                </div>                                    			
-                                    		<%} %>
-                                    	</c:forEach>
+                                <form class="needs-validation" novalidate method="GET" action="">
+                                    <div class="panel-hdr bg-primary-800 bg-success-gradient ">
+                                        <h2 class="text-white">課程意見調查表</h2>
                                     </div>
-                                </div>
+                                    <div class="panel-container show">
+                                        <div class="panel-content">
+                                            <div class="form-group">
+                                                <label class="form-label" for="selectCourse">課程</label>
+                                                <div class="input-group flex-nowrap">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fal fa-book fs-xl"></i></span>
+                                                    </div>
+                                                    <select class="custom-select form-control" id="selectCourse">
+                                                        <c:forEach var="course" items="${courseSvc.all}">
+                                                            <option value="${course.courseNo}">${course.courseName}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                                <c:forEach var="question" items="${evaluationSvc.getEvaluationQuestionAll()}">
+                                                    <h5 class="frame-heading fs-md m-0 mb-1 mt-1">${question.text}</h5>
+                                                    <%for(int i=9;i>-1;i--) {%>
+                                                        <div style="display:inline;" class="custom-control custom-radio custom-control-inline">                                                   
+                                                            <input type="radio" class="custom-control-input" id="Q${question.num}_<%=i %>" name="Q${question.num}" value="<%=i %>" required=""/>
+                                                            <label class="custom-control-label" for="Q${question.num}_<%=i %>"><%=i %></label>
+                                                            <%if(i==0){%><div class="invalid-feedback">Please select at least one</div><%}%>                                                                                                   	
+                                                        </div>                                                                                        			
+                                                    <%} %>                                                                                          
+                                                </c:forEach>
+                                                <div class="">
+                                                    <button type="submit" class="btn btn-lg btn-primary waves-effect waves-themed text-white">
+                                                        <span class="fal fa-share-square mr-1"></span> 送出點評                                          
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <script>
+                                    // Example starter JavaScript for disabling form submissions if there are invalid fields
+                                    (function()
+                                    {
+                                        'use strict';
+                                        window.addEventListener('load', function()
+                                        {
+                                            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                            var forms = document.getElementsByClassName('needs-validation');
+                                            // Loop over them and prevent submission
+                                            var validation = Array.prototype.filter.call(forms, function(form)
+                                            {
+                                                form.addEventListener('submit', function(event)
+                                                {
+                                                    if (form.checkValidity() === false)
+                                                    {
+                                                        event.preventDefault();
+                                                        event.stopPropagation();
+                                                    }
+                                                    form.classList.add('was-validated');
+                                                }, false);
+                                            });
+                                        }, false);
+                                    })();
+                                </script>
                             </div>                            
                         </div>
                     </div>
