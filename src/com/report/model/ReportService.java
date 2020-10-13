@@ -1,5 +1,6 @@
 package com.report.model;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -14,7 +15,7 @@ public class ReportService {
 	}
 
 	public ReportVO addReport(String forumPostNo, String forumCommentNo, String studentNo, Integer type,
-			String description, java.sql.Timestamp reportTime, Integer status) {
+			String description, Integer status) {
 
 		ReportVO reportVO = new ReportVO();
 
@@ -23,7 +24,7 @@ public class ReportService {
 		reportVO.setStudentNo(studentNo);
 		reportVO.setType(type);
 		reportVO.setDescription(description);
-		reportVO.setReportTime(reportTime);
+		reportVO.setReportTime(new Timestamp(System.currentTimeMillis()));
 		reportVO.setStatus(status);
 
 		dao.insert(reportVO);
@@ -31,8 +32,8 @@ public class ReportService {
 		return reportVO;
 	}
 
-	public ReportVO updateReport(String reportNo, String forumPostNo, String forumCommentNo, String studentNo, Integer type,
-			String description, java.sql.Timestamp reportTime, Integer status) {
+	public ReportVO updateReportVO(String reportNo, String forumPostNo, String forumCommentNo, String studentNo, Integer type,
+			String description, Timestamp reportTime, Integer status) {
 
 		ReportVO reportVO = new ReportVO();
 
@@ -42,7 +43,7 @@ public class ReportService {
 		reportVO.setStudentNo(studentNo);
 		reportVO.setType(type);
 		reportVO.setDescription(description);
-		reportVO.setReportTime(reportTime);
+		reportVO.setReportTime(new Timestamp(System.currentTimeMillis()));
 		reportVO.setStatus(status);
 
 		dao.update(reportVO);
@@ -50,7 +51,7 @@ public class ReportService {
 		return reportVO;
 	}
 
-	public void deleteReport(String reportNo) {
+	public void deleteReportVO(String reportNo) {
 		dao.delete(reportNo);
 	}
 
@@ -66,7 +67,7 @@ public class ReportService {
 		return ReportType.values();
 	}
 
-	public ReportStatus[] getLeaveStatusAll() {
+	public ReportStatus[] getReportStatusAll() {
 		return ReportStatus.values();
 	}
 	
