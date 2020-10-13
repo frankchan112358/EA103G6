@@ -24,7 +24,7 @@ public class ForumPostJNDIDAO implements ForumPostDAO_interface {
 	private static final String GET_ALL_STMT = "SELECT forumpostno,forumtopicno,studentno,title, content,updatetime,createtime FROM forumpost where isDelete = 0 order by forumpostno";
 	private static final String GET_ONE_STMT = "SELECT forumpostno,forumtopicno,studentno,title, content,updatetime,createtime FROM forumpost where forumpostno = ?";
 	private static final String DELETE = "UPDATE forumpost set isDelete=1 where forumpostno = ?";
-	private static final String UPDATE = "UPDATE forumpost set forumtopicno=?, studentno=?, title=?, content=?, updatetime=?, createtime=? where forumpostno = ?";
+	private static final String UPDATE = "UPDATE forumpost set forumtopicno=?, studentno=?, title=?, content=?, updatetime=? where forumpostno = ?";
 
 	@Override
 	public void insert(ForumPostVO forumPostVO) {
@@ -86,8 +86,8 @@ public class ForumPostJNDIDAO implements ForumPostDAO_interface {
 			pstmt.setString(3, forumPostVO.getTitle());
 			pstmt.setString(4, forumPostVO.getContent());
 			pstmt.setTimestamp(5, forumPostVO.getUpdateTime());
-			pstmt.setTimestamp(6, forumPostVO.getCreateTime());
-			pstmt.setString(7, forumPostVO.getForumPostNo());
+//			pstmt.setTimestamp(6, forumPostVO.getCreateTime());
+			pstmt.setString(6, forumPostVO.getForumPostNo());
 
 			pstmt.executeUpdate();
 

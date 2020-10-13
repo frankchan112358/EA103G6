@@ -38,7 +38,7 @@ public class ForumPostService {
 		forumPostVO.setTitle(title);
 		forumPostVO.setContent(content);
 		forumPostVO.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-		forumPostVO.setCreateTime(new Timestamp(System.currentTimeMillis()));
+//		forumPostVO.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		dao.update(forumPostVO);
 
 		return forumPostVO;

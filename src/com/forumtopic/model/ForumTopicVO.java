@@ -1,7 +1,6 @@
 package com.forumtopic.model;
 
 public class ForumTopicVO implements java.io.Serializable{
-	private static final long serialVersionUID = 1L;
 	private String forumTopicNo;
 	private String banjiNo;
 	private String forumTopicName;

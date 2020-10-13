@@ -1,11 +1,16 @@
 package com.forumtopic.model;
 
 import java.util.*;
+
+import com.forumpost.model.ForumPostJDBCDAO;
+import com.forumpost.model.ForumPostVO;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.*;
 
 public class ForumTopicJDBCDAO implements ForumTopicDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
