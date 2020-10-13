@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
 			String studentNo = req.getParameter("studentNo");
 			StudentVO studentVO = (new StudentService()).getOneStudent(studentNo);
 			if(studentVO!=null) {
-				UserVO userVO = (new UserService()).getOneUser(studentVO.getUserno());				
+				UserVO userVO = (new UserService()).getOneUser(studentVO.getUserNo());				
 				HttpSession session = req.getSession();
 				session.setAttribute("userVO", userVO);
 				res.sendRedirect(req.getContextPath() + "/front-end/index/index.jsp");
