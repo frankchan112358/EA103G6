@@ -1,6 +1,9 @@
 package com.report.model;
 
+import java.sql.Timestamp;
 import java.util.List;
+
+
 
 
 public class ReportService {
@@ -12,7 +15,7 @@ public class ReportService {
 	}
 
 	public ReportVO addReport(String forumPostNo, String forumCommentNo, String studentNo, Integer type,
-			String description, java.sql.Timestamp reportTime) {
+			String description, Integer status) {
 
 		ReportVO reportVO = new ReportVO();
 
@@ -21,14 +24,16 @@ public class ReportService {
 		reportVO.setStudentNo(studentNo);
 		reportVO.setType(type);
 		reportVO.setDescription(description);
-		reportVO.setReportTime(reportTime);
+		reportVO.setReportTime(new Timestamp(System.currentTimeMillis()));
+		reportVO.setStatus(status);
+
 		dao.insert(reportVO);
 
 		return reportVO;
 	}
 
-	public ReportVO updateReport(String reportNo, String forumPostNo, String forumCommentNo, String studentNo, Integer type,
-			String description, java.sql.Timestamp reportTime) {
+	public ReportVO updateReportVO(String reportNo, String forumPostNo, String forumCommentNo, String studentNo, Integer type,
+			String description, Timestamp reportTime, Integer status) {
 
 		ReportVO reportVO = new ReportVO();
 
@@ -38,13 +43,15 @@ public class ReportService {
 		reportVO.setStudentNo(studentNo);
 		reportVO.setType(type);
 		reportVO.setDescription(description);
-		reportVO.setReportTime(reportTime);
+		reportVO.setReportTime(new Timestamp(System.currentTimeMillis()));
+		reportVO.setStatus(status);
+
 		dao.update(reportVO);
 
 		return reportVO;
 	}
 
-	public void deleteReport(String reportNo) {
+	public void deleteReportVO(String reportNo) {
 		dao.delete(reportNo);
 	}
 
@@ -54,5 +61,21 @@ public class ReportService {
 
 	public List<ReportVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public ReportType[] getReportTypeAll() {
+		return ReportType.values();
+	}
+
+	public ReportStatus[] getReportStatusAll() {
+		return ReportStatus.values();
+	}
+	
+	public String getReportTypeText(Integer num) {
+		return ReportType.findByNum(num).getText();
+	}
+	
+	public String getReportStatusText(Integer num) {
+		return ReportStatus.findByNum(num).getText();
 	}
 }

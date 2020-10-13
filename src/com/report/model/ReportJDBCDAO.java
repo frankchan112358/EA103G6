@@ -8,19 +8,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class ReportJDBCDAO implements ReportDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String userid = "EA103G6";
 	String passwd = "123456";
 
-	private static final String INSERT_STMT = "INSERT INTO report (reportno,forumpostno, forumcommentno, studentno, type, description , reporttime) VALUES (report_seq.NEXTVAL,?, ?,?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT reportno,forumpostno, forumcommentno, studentno, type, description , reporttime FROM report where status = 0 order by to_number(reportno)";
-	private static final String GET_ONE_STMT = "SELECT reportno,forumpostno, forumcommentno, studentno, type, description , reporttime FROM report where reportno = ?";
-	private static final String DELETE = "UPDATE report set status=1 where reportno = ?";
-	private static final String UPDATE = "UPDATE report set forumpostno=?, forumcommentno=?, studentno=?, type=?, description=?, reporttime=? where reportno = ?";
+	private static final String INSERT_STMT = "INSERT INTO report (reportno,forumpostno, forumcommentno, studentno, type, description , reporttime,status) VALUES (report_seq.NEXTVAL,?, ?,?, ?, ?, ?, ?)";
+	private static final String GET_ALL_STMT = "SELECT reportno,forumpostno, forumcommentno, studentno, type, description , reporttime ,status FROM report order by to_number(reportno)";
+	private static final String GET_ONE_STMT = "SELECT reportno,forumpostno, forumcommentno, studentno, type, description , reporttime ,status FROM report where reportno = ?";
+	private static final String DELETE = "DELETE FROM report where reportno = ?";
+	private static final String UPDATE = "UPDATE report set forumpostno=?, forumcommentno=?, studentno=?, type=?, description=?, reporttime=? ,status=? where reportno = ?";
 
 	@Override
 	public void insert(ReportVO reportVO) {
@@ -39,6 +37,7 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 			pstmt.setInt(4, reportVO.getType());
 			pstmt.setString(5, reportVO.getDescription());
 			pstmt.setTimestamp(6, reportVO.getReportTime());
+			pstmt.setInt(7, reportVO.getStatus());
 
 			pstmt.executeUpdate();
 
@@ -85,7 +84,8 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 			pstmt.setInt(4, reportVO.getType());
 			pstmt.setString(5, reportVO.getDescription());
 			pstmt.setTimestamp(6, reportVO.getReportTime());
-			pstmt.setString(7, reportVO.getReportNo());
+			pstmt.setInt(7, reportVO.getStatus());
+			pstmt.setString(8, reportVO.getReportNo());
 
 			pstmt.executeUpdate();
 
@@ -183,6 +183,8 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 				reportVO.setType(rs.getInt("type"));
 				reportVO.setDescription(rs.getString("description"));
 				reportVO.setReportTime(rs.getTimestamp("reportTime"));
+				reportVO.setStatus(rs.getInt("status"));
+
 
 			}
 
@@ -245,6 +247,8 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 				reportVO.setType(rs.getInt("type"));
 				reportVO.setDescription(rs.getString("description"));
 				reportVO.setReportTime(rs.getTimestamp("reportTime"));
+				reportVO.setStatus(rs.getInt("status"));
+
 				list.add(reportVO);
 			}
 
@@ -290,9 +294,11 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 		reportVO1.setForumPostNo("1");
 		reportVO1.setForumCommentNo("");
 		reportVO1.setStudentNo("S000001");
-		reportVO1.setType(0);
+		reportVO1.setType(1);
 		reportVO1.setDescription("自己的貼文自己檢舉");
 		reportVO1.setReportTime(new java.sql.Timestamp((new java.util.Date()).getTime()));
+		reportVO1.setStatus(1);
+
 		dao.insert(reportVO1);
 
 		ReportVO reportVO2 = new ReportVO();
@@ -303,11 +309,13 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 		reportVO2.setType(1);
 		reportVO2.setDescription("涉及暴力等字言");
 		reportVO2.setReportTime(new java.sql.Timestamp((new java.util.Date()).getTime()));
+		reportVO2.setStatus(1);
+
 		dao.update(reportVO2);
 
 		dao.delete("1");
 
-		ReportVO reportVO3 = dao.findByPrimaryKey("1");
+		ReportVO reportVO3 = dao.findByPrimaryKey("2");
 		System.out.print(reportVO3.getReportNo() + ",");
 		System.out.print(reportVO3.getForumPostNo() + ",");
 		System.out.print(reportVO3.getForumCommentNo() + ",");
@@ -315,6 +323,8 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 		System.out.print(reportVO3.getType() + ",");
 		System.out.print(reportVO3.getDescription() + ",");
 		System.out.print(reportVO3.getReportTime() + ",");
+		System.out.print(reportVO3.getStatus() + ",");
+
 		System.out.println("---------------------");
 
 		List<ReportVO> list = dao.getAll();
@@ -326,6 +336,8 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 			System.out.print(aReport.getType() + ",");
 			System.out.print(aReport.getDescription() + ",");
 			System.out.print(aReport.getReportTime() + ",");
+			System.out.print(aReport.getStatus() + ",");
+
 			System.out.println();
 		}
 	}
