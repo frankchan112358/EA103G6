@@ -26,12 +26,25 @@ public class BanjiServlet extends HttpServlet {
 
 			try {
 
-				String banjiNo = req.getParameter("banjiNo");
-				if (banjiNo == null || (banjiNo.trim()).length() == 0) {
+				String str = req.getParameter("banjiNo");
+				if (str == null || (str.trim()).length() == 0) {
 					errorMsgs.add("請輸入班級編號");
 				}
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/select_page.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				String banjiNo = null;
+				try {
+					banjiNo = str;
+				} catch (Exception e) {
+					errorMsgs.add("班級編號格式不正確");
+				}
+
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}

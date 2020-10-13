@@ -118,4 +118,14 @@
     <servlet-name>BanjiTypeServlet</servlet-name>
     <url-pattern>/banjiType/banjiType.do</url-pattern>
   </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>BanjiPostServlet</servlet-name>
+    <servlet-class>com.banjipost.controller.BanjiPostServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BanjiPostServlet</servlet-name>
+    <url-pattern>/banjiPost/banjiPost.do</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
