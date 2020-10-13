@@ -1,9 +1,9 @@
 package com.forumpost.model;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class ForumPostVO implements java.io.Serializable {
-	private static final long serialVersionUID = 1L;
 	private String forumPostNo;
 	private String forumTopicNo;
 	private String studentNo;
@@ -12,11 +12,6 @@ public class ForumPostVO implements java.io.Serializable {
     private Timestamp updateTime;
 	private Timestamp createTime;
 	
-	
-
-	public ForumPostVO() {
-		super();
-	}
 
 	public String getForumPostNo() {
 		return forumPostNo;
