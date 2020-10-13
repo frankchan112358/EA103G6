@@ -1,11 +1,13 @@
 package com.forumcomment.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -26,7 +28,7 @@ public class ForumCommentJNDIDAO implements ForumCommentDAO_interface {
 	private static final String GET_ALL_STMT = "SELECT forumcommentno,forumpostno,studentno, content ,updatetime,createtime FROM forumcomment where isDelete = 0 order by forumcommentno";
 	private static final String GET_ONE_STMT = "SELECT forumcommentno,forumpostno,studentno, content ,updatetime,createtime FROM forumcomment where forumcommentno = ?";
 	private static final String DELETE = "UPDATE forumcomment set isDelete=1 where forumcommentno = ?";
-	private static final String UPDATE = "UPDATE forumcomment set forumpostno=?, studentno=?, content=?, updatetime=?, createtime=? where forumcommentno = ?";
+	private static final String UPDATE = "UPDATE forumcomment set forumpostno=?, studentno=?, content=?, updatetime=? where forumcommentno = ?";
 
 	@Override
 	public void insert(ForumCommentVO forumCommentVO) {
@@ -83,8 +85,8 @@ public class ForumCommentJNDIDAO implements ForumCommentDAO_interface {
 			pstmt.setString(2, forumCommentVO.getStudentNo());
 			pstmt.setString(3, forumCommentVO.getContent());
 			pstmt.setTimestamp(4, forumCommentVO.getUpdateTime());
-			pstmt.setTimestamp(5, forumCommentVO.getCreateTime());
-			pstmt.setString(6, forumCommentVO.getForumCommentNo());
+//			pstmt.setTimestamp(5, forumCommentVO.getCreateTime());
+			pstmt.setString(5, forumCommentVO.getForumCommentNo());
 
 			pstmt.executeUpdate();
 

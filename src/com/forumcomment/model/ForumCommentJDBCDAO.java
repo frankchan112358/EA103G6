@@ -18,7 +18,7 @@ public class ForumCommentJDBCDAO implements ForumCommentDAO_interface{
 	private static final String GET_ALL_STMT = "SELECT forumcommentno,forumpostno,studentno, content ,updatetime,createtime FROM forumcomment where isDelete = 0 order by to_number(forumcommentno)";
 	private static final String GET_ONE_STMT = "SELECT forumcommentno,forumpostno,studentno, content ,updatetime,createtime FROM forumcomment where forumcommentno = ?";
 	private static final String DELETE = "UPDATE forumcomment set isDelete=1 where forumcommentno = ?";
-	private static final String UPDATE = "UPDATE forumcomment set forumpostno=?, studentno=?, content=?, updatetime=?, createtime=? where forumcommentno = ?";
+	private static final String UPDATE = "UPDATE forumcomment set forumpostno=?, studentno=?, content=?, updatetime=? where forumcommentno = ?";
 
 
 	@Override
@@ -81,8 +81,8 @@ public class ForumCommentJDBCDAO implements ForumCommentDAO_interface{
 			pstmt.setString(2, forumCommentVO.getStudentNo());
 			pstmt.setString(3, forumCommentVO.getContent());
 			pstmt.setTimestamp(4, forumCommentVO.getUpdateTime());
-			pstmt.setTimestamp(5, forumCommentVO.getCreateTime());
-			pstmt.setString(6, forumCommentVO.getForumCommentNo());
+//			pstmt.setTimestamp(5, forumCommentVO.getCreateTime());
+			pstmt.setString(5, forumCommentVO.getForumCommentNo());
 
 			pstmt.executeUpdate();
 

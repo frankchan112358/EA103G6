@@ -68,31 +68,32 @@
 
 <FORM METHOD="post" ACTION="<%=request.getContextPath() %>/forumComment/forumComment.do" name="form1">
 <table>
-	<tr>
-			<td>
-				  貼文編號:
-			</td>
-			<td>
-				<select size="1" name="forumPostNo">
-					<option value="1" ${('1'==forumCommentVO.forumPostNo)?'selected':''} >1</option>
-					<option value="2" ${('2'==forumCommentVO.forumPostNo)?'selected':''} >2</option>
-					<option value="3" ${('3'==forumCommentVO.forumPostNo)?'selected':''} >3</option>
-				</select>
-			</td>
-	</tr>
 
-	<tr>
-			<td>
-				  學員編號:
-			</td>
-			<td>
-				<select size="1" name="studentNo">
-					<option value="S000001" ${('S000001'==forumCommentVO.studentNo)?'selected':''} >S000001</option>
-					<option value="S000002" ${('S000002'==forumCommentVO.studentNo)?'selected':''} >S000002</option>
-					<option value="S000003" ${('S000003'==forumCommentVO.studentNo)?'selected':''} >S000003</option>
-				</select>
-			</td>
-	</tr>
+	<jsp:useBean id="forumpostSvc" scope="page"
+				class="com.forumpost.model.ForumPostService" />
+
+			<tr>
+				<td>貼文編號:</td>
+				<td><select size="1" name="forumPostNo">
+						<c:forEach var="forumPostVO" items="${forumpostSvc.all}">
+							<option value="${forumPostVO.forumPostNo}"
+								${(forumCommentVO.forumPostNo==forumPostVO.forumPostNo)? 'selected':'' }>${forumPostVO.forumPostNo}
+						</c:forEach>
+				</select></td>
+			</tr>
+
+	<jsp:useBean id="studentSvc" scope="page"
+				class="com.student.model.StudentService" />
+
+			<tr>
+				<td>學員編號:</td>
+				<td><select size="1" name="studentNo">
+						<c:forEach var="studentVO" items="${studentSvc.all}">
+							<option value="${studentVO.studentNo}"
+								${(forumCommentVO.studentNo==studentVO.studentNo)? 'selected':'' }>${studentVO.studentNo}
+						</c:forEach>
+				</select></td>
+			</tr>
 	<tr>
 			<td>
 				  貼文留言:
