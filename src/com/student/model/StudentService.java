@@ -16,54 +16,53 @@ public class StudentService {
 		dao = new StudentDAO();
 	}
 	
-	public StudentVO addStudent(String userno, String banjino,
-			String studentname, String faceid, String studentdescription,Integer studentstatus) {
+	public StudentVO addStudent(String userNo, String banjiNo,
+			String studentName, String faceId, String studentDescription,Integer studentStatus) {
 
 		StudentVO studentVO = new StudentVO();
 
 		
-		studentVO.setUserno(userno);
-		studentVO.setBanjino(banjino);
-		studentVO.setStudentname(studentname);
-		studentVO.setFaceid(faceid);
-		studentVO.setStudentdescription(studentdescription);
-		studentVO.setStudentstatus(studentstatus);
+		studentVO.setUserNo(userNo);
+		studentVO.setBanjiNo(banjiNo);
+		studentVO.setStudentName(studentName);
+		studentVO.setFaceId(faceId);
+		studentVO.setStudentDescription(studentDescription);
+		studentVO.setStudentStatus(studentStatus);
 		dao.insert(studentVO);
 
 		return studentVO;
 	}
-	//String userno,String banjino,InputStream face,InputStream face,
-	public StudentVO updateStudent(String studentno,String userno,String studentname,String banjino,String faceid,
-			String studentdescription,Integer studentstatus) {
+	public StudentVO updateStudent(String studentNo,String userNo,String studentName,String banjiNo,String faceId,
+			String studentDescription,Integer studentStatus) {
 		
 		StudentVO studentVO = new StudentVO();
-		studentVO.setStudentno(studentno);
-		studentVO.setUserno(userno);
-	studentVO.setBanjino(banjino);
-		studentVO.setStudentname(studentname);
-		studentVO.setFaceid(faceid);
+		studentVO.setStudentNo(studentNo);
+		studentVO.setUserNo(userNo);
+	studentVO.setBanjiNo(banjiNo);
+		studentVO.setStudentName(studentName);
+		studentVO.setFaceId(faceId);
 //		studentVO.setFace(face);
-		studentVO.setStudentdescription(studentdescription);
-		studentVO.setStudentstatus(studentstatus);
+		studentVO.setStudentDescription(studentDescription);
+		studentVO.setStudentStatus(studentStatus);
 		dao.update(studentVO);
 		return studentVO;
 		
 	}
 	
-	public void deleteStudent(String studentno) {
-		dao.delete(studentno);
+	public void deleteStudent(String studentNo) {
+		dao.delete(studentNo);
 	}
 	
-	public StudentVO getOneStudent(String studentno) {
-		return dao.findByPrimaryKey(studentno);
+	public StudentVO getOneStudent(String studentNo) {
+		return dao.findByPrimaryKey(studentNo);
 		
 	}
 	public List<StudentVO> getAll() {
 		return dao.getAll();
 	}
 	
-	public InputStream getPic(String studentno) {
-		return dao.getPic(studentno);
+	public InputStream getPic(String studentNo) {
+		return dao.getPic(studentNo);
 	}
 	
 	
