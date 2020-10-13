@@ -185,5 +185,40 @@
 		<servlet-name>BanjiPostServlet</servlet-name>
 		<url-pattern>/banjiPost/banjiPost.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+        <servlet-name>ForumPostServlet</servlet-name>
+        <servlet-class>com.forumpost.controller.ForumPostServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ForumPostServlet</servlet-name>
+        <url-pattern>/forumPost/forumPost.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ForumCommentServlet</servlet-name>
+        <servlet-class>com.forumcomment.controller.ForumCommentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ForumCommentServlet</servlet-name>
+        <url-pattern>/forumComment/forumComment.do</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+  	<servlet-name>ReportServlet</servlet-name>
+  	<servlet-class>com.report.controller.ReportServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ReportServlet</servlet-name>
+  	<url-pattern>/report/report.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>ForumTopicServlet</servlet-name>
+  	<servlet-class>com.forumtopic.controller.ForumTopicServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ForumTopicServlet</servlet-name>
+  	<url-pattern>/forumTopic/forumTopic.do</url-pattern>
+  </servlet-mapping>
 
 </web-app>
