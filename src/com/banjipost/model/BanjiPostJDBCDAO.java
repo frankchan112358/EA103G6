@@ -12,9 +12,9 @@ public class BanjiPostJDBCDAO implements BanjiPostDAO_interface {
 	// 新增
 	private static final String INSERT_STMT = "INSERT INTO BANJIPOST(BANJIPOSTNO,BANJINO,TITLE,BANJIPOSTCONTENT,UPDATETIME,STATUS) VALUES (BANJIPOST_SEQ.NEXTVAL,?,?,?,?,?)";
 	// 查全部
-	private static final String GET_ALL_STMT = "SELECT BANJIPOSTNO,BANJINO,TITLE,BANJIPOSTCONTENT,UPDATETIME FROM BANJIPOST ORDER BY BANJIPOSTNO";
+	private static final String GET_ALL_STMT = "SELECT BANJIPOSTNO,BANJINO,TITLE,BANJIPOSTCONTENT,UPDATETIME,STATUS FROM BANJIPOST ORDER BY BANJIPOSTNO";
 	// 查單個
-	private static final String GET_ONE_STMT = "SELECT BANJIPOSTNO,BANJINO,TITLE,BANJIPOSTCONTENT,UPDATETIME FROM BANJIPOST  WHERE BANJIPOSTNO =?";
+	private static final String GET_ONE_STMT = "SELECT BANJIPOSTNO,BANJINO,TITLE,BANJIPOSTCONTENT,UPDATETIME,STATUS FROM BANJIPOST  WHERE BANJIPOSTNO =?";
 	// 刪除狀態
 	private static final String DELETE = "DELETE FROM BANJIPOST WHERE BANJIPOSTNO=?";
 	// 修改
@@ -164,6 +164,7 @@ public class BanjiPostJDBCDAO implements BanjiPostDAO_interface {
 				banjiPostVO.setTitle(rs.getString("title"));
 				banjiPostVO.setBanjiPostContent(rs.getString("banjiPostContent"));
 				banjiPostVO.setUpdateTime(rs.getTimestamp("updateTime"));
+				banjiPostVO.setStatus(rs.getInt("status"));
 			}
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -217,6 +218,7 @@ public class BanjiPostJDBCDAO implements BanjiPostDAO_interface {
 				banjiPostVO.setTitle(rs.getString("title"));
 				banjiPostVO.setBanjiPostContent(rs.getString("banjiPostContent"));
 				banjiPostVO.setUpdateTime(rs.getTimestamp("updateTime"));
+				banjiPostVO.setStatus(rs.getInt("status"));
 
 				list.add(banjiPostVO);
 			}

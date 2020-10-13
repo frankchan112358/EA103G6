@@ -24,11 +24,11 @@ public class BanjiPostService {
 		return banjiPostVO;
 	}
 
-	public BanjiPostVO updateBanjiPost(String banjiPostNo,String banjiNo, String title, String banjiPostContent,
+	public BanjiPostVO updateBanjiPost(String banjiPostNo, String banjiNo, String title, String banjiPostContent,
 			java.sql.Timestamp updateTime, Integer status) {
 
 		BanjiPostVO banjiPostVO = new BanjiPostVO();
-		
+
 		banjiPostVO.setBanjiPostNo(banjiPostNo);
 		banjiPostVO.setBanjiNo(banjiNo);
 		banjiPostVO.setTitle(title);
