@@ -296,7 +296,7 @@ public class BanjiPostJDBCDAO implements BanjiPostDAO_interface {
 		banjiPostVO3.setBanjiPostContent("認為是帥哥傳自拍照至班網");
 		banjiPostVO3.setUpdateTime(new java.sql.Timestamp((new java.util.Date()).getTime()));
 		banjiPostVO3.setStatus(2);
-		banjiPostVO3.setBanjiPostNo("1");
+		banjiPostVO3.setBanjiPostNo("2");
 		dao.update(banjiPostVO3);
 	}
 }

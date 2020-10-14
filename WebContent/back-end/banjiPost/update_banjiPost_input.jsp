@@ -108,6 +108,7 @@ td {
 		</table>
 		<br> <input type="hidden" name="action" value="update"> 
 		     <input type="hidden" name="banjiNo" value="<%=banjiPostVO.getBanjiNo()%>">
+		     <input type="hidden" name="banjiPostNo" value="<%=banjiPostVO.getBanjiPostNo()%>">
 		<input type="submit" value="送出修改">
 	</FORM>
 </body>

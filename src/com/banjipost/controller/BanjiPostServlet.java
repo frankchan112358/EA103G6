@@ -105,7 +105,7 @@ public class BanjiPostServlet extends HttpServlet {
 				String title = req.getParameter("title");
 				if (title == null || title.trim().length() == 0) {
 					errorMsgs.add("公告標題請勿空白");
-					
+
 				}
 				String banjiPostContent = req.getParameter("banjiPostContent");
 				if (banjiPostContent == null || banjiPostContent.trim().length() == 0) {
@@ -135,9 +135,10 @@ public class BanjiPostServlet extends HttpServlet {
 				banjiPostVO.setUpdateTime(updateTime);
 				banjiPostVO.setStatus(status);
 
-				if (!errorMsgs.isEmpty()) {		
+				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("banjiPostVO", banjiPostVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banjiPost/update_banjiPost_input.jsp");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back-end/banjiPost/update_banjiPost_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -145,7 +146,7 @@ public class BanjiPostServlet extends HttpServlet {
 				BanjiPostService banjiPostSvc = new BanjiPostService();
 				banjiPostVO = banjiPostSvc.updateBanjiPost(banjiPostNo, banjiNo, title, banjiPostContent, updateTime,
 						status);
-				
+
 				req.setAttribute("banjiPostVO", banjiPostVO);
 				String url = "/back-end/banjiPost/listOneBanjiPost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -195,7 +196,6 @@ public class BanjiPostServlet extends HttpServlet {
 				banjiPostVO.setTitle(title);
 				banjiPostVO.setBanjiPostContent(banjiPostContent);
 				banjiPostVO.setUpdateTime(updateTime);
-
 				banjiPostVO.setStatus(status);
 
 				if (!errorMsgs.isEmpty()) {

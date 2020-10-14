@@ -29,6 +29,7 @@ public class BanjiPostJNDIDAO implements BanjiPostDAO_interface {
 	// 修改
 	private static final String UPDATE = "UPDATE BANJIPOST SET BANJINO=?,TITLE=?,BANJIPOSTCONTENT=?,UPDATETIME=?,STATUS=? WHERE BANJIPOSTNO=?";
 
+	
 	@Override
 	public void insert(BanjiPostVO banjiPostVO) {
 		Connection con = null;
