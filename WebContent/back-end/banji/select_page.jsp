@@ -115,7 +115,7 @@ h4 {
 		<li>
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/banjiType/banjiType.do">
-				<b>查看班級:</b> <select size="1" name="banjiTypeNo">
+				<b>查看班種:</b> <select size="1" name="banjiTypeNo">
 					<c:forEach var="banjiTypeVO" items="${banjiTypeSvc.all}">
 						<option value="${banjiTypeVO.banjiTypeNo}">${banjiTypeVO.banjiTypeName}
 					</c:forEach>

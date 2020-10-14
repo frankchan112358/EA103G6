@@ -3,11 +3,11 @@
 
 <html>
 <head>
-<title>班級首頁</title>
+<title>公告區</title>
 
 <style>
 input[type=button] {
-	background-color: #4CAF50;
+	background-color:#5151A2;
 	border: none;
 	padding: 16px 32px;
 	text-decoration: none;
@@ -51,26 +51,22 @@ h4 {
 </head>
 <body bgcolor='#c8c8c8'>
 	<h1>
-		養成班級管理
+		公告管理
 	</h1>
 
 	<br>
 
-	<h3>班級管理:</h3>
+	<h3>公告管理:</h3>
 
 	<div align="left">
-		<input type="button" value="班級資料"
-			onclick="location.href='listAllBanji.jsp'"><br>
+		<input type="button" value="公告資料"
+			onclick="location.href='listAllBanjiPost.jsp'"><br>
 	</div>
 
 	<div align="center">
-		<input type="button" value="新增班級"
-			onclick="location.href='addbanji.jsp'"><br>
+		<input type="button" value="新增班級公告"
+			onclick="location.href='addBanjiPost.jsp'"><br>
 	</div>
-
-<ul>
-<li><a href='<%=request.getContextPath()%>/back-end/banjiType/listAllBanjiType.jsp'>班種資料</a></li>
-</ul>
 
 	<h3>資料查詢:</h3>
 
@@ -85,16 +81,15 @@ h4 {
 	</c:if>
 	<jsp:useBean id="banjiSvc" scope="page"
 		class="com.banji.model.BanjiService" />
-
-	<jsp:useBean id="banjiTypeSvc" scope="page"
-		class="com.banjitype.model.BanjiTypeService" />
-
+	<jsp:useBean id="banjiPostSvc" scope="page"
+		class="com.banjipost.model.BanjiPostService" />
+	
 	<ul>
 
 		<li>
 			<FORM METHOD="post"
-				ACTION="<%=request.getContextPath()%>/banji/banji.do">
-				<b>輸入班級編號 (如B001):</b> <input type="text" name="banjiNo"> <input
+				ACTION="<%=request.getContextPath()%>/banjiPost/banjiPost.do">
+				<b>輸入公告編號 (如B1):</b> <input type="text" name="banjiPostNo"> <input
 					type="hidden" name="action" value="getOne_For_Display"> <input
 					type="submit" value="送出">
 			</FORM>
@@ -102,26 +97,13 @@ h4 {
 
 		<li>
 			<FORM METHOD="post"
-				ACTION="<%=request.getContextPath()%>/banji/banji.do">
-				<b>查看班級編號:</b> <select size="1" name="banjiNo">
-					<c:forEach var="banjiVO" items="${banjiSvc.all}">
-						<option value="${banjiVO.banjiNo}">${banjiVO.banjiNo}
+				ACTION="<%=request.getContextPath()%>/banjiPost/banjiPost.do">
+				<b>查看公告編號:</b> <select size="1" name="banjiPostNo">
+					<c:forEach var="banjiPostVO" items="${banjiPostSvc.all}">
+						<option value="${banjiPostVO.banjiPostNo}">${banjiPostVO.banjiPostNo}
 					</c:forEach>
 				</select> <input type="hidden" name="action" value="getOne_For_Display">
 				<input type="submit" value="送出">
-			</FORM>
-		</li>
-
-		<li>
-			<FORM METHOD="post"
-				ACTION="<%=request.getContextPath()%>/banjiType/banjiType.do">
-				<b>查看班級:</b> <select size="1" name="banjiTypeNo">
-					<c:forEach var="banjiTypeVO" items="${banjiTypeSvc.all}">
-						<option value="${banjiTypeVO.banjiTypeNo}">${banjiTypeVO.banjiTypeName}
-					</c:forEach>
-				</select> 
-				<input type="submit" value="送出">
-				<input type="hidden" name="action" value="listBanji_ByBanjiTypeNo_A">
 			</FORM>
 		</li>
 

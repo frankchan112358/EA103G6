@@ -21,14 +21,15 @@ public class BanjiPostJNDIDAO implements BanjiPostDAO_interface {
 	// 新增
 	private static final String INSERT_STMT = "INSERT INTO BANJIPOST(BANJIPOSTNO,BANJINO,TITLE,BANJIPOSTCONTENT,UPDATETIME,STATUS) VALUES (BANJIPOST_SEQ.NEXTVAL,?,?,?,?,?)";
 	// 查全部
-	private static final String GET_ALL_STMT = "SELECT BANJIPOSTNO,BANJINO,TITLE,BANJIPOSTCONTENT,UPDATETIME FROM BANJIPOST ORDER BY BANJIPOSTNO";
+	private static final String GET_ALL_STMT = "SELECT BANJIPOSTNO,BANJINO,TITLE,BANJIPOSTCONTENT,UPDATETIME,STATUS FROM BANJIPOST ORDER BY BANJIPOSTNO";
 	// 查單個
-	private static final String GET_ONE_STMT = "SELECT BANJIPOSTNO,BANJINO,TITLE,BANJIPOSTCONTENT,UPDATETIME FROM BANJIPOST  WHERE BANJIPOSTNO =?";
+	private static final String GET_ONE_STMT = "SELECT BANJIPOSTNO,BANJINO,TITLE,BANJIPOSTCONTENT,UPDATETIME,STATUS FROM BANJIPOST  WHERE BANJIPOSTNO =?";
 	// 刪除狀態
 	private static final String DELETE = "DELETE FROM BANJIPOST WHERE BANJIPOSTNO=?";
 	// 修改
 	private static final String UPDATE = "UPDATE BANJIPOST SET BANJINO=?,TITLE=?,BANJIPOSTCONTENT=?,UPDATETIME=?,STATUS=? WHERE BANJIPOSTNO=?";
 
+	
 	@Override
 	public void insert(BanjiPostVO banjiPostVO) {
 		Connection con = null;
@@ -158,6 +159,7 @@ public class BanjiPostJNDIDAO implements BanjiPostDAO_interface {
 				banjiPostVO.setTitle(rs.getString("title"));
 				banjiPostVO.setBanjiPostContent(rs.getString("banjiPostContent"));
 				banjiPostVO.setUpdateTime(rs.getTimestamp("updateTime"));
+				banjiPostVO.setStatus(rs.getInt("status"));
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -208,6 +210,7 @@ public class BanjiPostJNDIDAO implements BanjiPostDAO_interface {
 				banjiPostVO.setTitle(rs.getString("title"));
 				banjiPostVO.setBanjiPostContent(rs.getString("banjiPostContent"));
 				banjiPostVO.setUpdateTime(rs.getTimestamp("updateTime"));
+				banjiPostVO.setStatus(rs.getInt("status"));
 
 				list.add(banjiPostVO);
 			}

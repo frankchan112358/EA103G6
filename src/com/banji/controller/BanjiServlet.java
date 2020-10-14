@@ -76,15 +76,8 @@ public class BanjiServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				String banjiNo = req.getParameter("banjiNo");
-				if (banjiNo == null || (banjiNo.trim()).length() == 0) {
-					errorMsgs.add("請輸入班級編號");
-				}
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/select_page.jsp");
-					failureView.forward(req, res);
-					return;
-				}
+				String banjiNo = req.getParameter("banjiNo");			
+			
 				BanjiService banjiSvc = new BanjiService();
 				BanjiVO banjiVO = banjiSvc.getOneBanji(banjiNo);
 

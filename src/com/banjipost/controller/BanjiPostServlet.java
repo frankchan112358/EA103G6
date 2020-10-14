@@ -105,18 +105,20 @@ public class BanjiPostServlet extends HttpServlet {
 				String title = req.getParameter("title");
 				if (title == null || title.trim().length() == 0) {
 					errorMsgs.add("公告標題請勿空白");
+
 				}
 				String banjiPostContent = req.getParameter("banjiPostContent");
-				if (title == null || title.trim().length() == 0) {
+				if (banjiPostContent == null || banjiPostContent.trim().length() == 0) {
 					errorMsgs.add("公告內容請勿空白");
 				}
-				java.sql.Timestamp updateTime = null;
-				try {
-					updateTime = java.sql.Timestamp.valueOf(req.getParameter("updateTime").trim());
-				} catch (IllegalArgumentException e) {
-					updateTime = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("時間錯誤");
-				}
+
+				java.sql.Timestamp updateTime = new java.sql.Timestamp((new java.util.Date()).getTime());
+//				try {
+//					updateTime = java.sql.Timestamp.valueOf(req.getParameter("updateTime").trim());
+//				} catch (IllegalArgumentException e) {
+//					updateTime = new java.sql.Timestamp(System.currentTimeMillis());
+//					errorMsgs.add("時間錯誤");
+//				}
 
 				Integer status = null;
 				try {
@@ -134,6 +136,7 @@ public class BanjiPostServlet extends HttpServlet {
 				banjiPostVO.setStatus(status);
 
 				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("banjiPostVO", banjiPostVO);
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/back-end/banjiPost/update_banjiPost_input.jsp");
 					failureView.forward(req, res);
@@ -150,7 +153,7 @@ public class BanjiPostServlet extends HttpServlet {
 				successView.forward(req, res);
 
 			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗" + e.getMessage());
+				errorMsgs.add("更新資料失敗" + e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/back-end/banjiPost/update_banjiPost_input.jsp");
 				failureView.forward(req, res);
@@ -169,17 +172,17 @@ public class BanjiPostServlet extends HttpServlet {
 				}
 
 				String banjiPostContent = req.getParameter("banjiPostContent");
-				if (title == null || title.trim().length() == 0) {
+				if (banjiPostContent == null || banjiPostContent.trim().length() == 0) {
 					errorMsgs.add("公告內容請勿空白");
 				}
 
-				java.sql.Timestamp updateTime = null;
-				try {
-					updateTime = java.sql.Timestamp.valueOf(req.getParameter("updateTime").trim());
-				} catch (IllegalArgumentException e) {
-					updateTime = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("時間錯誤");
-				}
+				java.sql.Timestamp updateTime = new java.sql.Timestamp((new java.util.Date()).getTime());
+//				try {
+//					updateTime = java.sql.Timestamp.valueOf(req.getParameter("updateTime").trim());
+//				} catch (IllegalArgumentException e) {
+//					updateTime = new java.sql.Timestamp(System.currentTimeMillis());
+//					errorMsgs.add("時間錯誤");
+//				}
 
 				Integer status = null;
 				try {
