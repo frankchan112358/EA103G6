@@ -18,6 +18,8 @@ import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
 import com.permission.model.PermissionService;
 import com.permission.model.PermissionVO;
+import com.student.model.StudentService;
+import com.student.model.StudentVO;
 import com.teacher.model.TeacherService;
 import com.teacher.model.TeacherVO;
 import com.user.model.UserService;
@@ -105,30 +107,9 @@ public class UserServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("userVO", userVO);
-//				String url = "/back-end/user/listOneUser.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url);
-//				successView.forward(req, res);
-				
-				
-				if(userVO.getType().equals(0)) {
-					//暫無student Table
-				
-				}else if(userVO.getType().equals(1)) {
-					TeacherService teacherSvc =new TeacherService();
-					TeacherVO teacherVO=teacherSvc.getOneTeacherByUserNo(userNo);
-					req.setAttribute("teacherVO", teacherVO);
-					
-					RequestDispatcher successView = req.getRequestDispatcher("/back-end/teacher/listOneTeacher.jsp");
-					successView.forward(req, res);
-
-				}else {
-					EmpService empSvc =new EmpService();
-					EmpVO empVO=empSvc.getOneEmpByUserNo(userNo);
-					req.setAttribute("empVO", empVO);
-					
-					RequestDispatcher successView = req.getRequestDispatcher("/back-end/emp/listOneEmp.jsp");
-					successView.forward(req, res);
-				}
+				String url = "/back-end/user/listOneUser.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
@@ -294,6 +275,19 @@ public class UserServlet extends HttpServlet {
 
 				if (type == 0) {
 					// 暫無學員table
+					StudentService studentSvc = new StudentService();
+					
+					String studentDescription = null;
+					String banjiNo = "B002";
+					Integer studentStatus = 0;
+					String faceId =null;
+					UserVO userVO1 = userSvc.getOneUserById(id);
+					String userNo = userVO1.getUserNo();
+
+					studentSvc.addStudent(userNo, banjiNo,
+							name,faceId, studentDescription,studentStatus);
+					
+					
 				} else if (type == 1) {
 					// 新增講師table
 					String skill = null;
@@ -452,7 +446,9 @@ public class UserServlet extends HttpServlet {
 				UserVO userVO = UserSvc.getOneUser(userNo);
 
 				if (userVO.getType().equals(0)) {
-					// 暫無學員table
+//					StudentService studentSvc = new StudentService();
+//					String studentrNo = studentSvc.getOneStudentByUserNo(userNo).getTeacherNo();
+//					studentSvc.deleteTeacher(studentNo);
 				} else if (userVO.getType().equals(1)) {
 
 					TeacherService teacherSvc = new TeacherService();
@@ -629,7 +625,16 @@ public class UserServlet extends HttpServlet {
 				userVO.setEnable(enable);
 
 				if (type.equals(0)) {
+					String studentNo = req.getParameter("studentNo");
+					String description = req.getParameter("description").trim();
+					Integer studentStatus = java.lang.Integer.valueOf(req.getParameter("studentStatus"));
 
+					StudentVO studentVO = new StudentVO();
+					studentVO.setStudentNo(studentNo);
+					
+					studentVO.setStudentDescription(description);
+					studentVO.setStudentStatus(studentStatus);
+					req.setAttribute("studentVO", studentVO);	
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("userVO", userVO);
 						RequestDispatcher failureView = req

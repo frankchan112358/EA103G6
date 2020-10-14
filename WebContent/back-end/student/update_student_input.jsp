@@ -1,11 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.user.model.*"%>
+<%@ page import="com.student.model.*"%>
 
 <%
 	UserVO userVO = (UserVO) request.getAttribute("userVO");
 %>
-
+<%
+    StudentVO studentVO = (StudentVO) request.getAttribute("studentVO");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -115,11 +118,25 @@ img {
 				<td>地址：</td>
 				<td><input type="text" name="address" size="60" value="${userVO.address}"></td>
 			</tr>
-
+			<tr>
+				<td>描述：</td>
+				<td><textarea name="description" rows="10" cols="50">${studentVO.studentDescription}</textarea></td>
+			</tr>
+			<tr><%--  --%>
+				 <td>學員狀態：</td>
+				<td><select name="studentStatus">
+						<option value="0"   >未受訓
+						<option value="1"   >在訓中
+						<option value="2"   >結訓
+						<option value="3"   >退訓
+					</select>
+				</td>
+			</tr>	
 			<tr>
 				<td>更換大頭貼：</td>
 				<td><input type="file" name="photo" accept="image/*"></td>
 			</tr>
+			
 		</table><br/>
 		<input type="hidden" name="action" value="update"> 
 		<input type="hidden" name="userNo" value="${userVO.userNo}">
