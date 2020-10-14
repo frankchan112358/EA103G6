@@ -90,6 +90,7 @@ public class ClassroomServlet extends HttpServlet {
 				String url = "/back-end/classroom/update_classroom_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
+
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改資料" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/classroom/listAllClassroom.jsp");
@@ -105,6 +106,12 @@ public class ClassroomServlet extends HttpServlet {
 				String classroomNo = req.getParameter("classroomNo");
 
 				String classroomName = req.getParameter("classroomName");
+				String classroomNameReg = "^[(\u4e00-\u9fd5)(a-zA-Z0-9_)]{2,10}$";
+				if (classroomName == null || classroomName.trim().length() == 0) {
+					errorMsgs.add("教室名稱請勿空白");
+				} else if (!classroomName.trim().matches(classroomNameReg)) {
+					errorMsgs.add("教室名稱只能是中、英文字母、數字，其他不行。");
+				}
 
 				Integer numberOfStudent = null;
 				try {
@@ -148,6 +155,12 @@ public class ClassroomServlet extends HttpServlet {
 
 			try {
 				String classroomName = req.getParameter("classroomName");
+				String classroomNameReg = "^[(\u4e00-\u9fd5)(a-zA-Z0-9_)]{2,10}$";
+				if (classroomName == null || classroomName.trim().length() == 0) {
+					errorMsgs.add("教室名稱請勿空白");
+				} else if (!classroomName.trim().matches(classroomNameReg)) {
+					errorMsgs.add("教室名稱只能是中、英文字母、數字，其他不行。");
+				}
 
 				Integer numberOfStudent = null;
 				try {
