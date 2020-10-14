@@ -220,5 +220,14 @@
   	<servlet-name>ForumTopicServlet</servlet-name>
   	<url-pattern>/forumTopic/forumTopic.do</url-pattern>
   </servlet-mapping>
+  
+  	<servlet>
+		<servlet-name>ClassroomServlet</servlet-name>
+		<servlet-class>com.classroom.controller.ClassroomServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ClassroomServlet</servlet-name>
+		<url-pattern>/classroom/classroom.do</url-pattern>
+	</servlet-mapping>
 
 </web-app>
