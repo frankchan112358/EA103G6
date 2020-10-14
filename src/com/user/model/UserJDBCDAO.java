@@ -490,4 +490,31 @@ public class UserJDBCDAO implements UserDAO_interface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+
+	@Override
+	public UserVO Login_stu(String account, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+	@Override
+	public UserVO Login_emp(String account, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+	@Override
+	public UserVO Login_tea(String account, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

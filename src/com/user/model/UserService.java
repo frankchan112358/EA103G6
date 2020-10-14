@@ -80,5 +80,17 @@ public class UserService {
 	public void deleteUser(String userNo) {
 		dao.delete(userNo);
 	}
+	public UserVO Login_stu(String account,String password) {
+		return dao.Login_stu(account, password);
+		
+	}
+	public UserVO Login_emp(String account,String password) {
+		return dao.Login_emp(account, password);
+		
+	}
+	public UserVO Login_tea(String account,String password) {
+		return dao.Login_tea(account, password);
+		
+	}
 	
 }

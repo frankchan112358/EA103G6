@@ -14,4 +14,7 @@ public interface UserDAO_interface {
     public List<String> checkAccount(Integer type);
     public List<String> checkId(String userNo);
     public InputStream getPic(String userNo);
+    public UserVO Login_stu(String account,String password);
+    public UserVO Login_emp(String account,String password);
+    public UserVO Login_tea(String account,String password);
 }
