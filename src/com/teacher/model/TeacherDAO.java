@@ -48,7 +48,7 @@ public class TeacherDAO implements TeacherDAO_interface{
 			pstmt.setString(1, teacherVO.getUserNo());
 			pstmt.setString(2, teacherVO.getTeacherName());
 			pstmt.setString(3, teacherVO.getSkill());
-			if(teacherVO.getDescription()!=null) {
+			if(teacherVO.getDescription().length()!=0) {
 				Clob clob = con.createClob();
 				String str = teacherVO.getDescription();
 				clob.setString(1, str);
@@ -94,7 +94,7 @@ public class TeacherDAO implements TeacherDAO_interface{
 			pstmt.setString(2, teacherVO.getTeacherName());
 			pstmt.setString(3, teacherVO.getSkill());
 			
-			if(teacherVO.getDescription()!=null) {
+			if(teacherVO.getDescription().length()!=0) {
 				Clob clob = con.createClob();
 				String str = teacherVO.getDescription();
 				clob.setString(1, str);
