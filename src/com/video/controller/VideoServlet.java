@@ -169,23 +169,35 @@ public class VideoServlet extends HttpServlet {
 					System.out.println("沒有傳影片、影片名稱不一樣");
 					
 					//從file讀出 > 存入DB
+					byte[] buffer = new byte[8192];
 					String Destination = "/videos";
 					String realPath = getServletContext().getRealPath(Destination);
-
+					
+					InputStream in = new FileInputStream(new File(realPath + "\\" + oriVideoName + ".mp4"));
+					ByteArrayOutputStream out = new ByteArrayOutputStream();
+					int i;
+					while ((i = in.read(buffer)) != -1) {
+						out.write(buffer, 0, i);
+						out.flush();
+					}
+					videos = out.toByteArray();
+					out.close();
+					in.close();
+					
 					//存入file //存入file(找檔案 > 設定好output檔案 > 建立水管 > read)
 					System.out.println(realPath + "\\" +  oriVideoName + ".mp4");
 
-					InputStream in = new FileInputStream(new File(realPath + "\\" + oriVideoName + ".mp4"));
+					InputStream fin = new FileInputStream(new File(realPath + "\\" + oriVideoName + ".mp4"));
 					OutputStream fos = new FileOutputStream(new File (realPath + "\\" + videoName + ".mp4"));
 					File fDestination = new File(realPath);
 					if (!fDestination.exists())
 						fDestination.mkdirs();
 					int c;
-					while ((c = in.read()) != -1) {
+					while ((c = fin.read()) != -1) {
 						fos.write(c);
 					}
 					fos.close();
-					in.close();
+					fin.close();
 				}
 				
 				String Destination = "/videos";
@@ -257,7 +269,7 @@ public class VideoServlet extends HttpServlet {
 				Part DBvideo = req.getPart("upfile2");
 				System.out.println(video);
 
-				byte[] buffer = new byte[1024*1024];
+				byte[] buffer = new byte[8192];
 				InputStream in = DBvideo.getInputStream();
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
 				int i;
