@@ -55,7 +55,7 @@
                 </a>
                 <ul>
                     <li>
-                        <a href="#" title="教學評鑑總覽">
+                        <a href="<%=request.getContextPath() %>/front-end/evaluation/selectEvaluation.jsp" title="教學評鑑總覽">
                             <span class="nav-link-text">教學評鑑總覽</span>
                         </a>
                     </li>

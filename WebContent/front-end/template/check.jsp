@@ -2,7 +2,7 @@
 <%@page import="com.user.model.UserVO"%>
 <%@page import="com.student.model.StudentVO"%>
 <%
-Object userVO = session.getAttribute("userVO");
+UserVO userVO = (UserVO)session.getAttribute("userVO");
 if(userVO == null){
 	response.sendRedirect(request.getContextPath() + "/back-end/test/login.jsp");
 	return;
@@ -11,5 +11,5 @@ if(userVO != null && ((UserVO)userVO).getType() != 0){
 	response.sendRedirect(request.getContextPath() + "/back-end/index/index.jsp");
 	return;
 }
-Object studentVO = session.getAttribute("studentVO");
+StudentVO studentVO = (StudentVO)session.getAttribute("studentVO");
 %>
