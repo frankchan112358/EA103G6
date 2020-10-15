@@ -9,7 +9,7 @@ public class VideoService {
 		dao = new VideoDAO();
 	}
 	
-	public VideoVO addVideo( String timetableNo, String videoName,String video) {
+	public VideoVO addVideo( String timetableNo, String videoName, byte[] video) {
 
 		VideoVO videoVO = new VideoVO();
 
@@ -21,7 +21,7 @@ public class VideoService {
 		return videoVO;
 	}
 
-	public VideoVO updateVideo(String videoNo, String timetableNo, String videoName, String video) {
+	public VideoVO updateVideo(String videoNo, String timetableNo, String videoName, byte[] video) {
 
 		VideoVO videoVO = new VideoVO();
 

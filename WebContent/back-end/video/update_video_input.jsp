@@ -66,6 +66,7 @@
 </c:if>
 
 <FORM METHOD="post" ACTION="<%=request.getContextPath() %>/video/video.do" NAME="form1" ENCTYPE="multipart/form-data">
+<input type="hidden" name="oriVideoName" value="<%=videoVO.getVideoName()%>">
 <table>
 	<tr>
 		<td>影片編號:<font color=red><b>*</b></font></td>
