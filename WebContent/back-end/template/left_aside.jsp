@@ -31,17 +31,17 @@
                 </a>
                 <ul>
                     <li>
-                        <a href="#" title="學員管理">
+                        <a href="<%=request.getContextPath()%>/back-end/democrat/teacherList.jsp" title="學員管理">
                             <span class="nav-link-text">學員管理</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" title="講師管理">
+                        <a href="# title="講師管理">
                             <span class="nav-link-text">講師管理</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" title="導師管理">
+                        <a href="<%=request.getContextPath()%>/back-end/democrat/empList.jsp" title="導師管理">
                             <span class="nav-link-text">導師管理</span>
                         </a>
                     </li>
