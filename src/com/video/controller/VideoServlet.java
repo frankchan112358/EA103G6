@@ -126,6 +126,7 @@ public class VideoServlet extends HttpServlet {
 				byte[] videos = null;
 				// 如果有新增影片，先驗證格是是否正確 > 重新取得影片、設定檔名
 				if (update_video.getSize()!= 0) {
+					
 					if (!"video/mp4".equals(update_video.getContentType().toLowerCase())) {
 						errorMsgs.add("請上傳mp4格式影片");
 					}
@@ -143,18 +144,27 @@ public class VideoServlet extends HttpServlet {
 
 					// 利用inputStream、outputStream把video存入DB(給儲存資料byte > 取影片 > 利用資料流讀取資料 )
 					Part DBvideo = req.getPart("upfile2");
-					byte[] buffer = new byte[8192];
+//					byte[] videos = null;
+//					byte[] buffer = new byte[8192];
+//					InputStream in = DBvideo.getInputStream();
+//					ByteArrayOutputStream out = new ByteArrayOutputStream();
+//					int i;
+//					while ((i = in.read(buffer)) != -1) {
+//						out.write(buffer, 0, i);
+//						out.flush();
+//					}
+//					videos = out.toByteArray();
+//					out.close();
+//					in.close();
+
 					InputStream in = DBvideo.getInputStream();
 					ByteArrayOutputStream out = new ByteArrayOutputStream();
-					int i;
-					while ((i = in.read(buffer)) != -1) {
-						out.write(buffer, 0, i);
-						out.flush();
-					}
-					videos = out.toByteArray();
+					videos = new byte[in.available()];
+					in.read(videos);
+					out.write(videos);
 					out.close();
 					in.close();
-
+					
 					// video儲存到資料夾(取路徑 > 建立資料夾 > getName > 存入file)
 					String Destination = "/videos";
 					String realPath = getServletContext().getRealPath(Destination);
@@ -167,34 +177,57 @@ public class VideoServlet extends HttpServlet {
 				} else {   // 如果影片名稱有改，則重取檔案 > 重新命名 > 重新存入
 					
 					//從file讀出 > 存入DB
-					byte[] buffer = new byte[8192];
+//					byte[] buffer = new byte[8192];
+//					String Destination = "/videos";
+//					String realPath = getServletContext().getRealPath(Destination);
+//					
+//					InputStream in = new FileInputStream(new File(realPath + "\\" + oriVideoName + ".mp4"));
+//					ByteArrayOutputStream out = new ByteArrayOutputStream();
+//					int i;
+//					while ((i = in.read(buffer)) != -1) {
+//						out.write(buffer, 0, i);
+//						out.flush();
+//					}
+//					videos = out.toByteArray();
+//					out.close();
+//					in.close();
+					
 					String Destination = "/videos";
 					String realPath = getServletContext().getRealPath(Destination);
 					
 					InputStream in = new FileInputStream(new File(realPath + "\\" + oriVideoName + ".mp4"));
+					videos = new byte[in.available()];
 					ByteArrayOutputStream out = new ByteArrayOutputStream();
-					int i;
-					while ((i = in.read(buffer)) != -1) {
-						out.write(buffer, 0, i);
-						out.flush();
-					}
-					videos = out.toByteArray();
+					in.read(videos);
+					out.write(videos);
 					out.close();
 					in.close();
 					
 					///存入file(找檔案 > 設定好output檔案 > 建立水管 > read)
 
+//					InputStream fin = new FileInputStream(new File(realPath + "\\" + oriVideoName + ".mp4"));
+//					OutputStream fos = new FileOutputStream(new File (realPath + "\\" + videoName + ".mp4"));
+//					File fDestination = new File(realPath);
+//					if (!fDestination.exists())
+//						fDestination.mkdirs();
+//					int c;
+//					while ((c = fin.read()) != -1) {
+//						fos.write(c);
+//					}
+//					fos.close();
+//					fin.close();
+					
 					InputStream fin = new FileInputStream(new File(realPath + "\\" + oriVideoName + ".mp4"));
+					videos = new byte[fin.available()];
 					OutputStream fos = new FileOutputStream(new File (realPath + "\\" + videoName + ".mp4"));
 					File fDestination = new File(realPath);
 					if (!fDestination.exists())
 						fDestination.mkdirs();
-					int c;
-					while ((c = fin.read()) != -1) {
-						fos.write(c);
-					}
+					fin.read(videos);
+					fos.write(videos);
 					fos.close();
 					fin.close();
+					
 				}
 				
 				VideoVO videoVO = new VideoVO();
@@ -256,19 +289,26 @@ public class VideoServlet extends HttpServlet {
 				}
 
 				// 利用inputStream、outputStream把video存入DB(給儲存資料byte > 取影片 > 利用資料流讀取資料 )
-				byte[] videos = null;
 				Part DBvideo = req.getPart("upfile2");
-				System.out.println(video);
 
-				byte[] buffer = new byte[8192];
+//				byte[] videos = null;
+//				byte[] buffer = new byte[8192];
+//				InputStream in = DBvideo.getInputStream();
+//				ByteArrayOutputStream out = new ByteArrayOutputStream();
+//				int i;
+//				while ((i = in.read(buffer)) != -1) {
+//					out.write(buffer, 0, i);
+//					out.flush();
+//				}
+//				videos = out.toByteArray();
+//				out.close();
+//				in.close();
+				
 				InputStream in = DBvideo.getInputStream();
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
-				int i;
-				while ((i = in.read(buffer)) != -1) {
-					out.write(buffer, 0, i);
-					out.flush();
-				}
-				videos = out.toByteArray();
+				byte[] videos = new byte[in.available()];
+				in.read(videos);
+				out.write(videos);
 				out.close();
 				in.close();
 
