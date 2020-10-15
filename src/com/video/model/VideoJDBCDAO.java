@@ -39,7 +39,7 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 			
 			pstmt.setString(1, videoVO.getTimetableNo());
 			pstmt.setString(2, videoVO.getVideoName());
-			pstmt.setString(3, videoVO.getVideo());
+			pstmt.setBytes(3, videoVO.getVideo());
 
 			pstmt.executeUpdate();
 			
@@ -72,7 +72,7 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 			
 			pstmt.setString(1, videoVO.getTimetableNo());
 			pstmt.setString(2, videoVO.getVideoName());
-			pstmt.setString(3, videoVO.getVideo());
+			pstmt.setBytes(3, videoVO.getVideo());
 			pstmt.setString(4, videoVO.getVideoNo());
 			
 			pstmt.executeUpdate();
@@ -164,7 +164,8 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 				videoVO.setVideoNo(rs.getString("videoNo"));
 				videoVO.setTimetableNo(rs.getString("TimetableNo"));
 				videoVO.setVideoName(rs.getString("videoName"));
-				videoVO.setVideo(rs.getString("video"));	
+				videoVO.setVideo(rs.getBytes("video"));				
+
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -220,7 +221,7 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 				videoVO.setVideoNo(rs.getString("videoNo"));
 				videoVO.setTimetableNo(rs.getString("timetableNo"));
 				videoVO.setVideoName(rs.getString("videoName"));
-				videoVO.setVideo(rs.getString("video"));
+				videoVO.setVideo(rs.getBytes("video"));
 				list.add(videoVO); 
 			}
 
@@ -262,8 +263,10 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 
 		// 新增
 		VideoVO videoVO1 = new VideoVO();
+
 		videoVO1.setTimetableNo("TT000001");
 		videoVO1.setVideoName("2020-01-02 早上");
+
 		dao.insert(videoVO1);
 
 		// 修改
@@ -277,13 +280,13 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 		dao.delete("1");
 
 		// 查詢
-		VideoVO videoVO3 = dao.findByPrimaryKey("4");
-		System.out.print(videoVO3);
+		VideoVO videoVO3 = dao.findByPrimaryKey("5");
+		System.out.print(videoVO3 );
 		System.out.println("---------------------");
-		System.out.print(videoVO3.getVideoNo() + ",");
-		System.out.print(videoVO3.getTimetableNo() + ",");
-		System.out.print(videoVO3.getVideoName() + ",");
-		System.out.print(videoVO3.getVideo() + ",");
+		System.out.print(videoVO3.getVideoNo() );
+		System.out.print(videoVO3.getTimetableNo() );
+		System.out.print(videoVO3.getVideoName() );
+		System.out.print(videoVO3.getVideo() );
 		System.out.println("---------------------");
 
 		// 查詢

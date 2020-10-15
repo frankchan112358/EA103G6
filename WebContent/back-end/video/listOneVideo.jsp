@@ -64,8 +64,6 @@
 		<td><%=videoVO.getVideo()%></td>
 	</tr>
 </table>
-<%if(videoVO.getVideo()!=null){ %>
-<video style="width: 100%;" src="<%=request.getContextPath()+"/video/"+videoVO.getVideo() %>"  autobuffer autoplay loop controls muted></video>
-<%} %>
+
 </body>
 </html>

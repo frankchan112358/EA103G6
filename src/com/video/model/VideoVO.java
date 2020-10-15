@@ -5,7 +5,7 @@ public class VideoVO implements java.io.Serializable{
 	private String videoNo;
 	private String timetableNo;
 	private String videoName;
-	private String video;
+	private byte[] video;
 	
 	public VideoVO() {}
 	
@@ -27,10 +27,10 @@ public class VideoVO implements java.io.Serializable{
 	public void setVideoName(String videoName) {
 		this.videoName = videoName;
 	}
-	public String getVideo() {
+	public byte[] getVideo() {
 		return video;
 	}
-	public void setVideo(String video) {
+	public void setVideo(byte[] video) {
 		this.video = video;
 	}
 		
