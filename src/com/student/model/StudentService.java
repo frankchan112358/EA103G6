@@ -65,6 +65,15 @@ public class StudentService {
 		return dao.getPic(studentNo);
 	}
 	
+	public StudentVO getOneStudentByUserNo(String userNo) {
+		StudentVO studentVO = null;
+		for (StudentVO item : dao.getAll()) {
+			userNo.equals(item.getUserNo());
+			studentVO = item;
+		}
+		return studentVO;
+	}
+	
 	
 	
 	

@@ -36,7 +36,7 @@ public class UserDAO implements UserDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT USERNO,ACCOUNT,PASSWORD,TYPE,NAME,MAIL,PHONE,ADDRESS,ID,PHOTO,ENABLE FROM WJLUSER WHERE ISDELETE=0 AND USERNO = ?";
 	private static final String GET_ONE_STMT_ID = "SELECT USERNO,ID FROM WJLUSER WHERE ID = ?";
 	private static final String DELETE = "UPDATE WJLUSER SET ISDELETE=1 WHERE USERNO=?";
-	private static final String LOGIN="SELECT USERNO,ACCOUNT,PASSWORD,TYPE,NAME,MAIL,PHONE,ADDRESS,ID,PHOTO,ENABLE FROM WJLUSER WHERE ISDELETE=0 AND ACCOUNT=? AND PASSWORD=?";
+	private static final String LOGIN="SELECT USERNO,ACCOUNT,PASSWORD,TYPE,NAME,MAIL,PHONE,ADDRESS,ID,PHOTO,ENABLE FROM WJLUSER WHERE ISDELETE=0 AND ACCOUNT=? AND PASSWORD=? AND TYPE=?";
 	
 	@Override
 	public void insert(UserVO userVO) {
@@ -500,7 +500,7 @@ public class UserDAO implements UserDAO_interface {
 	}
 
 	@Override
-	public UserVO UserLogin(String account, String password) {
+	public UserVO UserLogin(String account, String password, Integer type) {
 		UserVO userVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -512,7 +512,8 @@ public class UserDAO implements UserDAO_interface {
 
 			pstmt.setString(1, account);
 			pstmt.setString(2, password);
-
+			pstmt.setInt(3, type);
+			
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

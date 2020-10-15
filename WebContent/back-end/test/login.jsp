@@ -77,7 +77,7 @@ if(userVO!=null){
                                                 <select class="form-control" id="studentselect" name="studentNo">
                                                     <option value="">請選擇</option>
                                                     <c:forEach var="studentVO" items="${studentSvc.all }">
-                                                        <option value="${studentVO.studentno }">${studentVO.studentname }(${studentVO.studentno})</option>
+                                                        <option value="${studentVO.studentNo }">${studentVO.studentName }(${studentVO.studentNo})</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>

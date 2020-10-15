@@ -522,7 +522,7 @@ public class UserJDBCDAO implements UserDAO_interface {
 
 
 	@Override
-	public UserVO UserLogin(String account, String password) {
+	public UserVO UserLogin(String account, String password, Integer type) {
 		// TODO Auto-generated method stub
 		return null;
 	}

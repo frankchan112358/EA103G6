@@ -11,7 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import com.emp.model.EmpService;
+import com.emp.model.EmpVO;
+import com.student.model.StudentService;
+import com.student.model.StudentVO;
+import com.teacher.model.TeacherService;
+import com.teacher.model.TeacherVO;
 import com.user.model.UserService;
 import com.user.model.UserVO;
 
@@ -27,93 +32,84 @@ public class LoginHandler extends HttpServlet {
 
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
-
+				
 		try {
-			String type = req.getParameter("type");
+			Integer type = typeNameConvertToTypeNum(req.getParameter("type"));
 			String account = req.getParameter("account").trim();
 			String password = req.getParameter("password").trim();
-
-			
+		
 			UserService userSvc = new UserService();
-			UserVO userVO1 = userSvc.Login_stu(account, password);
-			UserVO userVO2 = userSvc.Login_emp(account, password);
-			UserVO userVO3 = userSvc.Login_tea(account, password);
+			UserVO userVO = userSvc.UserLogin(account, password, type);
 
-			if ("emp".equals(type)) {
-				
-				
-				if (userVO2 == null) {
-					errorMsgs.add("帳號或密碼輸入錯誤");
-				}
-
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/page_login.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-
+			if (userVO == null) {
+				errorMsgs.add("帳號或密碼輸入錯誤");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/page_login.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+			
+			if (type == 2) {
 				/*************************** 查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("userVO", userVO2);
+				req.setAttribute("userVO", userVO);
+				EmpVO empVO = (new EmpService()).getOneEmpByUserNo(userVO.getUserNo());
 				HttpSession session = req.getSession();
-				session.setAttribute("account", account);
+				session.setAttribute("userVO", userVO);
+				session.setAttribute("empVO", empVO);
+				
+				RequestDispatcher successView = req.getRequestDispatcher("/back-end/index/index.jsp");
+				successView.forward(req, res);
+			}
+			
+			if (type == 1) {
+				/*************************** 查詢完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("userVO", userVO);
+				TeacherVO teacherVO = (new TeacherService()).getOneTeacherByUserNo(userVO.getUserNo());
+				HttpSession session = req.getSession();
+				session.setAttribute("userVO", userVO);
+				session.setAttribute("teacherVO", teacherVO);
 
 				RequestDispatcher successView = req.getRequestDispatcher("/back-end/index/index.jsp");
 				successView.forward(req, res);
-
 			}
-
-			if ("teacher".equals(type)) {
-
-				if (userVO3 == null) {
-					errorMsgs.add("帳號或密碼輸入錯誤");
-				}
-
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/page_login.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-
+			
+			if (type == 0) {
 				/*************************** 查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("userVO", userVO3);
+				req.setAttribute("userVO", userVO);
+				StudentVO studentVO = (new StudentService()).getOneStudentByUserNo(userVO.getUserNo());
 				HttpSession session = req.getSession();
-				session.setAttribute("account", account);
-
-
-				RequestDispatcher successView = req.getRequestDispatcher("/back-end/index/index.jsp");
-				successView.forward(req, res);
-
-			}
-
-			if ("student".equals(type)) {
-
-				if (userVO1 == null) {
-					errorMsgs.add("帳號或密碼輸入錯誤");
-				}
-
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/page_login.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-				/*************************** 查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("userVO", userVO1);
-				HttpSession session = req.getSession();
-				session.setAttribute("account", account);
-
+				session.setAttribute("userVO", userVO);
+				session.setAttribute("studentVO", studentVO);
+				
 				RequestDispatcher successView = req.getRequestDispatcher("/front-end/index/index.jsp");
 				successView.forward(req, res);
-
-				/*************************** 其他可能的錯誤處理 *************************************/
-
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			errorMsgs.add("無法取得資料:" + e.getMessage());
 			RequestDispatcher failureView = req.getRequestDispatcher("/back-end/page_login.jsp");
 			failureView.forward(req, res);
 
 		}
-
+	}
+	
+	private Integer typeNameConvertToTypeNum (String type) {
+		Integer typeNum = -1;
+		if(type == null)
+			return typeNum;
+		switch (type) {
+		case "student":
+			typeNum = 0;		
+			break;
+		case "teacher":
+			typeNum = 1;		
+			break;
+		case "emp":
+			typeNum = 2;		
+			break;			
+		default:
+			break;
+		}
+		return typeNum;
 	}
 }
 

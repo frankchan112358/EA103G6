@@ -40,7 +40,7 @@
                                     <div class="panel-container show">
                                         <div class="panel-content">
                                             <div class="form-group">
-                                                <input type="hidden" name="studentNo" value="${studentVO.studentno}"/>
+                                                <input type="hidden" name="studentNo" value="${studentVO.studentNo}"/>
                                                 <label class="form-label" for="selectCourse">課程</label>
                                                 <div class="input-group flex-nowrap">
                                                     <div class="input-group-prepend">

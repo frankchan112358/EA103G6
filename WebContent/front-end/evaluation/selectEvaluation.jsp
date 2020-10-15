@@ -118,7 +118,7 @@ pageContext.setAttribute("courseList", courseList);
                 <div class="modal-body">
                     <form id="formEvaluation" class="needs-validation" novalidate>
                         <div class="form-group">
-                            <input type="hidden" name="studentNo" value="${studentVO.studentno}"/>
+                            <input type="hidden" name="studentNo" value="${studentVO.studentNo}"/>
                             <input type="hidden" name="courseNo" value=""/>
                             <c:forEach var="question" items="${evaluationSvc.getEvaluationQuestionAll()}">
                             	<div style="height: 67px;"> 
@@ -225,7 +225,7 @@ pageContext.setAttribute("courseList", courseList);
                         type: 'GET',
                         url: '<%=request.getContextPath()%>/evaluation/get',
                         data: {
-                            studentNo:'${studentVO.studentno}',
+                            studentNo:'${studentVO.studentNo}',
                             courseNo:courseNo
                         },
                         success(res){

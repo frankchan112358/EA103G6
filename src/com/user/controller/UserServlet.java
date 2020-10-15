@@ -443,6 +443,7 @@ public class UserServlet extends HttpServlet {
 				}
 
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/listAllUser.jsp");
 				failureView.forward(req, res);
