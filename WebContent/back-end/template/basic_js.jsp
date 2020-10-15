@@ -12,3 +12,4 @@
 <script src="<%=request.getContextPath() %>/SmartAdmin4/js/statistics/easypiechart/easypiechart.bundle.js"></script>
 <script src="<%=request.getContextPath() %>/SmartAdmin4/js/statistics/flot/flot.bundle.js"></script>
 <script src="<%=request.getContextPath() %>/SmartAdmin4/js/miscellaneous/jqvmap/jqvmap.bundle.js"></script>
+<script src="<%=request.getContextPath() %>/SmartAdmin4/js/datagrid/datatables/datatables.bundle.js"></script>

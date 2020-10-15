@@ -33,6 +33,7 @@ public class LoginServlet extends HttpServlet {
 				UserVO userVO = (new UserService()).getOneUser(empVO.getUserNo());				
 				HttpSession session = req.getSession();
 				session.setAttribute("userVO", userVO);
+				session.setAttribute("empVO", empVO);
 				res.sendRedirect(req.getContextPath() + "/back-end/index/index.jsp");
 				return;
 			}
@@ -44,6 +45,7 @@ public class LoginServlet extends HttpServlet {
 				UserVO userVO = (new UserService()).getOneUser(teacherVO.getUserNo());				
 				HttpSession session = req.getSession();
 				session.setAttribute("userVO", userVO);
+				session.setAttribute("teacherVO", teacherVO);
 				res.sendRedirect(req.getContextPath() + "/back-end/index/index.jsp");
 				return;
 			}
