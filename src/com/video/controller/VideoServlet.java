@@ -165,8 +165,6 @@ public class VideoServlet extends HttpServlet {
 					File f = new File(fDestination, videoName + ".mp4");
 					update_video.write(f.toString());
 				} else {   // 如果影片名稱有改，則重取檔案 > 重新命名 > 重新存入
-					System.out.println("line170: 迷有傳影片");
-					System.out.println("沒有傳影片、影片名稱不一樣");
 					
 					//從file讀出 > 存入DB
 					byte[] buffer = new byte[8192];
@@ -184,8 +182,7 @@ public class VideoServlet extends HttpServlet {
 					out.close();
 					in.close();
 					
-					//存入file //存入file(找檔案 > 設定好output檔案 > 建立水管 > read)
-					System.out.println(realPath + "\\" +  oriVideoName + ".mp4");
+					///存入file(找檔案 > 設定好output檔案 > 建立水管 > read)
 
 					InputStream fin = new FileInputStream(new File(realPath + "\\" + oriVideoName + ".mp4"));
 					OutputStream fos = new FileOutputStream(new File (realPath + "\\" + videoName + ".mp4"));
@@ -200,11 +197,6 @@ public class VideoServlet extends HttpServlet {
 					fin.close();
 				}
 				
-				String Destination = "/videos";
-				String realPath = getServletContext().getRealPath(Destination);
-				System.out.println("videoName_again = " + videoName);
-				System.out.println("videoNo = " + videoNo);
-				System.out.println(realPath + "\\" +  oriVideoName + ".mp4");
 				VideoVO videoVO = new VideoVO();
 				videoVO.setVideoNo(videoNo);
 				videoVO.setTimetableNo(timetableNo);
@@ -217,7 +209,6 @@ public class VideoServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
-				System.out.println("videoName_againNagain = " + videoName);
 				VideoService videoSvc = new VideoService();
 				videoVO = videoSvc.updateVideo(videoNo, timetableNo, videoName, videos);
 
