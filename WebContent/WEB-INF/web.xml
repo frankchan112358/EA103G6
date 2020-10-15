@@ -92,7 +92,16 @@
 	<servlet-name>TestLogoutServlet</servlet-name>
 	<url-pattern>/test/testlogout.do</url-pattern>
   </servlet-mapping>
-
+  
+  <servlet>
+	<servlet-name>GetEvaluation</servlet-name>
+	<servlet-class>com.evaluation.controller.GetEvaluation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>GetEvaluation</servlet-name>
+	<url-pattern>/evaluation/get</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
 	<servlet-name>AddEvaluation</servlet-name>
 	<servlet-class>com.evaluation.controller.AddEvaluation</servlet-class>
@@ -100,6 +109,24 @@
   <servlet-mapping>
 	<servlet-name>AddEvaluation</servlet-name>
 	<url-pattern>/evaluation/add</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+	<servlet-name>UpdateEvaluation</servlet-name>
+	<servlet-class>com.evaluation.controller.UpdateEvaluation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>UpdateEvaluation</servlet-name>
+	<url-pattern>/evaluation/update</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+	<servlet-name>SelectEvaluation</servlet-name>
+	<servlet-class>com.evaluation.controller.SelectEvaluation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>SelectEvaluation</servlet-name>
+	<url-pattern>/evaluation/select</url-pattern>
   </servlet-mapping>
     
 </web-app>

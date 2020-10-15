@@ -1,13 +1,16 @@
 package com.evaluation.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EvaluationService {
 
-	private EvaluationDAO_interface dao;
+//	private EvaluationDAO_interface dao;
+	private EvaluationJDBCDAO dao = new EvaluationJDBCDAO();
 
 	public EvaluationService() {
-		dao = new EvaluationJNDIDAO();
+//		dao = new EvaluationJNDIDAO();
 	}
 
 	public EvaluationVO addEvaluation(String courseNo, String studentNo, Integer question, Integer answer) {
@@ -51,5 +54,22 @@ public class EvaluationService {
 
 	public String getEvaluationQuestionText(Integer num) {
 		return EvaluationQuestion.findByNum(num).getText();
+	}
+
+	public Map<String, Integer> getEvaluationWithCourseStudent(String courseNo, String studentNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		List<EvaluationVO> list = dao.getEvaluationWithCourseStudent(courseNo, studentNo);
+		for (EvaluationVO evaluationVO : list) {
+			map.put("Q" + evaluationVO.getQuestion(), evaluationVO.getAnswer());
+		}
+		return map;
+	}
+
+	public void deleteEvaluationWithCourseStudent(String courseNo, String studentNo) {
+		dao.deleteWithCourseStudent(courseNo, studentNo);
+	}
+
+	public List<String> getStudentAddedCourseEvaluation(String studentNo) {
+		return dao.getStudentAddedCourseEvaluation(studentNo);
 	}
 }

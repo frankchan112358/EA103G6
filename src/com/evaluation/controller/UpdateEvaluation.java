@@ -9,16 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 import com.evaluation.model.EvaluationQuestion;
 import com.evaluation.model.EvaluationService;
 
-public class AddEvaluation extends HttpServlet {
+public class UpdateEvaluation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		PrintWriter out = res.getWriter();
 		try {
-			String studentNo = req.getParameter("studentNo");
 			String courseNo = req.getParameter("courseNo");
+			String studentNo = req.getParameter("studentNo");
 			EvaluationService evaluationSvc = new EvaluationService();
+			evaluationSvc.deleteEvaluationWithCourseStudent(courseNo, studentNo);
 			for (int i = 1; i <= EvaluationQuestion.values().length; i++) {
 				Integer question = i;
 				Integer answer = Integer.parseInt(req.getParameter("Q" + i));
