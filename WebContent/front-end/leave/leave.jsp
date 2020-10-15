@@ -27,7 +27,7 @@
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-clipboard-check'></i> 請假申請
+                            <i class='subheader-icon fal fa-file-edit'></i> 請假申請
                         </h1>
                     </div>
                     <div class="row">
@@ -40,6 +40,7 @@
                                     <div class="panel-container show">
                                         <div class="panel-content">
                                             <div class="form-group">
+                                                <button id="new" data-toggle="modal" data-target="#editor-leave" type="button" class="btn btn-primary waves-effect waves-themed float-left">申請</button>
                                                 <!-- datatable start -->
                                                 <table id="table-leave" class="table table-bordered table-hover table-striped w-100">
                                                     <thead>
@@ -73,8 +74,8 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">課程意見調查表
-                        <small class="m-0 text-muted">請務必評分每個問題</small>
+                    <h4 class="modal-title">學員請假單
+                        <small class="m-0 text-muted">請務必照實填寫</small>
                     </h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
@@ -89,7 +90,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel">取消</button>
-                    <button type="button" class="btn btn-primary" id="save">儲存</button>
+                    <button type="button" class="btn btn-primary" id="save">送出</button>
                 </div>
             </div>
         </div>
@@ -99,14 +100,9 @@
     <%@ include file="/front-end/template/basic_js.jsp" %>   
     <script>
         'use strict';
-        $(document).ready(function(){
-            var formLeave =  document.getElementById('form-leave');
-
-            $('#table-leave').dataTable({
-                responsive: true,
-                language:{url:'<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json'}
-            });
-        });
+        // 把java取值得結果，先放入var變數
+        var ContextPath = '<%=request.getContextPath()%>';
     </script>
+    <script src="<%=request.getContextPath()%>/front-end/leave/leave.js"></script>
 </body>
 </html>
