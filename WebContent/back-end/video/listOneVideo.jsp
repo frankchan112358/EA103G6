@@ -64,6 +64,7 @@
 		<td><%=videoVO.getVideo()%></td>
 	</tr>
 </table>
+	<video src="<%=request.getContextPath()%>/videos/<%=videoVO.getVideoName()%>.mp4"   type="video/mp4" autoplay loop controls muted></video>
 
 </body>
 </html>
