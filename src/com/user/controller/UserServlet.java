@@ -2,8 +2,10 @@ package com.user.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,8 +20,6 @@ import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
 import com.permission.model.PermissionService;
 import com.permission.model.PermissionVO;
-import com.student.model.StudentService;
-import com.student.model.StudentVO;
 import com.teacher.model.TeacherService;
 import com.teacher.model.TeacherVO;
 import com.user.model.UserService;
@@ -107,9 +107,29 @@ public class UserServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("userVO", userVO);
-				String url = "/back-end/user/listOneUser.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
+//				String url = "/back-end/user/listOneUser.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);
+//				successView.forward(req, res);
+
+				if (userVO.getType().equals(0)) {
+					// 暫無student Table
+
+				} else if (userVO.getType().equals(1)) {
+					TeacherService teacherSvc = new TeacherService();
+					TeacherVO teacherVO = teacherSvc.getOneTeacherByUserNo(userNo);
+					req.setAttribute("teacherVO", teacherVO);
+
+					RequestDispatcher successView = req.getRequestDispatcher("/back-end/teacher/listOneTeacher.jsp");
+					successView.forward(req, res);
+
+				} else {
+					EmpService empSvc = new EmpService();
+					EmpVO empVO = empSvc.getOneEmpByUserNo(userNo);
+					req.setAttribute("empVO", empVO);
+
+					RequestDispatcher successView = req.getRequestDispatcher("/back-end/emp/listOneEmp.jsp");
+					successView.forward(req, res);
+				}
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
@@ -120,68 +140,49 @@ public class UserServlet extends HttpServlet {
 		}
 
 		if ("insert".equals(action)) {
-			List<String> errorMsgs = new LinkedList<String>();
+
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-				Integer type = null;
+				Integer type = java.lang.Integer.valueOf(req.getParameter("type"));
+				;
 
-				try {
-					type = java.lang.Integer.valueOf(req.getParameter("type"));
-				} catch (NumberFormatException se) {
-					errorMsgs.add("請填寫使用者身分欄位");
+				String name = req.getParameter("name").trim();
+				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{2,10}$";
+				if (name == null || name.trim().length() == 0) {
+					errorMsgs.put("name", "姓名請勿空白");
+				} else if (!name.trim().matches(nameReg)) {
+					errorMsgs.put("name", "只能是中、英文字母 , 且長度必需在2到10之間");
 				}
 
-				String account = req.getParameter("account").trim();
-				String accountReg = "\\w{6,12}";
-
-				UserService userSVAccount = new UserService();
-				List<String> accountVS = userSVAccount.checkAccount(type);
-
-				if (account == null || account.trim().length() == 0) {
-					errorMsgs.add("帳號請勿空白");
-				} else if (!account.trim().matches(accountReg)) {
-					errorMsgs.add("帳號：僅能輸入英文字母及數字，且長度為6-12");
+				String mail = req.getParameter("mail").trim();
+				String mailReg = "^\\w{1,63}@[a-zA-Z0-9]{2,63}\\.[a-zA-Z]{2,63}(\\.[a-zA-Z]{2,63})?$";
+				if (mail == null || mail.trim().length() == 0) {
+					errorMsgs.put("mail", "信箱請勿空白");
+				} else if (!mail.trim().matches(mailReg)) {
+					errorMsgs.put("mail", "格式錯誤，請再次檢查");
 				} else {
+
+					// 進資料庫對比信箱是否重複註冊
+					UserService userSVAccount = new UserService();
+					List<String> accountVS = userSVAccount.checkAccount(type);
+
 					for (String checkAccount : accountVS) {
-						if (account.equals(checkAccount)) {
-							errorMsgs.add("帳號：已重複註冊請更換");
+						if (mail.equals(checkAccount)) {
+							errorMsgs.put("mail", "信箱已重複註冊請更換");
 							break;
 						}
 					}
 				}
 
-				String password = req.getParameter("password");
+				String phone = req.getParameter("phone").trim();
 
-				String passwordReg = req.getParameter("id");
-				if (password == null || password.trim().length() == 0) {
-					errorMsgs.add("密碼請勿空白");
-				} else if (!password.trim().matches(passwordReg)) {
-					errorMsgs.add("密碼：請與學員身分證字號相同");
-				}
-
-				String name = req.getParameter("name");
-				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{2,10}$";
-				if (name == null || name.trim().length() == 0) {
-					errorMsgs.add("姓名: 請勿空白");
-				} else if (!name.trim().matches(nameReg)) {
-					errorMsgs.add("姓名: 只能是中、英文字母 , 且長度必需在2到10之間");
-				}
-
-				String mail = req.getParameter("mail");
-				String mailReg = "^\\w{1,63}@[a-zA-Z0-9]{2,63}\\.[a-zA-Z]{2,63}(\\.[a-zA-Z]{2,63})?$";
-				if (mail == null || mail.trim().length() == 0) {
-					errorMsgs.add("信箱: 請勿空白");
-				} else if (!mail.trim().matches(mailReg)) {
-					errorMsgs.add("信箱: 格式錯誤，請再次檢查");
-				}
-
-				String phone = req.getParameter("phone");
 				String phoneReg = "[0-9]{10}";
 				if (phone == null || phone.trim().length() == 0) {
 				} else if (!phone.trim().matches(phoneReg)) {
-					errorMsgs.add("手機號碼: 僅接受台灣連絡電話且僅能輸入10碼");
+					errorMsgs.put("phone", "僅接受台灣連絡電話且僅能輸入10碼");
 				}
 
 				String address = req.getParameter("address").trim();
@@ -203,7 +204,7 @@ public class UserServlet extends HttpServlet {
 					String reg = "^[A-Z][12]\\d{8}$";
 
 					if (!id.matches(reg)) {
-						errorMsgs.add("請仔細填寫身分證號碼，第一碼請大寫");
+						errorMsgs.put("id", "請仔細填寫身分證號碼，第一碼請大寫");
 					} else {
 						firstChar = Character.toUpperCase(id.charAt(0));
 						lastNum = Integer.valueOf(Character.toString(id.charAt(9)));
@@ -227,18 +228,18 @@ public class UserServlet extends HttpServlet {
 
 						if (total == 0) {
 							if (total != Integer.valueOf(Character.toString(id.charAt(9)))) {
-								errorMsgs.add("身分證號碼輸入錯誤");
+								errorMsgs.put("id", "身分證號碼輸入錯誤");
 
 							}
 						} else {
 							if ((10 - total) != Integer.valueOf(Character.toString(id.charAt(9)))) {
-								errorMsgs.add("身分證號碼輸入錯誤");
+								errorMsgs.put("id", "身分證號碼輸入錯誤");
 
 							}
 						}
 					}
 				} catch (StringIndexOutOfBoundsException se) {
-					errorMsgs.add("請仔細填寫身分證號碼");
+					errorMsgs.put("id", "請仔細填寫身分證號碼");
 				}
 
 				UserService userSvcId = new UserService();
@@ -246,14 +247,20 @@ public class UserServlet extends HttpServlet {
 
 				for (String checkId : idVS) {
 					if (id.equals(checkId)) {
-						errorMsgs.add("身分證字號：已重複註冊請更換");
+						errorMsgs.put("id", "身分證字號已重複註冊請更換");
 						break;
 					}
 				}
 
+				Part part = req.getPart("photo");
+				InputStream photo = null;
+				String form = part.getContentType().toLowerCase();
+
+				if (form.contains("image") && errorMsgs.isEmpty()) {
+					photo = part.getInputStream();
+				}
+
 				UserVO userVO = new UserVO();
-				userVO.setAccount(account);
-				userVO.setPassword(password);
 				userVO.setType(type);
 				userVO.setName(name);
 				userVO.setMail(mail);
@@ -261,37 +268,67 @@ public class UserServlet extends HttpServlet {
 				userVO.setAddress(address);
 				userVO.setId(id);
 
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("userVO", userVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/addUser.jsp");
-					failureView.forward(req, res);
-					return;
+				
+				String skill =null;
+				String description=null;
+				/**************************** Start講師物件的回傳設定 ********************************/
+				if (type.equals(1)) {
+					
+					skill = req.getParameter("skill");
+					if (skill != null) 
+						skill.trim();
+					
+					description = req.getParameter("description");
+					if (description != null) 
+						description.trim();
+					
+
+					TeacherVO teacherVO = new TeacherVO();
+					teacherVO.setSkill(skill);
+					teacherVO.setDescription(description);
+
+					
+					if (!errorMsgs.isEmpty()) {
+						req.setAttribute("userVO", userVO);
+						req.setAttribute("teacherVO", teacherVO);
+						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teacher/addTeacher.jsp");
+						failureView.forward(req, res);
+						return;
+
+					}
 
 				}
-				/*************************** 2.開始新增資料 ***************************************/
+				/************************* End講師物件的回傳設定 ****************************/
+
+				/**************************** Start導師物件的回傳設定 ********************************/
+				if (type.equals(2)) {
+
+					if (!errorMsgs.isEmpty()) {
+						req.setAttribute("userVO", userVO);
+						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/addEmp.jsp");
+						failureView.forward(req, res);
+						return;
+
+					}
+				}
+
+				/************************* End導師物件的回傳設定 ****************************/
+				
+
+				/************************ 2.確認無誤後開始新增使用者Table資料 **********************/
+				
+				String account = mail;
+				String password = id;
+
 				UserService userSvc = new UserService();
-				userVO = userSvc.addUser(account, password, type, name, mail, phone, address, id);
+				userVO = userSvc.addUser(account, password, type, name, mail, phone, address, id, photo);
 				/*************************** 2-1.開始新增其身分table *******************************/
+				
 
-				if (type == 0) {
+				if (type.equals(0)) {
 					// 暫無學員table
-					StudentService studentSvc = new StudentService();
-					
-					String studentDescription = null;
-					String banjiNo = "B002";
-					Integer studentStatus = 0;
-					String faceId =null;
-					UserVO userVO1 = userSvc.getOneUserById(id);
-					String userNo = userVO1.getUserNo();
-
-					studentSvc.addStudent(userNo, banjiNo,
-							name,faceId, studentDescription,studentStatus);
-					
-					
-				} else if (type == 1) {
+				} else if (type.equals(1)) {
 					// 新增講師table
-					String skill = null;
-					String description = null;
 
 					UserVO userVO1 = userSvc.getOneUserById(id);
 					String userNo = userVO1.getUserNo();
@@ -318,7 +355,7 @@ public class UserServlet extends HttpServlet {
 						if (req.getParameter("readable" + permissionVO.getPermissionNo()) == null) {
 							readable = 0;
 						}
-						if (req.getParameter("editabld" + permissionVO.getPermissionNo()) == null) {
+						if (req.getParameter("editable" + permissionVO.getPermissionNo()) == null) {
 							editable = 0;
 						}
 
@@ -329,11 +366,23 @@ public class UserServlet extends HttpServlet {
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 
-				RequestDispatcher successView = req.getRequestDispatcher("/back-end/user/listAllUser.jsp");
-				successView.forward(req, res);
+				if(type.equals(0)) {
+					
+					RequestDispatcher successView = req.getRequestDispatcher("/back-end/user/listAllUser.jsp");
+					successView.forward(req, res);
+					
+				}else if(type.equals(1)) {
+					
+					RequestDispatcher successView = req.getRequestDispatcher("/back-end/democrat/teacherList.jsp");
+					successView.forward(req, res);
+				}else {
+					RequestDispatcher successView = req.getRequestDispatcher("/back-end/democrat/empList.jsp");
+					successView.forward(req, res);
+				}
+				
 
 			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
+				errorMsgs.put("mistake", e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/addUser.jsp");
 				failureView.forward(req, res);
 			}
@@ -355,12 +404,10 @@ public class UserServlet extends HttpServlet {
 				req.setAttribute("userVO", userVO);
 
 				/*************************** 2.查詢資料,並準備轉交(Send the Success view) ************/
-				req.setAttribute("userVO", userVO);
 
 				if (userVO.getType().equals(0)) {
 
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/student/update_student_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/student/update_student_input.jsp");
 					failureView.forward(req, res);
 					return;
 
@@ -369,30 +416,29 @@ public class UserServlet extends HttpServlet {
 					TeacherService teacherSvc = new TeacherService();
 					TeacherVO teacherVO = teacherSvc.getOneTeacherByUserNo(userNo);
 					if (teacherVO == null) {
-						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back-end/user/update_user_input.jsp");
+						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/update_user_input.jsp");
 						failureView.forward(req, res);
 						return;
 					}
 
 					req.setAttribute("teacherVO", teacherVO);
-					RequestDispatcher successView = req
-							.getRequestDispatcher("/back-end/teacher/update_teacher_input.jsp");
+					RequestDispatcher successView = req.getRequestDispatcher("/back-end/teacher/update_teacher_input.jsp");
 					successView.forward(req, res);
 				} else {
 
 					EmpService empSvc = new EmpService();
 					EmpVO empVO = empSvc.getOneEmpByUserNo(userNo);
-					if (empVO == null) {
-						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back-end/user/update_user_input.jsp");
+					
+					
+					if (empVO == null) { //若離職頁面轉至此跳刪除建議，但目前新版面離職的人會抓不到
+						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/update_user_input.jsp");
 						failureView.forward(req, res);
 						return;
 					}
-
 					req.setAttribute("empVO", empVO);
-					RequestDispatcher successView = req.getRequestDispatcher("/back-end/emp/update_emp_input.jsp");
-					successView.forward(req, res);
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/updateEmp.jsp");
+					failureView.forward(req, res);
+					
 
 				}
 
@@ -446,9 +492,7 @@ public class UserServlet extends HttpServlet {
 				UserVO userVO = UserSvc.getOneUser(userNo);
 
 				if (userVO.getType().equals(0)) {
-//					StudentService studentSvc = new StudentService();
-//					String studentrNo = studentSvc.getOneStudentByUserNo(userNo).getTeacherNo();
-//					studentSvc.deleteTeacher(studentNo);
+					// 暫無學員table
 				} else if (userVO.getType().equals(1)) {
 
 					TeacherService teacherSvc = new TeacherService();
@@ -625,16 +669,7 @@ public class UserServlet extends HttpServlet {
 				userVO.setEnable(enable);
 
 				if (type.equals(0)) {
-					String studentNo = req.getParameter("studentNo");
-					String description = req.getParameter("description").trim();
-					Integer studentStatus = java.lang.Integer.valueOf(req.getParameter("studentStatus"));
 
-					StudentVO studentVO = new StudentVO();
-					studentVO.setStudentNo(studentNo);
-					
-					studentVO.setStudentDescription(description);
-					studentVO.setStudentStatus(studentStatus);
-					req.setAttribute("studentVO", studentVO);	
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("userVO", userVO);
 						RequestDispatcher failureView = req

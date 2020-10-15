@@ -137,6 +137,12 @@
 												</tr>
 																					
                                             </table>
+                                            
+                                            <form method="post" action="<%=request.getContextPath()%>/user.do">
+                                            	<input type="hidden" name="userNo" value=<%=userVO.getUserNo()%>> 
+												<input type="hidden" name="action" value="getOne_For_Update">
+                                            	<button id="submitAddEmp" class="btn btn-primary ml-auto">修改</button>
+                                            </form>
                                             <!-- datatable end -->
                                         </div>
                                     </div>

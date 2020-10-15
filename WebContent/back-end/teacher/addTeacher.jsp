@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.user.model.*,com.emp.model.*"%>
+<%@ page import="com.user.model.*,com.teacher.model.*"%>
 <%@ page import="java.util.*"%>
 <%
 	UserVO userVO = (UserVO) request.getAttribute("userVO");  
-	
+	TeacherVO teacherVO=(TeacherVO) request.getAttribute("teacherVO");
 %>
 
 <!DOCTYPE html>
@@ -56,7 +56,7 @@
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-democrat'></i> Democrat 
+                            <i class='subheader-icon fal fa-democrat'></i> Democrat
                         </h1>
                     </div>
            					<div id="panel-2" class="panel">
@@ -114,6 +114,16 @@
                                                 	</div>
                                                     
                                                     <div class="form-group mb-3">
+                                                         <label class="form-label" for="skill">講師技術簡介  </label>
+                                                         <input type="text" class="form-control" id="id" placeholder="Skill" name="skill" value="${teacherVO eq null?'':teacherVO.skill}" >
+                                                    </div>
+                                                    
+                                                    <div class="form-group mb-3">
+                                                         <label class="form-label" for="description">講師詳細描述 </label>
+                                                         <textarea class="form-control" id="description"  name="description" placeholder="Description" >${teacherVO eq null?'':teacherVO.description}</textarea>
+                                                    </div>
+                                                    
+                                                    <div class="form-group mb-3">
                                                     	<label class="form-label">上傳大頭照</label>
                                                     	<div class="custom-file">
                                                        	 <input type="file" class="custom-file-input" id="photo" accept="image/*" name="photo">
@@ -122,39 +132,7 @@
                                                		</div>
                                                     <div class="form-row form-group">
                                                         
-                                                        <div class="col-md-4 mb-3" style="text-align:center;">
-                                                            <label class="form-label mb-2">編輯班種之權限 <span class="text-danger">*</span></label>
-                                                            <div class="mb-2">
-                                                            	<label for="readable1">可否讀取</label>
-                                                                <input type="checkbox" name="readable1" data-toggle="toggle" data-size="xs" value="0" id="permission1" >
-                                                            </div>
-                                                            <div class="mb-2">
-                                                            <label for="editable1">可否編輯</label>
-                                                                <input type="checkbox" name="editable1" data-toggle="toggle" data-size="xs" value="0" id="permission2" >
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 mb-3" style="text-align:center;">
-                                                            <label class="form-label mb-2">編輯教室之權限 <span class="text-danger">*</span></label>
-                                                            <div class="mb-2">
-                                                            	<label for="readable2">可否讀取</label>
-                                                                <input type="checkbox" name="readable2" data-toggle="toggle" data-size="xs" value="0" id="permission3" >
-                                                            </div>
-                                                            <div class="mb-2">
-                                                            <label for="editable2">可否編輯</label>
-                                                                <input type="checkbox" name="editable2" data-toggle="toggle" data-size="xs" value="0" id="permission4" >
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 mb-3" style="text-align:center;">
-                                                            <label class="form-label mb-2">請假審核之權限 <span class="text-danger">*</span></label>
-                                                            <div class="mb-2">
-                                                            	<label for="readable3">可否讀取</label>
-                                                                <input type="checkbox" name="readable3" data-toggle="toggle" data-size="xs" value="0" id="permission5" >
-                                                            </div>
-                                                            <div class="mb-2">
-                                                            <label for="editable3">可否編輯</label>
-                                                                <input type="checkbox" name="editable3" data-toggle="toggle" data-size="xs" value="0" id="permission6" >
-                                                            </div>
-                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                                 <div class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row align-items-center">
@@ -168,7 +146,7 @@
                                                     <button id="submitAddEmp" class="btn btn-primary ml-auto">Submit form</button>
                                                 </div>
                                             <input type="hidden" name="action" value="insert"> 
-                                            <input type="hidden" name="type" value="2"> 
+                                            <input type="hidden" name="type" value="1"> 
                                                 
                                             </form>
                                             
@@ -250,14 +228,6 @@
                                                     districtName: "town" // 自訂區別 select 標籤的 name 值
                                                 });
                                             
-                                            //控制權限之value值 
-                                            <%for(int i=1;i<=6;i++){%>
-                                            	$("#permission<%=i%>").change(function(){
-                                            		if($(this).prop("checked")){
-                                            			$(this).val(1);}
-                                            	});
-                                            <%}%>
-
                                             
                                             //後端抓到錯誤前端改樣式
                                             <c:if test="${not empty errorMsgs.name}">

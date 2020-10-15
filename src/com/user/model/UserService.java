@@ -13,7 +13,7 @@ public class UserService {
 	}
 	
 	public UserVO addUser(String account,String password,Integer type,String name,
-			String mail,String phone, String address,String id) {
+			String mail,String phone, String address,String id,InputStream photo) {
 		
 		UserVO userVO = new UserVO();
 		
@@ -25,6 +25,7 @@ public class UserService {
 		userVO.setPhone(phone);
 		userVO.setAddress(address);
 		userVO.setId(id);
+		userVO.setPhoto(photo);
 		dao.insert(userVO);
 		
 		return userVO;				

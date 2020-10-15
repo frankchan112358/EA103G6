@@ -4,7 +4,8 @@
 <%@ page import="java.util.*"%>
 <%
 	UserVO userVO = (UserVO) request.getAttribute("userVO");  
-	
+	EmpVO empVO = (EmpVO) request.getAttribute("empVO");
+
 %>
 
 <!DOCTYPE html>
@@ -31,9 +32,10 @@
 	
 }
 
-#pic{
+#picDiv{
 	width: 150px;
 	height: 150px;
+
 }
 
 </style>
@@ -56,13 +58,13 @@
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-democrat'></i> Democrat 
+                            <i class='subheader-icon fal fa-democrat'></i> Democrat
                         </h1>
                     </div>
            					<div id="panel-2" class="panel">
                                     <div class="panel-hdr">
                                         <h2>
-                                            Add <span class="fw-300"><i>Employee</i></span>
+                                            Update <span class="fw-300"><i>Employee</i></span>
                                         </h2>
                                         <div class="panel-toolbar">
                                             <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
@@ -73,8 +75,12 @@
                                     <div class="panel-container show">
                                         
                                         <div class="panel-content p-0">
-                                            <form class="needs-validation" method="post" action="<%=request.getContextPath()%>/user.do" enctype="multipart/form-data" novalidate>
+                                            <form class="needs-validation"  enctype="multipart/form-data" novalidate>
                                                 <div class="panel-content">
+                                                <div  id="picDiv">
+															<img src="<%=request.getContextPath() %>/images/noPicture.png">
+                                                        
+                                                        </div>
                                                     <div class="form-row">
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="name">姓名 <span class="text-danger">*</span> </label>
@@ -92,6 +98,23 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 mb-3">
+                                                            <label class="form-label" for="enable">帳號啟用狀態 <span class="text-danger">*</span></label>
+                                                            <select class="custom-select" id="enable" name="enable" required="" >
+                                                                <option value="0">停用中</option>
+                                                                <option value="1">啟用中</option>
+                                                            </select>
+                                                        </div>
+                                                        
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label" for="empStatus">導師狀態調整 <span class="text-danger">*</span></label>
+                                                            <select class="custom-select" id="empStatus" name="empStatus" required="" >
+                                                                <option value="0">離職</option>
+                                                                <option value="1">在職</option>
+                                                                <option value="2">停職</option>
+                                                            </select>
+                                                        </div>
+                                                        
+                                                        <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="id">身分證字號 <span class="text-danger">*</span> </label>
                                                             <input type="text" class="form-control" id="id" placeholder="Id" name="id" value="${userVO eq null?'':userVO.id }" required>
                                                             <div class="invalid-feedback" id="wrongId">
@@ -99,6 +122,7 @@
                                                             </div>
                                                             
                                                         </div>
+                                                        
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="mail">電子郵件<span class="text-danger">*</span></label>
                                                             <input type="text" class="form-control" id="mail" placeholder="E-mail" name="mail" value="${userVO eq null?'':userVO.mail }" required>
@@ -122,39 +146,6 @@
                                                		</div>
                                                     <div class="form-row form-group">
                                                         
-                                                        <div class="col-md-4 mb-3" style="text-align:center;">
-                                                            <label class="form-label mb-2">編輯班種之權限 <span class="text-danger">*</span></label>
-                                                            <div class="mb-2">
-                                                            	<label for="readable1">可否讀取</label>
-                                                                <input type="checkbox" name="readable1" data-toggle="toggle" data-size="xs" value="0" id="permission1" >
-                                                            </div>
-                                                            <div class="mb-2">
-                                                            <label for="editable1">可否編輯</label>
-                                                                <input type="checkbox" name="editable1" data-toggle="toggle" data-size="xs" value="0" id="permission2" >
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 mb-3" style="text-align:center;">
-                                                            <label class="form-label mb-2">編輯教室之權限 <span class="text-danger">*</span></label>
-                                                            <div class="mb-2">
-                                                            	<label for="readable2">可否讀取</label>
-                                                                <input type="checkbox" name="readable2" data-toggle="toggle" data-size="xs" value="0" id="permission3" >
-                                                            </div>
-                                                            <div class="mb-2">
-                                                            <label for="editable2">可否編輯</label>
-                                                                <input type="checkbox" name="editable2" data-toggle="toggle" data-size="xs" value="0" id="permission4" >
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 mb-3" style="text-align:center;">
-                                                            <label class="form-label mb-2">請假審核之權限 <span class="text-danger">*</span></label>
-                                                            <div class="mb-2">
-                                                            	<label for="readable3">可否讀取</label>
-                                                                <input type="checkbox" name="readable3" data-toggle="toggle" data-size="xs" value="0" id="permission5" >
-                                                            </div>
-                                                            <div class="mb-2">
-                                                            <label for="editable3">可否編輯</label>
-                                                                <input type="checkbox" name="editable3" data-toggle="toggle" data-size="xs" value="0" id="permission6" >
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row align-items-center">
@@ -167,9 +158,6 @@
                                                     </div>
                                                     <button id="submitAddEmp" class="btn btn-primary ml-auto">Submit form</button>
                                                 </div>
-                                            <input type="hidden" name="action" value="insert"> 
-                                            <input type="hidden" name="type" value="2"> 
-                                                
                                             </form>
                                             
                                             <script>
