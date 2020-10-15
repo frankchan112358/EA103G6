@@ -1,17 +1,12 @@
 package com.reply.controller;
 
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
-import com.reply.model.ReplyService;
-import com.reply.model.ReplyVO;
+import com.reply.model.*;
 
 public class ReplyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
