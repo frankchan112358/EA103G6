@@ -64,4 +64,14 @@ public class CourseService {
 	public List<CourseVO> getAll() {
 		return dao.getAll();
 	}
+	
+
+	public CourseStatus[] getCourseStatusAll() {
+		return CourseStatus.values();
+	}
+
+	public String getCourseStatusText(Integer num) {
+		return CourseStatus.findByNum(num).getText();
+	}
+
 }
