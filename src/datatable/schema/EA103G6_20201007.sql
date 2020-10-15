@@ -861,9 +861,15 @@ INSERT INTO teachingplan (teachingplanno,courseno,week,lesson,plancontent) VALUE
 --------------------------------------------------------
 --  Insert into 教學評鑑 evaluation
 --------------------------------------------------------
-INSERT INTO evaluation (evaluationno, courseno, studentno, question, answer) VALUES (EVALUATION_SEQ.nextval, 'C001', 'S000001', 1, 9);
-INSERT INTO evaluation (evaluationno, courseno, studentno, question, answer) VALUES (EVALUATION_SEQ.nextval, 'C001', 'S000002', 2, 8);
-INSERT INTO evaluation (evaluationno, courseno, studentno, question, answer) VALUES (EVALUATION_SEQ.nextval, 'C001', 'S000003', 3, 7);
+Insert into EVALUATION (EVALUATIONNO,COURSENO,STUDENTNO,QUESTION,ANSWER) values (evaluation_seq.nextval,'C001','S000002',1,9);
+Insert into EVALUATION (EVALUATIONNO,COURSENO,STUDENTNO,QUESTION,ANSWER) values (evaluation_seq.nextval,'C001','S000002',2,8);
+Insert into EVALUATION (EVALUATIONNO,COURSENO,STUDENTNO,QUESTION,ANSWER) values (evaluation_seq.nextval,'C001','S000002',3,7);
+Insert into EVALUATION (EVALUATIONNO,COURSENO,STUDENTNO,QUESTION,ANSWER) values (evaluation_seq.nextval,'C001','S000002',4,7);
+Insert into EVALUATION (EVALUATIONNO,COURSENO,STUDENTNO,QUESTION,ANSWER) values (evaluation_seq.nextval,'C001','S000002',5,7);
+Insert into EVALUATION (EVALUATIONNO,COURSENO,STUDENTNO,QUESTION,ANSWER) values (evaluation_seq.nextval,'C001','S000002',6,0);
+Insert into EVALUATION (EVALUATIONNO,COURSENO,STUDENTNO,QUESTION,ANSWER) values (evaluation_seq.nextval,'C001','S000002',7,1);
+Insert into EVALUATION (EVALUATIONNO,COURSENO,STUDENTNO,QUESTION,ANSWER) values (evaluation_seq.nextval,'C001','S000002',8,2);
+Insert into EVALUATION (EVALUATIONNO,COURSENO,STUDENTNO,QUESTION,ANSWER) values (evaluation_seq.nextval,'C001','S000002',9,3);
 --------------------------------------------------------
 --  Insert into 期末成績 finalscore
 --------------------------------------------------------
