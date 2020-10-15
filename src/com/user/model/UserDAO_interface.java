@@ -17,5 +17,5 @@ public interface UserDAO_interface {
     public UserVO Login_stu(String account,String password);
     public UserVO Login_emp(String account,String password);
     public UserVO Login_tea(String account,String password);
-	UserVO UserLogin(String account, String password);
+	public UserVO UserLogin(String account, String password, Integer type);
 }

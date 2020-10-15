@@ -90,8 +90,10 @@ public class UserService {
 		
 	}
 	public UserVO Login_tea(String account,String password) {
-		return dao.Login_tea(account, password);
+		return dao.Login_tea(account, password);		
+	}
+	public UserVO UserLogin(String account,String password, Integer type) {
+		return dao.UserLogin(account, password, type);
 		
 	}
-	
 }
