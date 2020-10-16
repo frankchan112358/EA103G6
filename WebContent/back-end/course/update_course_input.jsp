@@ -6,195 +6,196 @@
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
 %>
 
+<jsp:useBean id="banjiSvc" scope="page" class="com.banji.model.BanjiService" />
+<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
+<jsp:useBean id="classroomSvc" scope="page" class="com.classroom.model.ClassroomService" />
 
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>課程資料修改</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/vendors/bootstrap/css/bootstrap.min.css">
-<script src="<%=request.getContextPath()%>/vendors/jquery/jquery-3.4.1.min.js"></script>
-<script src="<%=request.getContextPath()%>/vendors/popper/popper.min.js"></script>
-<script src="<%=request.getContextPath()%>/vendors/bootstrap/js/bootstrap.min.js"></script>
+    <%@ include file="/back-end/template/head.jsp" %> 
+    <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/datagrid/datatables/datatables.bundle.css">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<style>
-table#table-1 {
-	border-bottom: 2px solid #0e6e95;
-    text-align: center;
-    margin-left:auto;
-    margin-right:auto;
-}
-
-  .h3-1 {
-    margin: 10px;
-  }
-  
- table#table-3 {
-    text-align: center;
-}
-
-
-h5{
-	margin: 5px auto;
-	text-align: left;
-}
-  
-</style>
-
-<style>
-table {
-	width: 550px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	margin-left:auto;
-	margin-right:auto;
-}
-
-table, th, td {
-	border: 0px solid #CCCCFF;
-}
-
-th, td {
-	padding: 1px;
-}
-
-.swal-text {
-  background-color: #FEFAE3;
-  padding: 17px;
-  border: 1px solid #F0E1A1;
-  font-size: 17px;
-  font-weight:bold;
-  display: block;
-  margin: 22px;
-  text-align: center;
-  color: #F56455;
-}
-
-</style>
 </head>
-<body bgcolor='white'>
-<div class="container">
+<body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
+	<script>
+		var classHolder = document.getElementsByTagName("BODY")[0];
+	</script>
 
-	<table id="table-1">	
-	<tr><td>
-		 <h3 class="h3-1">課程資料修改</h3>
-		 <h4><a href="<%=request.getContextPath()%>/back-end/course/select_page.jsp"><img src="<%=request.getContextPath()%>/images/homepage.svg" width="80" height="50" border="0">Home</a></h4>
-	</td></tr>
-	</table>
+	<div class="page-wrapper">
+		<div class="page-inner">
+			<%@ include file="/back-end/template/left_aside.jsp"%>
+			<div class="page-content-wrapper">
+				<%@ include file="/back-end/template/header.jsp"%>
+				<main id="js-page-content" role="main" class="page-content">
+					<ol class="breadcrumb page-breadcrumb">
+						<li class="breadcrumb-item">
+							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a>
+						</li>
+						<li class="breadcrumb-item" ><a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a></li>
+						<li class="breadcrumb-item">課程資料修改</li>
+					</ol>
+					<div class="subheader">
+						<h1 class="subheader-title">
+							<i class='subheader-icon fal fa-file-edit'></i>
+							課程資料修改
+						</h1>
+					</div>
+					<div class="row">
+						<div class="col-xl-12">
+							<div id="panel-1" class="panel">
+								<div class="panel-hdr bg-primary-800 bg-gradient-info">
+									<h2 class="text-white">課程資料修改</h2>
+								</div>
+								<div class="panel-container show">
+									<div class="panel-content">
+
+										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" name="form1">
+
+											<div class="form-group">
+												<label class="form-label">課程編號</label>
+												<input type="text" name="courseNo" class="form-control" value="${courseVO.courseNo}" disabled />
+											</div>
+
+											<div class="form-group">
+												<label class="form-label">基本課程編號</label>
+												<input type="text" name="basicCourseNo" class="form-control" value="${courseVO.basicCourseNo}" />
+												<font color=red>${errorMsgs.basicCourseNo}</font>
+											</div>
+
+											<div class="form-group">
+												<label class="form-label">課程名稱</label>
+												<input type="text" name="courseName" class="form-control" value="${courseVO.courseName}" />
+												<font color=red>${errorMsgs.courseName}</font>
+											</div>
+
+
+											<div class="form-group">
+												<label class="form-label">課程大綱</label>
+												<textarea class="form-control" name="courseOutline" rows="5">${courseVO.courseOutline}</textarea>
+											</div>
+
+
+											<div class="form-group">
+												<label class="form-label">班級</label>
+												<select class="custom-select form-control" name="banjiNo">
+													<option value="">請選擇班級</option>
+													<c:forEach var="banjiVO" items="${banjiSvc.all}">
+														<option value="${courseVO.banjiNo}" ${(courseVO.banjiNo==banjiVO.banjiNo)?'selected':'' }>${banjiVO.banjiName}</option>
+													</c:forEach>
+												</select>
+												<font color=red>${errorMsgs.banjiNo}</font>
+											</div>
+
+
+											<div class="form-group">
+												<label class="form-label">講師</label>
+												<select class="custom-select form-control" name="teacherNo">
+													<option value="">請選擇講師</option>
+													<c:forEach var="teacherVO" items="${teacherSvc.all}">
+														<option value="${courseVO.teacherNo}" ${(courseVO.teacherNo==teacherVO.teacherNo)?'selected':'' }>${teacherVO.teacherName}</option>
+													</c:forEach>
+												</select>
+												<font color=red>${errorMsgs.teacherNo}</font>
+											</div>
+
+
+											<div class="form-group">
+												<label class="form-label">教室</label>
+												<select class="custom-select form-control" name="classroomNo">
+													<option value="">請選擇教室</option>
+													<c:forEach var="classroomVO" items="${classroomSvc.all}">
+														<option value="${courseVO.classroomNo}" ${(courseVO.classroomNo==classroomVO.classroomNo)?'selected':'' }>${classroomVO.classroomName}</option>
+													</c:forEach>
+												</select>
+												<font color=red>${errorMsgs.classroomNo}</font>
+											</div>
+
+
+											<div class="form-group">
+												<label class="form-label">堂數</label>
+												<input class="form-control" type="number" name="lesson" min="0" value="${courseVO.lesson}">
+												<font color=red>${errorMsgs.lesson}</font>
+											</div>
+
+
+											<div class="form-group">
+												<label class="form-label">開始日期</label>
+												<input class="form-control" id="f_date1" type="date" name="startDate" onfocus="this.blur()">
+												<font color=red>${errorMsgs.startDate}</font>
+											</div>
+
+											<div class="form-group">
+												<label class="form-label">結束日期</label>
+												<input class="form-control" id="f_date2" type="date" name="endDate" onfocus="this.blur()">
+												<font color=red>${errorMsgs.endDate}</font>
+											</div>
+
+
+											<div class="form-group">
+												<label class="form-label">狀態</label>
+												<select class="custom-select form-control" name="status">
+													<option value="0" ${(courseVO.status==0)?'selected':'' }>課程未開始</option>
+													<option value="1" ${(courseVO.status==1)?'selected':'' }>課程進行中</option>
+													<option value="2" ${(courseVO.status==2)?'selected':'' }>課程結束</option>
+												</select>
+											</div>
+										</FORM>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
 	
-
- 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" name="form1">
-		<table id="table-3">
-			
-				<tr><td><h5>課程編號</h5></td></tr>
-				<tr><td><input type="TEXT" name="courseNo" size="67" disabled
-					value="${courseVO.courseNo}" /></td></tr>
-			
-			
-				<tr><td><h5>基本課程編號</h5></td></tr>
-				<tr><td><input type="TEXT" name="basicCourseNo" size="67" 
-					value="${courseVO.basicCourseNo}"/><font color=red>${errorMsgs.basicCourseNo}</font></td></tr>
-			
-			
-				<tr><td><h5>課程名稱</h5></td></tr>
-				<tr><td><input type="TEXT" name="courseName" size="67"
-					value="${courseVO.courseName}" /><font color=red>${errorMsgs.courseName}</font></td></tr>
-			
-			
-				<tr><td><h5>課程大綱</h5></td></tr>
-				<tr><td><textarea id="courseOutline" name="courseOutline" rows="8"  style= "width: 550px; resize:none" >${courseVO.courseOutline}</textarea></td></tr>
-			
-			
-				<tr><td><h5>班級</h5></td></tr>
-				<tr><td><input type="TEXT" name="banjiNo" size="67"
-					value="${courseVO.banjiNo}" /><font color=red>${errorMsgs.banjiNo}</font></td></tr>
-			
-			
-				<tr><td><h5>講師</h5></td></tr>
-				<tr><td><input type="TEXT" name="teacherNo" size="67"
-					value="${courseVO.teacherNo}" /><font color=red>${errorMsgs.teacherNo}</font></td></tr>
-			
-			
-				<tr><td><h5>教室</h5></td></tr>
-				<tr><td><input type="TEXT" name="classroomNo" size="67"
-					value="${courseVO.classroomNo}" /><font color=red>${errorMsgs.classroomNo}</font></td></tr>
-			
-			
-				<tr><td><h5>堂數</h5></td></tr>
-				<tr><td><input type="TEXT" name="lesson" size="67"
-					value="${courseVO.lesson} " /><font color=red>${errorMsgs.lesson}</font></td></tr>
-			
-			
-				<tr><td><h5>開始日期</h5></td></tr>
-				<tr><td><input name="startDate" id="f_date1" type="TEXT" size="67" onfocus="this.blur()"><font color=red>${errorMsgs.startDate}</font></td></tr>
-			
-			
-				<tr><td><h5>結束日期</h5></td></tr>
-				<tr><td><input name="endDate" id="f_date2" type="TEXT" size="67" onfocus="this.blur()"><font color=red>${errorMsgs.endDate}</font></td></tr>
-			
-			
-				<tr><td><h5>狀態</h5></td></tr>
-				<tr><td><select size="1" name="status" style="font-size:16px; width:550px; height:26px;">
-         				<option value="0"${(courseVO.status==0)?'selected':'' }>課程未開始 </option>
-						<option value="1"${(courseVO.status==1)?'selected':'' }>課程進行中 </option>
-						<option value="2"${(courseVO.status==2)?'selected':'' }>課程結束 </option>
-						</select>
-				</td></tr>
-          		
-		</table>
-		<br>
-		
-		<div class="form-row align-items-center justify-content-center">
-		<input type="hidden" name="action" value="update">
-		<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-		<input class="btn btn-primary justify-content-center" type="submit" value="Submit">
+	
+		<div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
+				<%@ include file="/back-end/template/footer.jsp"%>
+			</div>
 		</div>
-		
-		</FORM>
+	</div>
 
-</div>
-	
+
+    <%@ include file="/back-end/template/quick_menu.jsp" %>
+    <%@ include file="/back-end/template/messager.jsp" %>
+    <%@ include file="/back-end/template/basic_js.jsp" %>
+
+
+	<script src="<%=request.getContextPath()%>/SmartAdmin4/js/vendors.bundle.js"></script>
+	<script src="<%=request.getContextPath()%>/SmartAdmin4/js/app.bundle.js"></script>
+	<script src="<%=request.getContextPath()%>/SmartAdmin4/js/datagrid/datatables/datatables.bundle.js"></script>
 
 </body>
 
-<% 
- 	java.sql.Date startDate = null;
-  try {
-	  startDate = courseVO.getStartDate();
-   } catch (Exception e) {
-	   startDate = new java.sql.Date(System.currentTimeMillis());
-   }
+<%
+	java.sql.Date startDate = null;
+	try {
+		startDate = courseVO.getStartDate();
+	} catch (Exception e) {
+		startDate = new java.sql.Date(System.currentTimeMillis());
+	}
 %>
 
-<% 
- 	java.sql.Date endDate = null;
-  try {
-	  endDate = courseVO.getEndDate();
-   } catch (Exception e) {
-	   endDate = new java.sql.Date(System.currentTimeMillis());
-   }
+<%
+	java.sql.Date endDate = null;
+	try {
+		endDate = courseVO.getEndDate();
+	} catch (Exception e) {
+		endDate = new java.sql.Date(System.currentTimeMillis());
+	}
 %>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
-<style>
-  .xdsoft_datetimepicker .xdsoft_datepicker {
-           width:  300px;   /* width:  300px; */
-  }
-  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-           height: 151px;   /* height:  151px; */
-  }
-</style>
+        <script src="js/vendors.bundle.js"></script>
+        <script src="js/app.bundle.js"></script>
+        <script src="js/formplugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 
 <script>
 		$(function(){
 			$.datetimepicker.setLocale('zh');
 			$('#f_date1').datetimepicker({
 			  format:'Y-m-d',
-			  timepicker:false,
 			  step: 1,
 			  scrollInput : false,      
 			  value: '<%=courseVO.getStartDate()%>',
@@ -208,29 +209,26 @@ th, td {
         
 			$('#f_date2').datetimepicker({
 				format:'Y-m-d',
-	        	timepicker:false,
 	        	step: 1,
 	        	scrollInput : false,
 		   		value: '<%=courseVO.getEndDate()%>',
-				onShow : function() {
-					this.setOptions({
+			onShow : function() {
+				this.setOptions({
 					minDate : $('#f_date1').val()
 				})
 			},
 			timepicker : false
 		});
 	});
-		
-		
-		<c:if test="${not empty errorMsgs}">
-		<c:forEach var="message" items="${errorMsgs}">
-			swal({
-				icon:'error',
-				title:'手指是否有問題',
-				text:'⚠有項目未填⚠'
-				});
-		</c:forEach>
-		</c:if>
-		
+
+	<c:if test="${not empty errorMsgs}">
+	<c:forEach var="message" items="${errorMsgs}">
+	swal({
+		icon : 'error',
+		title : '手指是否有問題',
+		text : '⚠有項目未填⚠'
+	});
+	</c:forEach>
+	</c:if>
 </script>
 </html>

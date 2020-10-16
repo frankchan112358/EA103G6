@@ -100,7 +100,7 @@ table#table-1 h4 {
 	<h3>課程管理</h3>
 	<ul>
 	<li>
-		<h4><a href="<%=request.getContextPath()%>/back-end/course/addCourse.jsp"><img src="images/add.svg" width="50" height="50" border="0">Add a new Course</a></h4>
+		<h4><a href="<%=request.getContextPath()%>/back-end/course/addCourse.jsp"><img src="<%=request.getContextPath()%>/images/add.svg" width="50" height="50" border="0">Add a new Course</a></h4>
 	</li>
 	</ul>
 

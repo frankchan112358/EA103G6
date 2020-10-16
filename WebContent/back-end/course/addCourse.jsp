@@ -6,6 +6,10 @@
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
 %>
 
+<jsp:useBean id="banjiSvc" scope="page" class="com.banji.model.BanjiService"/>
+<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService"/>
+<jsp:useBean id="classroomSvc" scope="page" class="com.classroom.model.ClassroomService"/>
+
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -88,36 +92,58 @@ th, td {
 		<table id="table-3">
 				
 				<tr><td><h5>基本課程編號</h5></td></tr>
-				<tr><td><input id="basicCourseNo" type="TEXT" name="basicCourseNo" size="67"
+				<tr><td><input id="basicCourseNo" type="TEXT" name="basicCourseNo" size="67" 
 					value="${courseVO.basicCourseNo}"/><font color=red>${errorMsgs.basicCourseNo}</font></td></tr>
 
 			
 				<tr><td><h5>課程名稱</h5></td></tr>
-				<tr><td><input id="courseName" type="TEXT" name="courseName" size="67"
+				<tr><td><input id="courseName" type="TEXT" name="courseName" size="67" 
 					value="${courseVO.courseName}" /><font color=red>${errorMsgs.courseName}</font></td></tr>
+					
 					
 				<tr><td><h5>課程大綱</h5></td></tr> 
 				<tr><td><textarea id="courseOutline" name="courseOutline" rows="8"  style= "width: 550px; resize:none" >${courseVO.courseOutline}</textarea></td></tr>
 			
 			
 				<tr><td><h5>班級</h5></td></tr>
-				<tr><td><input id="banjiNo" type="TEXT" name="banjiNo" size="67"
-					value="${courseVO.banjiNo}" /><font color=red>${errorMsgs.banjiNo}</font></td></tr>
-			
-			
+				<tr><td>
+					<select size="1" name="banjiNo" style="font-size:16px; width:550px; height:26px;">
+					<option value="">請選擇班級</option>
+					<c:forEach var="banjiVO" items="${banjiSvc.all}">
+         					<option value="${banjiVO.banjiNo}" ${(courseVO.banjiNo==banjiVO.banjiNo)?'selected':'' }>${banjiVO.banjiName} </option>
+				</c:forEach>
+          			</select>
+          		<font color=red>${errorMsgs.banjiNo}</font>
+          		</td></tr>
+				
+						
 				<tr><td><h5>講師</h5></td></tr>
-				<tr><td><input id="teacherNo" type="TEXT" name="teacherNo" size="67"
-					value="${courseVO.teacherNo}" /><font color=red>${errorMsgs.teacherNo}</font></td></tr>
-			
-			
+				<tr><td>
+					<select size="1" name="teacherNo" style="font-size:16px; width:550px; height:26px;">
+					<option value="">請選擇講師</option>
+					<c:forEach var="teacherVO" items="${teacherSvc.all}">
+         					<option value="${teacherVO.teacherNo}" ${(courseVO.teacherNo==teacherVO.teacherNo)?'selected':'' }>${teacherVO.teacherName} </option>
+				</c:forEach>
+          			</select>
+          		<font color=red>${errorMsgs.teacherNo}</font>
+          		</td></tr>			
+				
+								
 				<tr><td><h5>教室</h5></td></tr>
-				<tr><td><input id="classroomNo" type="TEXT" name="classroomNo" size="67"
-					value="${courseVO.classroomNo}" /><font color=red>${errorMsgs.classroomNo}</font></td></tr>
+				<tr><td>
+					<select size="1" name="classroomNo" style="font-size:16px; width:550px; height:26px;">
+					<option value="">請選擇教室</option>
+					<c:forEach var="classroomVO" items="${classroomSvc.all}">
+         					<option value="${classroomVO.classroomNo}" ${(courseVO.classroomNo==classroomVO.classroomNo)?'selected':'' }>${classroomVO.classroomName} </option>
+				</c:forEach>
+          			</select>
+          		<font color=red>${errorMsgs.classroomNo}</font>
+          		</td></tr>		
 			
 			
 				<tr><td><h5>堂數</h5></td></tr>
-				<tr><td><input id="lesson" type="TEXT" name="lesson" size="67"  
-					value="${courseVO.lesson} " /><font color=red>${errorMsgs.lesson}</font></td></tr>
+				<tr><td><input id="lesson" type="number" name="lesson" min="0" style="width: 550px;"
+					value="${courseVO.lesson}" /><font color=red>${errorMsgs.lesson}</font></td></tr>
 			
 			
 				<tr><td><h5>開始日期</h5></td></tr>
