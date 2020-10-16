@@ -131,7 +131,7 @@ public class CourseServlet extends HttpServlet {
 					lesson = new Integer(req.getParameter("lesson").trim());
 				} catch (NumberFormatException e) {
 					lesson = 0;
-					errorMsgs.put("lesson", "⚠堂數請填數字⚠");
+					errorMsgs.put("lesson", "⚠堂數請勿空白⚠");
 				}
 
 				java.sql.Date startDate = null;
@@ -226,7 +226,7 @@ public class CourseServlet extends HttpServlet {
 					lesson = new Integer(req.getParameter("lesson").trim());
 				} catch (NumberFormatException e) {
 					lesson = 0;
-					errorMsgs.put("lesson", "⚠堂數請填數字⚠");
+					errorMsgs.put("lesson", "⚠堂數請勿空白⚠");
 				}
 
 				java.sql.Date startDate = null;

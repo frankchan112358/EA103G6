@@ -10,6 +10,10 @@
     pageContext.setAttribute("list",list);
 %>
 
+<jsp:useBean id="banjiSvc" scope="page" class="com.banji.model.BanjiService"/>
+<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService"/>
+<jsp:useBean id="classroomSvc" scope="page" class="com.classroom.model.ClassroomService"/>
+
 <html>
 <head>
 <title>課程資料</title>
@@ -84,7 +88,6 @@
 	<table>
 		<tr>
 			<th>課程編號</th>
-<!-- 			<th>基本課程編號</th> -->
 			<th>課程名稱</th>
 			<th width="30%">課程大綱</th>
 			<th>班級</th>
@@ -98,12 +101,11 @@
 
 		<tr>
 			<td>${courseVO.courseNo}</td>
-<%-- 			<td>${courseVO.basicCourseNo}</td> --%>
 			<td>${courseVO.courseName}</td>
 			<td>${courseVO.courseOutline}</td>
-			<td>${courseVO.banjiNo}</td>
-			<td>${courseVO.teacherNo}</td>
-			<td>${courseVO.classroomNo}</td>
+			<td>${banjiSvc.getOneBanji(courseVO.banjiNo).banjiName}</td>
+			<td>${teacherSvc.getOneTeacher(courseVO.teacherNo).teacherName}</td>
+			<td>${classroomSvc.getOneClassroom(courseVO.classroomNo).classroomName}</td>
 			<td>${courseVO.lesson}</td>
 			<td>${courseVO.startDate}</td>
 			<td>${courseVO.endDate}</td>
