@@ -937,3 +937,4 @@ INSERT INTO attendance (attendanceno, studentno, timetableno, time, status, note
 --  commit
 --------------------------------------------------------
 commit;
+---
