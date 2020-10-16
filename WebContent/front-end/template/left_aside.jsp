@@ -72,6 +72,12 @@
                     <span class="nav-link-text">通知中心</span>
                 </a>
             </li>
+            <li>
+                <a href="<%=request.getContextPath() %>/front-end/democrat/democrat.jsp" title="DEMOCRAT">
+                    <i class="fal fa-democrat"></i>
+                    <span class="nav-link-text">DEMOCRAT</span>
+                </a>
+            </li>
         </ul>
         <div class="filter-message js-filter-message bg-success-600"></div>
     </nav>
