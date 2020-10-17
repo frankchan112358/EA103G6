@@ -1,15 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.banjipost.model.*"%>
+<%@ page import="com.reply.model.*"%>
 
 <%
-	BanjiPostVO banjiPostVO = (BanjiPostVO) request.getAttribute("banjiPostVO");
+	ReplyVO replyVO = (ReplyVO) request.getAttribute("replyVO");
 %>
 
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>修改公告</title>
+<title>修改</title>
 
 <style>
 table#table-1 {
@@ -56,15 +56,15 @@ td {
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>班級公告修改</h3>
+				<h3>回覆修改</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/back-end/banjiPost/select_page.jsp">回首頁</a>
+					<a href="<%=request.getContextPath()%>/back-end/reply/select_page.jsp">回首頁</a>
 				</h4>
 			</td>
 		</tr>
 	</table>
 
-	<h3>資料修改:</h3>
+	<h3>修改:</h3>
 
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
@@ -75,40 +75,39 @@ td {
 			</c:forEach>
 		</ul>
 	</c:if>
-
-	<jsp:useBean id="banjiSvc" scope="page"
-		class="com.banji.model.BanjiService" />
-
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/banjiPost/banjiPost.do" name="form1">
-		<table>
 		
+		<jsp:useBean id="studentSvc" scope="page"
+				class="com.student.model.StudentService" />
+		
+			<jsp:useBean id="teacherSvc" scope="page"
+				class="com.teacher.model.TeacherService" />
+
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/reply/reply.do" name="form1">
+		<table>
 			<tr>
-				<td>班級名稱:<font color=red><b>*</b></font></td>
- 				<td>${banjiSvc.getOneBanji(banjiPostVO.getBanjiNo()).banjiName}</td>
-				
-			</tr>
-			
-			<tr>
-				<td>公告標題:</td>
-				<td><input type="TEXT" name="title" size="40"
-					value="<%=banjiPostVO.getTitle()%>" /></td>
+				<td>講師名稱:</td>
+				<td>${teacherSvc.getOneTeacher(replyVO.getTeacherNo()).teacherName}</td>
 			</tr>
 
+
 			<tr>
-				<td>公告內容:</td>
-				<td><textarea name="banjiPostContent"
-						style="resize: none; width: 300px; height: 150px;"><%=(banjiPostVO == null) ? "最近轉涼" : banjiPostVO.getBanjiPostContent()%></textarea></td>
+				<td>學生名稱:<font color=red><b>*</b></font></td>
+				<td><input type="TEXT" name=studentNo size="40"
+					value="<%=replyVO.getStudentNo()%>" /></td>
+			</tr>			
+
+			<tr>
+				<td>回覆內容:</td>
+				<td><textarea name="replyContent"
+						style="resize: none; width: 300px; height: 150px;"><%=(replyVO == null) ? "是的" : replyVO.getReplyContent()%></textarea></td>
 			</tr>
 			
-			<tr>
-				<td>狀態:</td>
-				<td><input type="TEXT" name="status" size="40"
-					value="<%=banjiPostVO.getStatus()%>" /></td>
-			</tr>
+	
 		</table>
 		<br> <input type="hidden" name="action" value="update"> 
-		     <input type="hidden" name="banjiNo" value="<%=banjiPostVO.getBanjiNo()%>">
-		     <input type="hidden" name="banjiPostNo" value="<%=banjiPostVO.getBanjiPostNo()%>">
+		     <input type="hidden" name="teacherNo" value="<%=replyVO.getTeacherNo()%>">
+		     <input type="hidden" name="replyNo" value="<%=replyVO.getReplyNo()%>">
+		      <input type="hidden" name="courseAskNo" value="<%=replyVO.getCourseAskNo()%>">
 		<input type="submit" value="送出修改">
 	</FORM>
 </body>

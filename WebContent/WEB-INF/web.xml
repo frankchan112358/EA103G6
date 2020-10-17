@@ -286,4 +286,13 @@
 	<url-pattern>/reply/reply.do</url-pattern>
   </servlet-mapping>
 
+<servlet>
+	<servlet-name>CourseAskServlet</servlet-name>
+	<servlet-class>com.courseask.controller.CourseAskServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>CourseAskServlet</servlet-name>
+	<url-pattern>/courseAsk/courseAsk.do</url-pattern>
+  </servlet-mapping>
+
 </web-app>

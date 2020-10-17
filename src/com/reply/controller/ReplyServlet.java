@@ -100,20 +100,16 @@ public class ReplyServlet extends HttpServlet {
 			try {
 
 				String replyNo = req.getParameter("replyNo");
-
 				String courseAskNo = req.getParameter("courseAskNo");
-
 				String teacherNo = req.getParameter("teacherNo");
-
 				String studentNo = req.getParameter("studentNo");
-
 				String replyContent = req.getParameter("replyContent");
 				if (replyContent == null || replyContent.trim().length() == 0) {
 					errorMsgs.add("回覆內容請勿空白");
 				}
 
 				java.sql.Timestamp updateTime = new java.sql.Timestamp((new java.util.Date()).getTime());
-
+				
 				ReplyVO replyVO = new ReplyVO();
 				replyVO.setReplyNo(replyNo);
 				replyVO.setCourseAskNo(courseAskNo);

@@ -90,12 +90,8 @@ th, td {
 				
 			<tr>
 				<td>回覆標題:</td>
-				<td><select size="1" name="courseAskNo">
-						<c:forEach var="courseAskVO" items="${courseAskSvc.all}">
-							<option value="${courseAskVO.courseAskNo}"
-								${(replyVO.courseAskNo==courseAskVO.courseAskNo)? 'selected':'' }>${courseAskVO.title}
-						</c:forEach>
-				</select></td>
+				<td><input type="TEXT" name="courseAskNo" size="40"
+					value="<%=(replyVO == null) ? "1" : replyVO.getCourseAskNo()%>" /></td>
 			</tr>
 
 			<jsp:useBean id="teacherSvc" scope="page"
@@ -103,12 +99,8 @@ th, td {
 
 			<tr>
 				<td>講師名稱:</td>
-				<td><select size="1" name="teacherNo">
-						<c:forEach var="teacherVO" items="${teacherSvc.all}">
-							<option value="${teacherVO.teacherNo}"
-								${(replyVO.teacherNo==teacherVO.teacherNo)? 'selected':'' }>${teacherVO.teacherName}
-						</c:forEach>
-				</select></td>
+				<td><input type="TEXT" name="teacherNo" size="40"
+					value="<%=(replyVO == null) ? "T000001" : replyVO.getTeacherNo()%>" /></td>
 			</tr>
 
 			<jsp:useBean id="studentSvc" scope="page"
@@ -117,12 +109,8 @@ th, td {
 
 			<tr>
 				<td>學生名稱:<font color=red><b>*</b></font></td>
-				<td><select size="1" name="studentNo">
-						<c:forEach var="studentVO" items="${studentSvc.all}">
-							<option value="${studentVO.studentNo}"
-								${(courseAskVO.studentNo==studentVO.studentNo)? 'selected':'' }>${studentVO.studentName}
-						</c:forEach>
-				</select></td>
+				<td><input type="TEXT" name="studentNo" size="40"
+					value="<%=(replyVO == null) ? "S000002" : replyVO.getStudentNo()%>" /></td>
 			</tr>
 
 			<tr>
@@ -133,8 +121,7 @@ th, td {
 			
 		</table>
 		<br> <input type="hidden" name="action" value="insert"> 
-<%-- 		<input type="hidden" name="teacherNo" value="<%=replyVO.getTeacherNo()%>">  --%>
-<%-- 		<input type="hidden" name="studentNo" value="<%=replyVO.getStudentNo()%>">  --%>
+ 	
 			<input type="submit" value="送出">
 	</FORM>
 </body>

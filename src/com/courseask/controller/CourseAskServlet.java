@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.courseask.model.CourseAskService;
 import com.courseask.model.CourseAskVO;
-import com.reply.model.ReplyService;
+
 
 public class CourseAskServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -136,6 +136,9 @@ public class CourseAskServlet extends HttpServlet {
 				courseAskVO.setQuestion(question);
 				courseAskVO.setUpdateTime(updateTime);
 				courseAskVO.setStatus(status);
+				
+				System.out.println(courseAskVO.getCourseAskNo());
+				System.out.println(courseAskVO.getStatus());
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("courseAskVO", courseAskVO);
@@ -150,7 +153,7 @@ public class CourseAskServlet extends HttpServlet {
 						updateTime, status);
 
 				req.setAttribute("courseAskVO", courseAskVO);
-				String url = "/back-end/courseAsk/listOnecourseAsk.jsp";
+				String url = "/back-end/courseAsk/listOneCourseAsk.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -167,15 +170,18 @@ public class CourseAskServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
+
 				String courseNo = req.getParameter("courseNo");
 
 				String studentNo = req.getParameter("studentNo");
 
 				String title = req.getParameter("title");
+
 				if (title == null || title.trim().length() == 0) {
 					errorMsgs.add("提問標題請勿空白");
 				}
 				String question = req.getParameter("question");
+
 				if (question == null || question.trim().length() == 0) {
 					errorMsgs.add("問題內容請勿空白");
 				}
@@ -183,20 +189,29 @@ public class CourseAskServlet extends HttpServlet {
 				java.sql.Timestamp updateTime = new java.sql.Timestamp((new java.util.Date()).getTime());
 
 				Integer status = null;
+				
 				try {
 					status = new Integer(req.getParameter("status").trim());
+
 				} catch (NumberFormatException e) {
 					errorMsgs.add("狀態請填數字");
 				}
 
 				CourseAskVO courseAskVO = new CourseAskVO();
 				courseAskVO.setCourseNo(courseNo);
+			
 				courseAskVO.setStudentNo(studentNo);
+			
 				courseAskVO.setTitle(title);
+				
 				courseAskVO.setQuestion(question);
+			
 				courseAskVO.setUpdateTime(updateTime);
+		
 				courseAskVO.setStatus(status);
-
+			
+				
+				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("courseAskVO", courseAskVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/courseAsk/addCourseAsk.jsp");
@@ -212,7 +227,7 @@ public class CourseAskServlet extends HttpServlet {
 				successView.forward(req, res);
 
 			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗" + e.getMessage());
+				errorMsgs.add("資料新增失敗" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/courseAsk/addCourseAsk.jsp");
 				failureView.forward(req, res);
 			}

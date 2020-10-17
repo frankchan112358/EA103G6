@@ -2,26 +2,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*"%>
-<%@ page import="com.reply.model.*"%>
+<%@ page import="com.courseask.model.*"%>
 
 <%
-    ReplyService replySvc = new ReplyService();
-    List<ReplyVO> list = replySvc.getAll();
+    CourseAskService courseAskSvc = new CourseAskService();
+    List<CourseAskVO> list = courseAskSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
 
-<jsp:useBean id="courseAskSvc" scope="page"
-			class="com.courseask.model.CourseAskService" />
-			
-<jsp:useBean id="teacherSvc" scope="page"
-			class="com.teacher.model.TeacherService" />
-			
+
+<jsp:useBean id="courseSvc" scope="page"
+			class="com.course.model.CourseService" />
 <jsp:useBean id="studentSvc" scope="page"
 			class="com.student.model.StudentService" />
+<jsp:useBean id="replySvc" scope="page"
+			class="com.reply.model.ReplyService" />
 
 <html>
 <head>
-<title>所有回覆資料</title>
+<title>所有提問資料</title>
 
 <style>
 
@@ -66,11 +65,10 @@ font-family: DFKai-sb;
 
 </head>
 <body bgcolor='white'>
-
 <table id="table-1">
 	<tr><td>
-		 <h3>回覆資料</h3>
-		 <h4><a href="<%=request.getContextPath()%>/back-end/reply/select_page.jsp">回首頁</a></h4>
+		 <h3>提問資料</h3>
+		 <h4><a href="<%=request.getContextPath()%>/back-end/courseAsk/select_page.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
 
@@ -86,33 +84,42 @@ font-family: DFKai-sb;
 
 <table>
 	<tr>
-		<th>標題</th>
-		<th>講師</th>
+		<th>課程</th>
 		<th>學生</th>
-		<th>回覆內容</th>
-		<th>回覆時間</th>
+		<th>提問標題</th>
+		<th>提問問題</th>
+		<th>時間</th>
+		<th>回覆</th>
 		<th>修改</th>
 		<th>刪除</th>
 	</tr>
+	
 	<%@ include file="pages/page1.file" %> 
-	<c:forEach var="replyVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+	<c:forEach var="courseAskVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 		<tr>
-			<td>${courseAskSvc.getOneCourseAsk(replyVO.getCourseAskNo()).title}</td>
-			<td>${teacherSvc.getOneTeacher(replyVO.getTeacherNo()).teacherName}</td>
-			<td>${studentSvc.getOneStudent(replyVO.getStudentNo()).studentName}</td>
-			<td>${replyVO.replyContent}</td>
-			<td><fmt:formatDate value="${replyVO.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+			<td>${courseSvc.getOneCourse(courseAskVO.getCourseNo()).courseName}</td>
+			<td>${studentSvc.getOneStudent(courseAskVO.getStudentNo()).studentName}</td>
+			<td>${courseAskVO.title}</td>
+			<td>${courseAskVO.question}</td>
+			<td><fmt:formatDate value="${courseAskVO.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td> 
+	
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/reply/reply.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="修改">
+			     <input type="submit" value="回覆">
 			     <input type="hidden" name="replyNo"  value="${replyVO.replyNo}">
+			     <input type="hidden" name="action"	value="insert"></FORM>
+			</td>
+			<td>
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/courseAsk/courseAsk.do" style="margin-bottom: 0px;">
+			     <input type="submit" value="修改">
+			     <input type="hidden" name="courseAskNo"  value="${courseAskVO.courseAskNo}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/reply/reply.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/courseAsk/courseAsk.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
-			     <input type="hidden" name="replyNo"  value="${replyVO.replyNo}">
+			     <input type="hidden" name="courseAskNo"  value="${courseAskVO.courseAskNo}">
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>
 		</tr>
