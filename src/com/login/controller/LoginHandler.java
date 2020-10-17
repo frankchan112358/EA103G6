@@ -1,4 +1,4 @@
-package login;
+package com.login.controller;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -35,15 +35,16 @@ public class LoginHandler extends HttpServlet {
 				
 		try {
 			Integer type = typeNameConvertToTypeNum(req.getParameter("type"));
-			String account = req.getParameter("account").trim();
+			String account = req.getParameter("account").trim().toLowerCase();
 			String password = req.getParameter("password").trim();
-		
+				
+			System.out.println(account);
 			UserService userSvc = new UserService();
 			UserVO userVO = userSvc.UserLogin(account, password, type);
 
 			if (userVO == null) {
-				errorMsgs.add("帳號或密碼輸入錯誤");
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/page_login.jsp");
+				errorMsgs.add("帳號或密碼或型別輸入錯誤");
+				RequestDispatcher failureView = req.getRequestDispatcher("/login/login.jsp");
 				failureView.forward(req, res);
 				return;
 			}
@@ -86,7 +87,7 @@ public class LoginHandler extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			errorMsgs.add("無法取得資料:" + e.getMessage());
-			RequestDispatcher failureView = req.getRequestDispatcher("/back-end/page_login.jsp");
+			RequestDispatcher failureView = req.getRequestDispatcher("/login/login.jsp");
 			failureView.forward(req, res);
 
 		}
@@ -113,66 +114,4 @@ public class LoginHandler extends HttpServlet {
 	}
 }
 
-//package login;
-//
-//import java.io.IOException;
-//import java.util.LinkedList;
-//import java.util.List;
-//
-//import javax.servlet.RequestDispatcher;
-//import javax.servlet.ServletException;
-//import javax.servlet.http.HttpServlet;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.HttpSession;
-//
-//import com.user.model.UserService;
-//import com.user.model.UserVO;
-//
-//public class LoginHandler extends HttpServlet {
-//
-//	private static final long serialVersionUID = 1L;
-//
-//	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-//		req.setCharacterEncoding("UTF-8");
-//
-//		List<String> errorMsgs = new LinkedList<String>();
-//		req.setAttribute("errorMsgs", errorMsgs);
-//
-//		try {
-//			String account = req.getParameter("account").trim();
-//			String password = req.getParameter("password").trim();
-//
-//			UserService userSvc = new UserService();
-//			UserVO userVO = userSvc.UserLogin(account, password);
-//
-//			if (userVO == null) {
-//				errorMsgs.add("帳號或密碼輸入錯誤");
-//			}
-//
-//			if (!errorMsgs.isEmpty()) {
-//				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/page_login.jsp");
-//				failureView.forward(req, res);
-//				return;
-//			}
-//
-//			/*************************** 查詢完成,準備轉交(Send the Success view) *************/
-//			req.setAttribute("userVO", userVO);
-//			HttpSession session = req.getSession();
-//			session.setAttribute("account", account);
-//
-//			RequestDispatcher successView = req.getRequestDispatcher("/front-end/index/index.jsp");
-//			successView.forward(req, res);
-//
-//			/*************************** 其他可能的錯誤處理 *************************************/
-//
-//		} catch (Exception e) {
-//			errorMsgs.add("無法取得資料:" + e.getMessage());
-//			RequestDispatcher failureView = req.getRequestDispatcher("/back-end/page_login.jsp");
-//			failureView.forward(req, res);
-//
-//		}
-//
-//	}
-//
-//}
+
