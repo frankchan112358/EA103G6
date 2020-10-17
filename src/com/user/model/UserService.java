@@ -12,20 +12,14 @@ public class UserService {
 		dao = new UserDAO();
 	}
 	
-	public UserVO addUser(String account,String password,Integer type,String name,
-			String mail,String phone, String address,String id,InputStream photo) {
+	public UserVO addUser(Integer type,String name,String mail,String id) {
 		
 		UserVO userVO = new UserVO();
 		
-		userVO.setAccount(account);
-		userVO.setPassword(password);
 		userVO.setType(type);
 		userVO.setName(name);
 		userVO.setMail(mail);
-		userVO.setPhone(phone);
-		userVO.setAddress(address);
 		userVO.setId(id);
-		userVO.setPhoto(photo);
 		dao.insert(userVO);
 		
 		return userVO;				
@@ -45,6 +39,19 @@ public class UserService {
 		userVO.setAddress(address);
 		userVO.setId(id);
 		userVO.setPhoto(photo);
+		userVO.setEnable(enable);
+		dao.update(userVO);
+		return userVO;
+		
+	}
+	
+	public UserVO enableUser(String userNo,String account,String password,Integer type,Integer enable) {
+		
+		UserVO userVO = new UserVO();
+		userVO.setUserNo(userNo);
+		userVO.setAccount(account);
+		userVO.setPassword(password);
+		userVO.setType(type);
 		userVO.setEnable(enable);
 		dao.update(userVO);
 		return userVO;
@@ -81,6 +88,7 @@ public class UserService {
 	public void deleteUser(String userNo) {
 		dao.delete(userNo);
 	}
+	
 	public UserVO Login_stu(String account,String password) {
 		return dao.Login_stu(account, password);
 		

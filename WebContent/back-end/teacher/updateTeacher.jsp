@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.user.model.*,com.emp.model.*"%>
+<%@ page import="com.user.model.*,com.teacher.model.*"%>
 <%@ page import="java.util.*"%>
 <%  
 	UserVO userVO = (UserVO) request.getAttribute("userVO");
-	EmpVO empVO = (EmpVO) request.getAttribute("empVO");
+	TeacherVO teacherVO = (TeacherVO) request.getAttribute("teacherVO");
 %>
 
 <!DOCTYPE html>
@@ -63,7 +63,7 @@
            					<div id="panel-2" class="panel">
                                     <div class="panel-hdr">
                                         <h2>
-                                            Update <span class="fw-300"><i>Employee</i></span>
+                                            Update <span class="fw-300"><i>Teacher</i></span>
                                         </h2>
                                         <div class="panel-toolbar">
                                             <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
@@ -91,7 +91,7 @@
                                                         
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="phone">手機號碼 </label>
-                                                            <input type="text" class="form-control" id="phone" placeholder="Phone Number" value="${userVO eq null?'':userVO.phone }" name="phone" >
+                                                            <input type="text" class="form-control" id="phone" placeholder="Phone Number" name="phone" value="${userVO eq null?'':userVO.phone }"  >
                                                             <div class="invalid-feedback" id="wrongPhone">
 																僅接受台灣連絡電話且僅能輸入10碼
                                                             </div>
@@ -105,7 +105,7 @@
                                                         </div>
                                                         
                                                         <div class="col-md-6 mb-3">
-                                                            <label class="form-label" for="empStatus">導師狀態調整 <span class="text-danger">*</span></label>
+                                                            <label class="form-label" for="empStatus">講師狀態調整 <span class="text-danger">*</span></label>
                                                             <select class="custom-select" id="empStatus" name="empStatus" required="" >
                                                                 <option value="0">離職</option>
                                                                 <option value="1">在職</option>
@@ -135,11 +135,21 @@
                                                     <div class="form-group">
                                                     	<input type="text" id="address" name="address" class="form-control" placeholder="Address" value="${userVO eq null?'':userVO.address }">
                                                 	</div>
+                                                	
+                                                	<div class="form-group mb-3">
+                                                         <label class="form-label" for="skill">講師技術簡介  </label>
+                                                         <input type="text" class="form-control" id="id" placeholder="Skill" name="skill" value="${teacherVO eq null?'':teacherVO.skill}" >
+                                                    </div>
+                                                    
+                                                    <div class="form-group mb-3">
+                                                         <label class="form-label" for="description">講師詳細描述 </label>
+                                                         <textarea class="form-control" id="description"  name="description" placeholder="Description" >${teacherVO eq null?'':teacherVO.description}</textarea>
+                                                    </div>
                                                     
                                                     <div class="form-group mb-3">
                                                     	<label class="form-label">上傳大頭照</label>
                                                     	<div class="custom-file">
-                                                       	 <input type="file" class="custom-file-input" id="photo" accept="image/*" name="photo">
+                                                       	 <input type="file" class="custom-file-input" id="photo" name="photo" accept="image/*" >
                                                        	 <label class="custom-file-label" for="customFile">Choose Picture</label>
                                                     	</div>
                                                		</div>

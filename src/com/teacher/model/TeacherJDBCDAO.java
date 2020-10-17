@@ -17,7 +17,7 @@ public class TeacherJDBCDAO implements TeacherDAO_interface {
 	String userid = "EA103G6";
 	String passwd = "123456";
 
-	private static final String INSERT_STMT = "INSERT INTO TEACHER(TEACHERNO,USERNO,TEACHERNAME,SKILL,DESCRIPTION,TEACHERSTATUS) VALUES(TEACHER_SEQ.NEXTVAL,?,?,?,?,?)";
+	private static final String INSERT_STMT = "INSERT INTO TEACHER(TEACHERNO,USERNO,TEACHERNAME,TEACHERSTATUS) VALUES(TEACHER_SEQ.NEXTVAL,?,?,?)";
 	private static final String UPDATE = "UPDATE TEACHER SET USERNO=?,TEACHERNAME=?,SKILL=?,DESCRIPTION=?,TEACHERSTATUS=? WHERE TEACHERNO=?";
 	private static final String DELETE = "UPDATE TEACHER SET TEACHERSTATUS=0 WHERE TEACHERNO=?";
 	private static final String GET_ONE_STMT = "SELECT TEACHERNO,USERNO,TEACHERNAME,SKILL,DESCRIPTION,TEACHERSTATUS FROM TEACHER WHERE TEACHERSTATUS>0 AND TEACHERNO=?";
@@ -36,12 +36,7 @@ public class TeacherJDBCDAO implements TeacherDAO_interface {
 
 			pstmt.setString(1, teacherVO.getUserNo());
 			pstmt.setString(2, teacherVO.getTeacherName());
-			pstmt.setString(3, teacherVO.getSkill());
-			Clob clob = con.createClob();
-			String str = teacherVO.getDescription();
-			clob.setString(1, str);
-			pstmt.setClob(4, clob);
-			pstmt.setInt(5, teacherVO.getTeacherStatus());
+			pstmt.setInt(3, teacherVO.getTeacherStatus());
 
 			pstmt.executeUpdate();
 
@@ -358,15 +353,15 @@ public class TeacherJDBCDAO implements TeacherDAO_interface {
 	public static void main(String[] args) {
 
 		// insert
-//		TeacherJDBCDAO dao=new TeacherJDBCDAO();
-//		TeacherVO teacherVO = new TeacherVO();
-//		teacherVO.setUserNo("7");
-//		teacherVO.setTeacherName("陳水");
-//		teacherVO.setSkill("人工智慧");
-//		teacherVO.setDescription("熟悉前端、後端網頁技術開發，開發過許多網站、網路服務、手機 app 等，目前成立工作室自行接案、曾任 Senior 網頁工程師");
-//		teacherVO.setTeacherStatus(1);
-//		dao.insert(teacherVO);
-//		System.out.println("新增成功");
+		TeacherJDBCDAO dao=new TeacherJDBCDAO();
+		TeacherVO teacherVO = new TeacherVO();
+		teacherVO.setUserNo("U000001");
+		teacherVO.setTeacherName("陳水");
+		teacherVO.setSkill("人工智慧");
+		teacherVO.setDescription("熟悉前端、後端網頁技術開發，開發過許多網站、網路服務、手機 app 等，目前成立工作室自行接案、曾任 Senior 網頁工程師");
+		teacherVO.setTeacherStatus(1);
+		dao.insert(teacherVO);
+		System.out.println("新增成功");
 
 		// update
 //		TeacherJDBCDAO dao=new TeacherJDBCDAO();
@@ -420,8 +415,8 @@ public class TeacherJDBCDAO implements TeacherDAO_interface {
 //		}
 		
 		//delete
-		TeacherJDBCDAO dao = new TeacherJDBCDAO();
-		dao.delete("T000001");
+//		TeacherJDBCDAO dao = new TeacherJDBCDAO();
+//		dao.delete("T000001");
 		
 	}
 

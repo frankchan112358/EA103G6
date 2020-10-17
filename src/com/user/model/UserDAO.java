@@ -26,7 +26,7 @@ public class UserDAO implements UserDAO_interface {
 		}
 	}
 
-	private static final String INSERT_STMT = "INSERT INTO WJLUSER (USERNO,ACCOUNT,PASSWORD,TYPE,NAME,MAIL,PHONE,ADDRESS,ID,PHOTO) VALUES ('U'||LPAD(to_char(USER_SEQ.NEXTVAL), '6', '0'),?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT_STMT = "INSERT INTO WJLUSER (USERNO,TYPE,NAME,MAIL,ID) VALUES ('U'||LPAD(to_char(USER_SEQ.NEXTVAL), '6', '0'),?,?,?,?)";
 	private static final String GET_ALLACCOUNT = "SELECT ACCOUNT FROM WJLUSER WHERE ISDELETE=0 AND TYPE=?";
 	private static final String GET_ALLID = "SELECT ID FROM WJLUSER WHERE ISDELETE=0 AND USERNO!= ?";
 	private static final String GET_ALL_STMT = "SELECT USERNO,ACCOUNT,PASSWORD,TYPE,NAME,MAIL,PHONE,ADDRESS,ID,PHOTO,ENABLE FROM WJLUSER WHERE ISDELETE=0 ORDER BY TYPE";
@@ -47,15 +47,10 @@ public class UserDAO implements UserDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setString(1, userVO.getAccount());
-			pstmt.setString(2, userVO.getPassword());
-			pstmt.setInt(3, userVO.getType());
-			pstmt.setString(4, userVO.getName());
-			pstmt.setString(5, userVO.getMail());
-			pstmt.setString(6, userVO.getPhone());
-			pstmt.setString(7, userVO.getAddress());
-			pstmt.setString(8, userVO.getId());
-			pstmt.setBinaryStream(9, userVO.getPhoto());
+			pstmt.setInt(1, userVO.getType());
+			pstmt.setString(2, userVO.getName());
+			pstmt.setString(3, userVO.getMail());
+			pstmt.setString(4, userVO.getId());
 
 			pstmt.executeUpdate();
 
@@ -498,6 +493,7 @@ public class UserDAO implements UserDAO_interface {
 		}
 		return list;
 	}
+
 
 	@Override
 	public UserVO UserLogin(String account, String password, Integer type) {

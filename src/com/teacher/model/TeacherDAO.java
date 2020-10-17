@@ -28,7 +28,7 @@ public class TeacherDAO implements TeacherDAO_interface{
 		}
 	}
 	
-	private static final String INSERT_STMT = "INSERT INTO TEACHER(TEACHERNO,USERNO,TEACHERNAME,SKILL,DESCRIPTION) VALUES('T'||LPAD(to_char(TEACHER_SEQ.NEXTVAL), '6', '0'),?,?,?,?)";
+	private static final String INSERT_STMT = "INSERT INTO TEACHER(TEACHERNO,USERNO,TEACHERNAME) VALUES('T'||LPAD(to_char(TEACHER_SEQ.NEXTVAL), '6', '0'),?,?)";
 	private static final String UPDATE = "UPDATE TEACHER SET USERNO=?,TEACHERNAME=?,SKILL=?,DESCRIPTION=?,TEACHERSTATUS=? WHERE TEACHERNO=?";
 	private static final String GET_ONE_STMT = "SELECT TEACHERNO,USERNO,TEACHERNAME,SKILL,DESCRIPTION,TEACHERSTATUS FROM TEACHER WHERE TEACHERSTATUS>0 AND TEACHERNO=?";
 	private static final String GET_ALL_STMT="SELECT TEACHERNO,USERNO,TEACHERNAME,SKILL,DESCRIPTION,TEACHERSTATUS FROM TEACHER WHERE TEACHERSTATUS>0";
@@ -47,16 +47,6 @@ public class TeacherDAO implements TeacherDAO_interface{
 
 			pstmt.setString(1, teacherVO.getUserNo());
 			pstmt.setString(2, teacherVO.getTeacherName());
-			pstmt.setString(3, teacherVO.getSkill());
-			if(teacherVO.getDescription().length()!=0) {
-				Clob clob = con.createClob();
-				String str = teacherVO.getDescription();
-				clob.setString(1, str);
-				pstmt.setClob(4, clob);
-			}else {
-				Clob clob = null;
-				pstmt.setClob(4, clob);
-			}
 			
 			pstmt.executeUpdate();
 
