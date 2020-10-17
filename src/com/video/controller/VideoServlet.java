@@ -88,7 +88,6 @@ public class VideoServlet extends HttpServlet {
 				VideoVO videoVO = videoSvc.getOneVideo(videoNo);
 
 				req.setAttribute("videoVO", videoVO);
-//				System.out.println("videoVO.getVideoNo=" + videoVO.getVideoNo());
 				String url = "/back-end/video/update_video_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -137,7 +136,7 @@ public class VideoServlet extends HttpServlet {
 						videoVO.setTimetableNo(timetableNo);
 						videoVO.setVideoName(videoName);
 						req.setAttribute("videoVO", videoVO);
-						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/video/listOneVideo.jsp");
+						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/video/update_video_input.jsp");
 						failureView.forward(req, res);
 						return;
 					}

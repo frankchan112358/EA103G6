@@ -277,5 +277,14 @@
 	<servlet-name>SelectEvaluation</servlet-name>
 	<url-pattern>/evaluation/select</url-pattern>
   </servlet-mapping>
+  
+   <servlet>
+		<servlet-name>TeachingFileServlet</servlet-name>
+		<servlet-class>com.teachingfile.controller.TeachingFileServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeachingFileServlet</servlet-name>
+		<url-pattern>/teachingFile/teachingFile.do</url-pattern>
+	</servlet-mapping>
 
 </web-app>
