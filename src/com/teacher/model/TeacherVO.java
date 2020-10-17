@@ -3,7 +3,6 @@ package com.teacher.model;
 public class TeacherVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 	private String teacherNo;
 	private String userNo;
 	private String teacherName;

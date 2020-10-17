@@ -9,14 +9,12 @@ public class TeacherService {
 		dao = new TeacherDAO();
 	}
 
-	public TeacherVO addTeacher(String userNo, String teacherName, String skill, String description) {
+	public TeacherVO addTeacher(String userNo, String teacherName) {
 
 		TeacherVO teacherVO = new TeacherVO();
 
 		teacherVO.setUserNo(userNo);
 		teacherVO.setTeacherName(teacherName);
-		teacherVO.setSkill(skill);
-		teacherVO.setDescription(description);
 		dao.insert(teacherVO);
 
 		return teacherVO;
