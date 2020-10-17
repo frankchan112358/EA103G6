@@ -61,13 +61,13 @@ if(userVO!=null){
                                             <div class="form-group">
                                                 <%-- 註解 <label class="form-label" for="username">帳號</label>--%>
                                                 <input type="text" id="username" class="form-control form-control-lg" placeholder="請輸入您的帳號" name="account" >
-                                                <div class="invalid-feedback">No, you missed this one.</div>
+                                                <div class="invalid-feedback">請勿遺漏帳號欄位</div>
                                                 <div class="help-block"></div>
                                             </div>
                                             <div class="form-group">
                                                 <%--<label class="form-label" for="password">密碼</label>--%>
                                                 <input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="請輸入您的密碼" >
-                                                <div class="invalid-feedback">Sorry, you missed this one.</div>
+                                                <div class="invalid-feedback">請勿遺漏密碼欄位</div>
                                                 <div class="help-block"></div>
                                             </div>
                                             
@@ -89,55 +89,22 @@ if(userVO!=null){
 											</c:if> 
                                             </div>
                                         </form>
-                                         <form id="js-login" novalidate="" method="post" action="<%=request.getContextPath() %>/test/testlogin.do">
-                                         <div class="form-group">
-                                                <label class="form-label" for="typeselect">身分選單</label>
-                                                <select class="form-control" id="typeselect" name="type">
-                                                    <option value="emp">導師</option>
-                                                    <option value="teacher">講師</option>
-                                                    <option value="student">學員</option>
-                                                </select>
-                                            </div>
-                                         <div class="form-group">
-                                                <label class="form-label" for="empselect">導師選單</label>
-                                                <select class="form-control" id="empselect" name="empNo">
-                                                    <option value="">請選擇</option>
-                                                    <c:forEach var="empVO" items="${empSvc.all }">
-                                                        <option value="${empVO.empNo }">${empVO.empName }(${empVO.empNo})</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="form-label" for="teacherselect">講師選單</label>
-                                                <select class="form-control" id="teacherselect" name="teacherNo">
-                                                    <option value="">請選擇</option>
-                                                    <c:forEach var="teacherVO" items="${teacherSvc.all }">
-                                                        <option value="${teacherVO.teacherNo }">${teacherVO.teacherName }(${teacherVO.teacherNo})</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="form-label" for="studentselect">學員選單</label>
-                                                <select class="form-control" id="studentselect" name="studentNo">
-                                                    <option value="">請選擇</option>
-                                                    <c:forEach var="studentVO" items="${studentSvc.all }">
-                                                        <option value="${studentVO.studentNo }">${studentVO.studentName }(${studentVO.studentNo})</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                            <div class="col-xl-12 my-2">
-                                                <button id="js-login-btn" type="submit" class="btn btn-danger btn-block btn-lg"> 工程師們快速登入 </button>
+                                        
+                                        
+                                        
+                                        <form id="js-login" method="GET" action="<%=request.getContextPath() %>/test/testlogin.do">
+                                           <div class="form-group">
+                                                <div class="col-xl-12 my-2">
+                                                    <button id="js-login-btn" type="submit" class="btn btn-danger btn-block btn-lg">工程師快速登入按這裡 <i class="fas fa-sign-in-alt"></i></button>
                                                 </div>
-                                             </form>
+                                            </div>
+                                           
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                           </div>      
+                               
         
        
         <script src="<%=request.getContextPath() %>/SmartAdmin4/js/vendors.bundle.js"></script>
