@@ -159,6 +159,7 @@ public class UserServlet extends HttpServlet {
 					errorMsgs.put("name", "只能是中、英文字母 , 且長度必需在2到10之間");
 				}
 
+				
 				String mail = req.getParameter("mail").trim();
 				String mailReg = "[\\w\\.\\-]+@([\\w\\-]+\\.)+[\\w\\-]+";
 				if (mail == null || mail.trim().length() == 0) {
