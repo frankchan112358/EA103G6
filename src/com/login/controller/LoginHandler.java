@@ -32,7 +32,7 @@ public class LoginHandler extends HttpServlet {
 
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
-				//.toLowerCase()
+				
 		try {
 			Integer type = typeNameConvertToTypeNum(req.getParameter("type"));
 			String account = req.getParameter("account").trim().toLowerCase();
@@ -41,9 +41,23 @@ public class LoginHandler extends HttpServlet {
 			System.out.println(account);
 			UserService userSvc = new UserService();
 			UserVO userVO = userSvc.UserLogin(account, password, type);
-
+			
+			
 			if (userVO == null) {
 				errorMsgs.add("帳號或密碼或型別輸入錯誤");
+				RequestDispatcher failureView = req.getRequestDispatcher("/login/login.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+			
+			if(userVO.getEnable()==2) {
+				errorMsgs.add("您沒有權限登入，請聯繫系統管理員");
+				RequestDispatcher failureView = req.getRequestDispatcher("/login/login.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+			if(userVO.getEnable()==0) {
+				errorMsgs.add("您尚未開通帳號，請至信箱收信後開通帳號");
 				RequestDispatcher failureView = req.getRequestDispatcher("/login/login.jsp");
 				failureView.forward(req, res);
 				return;

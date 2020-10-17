@@ -1,4 +1,4 @@
-package com.filter.controller;
+package com.filter;
 
 import java.io.*;
 import javax.servlet.*;
