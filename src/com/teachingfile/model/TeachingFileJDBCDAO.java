@@ -24,6 +24,8 @@ public class TeachingFileJDBCDAO implements TeachingFileDAO_interface{
 			"DELETE FROM teachingFile where teachingFileNo = ?";
 	private static final String UPDATE = 
 			"UPDATE teachingFile set timetableNo=?, teachingFileName=?, teachingFile=? where teachingFileNo = ?";
+	private static final String UPDATENOFILE = 
+			"UPDATE teachingFile set timetableNo=?, teachingFileName=? where teachingFileNo = ?";
 
 	@Override
 	public void insert(TeachingFileVO teachingFileVO) {
@@ -72,6 +74,46 @@ public class TeachingFileJDBCDAO implements TeachingFileDAO_interface{
 			pstmt.setString(2, teachingFileVO.getTeachingFileName());
 			pstmt.setBytes(3, teachingFileVO.getTeachingFile());
 			pstmt.setString(4, teachingFileVO.getTeachingFileNo());
+			
+			pstmt.executeUpdate();
+
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver." 
+					+ e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured."
+					+ se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void updateNoFile(TeachingFileVO teachingFileVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATENOFILE);
+			
+			pstmt.setString(1, teachingFileVO.getTimetableNo());
+			pstmt.setString(2, teachingFileVO.getTeachingFileName());
+			pstmt.setString(3, teachingFileVO.getTeachingFileNo());
 			
 			pstmt.executeUpdate();
 

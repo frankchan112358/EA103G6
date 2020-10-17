@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>IBM VideoLog: HOME</title>
+<title>IBM Video: HOME</title>
 
 <style>
   table#table-1 {
