@@ -32,7 +32,7 @@ public class LoginHandler extends HttpServlet {
 
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
-				
+				//.toLowerCase()
 		try {
 			Integer type = typeNameConvertToTypeNum(req.getParameter("type"));
 			String account = req.getParameter("account").trim().toLowerCase();
