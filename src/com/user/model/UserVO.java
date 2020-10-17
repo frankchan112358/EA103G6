@@ -7,7 +7,6 @@ import javax.servlet.http.Part;
 public class UserVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 	private String userNo;
 	private String account;
 	private String password;
