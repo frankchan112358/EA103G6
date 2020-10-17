@@ -31,7 +31,7 @@
 	
 	<filter>
 		<filter-name>loginFilter</filter-name>
-		<filter-class>com.filter.controller.LoginFilter</filter-class>
+		<filter-class>com.filter.LoginFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>loginFilter</filter-name>
@@ -303,6 +303,15 @@
   <servlet-mapping>
 	<servlet-name>CourseAskServlet</servlet-name>
 	<url-pattern>/courseAsk/courseAsk.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+	<servlet-name>ForgetServlet</servlet-name>
+	<servlet-class>com.forget.controller.ForgetServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>ForgetServlet</servlet-name>
+	<url-pattern>/forget/forget.do</url-pattern>
   </servlet-mapping>
 
 </web-app>
