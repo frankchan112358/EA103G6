@@ -1,9 +1,7 @@
 package com.emp.model;
 
 public class EmpVO implements java.io.Serializable {
-
 	private static final long serialVersionUID = 1L;
-
 	private String empNo;
 	private String userNo;
 	private Integer empStatus;
