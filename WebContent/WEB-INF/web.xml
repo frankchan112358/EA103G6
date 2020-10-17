@@ -28,10 +28,10 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-
+	
 	<filter>
 		<filter-name>loginFilter</filter-name>
-		<filter-class>com.test.filter.LoginFilter</filter-class>
+		<filter-class>com.filter.controller.LoginFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>loginFilter</filter-name>
@@ -91,7 +91,7 @@
 	
 	<servlet>
 		<servlet-name>Login</servlet-name>
-		<servlet-class>login.LoginHandler</servlet-class>
+		<servlet-class>com.login.controller.LoginHandler</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Login</servlet-name>
@@ -115,6 +115,15 @@
 	<servlet-mapping>
 		<servlet-name>TestLogoutServlet</servlet-name>
 		<url-pattern>/test/testlogout.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>com.logout.controller.logout</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/logout/logout.do</url-pattern>
 	</servlet-mapping>
 
 

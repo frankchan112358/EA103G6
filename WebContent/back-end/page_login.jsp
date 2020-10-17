@@ -149,42 +149,10 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                     <span class="page-logo-text mr-1">SmartAdmin WebApp</span>
                                 </a>
                             </div>
-                            <a href="page_register.html" class="btn-link text-white ml-auto">
-                                Create Account
-                            </a>
+                            
                         </div>
                     </div>
-                    <div class="flex-1" style="background: url(img/svg/pattern-1.svg) no-repeat center bottom fixed; background-size: cover;">
-                        <div class="container py-4 py-lg-5 my-lg-5 px-4 px-sm-0">
-                            <div class="row">
-                                <div class="col col-md-6 col-lg-7 hidden-sm-down">
-                                    <h2 class="fs-xxl fw-500 mt-4 text-white">
-                                        The simplest UI toolkit for developers &amp; programmers
-                                        <small class="h3 fw-300 mt-3 mb-5 text-white opacity-60">
-                                           
-                                        </small>
-                                    </h2>
-                                    <a href="#" class="fs-lg fw-500 text-white opacity-70">Learn more &gt;&gt;</a>
-                                    <div class="d-sm-flex flex-column align-items-center justify-content-center d-md-block">
-                                        <div class="px-0 py-1 mt-5 text-white fs-nano opacity-50">
-                                            Find us on social media
-                                        </div>
-                                        <div class="d-flex flex-row opacity-70">
-                                            <a href="#" class="mr-2 fs-xxl text-white">
-                                                <i class="fab fa-facebook-square"></i>
-                                            </a>
-                                            <a href="#" class="mr-2 fs-xxl text-white">
-                                                <i class="fab fa-twitter-square"></i>
-                                            </a>
-                                            <a href="#" class="mr-2 fs-xxl text-white">
-                                                <i class="fab fa-google-plus-square"></i>
-                                            </a>
-                                            <a href="#" class="mr-2 fs-xxl text-white">
-                                                <i class="fab fa-linkedin"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                    
                                 <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4 ml-auto">
                                     <h1 class="text-white fw-300 mb-3 d-sm-block d-md-none">
                                         Secure login
@@ -208,29 +176,23 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label class="form-label" for="username">Username</label>
-                                                <input type="text" id="username" class="form-control form-control-lg" placeholder="your id or email" name="account" required>
+                                                <%-- 註解 <label class="form-label" for="username">帳號</label>--%>
+                                                <input type="text" id="username" class="form-control form-control-lg" placeholder="信箱或帳號" name="account" required>
                                                 <div class="invalid-feedback">No, you missed this one.</div>
-                                                <div class="help-block">Your unique username to app</div>
+                                                <div class="help-block"></div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="form-label" for="password">Password</label>
-                                                <input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="password" required>
+                                                <%--<label class="form-label" for="password">密碼</label>--%>
+                                                <input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="密碼" required>
                                                 <div class="invalid-feedback">Sorry, you missed this one.</div>
-                                                <div class="help-block">Your password</div>
+                                                <div class="help-block"></div>
                                             </div>
                                             <div class="form-group text-left">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="rememberme">
-                                                    <label class="custom-control-label" for="rememberme"> Remember me for the next 30 days</label>
-                                                </div>
+                                                
                                             </div>
                                             <div class="row no-gutters">
-                                                <div class="col-lg-6 pr-lg-1 my-2">
-                                                    <button type="submit" class="btn btn-info btn-block btn-lg">Sign in with <i class="fab fa-google"></i></button>
-                                                </div>
-                                                <div class="col-lg-6 pl-lg-1 my-2">
-                                                    <button id="js-login-btn" type="submit" class="btn btn-danger btn-block btn-lg">Secure login</button>
+                                                <div class="col-xl-12 my-2">
+                                                    <button type="submit" class="btn btn-info btn-block btn-lg">登入 <i class="fas fa-sign-in-alt"></i></button>
                                                 </div>
                                             </div>
                                         </form>
