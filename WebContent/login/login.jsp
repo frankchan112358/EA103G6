@@ -158,14 +158,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                         Secure login
                                     </h1>
                                     <div class="card p-4 rounded-plus bg-faded">
-                                    <%-- 錯誤表列 --%>
-											<c:if test="${not empty errorMsgs}">
-												<ul>
-													<c:forEach var="message" items="${errorMsgs}">
-														<li style="color: #ff0000"><b>${message}</b></li>												
-													</c:forEach>
-												</ul>
-											</c:if>
+                                    
                                         <form id="js-login" novalidate="" method="post" action="<%=request.getContextPath() %>/login.do">
                                             <div class="form-group">
                                                 <label class="form-label" for="typeselect">身分選單</label>
@@ -177,13 +170,13 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                             </div>
                                             <div class="form-group">
                                                 <%-- 註解 <label class="form-label" for="username">帳號</label>--%>
-                                                <input type="text" id="username" class="form-control form-control-lg" placeholder="信箱或帳號" name="account" required>
+                                                <input type="text" id="username" class="form-control form-control-lg" placeholder="請輸入您的帳號" name="account" required>
                                                 <div class="invalid-feedback">No, you missed this one.</div>
                                                 <div class="help-block"></div>
                                             </div>
                                             <div class="form-group">
                                                 <%--<label class="form-label" for="password">密碼</label>--%>
-                                                <input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="密碼" required>
+                                                <input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="請輸入您的密碼" required>
                                                 <div class="invalid-feedback">Sorry, you missed this one.</div>
                                                 <div class="help-block"></div>
                                             </div>
@@ -192,16 +185,23 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                             </div>
                                             <div class="row no-gutters">
                                                 <div class="col-xl-12 my-2">
-                                                    <button type="submit" class="btn btn-info btn-block btn-lg">登入 <i class="fas fa-sign-in-alt"></i></button>
+                                                    <button type="submit" class="btn btn-info btn-block btn-lg">登入 </button>
                                                 </div>
+                                           <%-- 錯誤表列 --%>
+											<c:if test="${not empty errorMsgs}">
+												<ul>
+													<c:forEach var="message" items="${errorMsgs}">
+														<li style="color: #ff0000"><b>${message}</b></li>												
+													</c:forEach>
+												</ul>
+											</c:if>
                                             </div>
                                         </form>
+                                             
                                     </div>
                                 </div>
                             </div>
-                            <div class="position-absolute pos-bottom pos-left pos-right p-3 text-center text-white">
-                                2020 © SmartAdmin by&nbsp;<a href='https://www.gotbootstrap.com' class='text-white opacity-40 fw-500' title='gotbootstrap.com' target='_blank'>gotbootstrap.com</a>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
