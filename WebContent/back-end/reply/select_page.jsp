@@ -3,11 +3,11 @@
 
 <html>
 <head>
-<title>公告區</title>
+<title>回覆管理</title>
 
 <style>
 input[type=button] {
-	background-color:#5151A2;
+	background-color:#E800E8;
 	border: none;
 	padding: 16px 32px;
 	text-decoration: none;
@@ -51,21 +51,21 @@ h4 {
 </head>
 <body bgcolor='#c8c8c8'>
 	<h1>
-		公告管理
+		回覆管理
 	</h1>
 
 	<br>
 
-	<h3>公告管理:</h3>
+	<h3>回覆管理:</h3>
 
 	<div align="left">
-		<input type="button" value="公告資料"
-			onclick="location.href='listAllBanjiPost.jsp'"><br>
+		<input type="button" value="所有資料"
+			onclick="location.href='listAllReply.jsp'"><br>
 	</div>
 
 	<div align="center">
-		<input type="button" value="新增班級公告"
-			onclick="location.href='addBanjiPost.jsp'"><br>
+		<input type="button" value="回覆"
+			onclick="location.href='addReply.jsp'"><br>
 	</div>
 
 	<h3>資料查詢:</h3>
@@ -80,15 +80,15 @@ h4 {
 		</ul>
 	</c:if>
 
-	<jsp:useBean id="banjiPostSvc" scope="page"
-		class="com.banjipost.model.BanjiPostService" />
+	<jsp:useBean id="replySvc" scope="page"
+		class="com.reply.model.ReplyService" />
 	
 	<ul>
 
 		<li>
 			<FORM METHOD="post"
-				ACTION="<%=request.getContextPath()%>/banjiPost/banjiPost.do">
-				<b>輸入公告編號 (如B1):</b> <input type="text" name="banjiPostNo"> <input
+				ACTION="<%=request.getContextPath()%>/reply/reply.do">
+				<b>輸入回覆編號 (如B1):</b> <input type="text" name="replyNo"> <input
 					type="hidden" name="action" value="getOne_For_Display"> <input
 					type="submit" value="送出">
 			</FORM>
@@ -96,10 +96,10 @@ h4 {
 
 		<li>
 			<FORM METHOD="post"
-				ACTION="<%=request.getContextPath()%>/banjiPost/banjiPost.do">
-				<b>查看公告編號:</b> <select size="1" name="banjiPostNo">
-					<c:forEach var="banjiPostVO" items="${banjiPostSvc.all}">
-						<option value="${banjiPostVO.banjiPostNo}">${banjiPostVO.banjiPostNo}
+				ACTION="<%=request.getContextPath()%>/reply/reply.do">
+				<b>查看回覆編號:</b> <select size="1" name="replyNo">
+					<c:forEach var="replyVO" items="${replySvc.all}">
+						<option value="${replyVO.replyNo}">${replyVO.replyNo}
 					</c:forEach>
 				</select> <input type="hidden" name="action" value="getOne_For_Display">
 				<input type="submit" value="送出">

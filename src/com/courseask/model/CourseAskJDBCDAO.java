@@ -296,12 +296,12 @@ public class CourseAskJDBCDAO implements CourseAskDAO_interface {
 
 		// 修改
 		CourseAskVO courseAskVO3 = new CourseAskVO();
-		courseAskVO3.setCourseNo("C002");
-		courseAskVO3.setStudentNo("S000002");
+		courseAskVO3.setCourseNo("C001");
+		courseAskVO3.setStudentNo("S000001");
 		courseAskVO3.setTitle("JAVA命名疑慮");
 		courseAskVO3.setQuestion("類別開頭大寫，方法小寫嗎??");
 		courseAskVO3.setUpdateTime(new java.sql.Timestamp((new java.util.Date()).getTime()));
-		courseAskVO3.setStatus(0);
+		courseAskVO3.setStatus(1);
 		courseAskVO3.setCourseAskNo("1");
 		dao.update(courseAskVO3);
 	}

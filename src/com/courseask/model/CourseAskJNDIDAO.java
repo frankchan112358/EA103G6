@@ -26,9 +26,9 @@ public class CourseAskJNDIDAO implements CourseAskDAO_interface {
 	// 新增
 	private static final String INSERT_STMT = "INSERT INTO COURSEASK(COURSEASKNO,COURSENO,STUDENTNO,TITLE,QUESTION,UPDATETIME,STATUS) VALUES (COURSEASK_SEQ.NEXTVAL,?,?,?,?,?,?)";
 	// 查全部
-	private static final String GET_ALL_STMT = "SELECT COURSEASKNO,COURSENO,STUDENTNO,TITLE,QUESTION,UPDATETIME FROM COURSEASK WHERE ISDELETE=0 ORDER BY COURSEASKNO";
+	private static final String GET_ALL_STMT = "SELECT COURSEASKNO,COURSENO,STUDENTNO,TITLE,QUESTION,UPDATETIME ,STATUS FROM COURSEASK WHERE ISDELETE=0 ORDER BY COURSEASKNO";
 	// 查單個
-	private static final String GET_ONE_STMT = "SELECT COURSEASKNO,COURSENO,STUDENTNO,TITLE,QUESTION,UPDATETIME FROM COURSEASK  WHERE COURSEASKNO =?";
+	private static final String GET_ONE_STMT = "SELECT COURSEASKNO,COURSENO,STUDENTNO,TITLE,QUESTION,UPDATETIME ,STATUS FROM COURSEASK  WHERE COURSEASKNO =?";
 	// 刪除狀態
 	private static final String DELETE = "UPDATE COURSEASK SET ISDELETE=1 WHERE COURSEASKNO=?";
 	// 修改
@@ -164,6 +164,7 @@ public class CourseAskJNDIDAO implements CourseAskDAO_interface {
 				courseAskVO.setTitle(rs.getString("title"));
 				courseAskVO.setQuestion(rs.getString("question"));
 				courseAskVO.setUpdateTime(rs.getTimestamp("updateTime"));
+				courseAskVO.setStatus(rs.getInt("status"));
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -216,6 +217,7 @@ public class CourseAskJNDIDAO implements CourseAskDAO_interface {
 				courseAskVO.setTitle(rs.getString("title"));
 				courseAskVO.setQuestion(rs.getString("question"));
 				courseAskVO.setUpdateTime(rs.getTimestamp("updateTime"));
+				courseAskVO.setStatus(rs.getInt("status"));
 
 				list.add(courseAskVO);
 			}
