@@ -26,7 +26,7 @@ import com.teachingfile.model.TeachingFileVO;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024)
 public class TeachingFileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -54,7 +54,8 @@ public class TeachingFileServlet extends HttpServlet {
 
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingFile/listAllTeachingFile.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back-end/teachingFile/listAllTeachingFile.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -75,7 +76,6 @@ public class TeachingFileServlet extends HttpServlet {
 					errorMsgs.add("課表編號格式錯誤");
 				}
 
-				String oriTeachingFileName = req.getParameter("oriTeachingFileName");
 				String teachingFileName = req.getParameter("teachingFileName");
 				if (teachingFileName == null || teachingFileName.trim().length() == 0) {
 					errorMsgs.add("影片名稱: 請勿空白");
@@ -83,40 +83,32 @@ public class TeachingFileServlet extends HttpServlet {
 
 				Part update_teachingFile = req.getPart("upfile2");
 				byte[] teachingFiles = null;
-				// 如果有新增教材，先驗證格是是否正確 > 重新取得影片、設定檔名
-				if (update_teachingFile.getSize()!= 0) {
-
+				// 如果有新增教材，先驗證格是是否正確 > 重新取得檔案、設定檔名
+				if (update_teachingFile.getSize() != 0) {
+					System.out.println("upload file");
 					if (!"application/pdf".equals(update_teachingFile.getContentType().toLowerCase())) {
 						errorMsgs.add("請上傳pdf格式教材");
 					}
-
+					System.out.println(errorMsgs);
 					// 就算有error，一樣把輸入值保留(所以要先存入再forward)
 					if (!errorMsgs.isEmpty()) {
+						System.out.println("here is the errorMsgs in errorMsgs1");
 						TeachingFileVO teachingFileVO = new TeachingFileVO();
 						teachingFileVO.setTeachingFileNo(teachingFileNo);
 						teachingFileVO.setTimetableNo(timetableNo);
 						teachingFileVO.setTeachingFileName(teachingFileName);
 						req.setAttribute("teachingFileVO", teachingFileVO);
-						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingFile/update_teachingFile_input.jsp");
+						System.out.println("here is the errorMsgs in errorMsgs2");
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/back-end/teachingFile/update_teachingFile_input.jsp");
 						failureView.forward(req, res);
 						return;
 					}
 
 					// 利用inputStream、outputStream把TeachingFile存入DB(給儲存資料byte > 取影片 > 利用資料流讀取資料 )
 					Part DBteachingFile = req.getPart("upfile2");
-//					byte[] teachingFiles = null;
-//					byte[] buffer = new byte[8192];
-//					InputStream in = DBteachingFile.getInputStream();
-//					ByteArrayOutputStream out = new ByteArrayOutputStream();
-//					int i;
-//					while ((i = in.read(buffer)) != -1) {
-//						out.write(buffer, 0, i);
-//						out.flush();
-//					}
-//					teachingFiles = out.toByteArray();
-//					out.close();
-//					in.close();
 
+					System.out.println("取part");
 					InputStream in = DBteachingFile.getInputStream();
 					ByteArrayOutputStream out = new ByteArrayOutputStream();
 					teachingFiles = new byte[in.available()];
@@ -124,101 +116,75 @@ public class TeachingFileServlet extends HttpServlet {
 					out.write(teachingFiles);
 					out.close();
 					in.close();
-					
-					// teachingFile儲存到資料夾(取路徑 > 建立資料夾 > getName > 存入file)
-					String Destination = "/teachingFiles";
-					String realPath = getServletContext().getRealPath(Destination);
-					File fDestination = new File(realPath);
-					if (!fDestination.exists())
-						fDestination.mkdirs();
 
-					File f = new File(fDestination, teachingFileName + ".pdf");
-					update_teachingFile.write(f.toString());
-				} else {   // 如果影片名稱有改，則重取檔案 > 重新命名 > 重新存入
+					System.out.println("set值前奏");
+					TeachingFileVO teachingFileVO = new TeachingFileVO();
+					teachingFileVO.setTeachingFileNo(teachingFileNo);
+					teachingFileVO.setTimetableNo(timetableNo);
+					teachingFileVO.setTeachingFileName(teachingFileName);
+					teachingFileVO.setTeachingFile(teachingFiles);
 
-					//從file讀出 > 存入DB
-//					byte[] buffer = new byte[8192];
-//					String Destination = "/teachingFiles";
-//					String realPath = getServletContext().getRealPath(Destination);
-//					
-////					InputStream in = new FileInputStream(new File(realPath + "\\" + oriTeachingFileName + "."));
-//					ByteArrayOutputStream out = new ByteArrayOutputStream();
-//					int i;
-//					while ((i = in.read(buffer)) != -1) {
-//						out.write(buffer, 0, i);
-//						out.flush();
-//					}
-//					teachingFiles = out.toByteArray();
-//					out.close();
-//					in.close();
-					
-					String Destination = "/teachingFiles";
-					String realPath = getServletContext().getRealPath(Destination);
-					
-					InputStream in = new FileInputStream(new File(realPath + "\\" + oriTeachingFileName + ".pdf"));
-					teachingFiles = new byte[in.available()];
-					ByteArrayOutputStream out = new ByteArrayOutputStream();
-					in.read(teachingFiles);
-					out.write(teachingFiles);
-					out.close();
-					in.close();
-					
-					///存入file(找檔案 > 設定好output檔案 > 建立水管 > read)
+					System.out.println("isEmpty?");
+					if (!errorMsgs.isEmpty()) {
+						System.out.println("NO");
+						req.setAttribute("teachingFileVO", teachingFileVO);
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/back-end/teachingFile/update_teachingFile_input.jsp");
+						failureView.forward(req, res);
+						return;
+					}
 
-//					InputStream fin = new FileInputStream(new File(realPath + "\\" + oriTeachingFileName + "."));
-//					OutputStream fos = new FileOutputStream(new File (realPath + "\\" + teachingFilesName + "."));
-//					File fDestination = new File(realPath);
-//					if (!fDestination.exists())
-//						fDestination.mkdirs();
-//					int c;
-//					while ((c = fin.read()) != -1) {
-//						fos.write(c);
-//					}
-//					fos.close();
-//					fin.close();
-					
-					InputStream fin = new FileInputStream(new File(realPath + "\\" + oriTeachingFileName + ".pdf"));
-					teachingFiles = new byte[fin.available()];
-					OutputStream fos = new FileOutputStream(new File (realPath + "\\" + teachingFileName + ".pdf"));
-					File fDestination = new File(realPath);
-					if (!fDestination.exists())
-						fDestination.mkdirs();
-					fin.read(teachingFiles);
-					fos.write(teachingFiles);
-					fos.close();
-					fin.close();
-					
-				}
-
-				TeachingFileVO teachingFileVO = new TeachingFileVO();
-				teachingFileVO.setTimetableNo(timetableNo);
-				teachingFileVO.setTeachingFileName(teachingFileName);
-				teachingFileVO.setTeachingFile(teachingFiles);
-
-				if (!errorMsgs.isEmpty()) {
+					System.out.println("YES");
+					TeachingFileService teachingFileSvc = new TeachingFileService();
+					System.out.println(142);
+					System.out.println(teachingFileVO.getTeachingFileNo());
+					System.out.println(teachingFileVO.getTimetableNo());
+					System.out.println(teachingFileVO.getTeachingFileName());
+					teachingFileVO = teachingFileSvc.updateTeachingFile(teachingFileNo, timetableNo, teachingFileName,
+							teachingFiles);
+					System.out.println(145);
 					req.setAttribute("teachingFileVO", teachingFileVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingFile/update_teachingFile_input.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-				TeachingFileService teachingFileSvc = new TeachingFileService();
-				teachingFileVO = teachingFileSvc.updateTeachingFile(teachingFileNo, timetableNo, teachingFileName, teachingFiles);
+					System.out.println(147);
+					String url = "/back-end/teachingFile/listAllTeachingFile.jsp";
+					System.out.println(149);
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
 
-				req.setAttribute("teachingFileVO", teachingFileVO);
-				String url = "/back-end/teachingFile/listAllTeachingFile.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
+				} else { // 如果影片名稱有改，則重取檔案 > 重新命名 > 重新存入
+					TeachingFileVO teachingFileVO = new TeachingFileVO();
+					teachingFileVO.setTeachingFileNo(teachingFileNo);
+					teachingFileVO.setTimetableNo(timetableNo);
+					teachingFileVO.setTeachingFileName(teachingFileName);
+
+					if (!errorMsgs.isEmpty()) {
+						req.setAttribute("teachingFileVO", teachingFileVO);
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/back-end/teachingFile/update_teachingFile_input.jsp");
+						failureView.forward(req, res);
+						return;
+					}
+					TeachingFileService teachingFileSvc = new TeachingFileService();
+					teachingFileVO = teachingFileSvc.updateTeachingFileNOFILE(teachingFileNo, timetableNo,
+							teachingFileName);
+
+					req.setAttribute("teachingFileVO", teachingFileVO);
+					String url = "/back-end/teachingFile/listAllTeachingFile.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+
+				}
 
 			} catch (Exception e) {
 				e.getStackTrace();
 				errorMsgs.add("資料修改失敗: " + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingFile/update_teachingFile_input.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back-end/teachingFile/update_teachingFile_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
 		if ("insert".equals(action)) { // 來自addTeachingFile.jsp的請求
-			
+
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
@@ -232,8 +198,8 @@ public class TeachingFileServlet extends HttpServlet {
 				if (teachingFileName == null || teachingFileName.trim().length() == 0) {
 					errorMsgs.add("課表名稱: 請勿空白");
 				}
-				
-				byte[] teachingFiles = null;				
+
+				byte[] teachingFiles = null;
 				Part teachingFile = req.getPart("upfile2"); // Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
 				if (!"application/pdf".equals(teachingFile.getContentType().toLowerCase())) {
 					errorMsgs.add("請上傳pdf格式教材");
@@ -249,14 +215,15 @@ public class TeachingFileServlet extends HttpServlet {
 					teachingFileVO.setTimetableNo(timetableNo);
 					teachingFileVO.setTeachingFileName(teachingFileName);
 					req.setAttribute("teachingFileVO", teachingFileVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingFile/addTeachingFile.jsp");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back-end/teachingFile/addTeachingFile.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 
 				// 利用inputStream、outputStream把teachingFile存入DB(給儲存資料byte > 取影片 > 利用資料流讀取資料 )
 				Part DBteachingFile = req.getPart("upfile2");
-				
+
 				InputStream in = DBteachingFile.getInputStream();
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
 				teachingFiles = new byte[in.available()];
@@ -265,22 +232,13 @@ public class TeachingFileServlet extends HttpServlet {
 				out.close();
 				in.close();
 
-				// teachingFile儲存到資料夾(取路徑 > 建立資料夾 > getName > 存入file)
-				String Destination = "/teachingFiles";
-				String realPath = getServletContext().getRealPath(Destination);
-				File fDestination = new File(realPath);
-				if (!fDestination.exists())
-					fDestination.mkdirs();
-
-				File f = new File(fDestination, teachingFileName + ".pdf");
-				teachingFile.write(f.toString());
-
 				TeachingFileVO teachingFileVO = new TeachingFileVO();
 				teachingFileVO.setTimetableNo(timetableNo);
 				teachingFileVO.setTeachingFileName(teachingFileName);
 				teachingFileVO.setTeachingFile(teachingFiles);
 				TeachingFileService teachingFileSvc = new TeachingFileService();
-				teachingFileVO = teachingFileSvc.addTeachingFile(teachingFileVO.getTimetableNo(), teachingFileVO.getTeachingFileName(), teachingFileVO.getTeachingFile());
+				teachingFileVO = teachingFileSvc.addTeachingFile(teachingFileVO.getTimetableNo(),
+						teachingFileVO.getTeachingFileName(), teachingFileVO.getTeachingFile());
 				String url = "/back-end/teachingFile/listAllTeachingFile.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -292,7 +250,7 @@ public class TeachingFileServlet extends HttpServlet {
 			}
 		}
 
-		if ("delete".equals(action))	{
+		if ("delete".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -302,14 +260,15 @@ public class TeachingFileServlet extends HttpServlet {
 
 				TeachingFileService teachingFileSvc = new TeachingFileService();
 				teachingFileSvc.deleteTeachingFile(teachingFileNo);
-				
+
 				String url = "/back-end/teachingFile/listAllTeachingFile.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingFile/listAllTeachingFile.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back-end/teachingFile/listAllTeachingFile.jsp");
 				failureView.forward(req, res);
 			}
 		}

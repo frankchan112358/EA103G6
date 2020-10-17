@@ -66,7 +66,6 @@
 </c:if>
 
 <FORM METHOD="post" ACTION="<%=request.getContextPath() %>/teachingFile/teachingFile.do" NAME="form1" ENCTYPE="multipart/form-data">
-<input type="hidden" name="oriTeachingFileName" value="<%=teachingFileVO.getTeachingFileName()%>">
 <table>
 	<tr>
 		<td>教材編號:<font color=red><b>*</b></font></td>

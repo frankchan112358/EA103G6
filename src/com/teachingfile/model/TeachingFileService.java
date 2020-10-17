@@ -35,6 +35,18 @@ public class TeachingFileService {
 
 		return teachingFileVO;
 	}
+	
+	public TeachingFileVO updateTeachingFileNOFILE(String teachingFileNo, String timetableNo, String teachingFileName) {
+
+		TeachingFileVO teachingFileVO = new TeachingFileVO();
+
+		teachingFileVO.setTeachingFileNo(teachingFileNo);
+		teachingFileVO.setTimetableNo(timetableNo);
+		teachingFileVO.setTeachingFileName(teachingFileName);
+		dao.updateNoFile(teachingFileVO);
+
+		return teachingFileVO;
+	}
 
 	public void deleteTeachingFile(String teachingFileNo) {
 		dao.delete(teachingFileNo);

@@ -1,7 +1,6 @@
 package com.teachingfile.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -86,6 +85,7 @@ public class TeachingFileDAO implements TeachingFileDAO_interface{
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
+			se.printStackTrace();
 			throw new RuntimeException("A database error occured."
 					+ se.getMessage());
 		} finally {
