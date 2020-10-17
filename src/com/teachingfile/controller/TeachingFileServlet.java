@@ -108,7 +108,6 @@ public class TeachingFileServlet extends HttpServlet {
 					// 利用inputStream、outputStream把TeachingFile存入DB(給儲存資料byte > 取影片 > 利用資料流讀取資料 )
 					Part DBteachingFile = req.getPart("upfile2");
 
-					System.out.println("取part");
 					InputStream in = DBteachingFile.getInputStream();
 					ByteArrayOutputStream out = new ByteArrayOutputStream();
 					teachingFiles = new byte[in.available()];
@@ -117,16 +116,13 @@ public class TeachingFileServlet extends HttpServlet {
 					out.close();
 					in.close();
 
-					System.out.println("set值前奏");
 					TeachingFileVO teachingFileVO = new TeachingFileVO();
 					teachingFileVO.setTeachingFileNo(teachingFileNo);
 					teachingFileVO.setTimetableNo(timetableNo);
 					teachingFileVO.setTeachingFileName(teachingFileName);
 					teachingFileVO.setTeachingFile(teachingFiles);
 
-					System.out.println("isEmpty?");
 					if (!errorMsgs.isEmpty()) {
-						System.out.println("NO");
 						req.setAttribute("teachingFileVO", teachingFileVO);
 						RequestDispatcher failureView = req
 								.getRequestDispatcher("/back-end/teachingFile/update_teachingFile_input.jsp");
@@ -134,19 +130,11 @@ public class TeachingFileServlet extends HttpServlet {
 						return;
 					}
 
-					System.out.println("YES");
 					TeachingFileService teachingFileSvc = new TeachingFileService();
-					System.out.println(142);
-					System.out.println(teachingFileVO.getTeachingFileNo());
-					System.out.println(teachingFileVO.getTimetableNo());
-					System.out.println(teachingFileVO.getTeachingFileName());
 					teachingFileVO = teachingFileSvc.updateTeachingFile(teachingFileNo, timetableNo, teachingFileName,
 							teachingFiles);
-					System.out.println(145);
 					req.setAttribute("teachingFileVO", teachingFileVO);
-					System.out.println(147);
 					String url = "/back-end/teachingFile/listAllTeachingFile.jsp";
-					System.out.println(149);
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
 
