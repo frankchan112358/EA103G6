@@ -307,11 +307,20 @@
   
   <servlet>
 	<servlet-name>ForgetServlet</servlet-name>
-	<servlet-class>com.forget.controller.ForgetServlet</servlet-class>
+	<servlet-class>com.login.controller.ForgetServlet</servlet-class>
   </servlet>
   <servlet-mapping>
 	<servlet-name>ForgetServlet</servlet-name>
 	<url-pattern>/forget/forget.do</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+	<servlet-name>ChangePasswordServlet</servlet-name>
+	<servlet-class>com.login.controller.ChangePasswordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>ChangePasswordServlet</servlet-name>
+	<url-pattern>/ChangePassword/ChangePassword.do</url-pattern>
   </servlet-mapping>
 
 </web-app>

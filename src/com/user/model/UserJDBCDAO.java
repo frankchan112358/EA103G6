@@ -528,4 +528,22 @@ public class UserJDBCDAO implements UserDAO_interface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+
+	@Override
+	public UserVO UserForget(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+	@Override
+	public void update_Password(UserVO userVO) {
+		// TODO Auto-generated method stub
+		
+	}
 }
