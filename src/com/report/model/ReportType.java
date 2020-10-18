@@ -1,7 +1,8 @@
 package com.report.model;
 
 public enum ReportType implements java.io.Serializable {
-	Other(0, "其他"), Ａ(1, "格式錯誤"), Ｂ(2, "濫發廣告訊息"), Ｃ(3, "內容含有色情暴力"), Ｄ(4, "無意義的貼文或留言"), Ｅ(5, "帶有敏感性議題");
+	Other(0, "其他"), Error(1, "格式錯誤"), Ad(2, "濫發廣告訊息"), Violence(3, "內容含有色情暴力"), 
+	Meaningless(4, "無意義的貼文或留言"), Sensitive(5, "帶有敏感性議題");
 
 	private Integer num;
 	private String text;
