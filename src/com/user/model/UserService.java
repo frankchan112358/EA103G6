@@ -90,18 +90,33 @@ public class UserService {
 	}
 	
 	public UserVO Login_stu(String account,String password) {
-		return dao.Login_stu(account, password);
-		
+		return dao.Login_stu(account, password);		
 	}
+	
 	public UserVO Login_emp(String account,String password) {
-		return dao.Login_emp(account, password);
-		
+		return dao.Login_emp(account, password);	
 	}
+	
 	public UserVO Login_tea(String account,String password) {
 		return dao.Login_tea(account, password);		
 	}
+	
 	public UserVO UserLogin(String account,String password, Integer type) {
 		return dao.UserLogin(account, password, type);
+	}
+	
+	public UserVO UserForget(String id) {
+		return dao.UserForget(id);
+	}
+	
+	public UserVO update_Password(String id,String password) {
+		
+		UserVO userVO = new UserVO();
+		userVO.setId(id);
+		userVO.setPassword(password);
+		dao.update_Password(userVO);
+		return userVO;
 		
 	}
+
 }

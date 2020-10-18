@@ -70,7 +70,9 @@ if(userVO!=null){
                                                 <div class="invalid-feedback">請勿遺漏密碼欄位</div>
                                                 <div class="help-block"></div>
                                             </div>
-                                            
+                                            <a href="<%=request.getContextPath() %>/login/forgetPassword.jsp" class="btn-link text-black ml-auto ml-sm-0">
+                              				忘記密碼?
+                           					 </a>
                                             
                                             <div class="form-group text-left">                                               
                                             </div>
