@@ -15,6 +15,12 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
 <head>
     <%@ include file="/front-end/template/head.jsp" %>
     <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/miscellaneous/fullcalendar/fullcalendar.bundle.css">
+    <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/notifications/sweetalert2/sweetalert2.bundle.css">
+    <style>
+        .swal2-container {
+            z-index: 100000;
+        }
+    </style>
 </head>
 
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
@@ -96,7 +102,8 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
                 <div class="modal-body">
                     <form id="leaveForm" class="needs-validation" novalidate>
                         <input type="hidden" name="studentNo" value="${studentVO.studentNo}" />
-                        <input id="timetableNo" type="hidden" name="timetableNo" value="" />
+                        <input id="timetableNo" type="hidden" name="timetableNo" value="" required="" />
+                        <div class="invalid-feedback">請選擇課堂</div>
                         <div class="form-group">
                             <label class="form-label">選擇課堂</label>
                             <span id="timetableInfo">未選擇</span>
@@ -112,11 +119,12 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class='fal fa-file-edit'></i></span>
                                 </div>
-                                <select class="custom-select" id="type" name="type">
+                                <select class="custom-select" id="type" name="type" required="">
                                     <c:forEach var="type" items="${leaveSvc.getLeaveTypeAll()}">
                                         <option value="${type.num}">${type.text}</option>
                                     </c:forEach>
                                 </select>
+                                <div class="invalid-feedback">請選擇假別</div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -125,7 +133,8 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class='fal fa-file-edit'></i></span>
                                 </div>
-                                <textarea id="description" name="description" class="form-control"></textarea>
+                                <textarea id="description" name="description" class="form-control" required=""></textarea>
+                                <div class="invalid-feedback">描述不能空白</div>
                             </div>
                         </div>
                     </form>
@@ -141,6 +150,7 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
     <%@ include file="/front-end/template/messager.jsp" %>
     <%@ include file="/front-end/template/basic_js.jsp" %>
     <script src="<%=request.getContextPath() %>/SmartAdmin4/js/miscellaneous/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="<%=request.getContextPath() %>/SmartAdmin4/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
     <script>
         'use strict';
         // 把java取值得結果，先放入var變數
@@ -167,16 +177,16 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
                             id:'${timetableVO.timetableNo}',
                             title: '${timetableVO.periodEnum.text},${timetableVO.courseVO.courseName}',
                             start: '${timetableVO.timetableDate}T${timetableVO.periodEnum.start}',
-                            borderColor:'white',
+                            borderColor:'',
                             extendedProps:{'timetableInfo':'${timetableVO.timetableDate},${timetableVO.periodEnum.text},${timetableVO.courseVO.courseName}'}
                         },
                     </c:forEach >
                 ],
                 eventClick: function (info) {
                     calendar.getEvents().forEach(e => {
-                        e.setProp('borderColor','white');
+                        e.setProp('borderColor', '');
                     });
-                    info.event.setProp('borderColor','red');
+                    info.event.setProp('borderColor', 'red');
                     $('#timetableNo').val(info.event.id);
                     $('#timetableInfo').html(info.event.extendedProps.timetableInfo);
                 }
@@ -186,21 +196,54 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
                 calendar.render();
             });
 
-            $('#save').click(function(){
+            $('#leaveEditor').on('hidden.bs.modal', function () {
+                resetLeaveForm();
+            });
+
+            $('#new').click(function () {
+                resetLeaveForm();
+            });
+
+            $('#save').click(function (event) {
+                if ($('#timetableNo').val() == '') {
+                    Swal.fire("請問請哪節課?", "請在課表中選取課堂", "question");
+                    return;
+                }
+                if (leaveForm.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    leaveForm.classList.add('was-validated');
+                    return;
+                } else {
+                    leaveForm.classList.add('was-validated');
+                }
+
+
                 $.ajax({
-                    type:'post',
-                    url:'<%=request.getContextPath()%>/leave/add',
-                    data:$(leaveForm).serialize(),
-                    success(res){
-                        if(res=='ok'){
+                    type: 'post',
+                    url: '<%=request.getContextPath()%>/leave/add',
+                    data: $(leaveForm).serialize(),
+                    success(res) {
+                        if (res == 'ok') {
                             $('#leaveEditor').modal('hide');
                         }
                     },
-                    error(err){
+                    error(err) {
                         console.log(err);
                     }
                 })
             });
+
+            function resetLeaveForm() {
+                leaveForm.classList.remove('was-validated');
+                calendar.getEvents().forEach(e => {
+                    e.setProp('borderColor', '');
+                });
+                $('#timetableInfo').html('未選擇')
+                $('input[name=timetableNo]').val('');
+                $('#type').val('0');
+                $('#description').val('');
+            }
         });
     </script>
 </body>
