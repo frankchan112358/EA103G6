@@ -688,7 +688,8 @@ public class UserDAO implements UserDAO_interface {
 			
 				pstmt = con.prepareStatement(UPDATE_PASSWORD);
 				
-				pstmt.setString(1, userVO.getPassword());                   
+				pstmt.setString(1, userVO.getPassword());
+				pstmt.setString(2, userVO.getId());
 
 			pstmt.executeUpdate();
 
