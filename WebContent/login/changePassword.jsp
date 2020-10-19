@@ -101,9 +101,9 @@
                                             </strong> 請設定長度至少 6-12 個字元的新密碼，由英文字母或數字共同組成密碼，強度才夠。
                                         </div>                                        
                                         <form id="js-login"  method="get" action="<%=request.getContextPath() %>/ChangePassword/ChangePassword.do">    
-                                           <div class="form-group">
-                                                <label class="form-label" for="lostaccount">你的身分證字號</label>
-                                                <input type="id" id="lostaccount" name="id" class="form-control" placeholder="請填寫您的身分證字號" >                         
+                                          <div class="form-group">
+                                                <label class="form-label" for="lostaccount"></label>
+                                                <input type="hidden" id="lostaccount" name="id" value="<%=request.getParameter("id") %>" >                         
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label" for="emailverify">新密碼</label>

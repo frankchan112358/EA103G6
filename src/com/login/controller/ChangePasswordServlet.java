@@ -31,20 +31,17 @@ public class ChangePasswordServlet  extends HttpServlet{
 			String password = req.getParameter("password").trim();
 			String checkPassword = req.getParameter("checkPassword").trim();
 			String passwordReg = "\\w{6,12}";
-//			String guest = req.getParameter("guest");
-//			String userNo=guest.substring(5);
-//			 userNo="U"+userNo;
 			 
 			 UserService userSvc =new UserService();
 			 UserVO userVO=userSvc.UserForget(id);
 			 req.setAttribute("userVO", userVO);
-				
-			
-			System.out.println(id);
-			System.out.println(password);
-			System.out.println(checkPassword);
-					
-
+			 
+			 if (password==null && checkPassword==null) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/login/changePassword.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+			 
 			if (!password.trim().matches(passwordReg)) {
 				errorMsgs.add("密碼僅能輸入英文字母及數字，且長度為6-12");
 				RequestDispatcher failureView = req.getRequestDispatcher("/login/changePassword.jsp");
@@ -73,8 +70,7 @@ public class ChangePasswordServlet  extends HttpServlet{
 			successView.forward(req, res);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
-			errorMsgs.add("無法取得資料:" + e.getMessage());
+
 			RequestDispatcher failureView = req.getRequestDispatcher("/login/changePassword.jsp");
 			failureView.forward(req, res);
 

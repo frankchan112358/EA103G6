@@ -72,17 +72,11 @@ public class ForgetServlet extends HttpServlet{
 				return;
 			}
 			
-//			String encoding =userVO.getId();
-//			String messageText="http://localhost:8081"+req.getContextPath()+"/ChangePassword.jsp"+encoding;
-//			String messageText="愛存在這美麗新世界";
-			
-//			MailService sendMail =new MailService();
-//			sendMail.sendMail(mail,"Work Join Learn 會員忘記密碼", messageText);
 			
 			
 			String encoding = userVO.getId();
 			String messageText = "http://localhost:8081" + req.getContextPath() + "/ChangePassword/ChangePassword.do?id="
-					+ encoding+"&password=&checkPassword=";
+					+ encoding;
 
 			MailService sendMail = new MailService();
 			sendMail.sendMail(mail,"Work Join Learn 會員忘記密碼", messageText);
