@@ -1,7 +1,7 @@
 package com.leave.model;
 
 public enum LeaveStatus {
-	Review(0, "審核"), Pass(1, "通過"), Reject(2, "拒絕");
+	Review(0, "審核"), Pass(1, "通過"), Reject(2, "拒絕"), Cancel(3,"取消");
 
 	private Integer num;
 	private String text;

@@ -1,5 +1,8 @@
 package com.leave.model;
 
+import com.timetable.model.TimetableService;
+import com.timetable.model.TimetableVO;
+
 public class LeaveVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private String leaveNo;
@@ -55,5 +58,25 @@ public class LeaveVO implements java.io.Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	
+	public String getStatusText() {
+		return LeaveStatus.findByNum(this.status).getText();
+	}
+	
+	public String getTypeText() {
+		return LeaveType.findByNum(this.type).getText();
+	}
+	
+	public TimetableVO getTimetableVO() {
+		return (new TimetableService()).getOneTimetable(this.timetableNo);
+	}
+	
+	public LeaveStatus getStatusEnum() {
+		return LeaveStatus.findByNum(this.status);
+	}
+	
+	public LeaveType getTypeEnum() {
+		return LeaveType.findByNum(this.type);
 	}
 }

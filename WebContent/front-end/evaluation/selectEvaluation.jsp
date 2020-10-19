@@ -11,14 +11,7 @@
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 <%
-List<CourseVO> courseList = new ArrayList<CourseVO>();
-for(CourseVO item : courseSvc.getAll()){
-	if(item.getBanjiNo().equals(studentVO.getBanjiNo())){
-		courseList.add(item);
-	}	
-}
 pageContext.setAttribute("addedList",evaluationSvc.getStudentAddedCourseEvaluation(studentVO.getStudentNo()));
-pageContext.setAttribute("courseList", courseList);
 %>
 
 <!DOCTYPE html>
@@ -67,7 +60,7 @@ pageContext.setAttribute("courseList", courseList);
                                                         </tr>                                                            
                                                     </thead>
                                                     <tbody>
-                                                    	<c:forEach var="courseVO" items="${courseList }" >
+                                                    	<c:forEach var="courseVO" items="${studentVO.courseList}" >
                                                         <tr>
                                                             <td>${courseVO.courseName }</td>
                                                             <td>${teacherSvc.getOneTeacher(courseVO.teacherNo).getTeacherName() }</td>
