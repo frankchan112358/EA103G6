@@ -5,8 +5,8 @@ import java.util.List;
 
 public interface UserDAO_interface {
     public void insert(UserVO userVO);
-    public void empUpdate(UserVO userVO);
     public void update(UserVO userVO);
+    public void userEnable(UserVO userVO);
     public void delete(String userNo);
     public UserVO findByPrimaryKey(String userNo);
     public UserVO findById(String id);
@@ -18,6 +18,4 @@ public interface UserDAO_interface {
     public UserVO Login_emp(String account,String password);
     public UserVO Login_tea(String account,String password);
 	public UserVO UserLogin(String account, String password, Integer type);
-	public UserVO UserForget(String id) ;
-	public void update_Password(UserVO userVO);
 }

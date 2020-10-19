@@ -12,10 +12,11 @@ public class UserService {
 		dao = new UserDAO();
 	}
 	
-	public UserVO addUser(Integer type,String name,String mail,String id) {
+	public UserVO addUser(Integer type, String account,String name,String mail,String id) {
 		
 		UserVO userVO = new UserVO();
 		
+		userVO.setAccount(account);
 		userVO.setType(type);
 		userVO.setName(name);
 		userVO.setMail(mail);
@@ -25,13 +26,11 @@ public class UserService {
 		return userVO;				
 	}
 	
-	public UserVO updateUser(String userNo,String account,String password,Integer type,String name,
+	public UserVO updateUser(String userNo,Integer type,String name,
 			String mail,String phone, String address,String id,InputStream photo,Integer enable) {
 		
 		UserVO userVO = new UserVO();
 		userVO.setUserNo(userNo);
-		userVO.setAccount(account);
-		userVO.setPassword(password);
 		userVO.setType(type);
 		userVO.setName(name);
 		userVO.setMail(mail);
@@ -45,15 +44,13 @@ public class UserService {
 		
 	}
 	
-	public UserVO enableUser(String userNo,String account,String password,Integer type,Integer enable) {
+	public UserVO enableUser(String userNo,String password,Integer enable) {
 		
 		UserVO userVO = new UserVO();
 		userVO.setUserNo(userNo);
-		userVO.setAccount(account);
 		userVO.setPassword(password);
-		userVO.setType(type);
 		userVO.setEnable(enable);
-		dao.update(userVO);
+		dao.userEnable(userVO);
 		return userVO;
 		
 	}
@@ -90,33 +87,18 @@ public class UserService {
 	}
 	
 	public UserVO Login_stu(String account,String password) {
-		return dao.Login_stu(account, password);		
+		return dao.Login_stu(account, password);
+		
 	}
-	
 	public UserVO Login_emp(String account,String password) {
-		return dao.Login_emp(account, password);	
+		return dao.Login_emp(account, password);
+		
 	}
-	
 	public UserVO Login_tea(String account,String password) {
 		return dao.Login_tea(account, password);		
 	}
-	
 	public UserVO UserLogin(String account,String password, Integer type) {
 		return dao.UserLogin(account, password, type);
-	}
-	
-	public UserVO UserForget(String id) {
-		return dao.UserForget(id);
-	}
-	
-	public UserVO update_Password(String id,String password) {
-		
-		UserVO userVO = new UserVO();
-		userVO.setId(id);
-		userVO.setPassword(password);
-		dao.update_Password(userVO);
-		return userVO;
 		
 	}
-
 }
