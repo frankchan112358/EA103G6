@@ -63,18 +63,6 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
                                                     <th>操作</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <c:forEach var="leaveVO" items="${list }">
-                                                    <tr>
-                                                        <td>${leaveVO.timetableVO.timetableDate}</td>
-                                                        <td>${leaveVO.timetableVO.periodText}</td>
-                                                        <td>${leaveVO.timetableVO.courseVO.courseName}</td>
-                                                        <td>${leaveVO.typeText}</td>
-                                                        <td>${leaveVO.statusText}</td>
-                                                        <td></td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
                                         </table>
                                         <!-- datatable end -->
                                     </div>
@@ -158,9 +146,67 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
         $(document).ready(function () {
             var leaveForm = document.getElementById('leaveForm');
 
-            $('#leaveTable').dataTable({
+            var columnSet = [
+                {
+                    title: "日期",
+                    id: "timetableDate",
+                    data: "timetableDate",
+                    type: "text"
+                },
+                {
+                    title: "時段",
+                    id: "periodText",
+                    data: "periodText",
+                    type: "text"
+                },
+                {
+                    title: "課程",
+                    id: "courseName",
+                    data: "courseName",
+                    type: "text"
+                },
+                {
+                    title: "假別",
+                    id: "typeText",
+                    data: "typeText",
+                    type: "text"
+                },
+                {
+                    title: "狀態",
+                    id: "statusText",
+                    data: "statusText",
+                    type: "text"
+                },
+                {
+                    title: "操作",
+                    id: "action",
+                    data: "action",
+                    render(data, type, row, meta) {
+                        let html = `<button type="button" class="btn btn-primary">檢視</button>`;
+                        if (row.action == 1)
+                            html = `<button type="button" class="btn btn-info">修改</button>
+                                         <button type="button" class="btn btn-danger">取消</button>`;
+                        if (row.action == 2)
+                            html += `<button type="button" class="btn btn-danger">取消</button>`;
+                        return html;
+
+                    }
+                }]
+
+
+            var leaveTable = $('#leaveTable').DataTable({
                 responsive: true,
-                language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' }
+                language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' },
+                columns: columnSet,
+                ajax: {
+                    url: '<%=request.getContextPath()%>/leave/student',
+                    type: 'GET',
+                    async: true,
+                    cache: false,
+                    data: {
+                        studentNo: '${studentVO.studentNo}'
+                    }
+                }
             });
 
             var calendarEl = document.getElementById('calendar');
@@ -171,17 +217,7 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
                 editable: false,
                 displayEventTime: false,
                 locale: 'zh-tw',
-                events: [
-                    <c:forEach var="timetableVO" items="${leaveSvc.getTimetableEvents(studentVO.studentNo)}">
-                        {
-                            id:'${timetableVO.timetableNo}',
-                            title: '${timetableVO.periodEnum.text},${timetableVO.courseVO.courseName}',
-                            start: '${timetableVO.timetableDate}T${timetableVO.periodEnum.start}',
-                            borderColor:'',
-                            extendedProps:{'timetableInfo':'${timetableVO.timetableDate},${timetableVO.periodEnum.text},${timetableVO.courseVO.courseName}'}
-                        },
-                    </c:forEach >
-                ],
+                events: '<%=request.getContextPath()%>/leave/calendar?studentNo=${studentVO.studentNo}',
                 eventClick: function (info) {
                     calendar.getEvents().forEach(e => {
                         e.setProp('borderColor', '');
@@ -220,12 +256,13 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
 
 
                 $.ajax({
-                    type: 'post',
+                    type: 'POST',
                     url: '<%=request.getContextPath()%>/leave/add',
                     data: $(leaveForm).serialize(),
                     success(res) {
                         if (res == 'ok') {
                             $('#leaveEditor').modal('hide');
+                            resetLeaveForm();
                         }
                     },
                     error(err) {
@@ -239,6 +276,9 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
                 calendar.getEvents().forEach(e => {
                     e.setProp('borderColor', '');
                 });
+                leaveTable.ajax.reload(null, false);
+                calendar.refetchEvents();
+                calendar.today();
                 $('#timetableInfo').html('未選擇')
                 $('input[name=timetableNo]').val('');
                 $('#type').val('0');

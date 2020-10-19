@@ -61,7 +61,25 @@
 		<servlet-name>AddLeave</servlet-name>
 		<url-pattern>/leave/add</url-pattern>
 	</servlet-mapping>
-
+	
+	<servlet>
+		<servlet-name>GetStudentLeave</servlet-name>
+		<servlet-class>com.leave.controller.GetStudentLeave</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetStudentLeave</servlet-name>
+		<url-pattern>/leave/student</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GetCalendarLeave</servlet-name>
+		<servlet-class>com.leave.controller.GetCalendarLeave</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetCalendarLeave</servlet-name>
+		<url-pattern>/leave/calendar</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>TimetableServlet</servlet-name>
 		<servlet-class>com.timetable.controller.TimetableServlet</servlet-class>
