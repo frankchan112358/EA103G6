@@ -3,8 +3,8 @@
 <%@ page import="com.user.model.*,com.teacher.model.*"%>
 <%@ page import="java.util.*"%>
 <%
-	UserVO userVO = (UserVO) request.getAttribute("userVO"); 
-	TeacherVO teacherVO = (TeacherVO) request.getAttribute("teacherVO"); 
+	UserVO userVOForShow = (UserVO) request.getAttribute("userVOForShow"); 
+	TeacherVO teacherVOForShow = (TeacherVO) request.getAttribute("teacherVOForShow"); 
 	
 %>
 
@@ -12,8 +12,8 @@
 <html>
 <head>
     <%@ include file="/back-end/template/head.jsp" %> 
-    <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/datagrid/datatables/datatables.bundle.css">
-    
+	<!-- notifications 的css連結 -->
+   	<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/notifications/sweetalert2/sweetalert2.bundle.css">        
 <style>
     
     img {
@@ -55,23 +55,8 @@
                                 <div id="panel-1" class="panel">
                                     <div class="panel-hdr">
                                         <h2>
-                                            ${userVO.name} <span class="fw-300"><i>個人資料</i></span>
+                                            ${userVOForShow.name} <span class="fw-300"><i>個人資料</i></span>
                                         </h2>
-                                        <div class="panel-toolbar">
-                                            <button class="btn btn-primary btn-sm" data-toggle="dropdown">Table Style</button>
-                                            <div class="dropdown-menu dropdown-menu-animated dropdown-menu-right position-absolute pos-top">
-                                                <button class="dropdown-item active" data-action="toggle" data-class="table-bordered" data-target="#dt-basic-example"> Bordered Table </button>
-                                                <button class="dropdown-item" data-action="toggle" data-class="table-sm" data-target="#dt-basic-example"> Smaller Table </button>
-                                                <button class="dropdown-item" data-action="toggle" data-class="table-dark" data-target="#dt-basic-example"> Table Dark </button>
-                                                <button class="dropdown-item active" data-action="toggle" data-class="table-hover" data-target="#dt-basic-example"> Table Hover </button>
-                                                <div class="dropdown-divider m-0"></div>
-                                                <div class="dropdown-multilevel dropdown-multilevel-left">
-                                                    
-                                                    
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="panel-container show">
                                         <div class="panel-content">
@@ -82,11 +67,11 @@
 											<tr>
 												<td>
 													<div id="pic" >
-														<%if (userVO.getPhoto() == null) {%>
+														<%if (userVOForShow.getPhoto() == null) {%>
 														<img src="<%=request.getContextPath()%>/images/noPicture.png">
 														
 														<%} else {%>
-														<img src="<%=request.getContextPath()%>/user.do?action=getPhoto&userNo=<%=userVO.getUserNo()%>">
+														<img src="<%=request.getContextPath()%>/user.do?action=getPhoto&userNo=<%=userVOForShow.getUserNo()%>">
 														<%} %>
 													</div>
 												<td>
@@ -95,68 +80,74 @@
 											
 											<tr data-dt-row="14">
 													<th>姓名</th>
-													<td>${userVO.name}</td>									
+													<td>${userVOForShow.name}</td>									
 												</tr>
                                                 <tr>
 													<th>講師編號</th>
-													<td>${teacherVO.teacherNo}</td>									
+													<td>${teacherVOForShow.teacherNo}</td>									
 												</tr>                                                
                                                 <tr>
 													<th>帳號</th>
-													<td>${userVO.account}</td>									
+													<td>${userVOForShow.account}</td>									
 												</tr>
                                                 <tr>
 													<th>電話</th>
-													<td>${userVO.phone eq null?"暫無輸入":userVO.phone}</td>									
+													<td>${userVOForShow.phone eq null?"暫無輸入":userVOForShow.phone}</td>									
 												</tr>
                                                 <tr>
 													<th>電子信箱</th>
-													<td>${userVO.mail}</td>									
+													<td>${userVOForShow.mail}</td>									
 												</tr>
                                                 <tr>
 													<th>身分證字號</th>
-													<td>${userVO.id}</td>									
+													<td>${userVOForShow.id}</td>									
 												</tr>
                                                 <tr>
 													<th>技能</th>
-													<td>${teacherVO.skill eq null? "暫無輸入":teacherVO.skill }</td>									
+													<td>${teacherVOForShow.skill eq null? "暫無輸入":teacherVOForShow.skill }</td>									
 												</tr>
                                                 <tr>
 													<th>描述</th>
-													<td>${teacherVO.description eq null? "暫無輸入":teacherVO.description}</td>									
+													<td>${teacherVOForShow.description eq null? "暫無輸入":teacherVOForShow.description}</td>									
 												</tr>
                                                 <tr>
 													<th>帳號狀態</th>
-													<td>${userVO.enable==0?"停用中":"啟用中"}</td>									
+													<td>${userVOForShow.enable==0?"停用中":"啟用中"}</td>									
 												</tr>
                                                 <tr>
 													<th>講師狀態</th>
 													<td>
 														<c:choose>
-                                                    			<c:when test="${teacherVO.teacherStatus==0}">離職</c:when>
-                                                    			<c:when test="${teacherVO.teacherStatus==1}">在職</c:when>
-                                                    			<c:when test="${teacherVO.teacherStatus==2}">停職</c:when>
+                                                    			<c:when test="${teacherVOForShow.teacherStatus==0}">離職</c:when>
+                                                    			<c:when test="${teacherVOForShow.teacherStatus==1}">在職</c:when>
+                                                    			<c:when test="${teacherVOForShow.teacherStatus==2}">停職</c:when>
                                                     	</c:choose>											
 													</td>									
 												</tr>
                                                 <tr>
 													<th>地址</th>
-													<td>${userVO.address eq null?"暫無輸入":userVO.address}</td>									
+													<td>${userVOForShow.address eq null?"暫無輸入":userVOForShow.address}</td>									
 												</tr>
 																					
                                             </table>
-                                            <!-- datatable end -->
-                                            <form method="post" action="<%=request.getContextPath()%>/user.do">
-                                            	<input type="hidden" name="userNo" value="<%=userVO.getUserNo()%>"> 
-												<input type="hidden" name="action" value="getOne_For_Update">
-                                            	<button id="submitAddEmp" class="btn btn-primary ml-auto">修改</button>
+                                            <div class="demo row">
+                                            <form id="deleteTeacher">
+                                            	<button id="submitDeleteTeacher" class="btn btn-danger ml-auto">刪除</button>
+                                            	<input type="hidden" name="action" value="delete">
+                                            	<input type="hidden" name="userNo" value="<%=userVOForShow.getUserNo()%>"> 
                                             </form>
+                                            <form method="post" action="<%=request.getContextPath()%>/user.do">
+                                            	<input type="hidden" name="userNo" value="<%=userVOForShow.getUserNo()%>"> 
+												<input type="hidden" name="action" value="getOne_For_Update">
+                                            	<button id="submitUpdateTeacher" class="btn btn-primary ml-auto" <% if(teacherVOForShow.getTeacherStatus()==0) out.print("disabled='disabled'");%>>修改</button>
+                                            </form>
+                                            </div>
+                                            <!-- datatable end -->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
                 </main>
                 <!-- this overlay is activated only when mobile menu is triggered -->
                 <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div> <!-- END Page Content -->
@@ -175,11 +166,61 @@
     
     <%@ include file="/back-end/template/quick_menu.jsp" %>
     <%@ include file="/back-end/template/messager.jsp" %>
-	<!--     把法蘭克原本預設的inclide的js刪掉 -->
+    <%@ include file="/back-end/template/basic_js.jsp" %>
+    
+    <script src="<%=request.getContextPath() %>/SmartAdmin4/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
     
     
-        <script src="<%=request.getContextPath() %>/SmartAdmin4/js/vendors.bundle.js"></script>
-        <script src="<%=request.getContextPath() %>/SmartAdmin4/js/app.bundle.js"></script>
-        <script src="<%=request.getContextPath() %>/SmartAdmin4/js/datagrid/datatables/datatables.bundle.js"></script>    
+    <script>
+
+$("#deleteTeacher").on("click", function(event)
+        {
+			event.preventDefault();
+            var swalWithBootstrapButtons = Swal.mixin(
+            {
+                customClass:
+                {
+                    confirmButton: "btn btn-primary",
+                    cancelButton: "btn btn-danger mr-2"
+                },
+                buttonsStyling: false
+            });
+            swalWithBootstrapButtons
+                .fire(
+                {
+                    title: "請再次確認是否刪除",
+                    text: "帳號一旦刪除並無復原可能",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "確定刪除",
+                    cancelButtonText: "暫不刪除",
+                    reverseButtons: true
+                })
+                .then(function(result)
+                {
+                    if (result.value)
+                    {
+                        swalWithBootstrapButtons.fire(
+                            "刪除請求送出",
+                            "請稍等跳轉頁面",
+                            "success"
+                        );
+                        setTimeout(function(){$('#deleteTeacher').submit();},1000);
+                    }
+                    else if (
+                        // Read more about handling dismissals
+                        result.dismiss === Swal.DismissReason.cancel
+                    )
+                    {
+                        swalWithBootstrapButtons.fire(
+                            "刪除請求取消",
+                            "刪除帳號請再三確認",
+                            "error"
+                        );
+                    }
+                });
+        }); // A message with a custom image and CSS animation disabled
+        
+</script>
 </body>
 </html>

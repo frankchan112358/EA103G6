@@ -39,26 +39,26 @@
 						<form class="needs-validation" method="post" action="<%=request.getContextPath()%>/user.do">
 							<div class="row text-left">
 								<div class="col mb-3">
-									<label class="form-label " for="name">帳號 (預設為信箱帳號)</label> 
-									<input type="text" class="form-control" id="account" placeholder="Account" value="${userVO.mail}" disabled>
+									<label class="form-label " for="account">帳號 (預設為信箱帳號)</label> 
+									<input type="text" class="form-control" id="account" placeholder="Account" value="${userVO.account}" disabled>
 								</div>
 							</div>
 							<div class="row text-left">
 								<div class="col mb-3">
-									<label class="form-label " for="name">密碼 (密碼長度需大於五碼)</label> 
+									<label class="form-label " for="password">密碼 (密碼長度需大於五碼)</label> 
 									<input type="text" class="form-control" id="password" placeholder="Password" name="password" value="${userVO eq null?'':userVO.password }" required>
 									<div class="invalid-feedback" id="wrongPassword">請輸入密碼</div>
 								</div>
 							</div>
 							<div class="row text-left">
 								<div class="col mb-3">
-									<label class="form-label " for="name">請再次確認密碼</label> 
+									<label class="form-label " for="passwordAgain">請再次確認密碼</label> 
 									<input type="password" class="form-control" id="passwordAgain" placeholder="Password" name="passwordAgain" required>
 									<div class="invalid-feedback" id="wrongPasswordAgain">請再次輸入密碼</div>
 								</div>
 							</div>
 							<input type="hidden" name="action" value="enableUpdate">
-							<input type="hidden" name="account" value="${userVO.mail}">
+							<input type="hidden" name="account" value="${userVO.account}">
 							<input type="hidden" name="id" value="${userVO.id}">
 							<input type="hidden" name="type" value="${userVO.type}">
 							<button id="submitAddEmp" class="btn btn-primary ml-auto">確認送出</button>

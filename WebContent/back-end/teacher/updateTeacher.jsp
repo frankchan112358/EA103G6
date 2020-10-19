@@ -3,22 +3,18 @@
 <%@ page import="com.user.model.*,com.teacher.model.*"%>
 <%@ page import="java.util.*"%>
 <%  
-	UserVO userVO = (UserVO) request.getAttribute("userVO");
-	TeacherVO teacherVO = (TeacherVO) request.getAttribute("teacherVO");
+	UserVO userVOForUpdate = (UserVO) request.getAttribute("userVOForUpdate");
+	TeacherVO teacherVOForUpdate = (TeacherVO) request.getAttribute("teacherVOForUpdate");
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
     <%@ include file="/back-end/template/head.jsp" %> 
-    <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/datagrid/datatables/datatables.bundle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
     
-    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
-	
-<!-- notifications 的css連結 -->
+	<!-- notifications 的css連結 -->
    <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/notifications/sweetalert2/sweetalert2.bundle.css">
 	
 		
@@ -38,7 +34,7 @@
 }
 
 </style>
-    
+
 </head>
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
     <script>
@@ -65,25 +61,23 @@
                                         <h2>
                                             Update <span class="fw-300"><i>Teacher</i></span>
                                         </h2>
-                                        <div class="panel-toolbar">
-                                            <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
-                                            <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
-                                            <button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
-                                        </div>
                                     </div>
                                     <div class="panel-container show">
-                                        
                                         <div class="panel-content p-0">
-                                            <form class="needs-validation"  enctype="multipart/form-data" novalidate>
+                                            <form class="needs-validation"  method="post" action="<%=request.getContextPath()%>/user.do" enctype="multipart/form-data" novalidate>
                                                 <div class="panel-content">
-                                                <div  id="picDiv">
+                                                	<div  id="picDiv">
+                                                        <c:if test="${userVOForUpdate.photo eq null}">
 															<img src="<%=request.getContextPath() %>/images/noPicture.png">
-                                                        
-                                                        </div>
+														</c:if>
+														<c:if test="${userVOForUpdate.photo ne null}">
+															<img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${userVOForUpdate.userNo}">
+														</c:if>
+                                                  	</div>
                                                     <div class="form-row">
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="name">姓名 <span class="text-danger">*</span> </label>
-                                                            <input type="text" class="form-control" id="name" placeholder="Name" name="name" value="${userVO eq null?'':userVO.name }" required>
+                                                            <input type="text" class="form-control" id="name" placeholder="Name" name="name" value="${userVOForUpdate eq null?'':userVOForUpdate.name }" required>
                                                             <div class="invalid-feedback" id="wrongName">
 																請輸入姓名
                                                             </div>
@@ -91,31 +85,31 @@
                                                         
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="phone">手機號碼 </label>
-                                                            <input type="text" class="form-control" id="phone" placeholder="Phone Number" name="phone" value="${userVO eq null?'':userVO.phone }"  >
+                                                            <input type="text" class="form-control" id="phone" placeholder="Phone Number" name="phone" value="${userVOForUpdate eq null?'':userVOForUpdate.phone }"  >
                                                             <div class="invalid-feedback" id="wrongPhone">
 																僅接受台灣連絡電話且僅能輸入10碼
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="enable">帳號啟用狀態 <span class="text-danger">*</span></label>
-                                                            <select class="custom-select" id="enable" name="enable" required="" >
-                                                                <option value="0">停用中</option>
-                                                                <option value="1">啟用中</option>
+                                                            <select class="custom-select" id="enable" name="enable" required >
+                                                                <option value="1" ${userVOForUpdate.enable eq 1?"selected":""}>啟用中</option>
+                                                                <option value="2" ${userVOForUpdate.enable eq 2?"selected":""}>停用中</option>
                                                             </select>
                                                         </div>
                                                         
                                                         <div class="col-md-6 mb-3">
-                                                            <label class="form-label" for="empStatus">講師狀態調整 <span class="text-danger">*</span></label>
-                                                            <select class="custom-select" id="empStatus" name="empStatus" required="" >
-                                                                <option value="0">離職</option>
-                                                                <option value="1">在職</option>
-                                                                <option value="2">停職</option>
+                                                            <label class="form-label" for="teacherStatus">講師狀態調整 <span class="text-danger">*</span></label>
+                                                            <select class="custom-select" id="teacherStatus" name="teacherStatus" required>
+                                                                <option value="0" ${teacherVOForUpdate.teacherStatus eq 0?"selected":""}>離職</option>
+                                                                <option value="1" ${teacherVOForUpdate.teacherStatus eq 1?"selected":""}>在職</option>
+                                                                <option value="2" ${teacherVOForUpdate.teacherStatus eq 2?"selected":""}>停職</option>
                                                             </select>
                                                         </div>
                                                         
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="id">身分證字號 <span class="text-danger">*</span> </label>
-                                                            <input type="text" class="form-control" id="id" placeholder="Id" name="id" value="${userVO eq null?'':userVO.id }" required>
+                                                            <input type="text" class="form-control" id="id" placeholder="Id Number" name="id" value="${userVOForUpdate eq null?'':userVOForUpdate.id }" required>
                                                             <div class="invalid-feedback" id="wrongId">
 																請輸入身分證字號
                                                             </div>
@@ -124,7 +118,7 @@
                                                         
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="mail">電子郵件<span class="text-danger">*</span></label>
-                                                            <input type="text" class="form-control" id="mail" placeholder="E-mail" name="mail" value="${userVO eq null?'':userVO.mail }" required>
+                                                            <input type="text" class="form-control" id="mail" placeholder="E-mail" name="mail" value="${userVOForUpdate eq null?'':userVOForUpdate.mail }" required>
                                                             <div class="invalid-feedback" id="wrongMail">
 																請輸入電子郵件
                                                             </div>
@@ -133,17 +127,17 @@
                                                     <div >地址</div>
                                                     <div id="twzipcode"></div>
                                                     <div class="form-group">
-                                                    	<input type="text" id="address" name="address" class="form-control" placeholder="Address" value="${userVO eq null?'':userVO.address }">
+                                                    	<input type="text" id="address" name="address" class="form-control" placeholder="Address" value="${userVOForUpdate eq null?'':userVOForUpdate.address }">
                                                 	</div>
                                                 	
                                                 	<div class="form-group mb-3">
                                                          <label class="form-label" for="skill">講師技術簡介  </label>
-                                                         <input type="text" class="form-control" id="id" placeholder="Skill" name="skill" value="${teacherVO eq null?'':teacherVO.skill}" >
+                                                         <input type="text" class="form-control" id="skill" placeholder="Skill" name="skill" value="${teacherVOForUpdate eq null?'':teacherVOForUpdate.skill}" >
                                                     </div>
                                                     
                                                     <div class="form-group mb-3">
                                                          <label class="form-label" for="description">講師詳細描述 </label>
-                                                         <textarea class="form-control" id="description"  name="description" placeholder="Description" >${teacherVO eq null?'':teacherVO.description}</textarea>
+                                                         <textarea class="form-control" id="description"  name="description" placeholder="Description" >${teacherVOForUpdate eq null?'':teacherVOForUpdate.description}</textarea>
                                                     </div>
                                                     
                                                     <div class="form-group mb-3">
@@ -165,8 +159,12 @@
                                                             	您必須再次確認後送出
                                                         </div>
                                                     </div>
-                                                    <button id="submitAddEmp" class="btn btn-primary ml-auto">Submit form</button>
+                                                    <button id="updateTeacher" class="btn btn-primary ml-auto">提交修改</button>
                                                 </div>
+                                                 <input type="hidden" name="action" value="update">
+												<input type="hidden" name="userNo" value="${userVOForUpdate.userNo}"> 
+												<input type="hidden" name="type" value="${userVOForUpdate.type}"> 
+												<input type="hidden" name="teacherNo" value="${teacherVOForUpdate.teacherNo}">
                                             </form>
                                             
                                             <script>
@@ -181,7 +179,7 @@
                                                         // Loop over them and prevent submission
                                                         var validation = Array.prototype.filter.call(forms, function(form)
                                                         {
-                                                            document.getElementById('submitAddEmp').addEventListener('click', function(event)
+                                                            document.getElementById('updateTeacher').addEventListener('click', function(event)
                                                             {
                                                                 event.preventDefault();
                                                                 if (form.checkValidity() === false)
@@ -247,15 +245,6 @@
                                                     districtName: "town" // 自訂區別 select 標籤的 name 值
                                                 });
                                             
-                                            //控制權限之value值 
-                                            <%for(int i=1;i<=6;i++){%>
-                                            	$("#permission<%=i%>").change(function(){
-                                            		if($(this).prop("checked")){
-                                            			$(this).val(1);}
-                                            	});
-                                            <%}%>
-
-                                            
                                             
                                             //地址下拉式表單自動填入
                                             $("select[name='city']").change(function(){
@@ -293,13 +282,33 @@
     
     <%@ include file="/back-end/template/quick_menu.jsp" %>
     <%@ include file="/back-end/template/messager.jsp" %>
-	<!--     把法蘭克原本預設的inclide的js刪掉 -->
+    <%@ include file="/back-end/template/basic_js.jsp" %> 
     
-    
-        <script src="<%=request.getContextPath() %>/SmartAdmin4/js/vendors.bundle.js"></script>
-        <script src="<%=request.getContextPath() %>/SmartAdmin4/js/app.bundle.js"></script>
-        <script src="<%=request.getContextPath() %>/SmartAdmin4/js/datagrid/datatables/datatables.bundle.js"></script>
-        <script src="<%=request.getContextPath() %>/SmartAdmin4/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
+    <script src="<%=request.getContextPath() %>/SmartAdmin4/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
         
+        
+    <script>
+  //後端抓到錯誤前端改樣式
+    <c:if test="${errorMsgs.name ne null}">
+    	$("#name").attr("class","form-control is-invalid");
+    	$("#wrongName").text("${errorMsgs.name}");
+    </c:if>
+    
+    <c:if test="${errorMsgs.id ne null}">
+    	$("#id").attr("class","form-control is-invalid");
+    	$("#wrongId").text("${errorMsgs.id}");
+    </c:if>
+    
+    <c:if test="${errorMsgs.phone ne null}">
+    	$("#phone").attr("class","form-control is-invalid");
+    </c:if>
+    
+    <c:if test="${errorMsgs.mail ne null}">
+    	$("#mail").attr("class","form-control is-invalid");
+    	$("#wrongMail").text("${errorMsgs.mail}");
+    </c:if>
+    
+    
+    </script>
 </body>
 </html>
