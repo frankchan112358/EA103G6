@@ -2,6 +2,9 @@ package com.timetable.model;
 
 import java.sql.Date;
 
+import com.course.model.CourseService;
+import com.course.model.CourseVO;
+
 public class TimetableVO implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	private String timetableNo;
@@ -55,5 +58,17 @@ public class TimetableVO implements java.io.Serializable{
 		return "TimetableVO [timetableNo=" + timetableNo + ", courseNo=" + courseNo + ", classroomNo=" + classroomNo
 				+ ", timetablePeriod=" + timetablePeriod + ", timetableDate=" + timetableDate + ", teachingLog="
 				+ teachingLog + "]";
+	}
+	
+	public String getPeriodText() {
+		return TimetablePeriod.findByNum(this.timetablePeriod).getText();
+	}
+	
+	public CourseVO getCourseVO() {
+		return (new CourseService()).getOneCourse(this.courseNo);
+	}
+	
+	public TimetablePeriod getPeriodEnum() {
+		return TimetablePeriod.findByNum(this.timetablePeriod);
 	}
 }

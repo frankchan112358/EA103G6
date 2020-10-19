@@ -91,7 +91,7 @@ public class LeaveServlet01 extends HttpServlet {
 				leaveVO.setDescription(description);
 				leaveVO.setStatus(status);
 				LeaveService leaveSvc = new LeaveService();
-				leaveVO = leaveSvc.addLeave(studentNo, timetableNo, type, description, status);
+				leaveVO = leaveSvc.addLeave(studentNo, timetableNo, type, description);
 				String url = "/back-end/leave/listAllLeave.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);

@@ -51,4 +51,12 @@ public class TimetableService {
 	public List<TimetableVO> getAll(){
 		return dao.getAll();
 	}
+	
+	public TimetablePeriod[] getTimetablePeriodAll() {
+		return TimetablePeriod.values();
+	}
+	
+	public String getTimetablePeriondText(Integer num) {
+		return TimetablePeriod.findByNum(num).getText();
+	}
 }
