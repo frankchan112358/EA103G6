@@ -80,9 +80,9 @@ public class ForgetServlet extends HttpServlet{
 //			sendMail.sendMail(mail,"Work Join Learn 會員忘記密碼", messageText);
 			
 			
-			String encoding = userVO.getId();
-			String messageText = "http://localhost:8081" + req.getContextPath() + "/ChangePassword/ChangePassword.do?id="
-					+ encoding+"&password=&checkPassword=";
+			String encoding = "guest" + userVO.getId();
+			String messageText = "http://localhost:8081" + req.getContextPath() + "/ChangePassword.do&guest="
+					+ encoding;
 
 			MailService sendMail = new MailService();
 			sendMail.sendMail(mail,"Work Join Learn 會員忘記密碼", messageText);

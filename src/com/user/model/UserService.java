@@ -101,4 +101,17 @@ public class UserService {
 		return dao.UserLogin(account, password, type);
 		
 	}
+	public UserVO UserForget(String id) {
+		return dao.UserForget(id);
+	}
+	
+	public UserVO update_Password(String id,String password) {
+		
+		UserVO userVO = new UserVO();
+		userVO.setId(id);
+		userVO.setPassword(password);
+		dao.update_Password(userVO);
+		return userVO;
+		
+	}
 }

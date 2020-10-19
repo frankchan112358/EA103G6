@@ -69,7 +69,7 @@ public class ChangePasswordServlet  extends HttpServlet{
 			userVO.setId(id);
 			userVO = userSvc.update_Password(id,password);
 			
-			RequestDispatcher successView = req.getRequestDispatcher("/login/changePasswordSuccess.jsp");
+			RequestDispatcher successView = req.getRequestDispatcher("/login/mailSuccess.jsp");
 			successView.forward(req, res);
 			
 		} catch (Exception e) {
