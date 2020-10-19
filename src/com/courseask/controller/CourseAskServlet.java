@@ -188,14 +188,7 @@ public class CourseAskServlet extends HttpServlet {
 
 				java.sql.Timestamp updateTime = new java.sql.Timestamp((new java.util.Date()).getTime());
 
-				Integer status = null;
-				
-				try {
-					status = new Integer(req.getParameter("status").trim());
 
-				} catch (NumberFormatException e) {
-					errorMsgs.add("狀態請填數字");
-				}
 
 				CourseAskVO courseAskVO = new CourseAskVO();
 				courseAskVO.setCourseNo(courseNo);
@@ -208,8 +201,6 @@ public class CourseAskServlet extends HttpServlet {
 			
 				courseAskVO.setUpdateTime(updateTime);
 		
-				courseAskVO.setStatus(status);
-			
 				
 				
 				if (!errorMsgs.isEmpty()) {
@@ -220,9 +211,9 @@ public class CourseAskServlet extends HttpServlet {
 				}
 
 				CourseAskService courseAskSvc = new CourseAskService();
-				courseAskVO = courseAskSvc.addCourseAsk(courseNo, studentNo, title, question, updateTime, status);
+				courseAskVO = courseAskSvc.addCourseAsk(courseNo, studentNo, title, question, updateTime);
 
-				String url = "/back-end/courseAsk/listAllCourseAsk.jsp";
+				String url = "/front-end/courseAsk/courseAsk.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 

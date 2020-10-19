@@ -11,7 +11,7 @@ public class CourseAskService {
 	}
 
 	public CourseAskVO addCourseAsk(String courseNo, String studentNo, String title, String question,
-			java.sql.Timestamp updateTime, Integer status) {
+			java.sql.Timestamp updateTime) {
 
 		CourseAskVO courseAskVO = new CourseAskVO();
 
@@ -20,7 +20,7 @@ public class CourseAskService {
 		courseAskVO.setTitle(title);
 		courseAskVO.setQuestion(question);
 		courseAskVO.setUpdateTime(updateTime);
-		courseAskVO.setStatus(status);
+
 		dao.insert(courseAskVO);
 
 		return courseAskVO;

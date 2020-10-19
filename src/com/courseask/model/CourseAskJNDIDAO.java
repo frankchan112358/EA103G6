@@ -24,7 +24,7 @@ public class CourseAskJNDIDAO implements CourseAskDAO_interface {
 	}
 
 	// 新增
-	private static final String INSERT_STMT = "INSERT INTO COURSEASK(COURSEASKNO,COURSENO,STUDENTNO,TITLE,QUESTION,UPDATETIME,STATUS) VALUES (COURSEASK_SEQ.NEXTVAL,?,?,?,?,?,?)";
+	private static final String INSERT_STMT = "INSERT INTO COURSEASK(COURSEASKNO,COURSENO,STUDENTNO,TITLE,QUESTION,UPDATETIME) VALUES (COURSEASK_SEQ.NEXTVAL,?,?,?,?,?)";
 	// 查全部
 	private static final String GET_ALL_STMT = "SELECT COURSEASKNO,COURSENO,STUDENTNO,TITLE,QUESTION,UPDATETIME ,STATUS FROM COURSEASK WHERE ISDELETE=0 ORDER BY COURSEASKNO";
 	// 查單個
@@ -48,7 +48,6 @@ public class CourseAskJNDIDAO implements CourseAskDAO_interface {
 			pstmt.setString(3, courseAskVO.getTitle());
 			pstmt.setString(4, courseAskVO.getQuestion());
 			pstmt.setTimestamp(5, courseAskVO.getUpdateTime());
-			pstmt.setInt(6, courseAskVO.getStatus());
 
 			pstmt.executeUpdate();
 		} catch (SQLException se) {

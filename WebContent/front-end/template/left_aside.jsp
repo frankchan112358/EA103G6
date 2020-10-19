@@ -42,6 +42,12 @@
                     <span class="nav-link-text">請假申請</span>
                 </a>
             </li>
+             <li>
+                <a href="<%=request.getContextPath() %>/front-end/courseAsk/courseAsk.jsp" title="課程提問">
+                    <i class="fal fa-file-edit"></i>
+                    <span class="nav-link-text">課程提問</span>
+                </a>
+            </li>
             <li>
                 <a href="#" title="出缺勤">
                     <i class="fal fa-briefcase"></i>
