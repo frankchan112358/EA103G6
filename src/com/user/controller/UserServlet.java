@@ -348,7 +348,7 @@ public class UserServlet extends HttpServlet {
 				/***************** 隨機產生亂數結束 **************/
 				
 				String encoding = "guest" + userNo.substring(1);
-				String messageText = "http://localhost:8081" + req.getContextPath() + "/user.do?action=enable&guest="
+				String messageText = req.getScheme()+req.getServerName()+req.getServerPort()+ req.getContextPath() + "/user.do?action=enable&guest="
 						+ encoding+"&userNo="+ranSen;
 
 				MailService sendMail = new MailService();
