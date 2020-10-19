@@ -18,4 +18,6 @@ public interface UserDAO_interface {
     public UserVO Login_emp(String account,String password);
     public UserVO Login_tea(String account,String password);
 	public UserVO UserLogin(String account, String password, Integer type);
+	public UserVO UserForget(String id) ;
+	public void update_Password(UserVO userVO);
 }
