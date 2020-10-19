@@ -52,6 +52,15 @@
 		<servlet-name>LeaveServlet</servlet-name>
 		<url-pattern>/leave/leave.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AddLeave</servlet-name>
+		<servlet-class>com.leave.controller.AddLeave</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddLeave</servlet-name>
+		<url-pattern>/leave/add</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>TimetableServlet</servlet-name>

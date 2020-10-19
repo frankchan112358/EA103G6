@@ -112,7 +112,7 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class='fal fa-file-edit'></i></span>
                                 </div>
-                                <select class="custom-select" id="type">
+                                <select class="custom-select" id="type" name="type">
                                     <c:forEach var="type" items="${leaveSvc.getLeaveTypeAll()}">
                                         <option value="${type.num}">${type.text}</option>
                                     </c:forEach>
@@ -190,10 +190,10 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
                 $.ajax({
                     type:'post',
                     url:'<%=request.getContextPath()%>/leave/add',
-                    data:$(formLeave).serialize(),
+                    data:$(leaveForm).serialize(),
                     success(res){
                         if(res=='ok'){
-                            $('#editorLeave').modal('hide');
+                            $('#leaveEditor').modal('hide');
                         }
                     },
                     error(err){
