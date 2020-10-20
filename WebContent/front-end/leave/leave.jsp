@@ -5,9 +5,6 @@
 <jsp:useBean id="leaveSvc" scope="page" class="com.leave.model.LeaveService" />
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 <jsp:useBean id="timetableSvc" scope="page" class="com.timetable.model.TimetableService" />
-<%
-pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStudentNo()));
-%>
 
 <!DOCTYPE html>
 <html>

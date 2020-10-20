@@ -65,7 +65,7 @@ public class TimetableVO implements java.io.Serializable{
 	}
 	
 	public CourseVO getCourseVO() {
-		return (new CourseService()).getOneCourse(this.courseNo);
+		return new CourseService().getOneCourse(this.courseNo);
 	}
 	
 	public TimetablePeriod getPeriodEnum() {

@@ -69,7 +69,7 @@ public class LeaveVO implements java.io.Serializable {
 	}
 	
 	public TimetableVO getTimetableVO() {
-		return (new TimetableService()).getOneTimetable(this.timetableNo);
+		return new TimetableService().getOneTimetable(this.timetableNo);
 	}
 	
 	public LeaveStatus getStatusEnum() {

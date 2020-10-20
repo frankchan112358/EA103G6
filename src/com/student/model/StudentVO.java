@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.course.model.CourseService;
 import com.course.model.CourseVO;
+import com.leave.model.LeaveService;
+import com.leave.model.LeaveVO;
 
 public class StudentVO implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
@@ -74,13 +76,16 @@ public class StudentVO implements java.io.Serializable{
 	public List<CourseVO>getCourseList(){
 		List<CourseVO> list = new ArrayList<CourseVO>();
 		for (CourseVO courseVO : new CourseService().getAll()) {
-			if (courseVO.getBanjiNo().equals(this.getBanjiNo())) {
+			if (courseVO.getBanjiNo().equals(this.banjiNo)) {
 				list.add(courseVO);
 			}
 		}
 		return list;
 	}
 	
+	public List<LeaveVO> getLeaveList(){
+		return new LeaveService().getLeaveWithStudent(this.studentNo);
+	}
 }
 
 
