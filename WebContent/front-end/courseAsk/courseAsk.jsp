@@ -95,6 +95,7 @@ background-color:	#E0E0E0;
                                                     <tbody>
                                                     	<c:forEach var="courseAskVO" items="${list }" >
                                                         <tr>
+                                                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/courseAsk/courseAsk.do" style="margin-bottom: 0px;">
                                                             <td>${courseSvc.getOneCourse(courseAskVO.getCourseNo()).courseName }</td>
                                                             <td>${studentSvc.getOneStudent(courseAskVO.getStudentNo()).studentName}</td>
                                                             <td>${courseAskVO.title }</td>
@@ -104,9 +105,12 @@ background-color:	#E0E0E0;
                                                                    <td> 
                                                                    <input type="hidden" name="replyNo"  value="${replyVO.replyNo}">
 			     														<input type="hidden" name="studentNo" value="${studentVO.studentNo}"/>
-			     														<input type="hidden" name="action" value="insert"> 
-                                                              			<span class="fal fa-edit mr-1"><input type="button"   value="填寫"onclick="myForm.action='<%=request.getContextPath()%>/reply/reply.do';myForm.submit()">
+			     														<input type="hidden" name="courseAskNo" value="${courseAskVO.courseAskNo}"/>
+			     														<input type="hidden" name="teacherNo" value="${teacherVO.teacherNo}"/>
+			     														<input type="hidden" name="action" value="insert1"> 
+                                                              			<span class="fal fa-edit mr-1"><input type="submit"   value="填寫">
 							 															</span>	</td>
+							 										 </FORM>					
                                                         </tr>
                                                         </c:forEach>
                                                     </tbody>
@@ -135,6 +139,9 @@ background-color:	#E0E0E0;
                     <h4 class="modal-title" >新增問題</h4> 
                 </div>
                  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/courseAsk/courseAsk.do" name="form1">
+            
+                    <h4 class="modal-title" >選擇課程</h4> 
+
        <select size="1" name="courseNo" style="color: black; width: 566px; height: 50px; margin: 20px ;">
          <c:forEach var="courseVO" items="${courseSvc.all}" > 
           <option value="${courseVO.courseNo}">${courseVO.courseName}
