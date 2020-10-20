@@ -47,9 +47,9 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
             height:500px;
         }
         .in-sb {
-        	border: 3px solid green;
+        	border-bottom:5px #9EDF56 double;
         	height:20%;
-            font-family:'Comic sans';
+            font-size: medium;
         }
     </style>
 </head>
@@ -84,15 +84,22 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
                                         <div class="slide-bar">
                                         	<c:forEach var="videoVO" items="${videoList}">
                                         		<div class="in-sb">
+                                                    <input type="hidden" name="videoNo" value="${videoVO.videoNo}">
                                                     ${videoVO.videoNo}<br>
+                                                    <input type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
                                                     ${videoVO.timetableNo}<br>
+                                                    <input type="hidden" name="videoName" value="${videoVO.videoName}">
                                         			${videoVO.videoName}<br>
-                                        			要放教學日誌orz<br>
+                                        			<div class="in-sb-log">
+                                                        <i class="fas fa-pencil-alt" style="color: green;">
+                                                        </i>#要放教學日誌連結orz</div>
                                         		</div>
                                         	</c:forEach>
                                         	</div>
                                         <div class="player">
-                                        要放影片R QQ
+                                        	<video loop="true" autoplay="autoplay"  muted="true" >
+                                                
+                                            </video>
                                         </div>
                                     </div>
                                 </div>
@@ -137,8 +144,19 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
     <script>
         'use strict';
         $(document).ready(function () {
-        	
-        	
+            //這裡是click可以連接到日誌
+        	$(".in-sb-log").hover(function(){
+        		$(this).click(function(){
+        		
+        	    })
+            })
+            
+            //這裡是click可以播放影片
+            $(".in-sb-log").hover(function(){
+        		$(this).click(function(){
+                    
+        	    })
+            })            
         });
     </script>
 </body>
