@@ -360,7 +360,7 @@ public class UserServlet extends HttpServlet {
 				/***************** 隨機產生亂數結束 **************/
 				
 				String encoding = "guest" + userNo.substring(1);
-				String messageText = req.getScheme()+req.getServerName()+req.getServerPort()+ req.getContextPath() + "/user.do?action=enable&guest="
+				String messageText = req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+req.getContextPath() + "/user.do?action=enable&guest="
 						+ encoding+"&userNo="+ranSen;
 
 				MailService sendMail = new MailService();
@@ -890,7 +890,7 @@ public class UserServlet extends HttpServlet {
 
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("userVO", userVO);
-						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/student/userEnable.jsp");
+						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/userEnable.jsp");
 						failureView.forward(req, res);
 						return;
 					}
@@ -918,7 +918,7 @@ public class UserServlet extends HttpServlet {
 				session.setAttribute("userVO", userVO);
 
 				if (type.equals(0)) {
-					RequestDispatcher successView = req.getRequestDispatcher("/back-end/student/listOneStudent.jsp");
+					RequestDispatcher successView = req.getRequestDispatcher("/front-end/index/index.jsp");
 					successView.forward(req, res);
 
 				} else {
