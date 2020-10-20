@@ -1,5 +1,6 @@
 package com.banji.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BanjiService {
@@ -31,9 +32,9 @@ public class BanjiService {
 
 	}
 
-	public BanjiVO updateBanji(String banjiNo,String empNo, String banjiTypeNo, java.sql.Date startDay, java.sql.Date endDay,
-			String banjiName, Integer classHours, Integer numberOfStudent, String classroomNo, Integer status,
-			String banjiContent) {
+	public BanjiVO updateBanji(String banjiNo, String empNo, String banjiTypeNo, java.sql.Date startDay,
+			java.sql.Date endDay, String banjiName, Integer classHours, Integer numberOfStudent, String classroomNo,
+			Integer status, String banjiContent) {
 
 		BanjiVO banjiVO = new BanjiVO();
 
@@ -63,5 +64,14 @@ public class BanjiService {
 
 	public List<BanjiVO> getAll() {
 		return dao.getAll();
+	}
+
+	public List<BanjiVO> getAllWithEmp(String empNo) {
+		List<BanjiVO> list = new ArrayList<BanjiVO>();
+		for (BanjiVO banjiVO : getAll()) {
+			if (empNo.equals(banjiVO.getEmpNo()))
+				list.add(banjiVO);
+		}
+		return list;
 	}
 }
