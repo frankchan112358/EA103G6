@@ -31,7 +31,7 @@
                 </a>
                 <ul>
                     <li>
-                        <a href="#" title="學員管理">
+                        <a href="<%=request.getContextPath()%>/user.do?action=checkPermission&goto=studentList" title="學員管理">
                             <span class="nav-link-text">學員管理</span>
                         </a>
                     </li>
