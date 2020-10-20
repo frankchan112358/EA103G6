@@ -1,6 +1,10 @@
 package com.banji.model;
 
 import java.sql.Date;
+import java.util.List;
+
+import com.student.model.StudentService;
+import com.student.model.StudentVO;
 
 public class BanjiVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
@@ -107,4 +111,8 @@ public class BanjiVO implements java.io.Serializable {
 		this.banjiContent = banjiContent;
 	}
 
+	public List<StudentVO> getStudentList() {
+		return new StudentService().getAllWithBanji(banjiNo);
+	}
+	
 }

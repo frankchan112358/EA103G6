@@ -1,5 +1,10 @@
 package com.emp.model;
 
+import java.util.List;
+
+import com.banji.model.BanjiService;
+import com.banji.model.BanjiVO;
+
 public class EmpVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private String empNo;
@@ -43,4 +48,8 @@ public class EmpVO implements java.io.Serializable {
 		this.empName = empName;
 	}
 
+	public List<BanjiVO> getBanjiList(){
+		return new BanjiService().getAllWithEmp(this.empNo);
+	}
+	
 }

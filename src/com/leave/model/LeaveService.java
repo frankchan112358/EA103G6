@@ -3,8 +3,11 @@ package com.leave.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.banji.model.BanjiVO;
 import com.course.model.CourseService;
 import com.course.model.CourseVO;
+import com.emp.model.EmpService;
+import com.emp.model.EmpVO;
 import com.student.model.StudentService;
 import com.student.model.StudentVO;
 import com.timetable.model.TimetableService;
@@ -117,5 +120,22 @@ public class LeaveService {
 			}
 		}
 		return true;
+	}
+
+	public void cancelLeave(String leaveNo) {
+		LeaveVO leaveVO = getOneLeave(leaveNo);
+		leaveVO.setStatus(LeaveStatus.Cancel.getNum());
+		dao.update(leaveVO);
+	}
+	
+	public List<LeaveVO> getAllWithEmp(String empNo) {
+		List<LeaveVO>list=new ArrayList<LeaveVO>();
+		EmpVO empVO = new EmpService().getOneEmp(empNo);
+		for (BanjiVO banjiVO :empVO.getBanjiList() ) {
+			for (StudentVO studentVO : banjiVO.getStudentList()) {
+				list.addAll(getLeaveWithStudent(studentVO.getStudentNo()));
+			}
+		}
+		return list;
 	}
 }

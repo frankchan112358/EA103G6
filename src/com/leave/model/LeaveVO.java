@@ -1,5 +1,7 @@
 package com.leave.model;
 
+import com.student.model.StudentService;
+import com.student.model.StudentVO;
 import com.timetable.model.TimetableService;
 import com.timetable.model.TimetableVO;
 
@@ -69,7 +71,7 @@ public class LeaveVO implements java.io.Serializable {
 	}
 	
 	public TimetableVO getTimetableVO() {
-		return (new TimetableService()).getOneTimetable(this.timetableNo);
+		return new TimetableService().getOneTimetable(this.timetableNo);
 	}
 	
 	public LeaveStatus getStatusEnum() {
@@ -78,5 +80,9 @@ public class LeaveVO implements java.io.Serializable {
 	
 	public LeaveType getTypeEnum() {
 		return LeaveType.findByNum(this.type);
+	}
+	
+	public StudentVO getStudentVO() {
+		return new StudentService().getOneStudent(studentNo);
 	}
 }

@@ -4,8 +4,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.banji.model.BanjiService;
+import com.banji.model.BanjiVO;
 import com.course.model.CourseService;
 import com.course.model.CourseVO;
+import com.leave.model.LeaveService;
+import com.leave.model.LeaveVO;
+import com.user.model.UserService;
+import com.user.model.UserVO;
 
 public class StudentVO implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
@@ -74,13 +80,24 @@ public class StudentVO implements java.io.Serializable{
 	public List<CourseVO>getCourseList(){
 		List<CourseVO> list = new ArrayList<CourseVO>();
 		for (CourseVO courseVO : new CourseService().getAll()) {
-			if (courseVO.getBanjiNo().equals(this.getBanjiNo())) {
+			if (courseVO.getBanjiNo().equals(this.banjiNo)) {
 				list.add(courseVO);
 			}
 		}
 		return list;
 	}
 	
+	public List<LeaveVO> getLeaveList(){
+		return new LeaveService().getLeaveWithStudent(this.studentNo);
+	}
+	
+	public BanjiVO getBanjiVO() {
+		return new BanjiService().getOneBanji(this.banjiNo);
+	}
+	
+	public UserVO getUserVO() {
+		return new UserService().getOneUser(this.userNo);
+	}
 }
 
 

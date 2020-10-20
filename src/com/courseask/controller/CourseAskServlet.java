@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.courseask.model.CourseAskService;
 import com.courseask.model.CourseAskVO;
+import com.reply.model.ReplyService;
+import com.reply.model.ReplyVO;
 
 
 public class CourseAskServlet extends HttpServlet {
@@ -165,6 +167,57 @@ public class CourseAskServlet extends HttpServlet {
 			}
 		}
 
+		
+		if ("insert1".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				String courseAskNo = req.getParameter("courseAskNo");
+				String teacherNo = req.getParameter("teacherNo");
+
+				String studentNo = req.getParameter("studentNo");
+
+				String replyContent = req.getParameter("replyContent");
+	
+				java.sql.Timestamp updateTime = new java.sql.Timestamp((new java.util.Date()).getTime());
+
+				ReplyVO replyVO = new ReplyVO();
+				replyVO.setCourseAskNo(courseAskNo);
+				replyVO.setTeacherNo(teacherNo);
+				replyVO.setStudentNo(studentNo);
+				replyVO.setReplyContent(replyContent);
+				replyVO.setUpdateTime(updateTime);
+
+				
+				req.setAttribute("replyVO", replyVO);
+				
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/reply/addReply.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				String url = "/front-end/courseAsk/addreply.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/reply/addReply.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		if ("insert".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
