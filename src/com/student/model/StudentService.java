@@ -18,7 +18,7 @@ public class StudentService {
 	}
 	
 	public StudentVO addStudent(String userNo, String banjiNo,
-			String studentName, String faceId, String studentDescription,Integer studentStatus) {
+			String studentName) {
 
 		StudentVO studentVO = new StudentVO();
 
@@ -26,9 +26,7 @@ public class StudentService {
 		studentVO.setUserNo(userNo);
 		studentVO.setBanjiNo(banjiNo);
 		studentVO.setStudentName(studentName);
-		studentVO.setFaceId(faceId);
-		studentVO.setStudentDescription(studentDescription);
-		studentVO.setStudentStatus(studentStatus);
+		
 		dao.insert(studentVO);
 
 		return studentVO;

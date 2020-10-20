@@ -21,11 +21,11 @@ public class StudentDAO implements StudentDAO_interface {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_STMT = "INSERT INTO student (studentNO,Userno,Banjino,Studentname,Faceid,Face,Studentdescription,Studentstatus) VALUES ('S'||LPAD(to_char(STUDENTNO_SEQ.NEXTVAL), '6', '0'), ?, ?, ?, ?, ?, ?,?)";
+	private static final String INSERT_STMT = "INSERT INTO student (studentNO,Userno,Banjino,Studentname) VALUES ('S'||LPAD(to_char(STUDENTNO_SEQ.NEXTVAL), '6', '0'), ?, ?, ?)";
 	private static final String DELETE = "UPDATE student SET Studentstatus=3 where studentno = ?";
 	private static final String GET_ONE_STMT = "SELECT STUDENTNO,USERNO,BANJINO,Studentname,faceid,face,studentdescription,studentstatus FROM  student where studentno = ? ";
 	private static final String GET_PIC = "SELECT PHOTO FROM WJLUSER WHERE PHOTO IS NOT NULL AND USERNO=";
-	private static final String GET_ALL_STMT = "SELECT studentno,userno,banjino,studentname,faceid,face,studentdescription,studentstatus FROM student WHERE studentstatus=1 ";
+	private static final String GET_ALL_STMT = "SELECT studentno,userno,banjino,studentname,faceid,face,studentdescription,studentstatus FROM student  WHERE studentstatus<3 ";
 	private static final String UPDATE = "UPDATE student set userno=?,banjino=?,studentname=?, faceid=?, face=?, studentdescription=?, studentstatus=? where studentno = ?";
 	private static final String UPDATE_NOPIC = "UPDATE student set userno=?,banjino=?,studentname=?, faceid=?, studentdescription=?, studentstatus=? where studentno = ?";
 	
@@ -209,10 +209,7 @@ public class StudentDAO implements StudentDAO_interface {
 			pstmt.setString(1, studentVO.getUserNo());
 			pstmt.setString(2, studentVO.getBanjiNo());
 			pstmt.setString(3, studentVO.getStudentName());
-			pstmt.setString(4, studentVO.getFaceId());
-			pstmt.setBinaryStream(5, studentVO.getFace());
-			pstmt.setString(6, studentVO.getStudentDescription());
-			pstmt.setInt(7, studentVO.getStudentStatus());
+			
 		
 			
 

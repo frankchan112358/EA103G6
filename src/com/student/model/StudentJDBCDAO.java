@@ -14,12 +14,12 @@ import java.util.List;
 
 
 
-public class StudentJDBCDAO {
+public class StudentJDBCDAO implements StudentDAO_interface{
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String userid = "EA103";
+	String userid = "EA103G6";
 	String passwd = "123456";
-	private static final String INSERT_STMT = "INSERT INTO student (studentNO,Userno,Banjino,Studentname,Faceid,Face,Studentdescription,Studentstatus) VALUES ('S'||LPAD(to_char(STUDENTNO_SEQ.NEXTVAL), '6', '0'), ?, ?, ?, ?, ?, ?,?)";
+	private static final String INSERT_STMT = "INSERT INTO student (studentNO,Userno,Banjino,Studentname) VALUES ('S'||LPAD(to_char(STUDENTNO_SEQ.NEXTVAL), '6', '0'), ?, ?, ?)";
 	private static final String DELETE = "UPDATE student SET Studentstatus=3 where studentno = ?";
 	private static final String GET_ONE_STMT = "SELECT STUDENTNO,USERNO,BANJINO,Studentname,faceid,face,studentdescription,studentstatus FROM  student where studentno = ? AND studentstatus=1";
 	private static final String GET_ALL_STMT = "SELECT studentno,userno,banjino,studentname,faceid,face,studentdescription,studentstatus FROM student WHERE studentstatus=1 ";
@@ -40,10 +40,6 @@ public class StudentJDBCDAO {
 			pstmt.setString(1, studentVO.getUserNo());
 			pstmt.setString(2, studentVO.getBanjiNo());
 			pstmt.setString(3, studentVO.getStudentName());
-			pstmt.setString(4, studentVO.getFaceId());
-			pstmt.setBinaryStream(5, studentVO.getFace());
-			pstmt.setString(6, studentVO.getStudentDescription());
-			pstmt.setInt(7, studentVO.getStudentStatus());
 
 			pstmt.executeUpdate();
 
@@ -307,13 +303,10 @@ public class StudentJDBCDAO {
 		StudentVO studentVO1 = new StudentVO();
 		studentVO1.setUserNo("U000010");
 		studentVO1.setBanjiNo("B001");
-		studentVO1.setStudentName("閰鄒撖�");
-		studentVO1.setFaceId("4");
-		studentVO1.setFace(null);
-		studentVO1.setStudentDescription("���QQQQQQQQ");
+		studentVO1.setStudentName("美女");
 		studentVO1.setStudentStatus(1);
 		dao.insert(studentVO1);
-		System.out.println("�憓���");
+		System.out.println("新增成功");
 //		dao.delete("S000003");
 //		System.out.println("������");
 
@@ -362,5 +355,11 @@ public class StudentJDBCDAO {
 //			
 //		}
 
+	}
+
+	@Override
+	public InputStream getPic(String studentNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

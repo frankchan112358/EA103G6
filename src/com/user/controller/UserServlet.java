@@ -23,6 +23,8 @@ import com.emp.model.EmpVO;
 import com.mail.service.MailService;
 import com.permission.model.PermissionService;
 import com.permission.model.PermissionVO;
+import com.student.model.StudentService;
+import com.student.model.StudentVO;
 import com.teacher.model.TeacherService;
 import com.teacher.model.TeacherVO;
 import com.user.model.UserService;
@@ -122,7 +124,12 @@ public class UserServlet extends HttpServlet {
 //				successView.forward(req, res);
 
 				if (userVO.getType().equals(0)) {
-					// 暫無student Table
+					StudentService studentSvc = new StudentService();
+					StudentVO studentVO = studentSvc.getOneStudentByUserNo(userNo);
+					req.setAttribute("studentVOForShow", studentVO);
+
+					RequestDispatcher successView = req.getRequestDispatcher("/back-end/student/listOneStudent.jsp");
+					successView.forward(req, res);
 
 				} else if (userVO.getType().equals(1)) {
 					TeacherService teacherSvc = new TeacherService();
@@ -294,7 +301,12 @@ public class UserServlet extends HttpServlet {
 				String userNo = userSvc.getOneUserById(id).getUserNo();
 
 				if (type.equals(0)) {
-					// 暫無學員table
+					// req.getParameter("banjiNo").trim();
+					
+					StudentService studentSvc = new StudentService();
+					String banjiNo =req.getParameter("banjiNo");
+					studentSvc.addStudent(userNo,banjiNo,name);
+					System.out.print(banjiNo);
 				} else if (type.equals(1)) {
 					// 新增講師table
 
@@ -483,7 +495,13 @@ public class UserServlet extends HttpServlet {
 				UserSvc.deleteUser(userNo);
 
 				if (userVO.getType().equals(0)) {
-					// 暫無學員table
+					
+					StudentService studentSvc = new StudentService();
+					String studentNo = studentSvc.getOneStudentByUserNo(userNo).getStudentNo();
+					studentSvc.deleteStudent(studentNo);
+					
+					RequestDispatcher successView = req.getRequestDispatcher("/back-end/student/studentList.jsp");
+					successView.forward(req, res);
 				} else if (userVO.getType().equals(1)) {
 
 					TeacherService teacherSvc = new TeacherService();
@@ -795,6 +813,7 @@ public class UserServlet extends HttpServlet {
 				req.setAttribute("userVOForShow", userVO);
 
 				if (type.equals(0)) {
+					//req.setAttribute("studentVOForShow", studentVO);
 					RequestDispatcher successView = req.getRequestDispatcher("/back-end/student/listOneStudent.jsp");
 					successView.forward(req, res);
 
@@ -980,6 +999,18 @@ public class UserServlet extends HttpServlet {
 				}else {
 					
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teacher/teacherList.jsp");
+					failureView.forward(req, res);
+				}
+			}
+			if("studentList".equals(gotoPlace)) {
+				if(userVO.getType().equals(1)) {
+						
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
+					failureView.forward(req, res);
+					return;
+				}else {
+					
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/student/studentList.jsp");
 					failureView.forward(req, res);
 				}
 			}
