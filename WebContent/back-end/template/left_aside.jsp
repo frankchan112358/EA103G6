@@ -128,6 +128,12 @@
                 </a>
             </li>
             <li>
+                <a href="<%=request.getContextPath()%>/leave/leave.manage" title="學員請假審核">
+                    <i class="fal fa-file-edit"></i>
+                    <span class="nav-link-text">學員請假審核</span>
+                </a>
+            </li>
+            <li>
                 <a href="#" title="帳號管理">
                     <i class="fal fa-user-cog"></i>
                     <span class="nav-link-text">帳號管理</span>

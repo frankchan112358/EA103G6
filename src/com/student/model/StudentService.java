@@ -1,5 +1,6 @@
 package com.student.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.io.InputStream;
 
@@ -101,5 +102,12 @@ public class StudentService {
 //		
 //	}
 	
-	
+	public List<StudentVO> getAllWithBanji(String banjiNo) {
+		List<StudentVO>list=new ArrayList<StudentVO>();
+		for (StudentVO studentVO : getAll()) {
+			if (banjiNo.equals(studentVO.getBanjiNo())) 
+				list.add(studentVO);
+		}
+		return list;
+	}
 }
