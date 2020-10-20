@@ -139,6 +139,7 @@ public class ReplyServlet extends HttpServlet {
 			}
 		}
 
+		
 		if ("insert".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -146,16 +147,10 @@ public class ReplyServlet extends HttpServlet {
 			try {
 
 				String courseAskNo = req.getParameter("courseAskNo");
-
+				
 				String teacherNo = req.getParameter("teacherNo");
-
 				String studentNo = req.getParameter("studentNo");
-
 				String replyContent = req.getParameter("replyContent");
-				if (replyContent == null || replyContent.trim().length() == 0) {
-					errorMsgs.add("回覆內容請勿空白");
-				}
-
 				java.sql.Timestamp updateTime = new java.sql.Timestamp((new java.util.Date()).getTime());
 
 				ReplyVO replyVO = new ReplyVO();
@@ -173,7 +168,7 @@ public class ReplyServlet extends HttpServlet {
 				ReplyService replySvc = new ReplyService();
 				replyVO = replySvc.addReply(courseAskNo, teacherNo, studentNo, replyContent, updateTime);
 
-				String url = "/back-end/reply/listAllReply.jsp";
+				String url = "/front-end/courseAsk/courseAsk.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {
