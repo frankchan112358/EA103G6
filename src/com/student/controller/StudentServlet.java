@@ -58,7 +58,7 @@ public class StudentServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/student/selectpage.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/student/selectpage.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -71,7 +71,7 @@ public class StudentServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/student/selectpage.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/student/selectpage.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -84,21 +84,21 @@ public class StudentServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/student/selectpage.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/student/selectpage.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("studentVO", studentVO); // 資料庫取出的empVO物件,存入req
-				String url = "/student/listOneStudent.jsp";
+				String url = "/student/listOneStudent1.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/student/selectpage.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/student/selectpage.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -160,15 +160,15 @@ public class StudentServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("studentVO", studentVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/student/addStudent.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/student/addStudent.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 
 				/*************************** 2.開始新增資料 ***************************************/
 				StudentService studentSvc = new StudentService();
-				studentVO = studentSvc.addStudent(userNo, banjiNo, studentName, faceId, studentDescription,
-						studentStatus);
+//				studentVO = studentSvc.addStudent(userNo, banjiNo, studentName, faceId, studentDescription,
+//						studentStatus);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/student/listAllStudent.jsp";
@@ -178,7 +178,7 @@ public class StudentServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/student/addStudent.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/student/addStudent.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -196,11 +196,11 @@ public class StudentServlet extends HttpServlet {
 				StudentSvc.deleteStudent(studentNo);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				RequestDispatcher successView = req.getRequestDispatcher("/student/listAllStudent.jsp");
+				RequestDispatcher successView = req.getRequestDispatcher("/back-end/student/listAllStudent.jsp");
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/student/listAllStudent.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/student/listAllStudent.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -222,14 +222,14 @@ public class StudentServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("studentVO", studentVO); // 資料庫取出的empVO物件,存入req
-				String url = "/student/update_student_input.jsp";
+				String url = "/back-end/student/update_student_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/student/listAllStudent.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/student/listAllStudent.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -293,7 +293,7 @@ public class StudentServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("studentVO", studentVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/student/update_student_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/student/update_student_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -312,7 +312,7 @@ public class StudentServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/student/update_student_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/student/update_student_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
