@@ -74,7 +74,10 @@ public class StudentService {
 	}
 	
 	
-	
+	public StudentVO findByPrimaryKeyByuserNo(String userNo) {
+		return dao.findByPrimaryKeyByuserNo(userNo);
+		
+	}
 	
 	
 	

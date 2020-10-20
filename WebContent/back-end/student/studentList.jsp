@@ -168,12 +168,13 @@
 								</div>
 							</div>
                         </div>
+                        </div>
                 	</div>
                 	<input type="hidden" name="action" value="insert"> 
                     <input type="hidden" name="type" value="0"> 
                 	<div class="modal-footer">
                     	<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel">取消</button>
-                    	<button type="button" class="btn btn-primary" id="submitAddTeacher">送出</button>
+                    	<button type="button" class="btn btn-primary" id="submitAddStudent">送出</button>
                 	</div>
                 </form>
             </div>
@@ -193,14 +194,14 @@
             // Loop over them and prevent submission
             var validation = Array.prototype.filter.call(forms, function(form)
             {
-                document.getElementById('submitAddTeacher').addEventListener('click', function(event)
+                document.getElementById('submitAddStudent').addEventListener('click', function(event)
                 {
                     event.preventDefault();
                     if (form.checkValidity() === false)
                     {                                                                   
                         event.stopPropagation();
                     } else {
-                    	$('#addTeacher').modal('hide')
+                    	$('#addStudent').modal('hide')
                         var swalWithBootstrapButtons = Swal.mixin(
                         {
                             customClass:

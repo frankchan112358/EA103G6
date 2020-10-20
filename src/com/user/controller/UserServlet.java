@@ -125,7 +125,7 @@ public class UserServlet extends HttpServlet {
 
 				if (userVO.getType().equals(0)) {
 					StudentService studentSvc = new StudentService();
-					StudentVO studentVO = studentSvc.getOneStudentByUserNo(userNo);
+					StudentVO studentVO = studentSvc.findByPrimaryKeyByuserNo(userNo);
 					req.setAttribute("studentVOForShow", studentVO);
 
 					RequestDispatcher successView = req.getRequestDispatcher("/back-end/student/listOneStudent.jsp");
@@ -360,7 +360,7 @@ public class UserServlet extends HttpServlet {
 				/***************** 隨機產生亂數結束 **************/
 				
 				String encoding = "guest" + userNo.substring(1);
-				String messageText = req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+req.getContextPath() + "/user.do?action=enable&guest="
+				String messageText = req.getScheme()+req.getServerName()+req.getServerPort()+ req.getContextPath() + "/user.do?action=enable&guest="
 						+ encoding+"&userNo="+ranSen;
 
 				MailService sendMail = new MailService();
@@ -497,7 +497,7 @@ public class UserServlet extends HttpServlet {
 				if (userVO.getType().equals(0)) {
 					
 					StudentService studentSvc = new StudentService();
-					String studentNo = studentSvc.getOneStudentByUserNo(userNo).getStudentNo();
+					String studentNo = studentSvc.findByPrimaryKeyByuserNo(userNo).getStudentNo();
 					studentSvc.deleteStudent(studentNo);
 					
 					RequestDispatcher successView = req.getRequestDispatcher("/back-end/student/studentList.jsp");

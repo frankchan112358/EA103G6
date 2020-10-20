@@ -362,4 +362,10 @@ public class StudentJDBCDAO implements StudentDAO_interface{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public StudentVO findByPrimaryKeyByuserNo(String userNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -24,6 +24,7 @@ public class StudentDAO implements StudentDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO student (studentNO,Userno,Banjino,Studentname) VALUES ('S'||LPAD(to_char(STUDENTNO_SEQ.NEXTVAL), '6', '0'), ?, ?, ?)";
 	private static final String DELETE = "UPDATE student SET Studentstatus=3 where studentno = ?";
 	private static final String GET_ONE_STMT = "SELECT STUDENTNO,USERNO,BANJINO,Studentname,faceid,face,studentdescription,studentstatus FROM  student where studentno = ? ";
+	private static final String GET_ONE_STMT_USERNO = "SELECT STUDENTNO,USERNO,BANJINO,Studentname,faceid,face,studentdescription,studentstatus FROM  student where USERNO = ? ";
 	private static final String GET_PIC = "SELECT PHOTO FROM WJLUSER WHERE PHOTO IS NOT NULL AND USERNO=";
 	private static final String GET_ALL_STMT = "SELECT studentno,userno,banjino,studentname,faceid,face,studentdescription,studentstatus FROM student  WHERE studentstatus<3 ";
 	private static final String UPDATE = "UPDATE student set userno=?,banjino=?,studentname=?, faceid=?, face=?, studentdescription=?, studentstatus=? where studentno = ?";
@@ -326,6 +327,69 @@ public class StudentDAO implements StudentDAO_interface {
 		}
 
 		
+	}
+
+	@Override
+	public StudentVO findByPrimaryKeyByuserNo(String userNo) {
+		StudentVO studentVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement( GET_ONE_STMT_USERNO);
+
+			pstmt.setString(1, userNo);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				studentVO = new StudentVO();
+				studentVO.setStudentNo(rs.getString("studentNo"));
+				studentVO.setUserNo(rs.getString("userNo"));
+				studentVO.setBanjiNo(rs.getString("banjiNo"));
+				studentVO.setStudentName(rs.getString("studentName"));
+				studentVO.setFaceId(rs.getString("faceId"));
+				studentVO.setStudentDescription(rs.getString("studentDescription"));
+				studentVO.setStudentStatus(rs.getInt("studentStatus"));
+				Blob face = rs.getBlob("face");
+				studentVO.setFace(null);
+				if (face == null) {
+				} else {
+					studentVO.setFace(rs.getBlob("Face").getBinaryStream());
+				}
+
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return studentVO;
 	}
 
 }
