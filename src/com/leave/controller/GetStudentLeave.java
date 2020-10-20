@@ -32,7 +32,7 @@ public class GetStudentLeave extends HttpServlet {
 			jsonObject.addProperty("courseName", leaveVO.getTimetableVO().getCourseVO().getCourseName());
 			jsonObject.addProperty("typeText", leaveVO.getTypeText());
 			jsonObject.addProperty("statusText", leaveVO.getStatusText());
-			jsonObject.addProperty("action", getActionNum(leaveVO).toString());
+			jsonObject.add("action", getActionObj(leaveVO));
 			jsonArray.add(jsonObject);
 		}
 		JsonObject data = new JsonObject();
@@ -44,6 +44,13 @@ public class GetStudentLeave extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
+	}
+
+	private JsonObject getActionObj(LeaveVO leaveVO) {
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("id", leaveVO.getLeaveNo());
+		jsonObject.addProperty("cando", getActionNum(leaveVO));
+		return jsonObject;
 	}
 
 	private Integer getActionNum(LeaveVO leaveVO) {
