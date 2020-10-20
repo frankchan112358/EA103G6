@@ -49,8 +49,13 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
         .in-sb {
         	border-bottom:5px #9EDF56 double;
         	height:20%;
-            font-size: medium;
+            font-size: large;
+            margin:auto;
         }
+        .fa-pencil-alt:hover {
+            transform: scale(1.5);
+        }
+
     </style>
 </head>
 
@@ -84,22 +89,23 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
                                         <div class="slide-bar">
                                         	<c:forEach var="videoVO" items="${videoList}">
                                         		<div class="in-sb">
+                                                    
                                                     <input type="hidden" name="videoNo" value="${videoVO.videoNo}">
-                                                    ${videoVO.videoNo}<br>
                                                     <input type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
-                                                    ${videoVO.timetableNo}<br>
+                                                    ${videoVO.timetableVO.timetableDate}<br>
                                                     <input type="hidden" name="videoName" value="${videoVO.videoName}">
                                         			${videoVO.videoName}<br>
                                         			<div class="in-sb-log">
-                                                        <i class="fas fa-pencil-alt" style="color: green;">
-                                                        </i>#要放教學日誌連結orz</div>
+                                        				<div class="log">
+                                        				#要放教學日誌連結orz
+                                                        <i class="fas fa-pencil-alt" style="color: green;"></i>
+                                                        </div>
+                                        			</div>
                                         		</div>
                                         	</c:forEach>
                                         	</div>
                                         <div class="player">
-                                        	<video loop="true" autoplay="autoplay"  muted="true" >
-                                                
-                                            </video>
+
                                         </div>
                                     </div>
                                 </div>
@@ -144,18 +150,19 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
     <script>
         'use strict';
         $(document).ready(function () {
-            //這裡是click可以連接到日誌
-        	$(".in-sb-log").hover(function(){
-        		$(this).click(function(){
-        		
-        	    })
+            //這裡是滑鼠進入slide-bar會讓區塊變色
+        	$(".in-sb").hover(function(){
+                $(this).css("background-color", "#a9ec62");},
+                function(){
+                $(this).css("background-color", " #c3dbaa");
             })
             
-            //這裡是click可以播放影片
+            //這裡是click(slide-bar)可以開啟影片
+			
+
+            
+            //這裡是click(in-sb-log)可以查看日誌
             $(".in-sb-log").hover(function(){
-        		$(this).click(function(){
-                    
-        	    })
             })            
         });
     </script>
