@@ -118,4 +118,10 @@ public class LeaveService {
 		}
 		return true;
 	}
+
+	public void cancelLeave(String leaveNo) {
+		LeaveVO leaveVO = getOneLeave(leaveNo);
+		leaveVO.setStatus(LeaveStatus.Cancel.getNum());
+		dao.update(leaveVO);
+	}
 }

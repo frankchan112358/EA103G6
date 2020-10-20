@@ -210,7 +210,7 @@ pageContext.setAttribute("addedList",evaluationSvc.getStudentAddedCourseEvaluati
 
             $(document).on("click", "button.btn-write", function(event) {
                 resetEvaluation();
-                let courseNo = this.getAttribute('courseNo')
+                let courseNo = this.getAttribute('courseNo');
                 $('#formEvaluation input[name=courseNo]').val(courseNo);
                 if(this.getAttribute('todo')=='update'){
                     $.ajax({

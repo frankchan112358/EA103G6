@@ -15,6 +15,12 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
 <head>
     <%@ include file="/front-end/template/head.jsp" %>
     <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/miscellaneous/fullcalendar/fullcalendar.bundle.css">
+    <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/notifications/sweetalert2/sweetalert2.bundle.css">
+    <style>
+        .swal2-container {
+            z-index: 100000;
+        }
+    </style>
 </head>
 
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
@@ -57,18 +63,6 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
                                                     <th>操作</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <c:forEach var="leaveVO" items="${list }">
-                                                    <tr>
-                                                        <td>${leaveVO.timetableVO.timetableDate}</td>
-                                                        <td>${leaveVO.timetableVO.periodText}</td>
-                                                        <td>${leaveVO.timetableVO.courseVO.courseName}</td>
-                                                        <td>${leaveVO.typeText}</td>
-                                                        <td>${leaveVO.statusText}</td>
-                                                        <td></td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
                                         </table>
                                         <!-- datatable end -->
                                     </div>
@@ -95,7 +89,8 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
                 </div>
                 <div class="modal-body">
                     <form id="leaveForm" class="needs-validation" novalidate>
-                        <input type="hidden" name="studentNo" value="${studentVO.studentNo}" />
+                        <input id="studentNo" type="hidden" name="studentNo" value="${studentVO.studentNo}" />
+                        <input id="leaveNo" type="hidden" name="leaveNo" value="" />
                         <input id="timetableNo" type="hidden" name="timetableNo" value="" />
                         <div class="form-group">
                             <label class="form-label">選擇課堂</label>
@@ -112,11 +107,12 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class='fal fa-file-edit'></i></span>
                                 </div>
-                                <select class="custom-select" id="type" name="type">
+                                <select class="custom-select" id="type" name="type" required="">
                                     <c:forEach var="type" items="${leaveSvc.getLeaveTypeAll()}">
                                         <option value="${type.num}">${type.text}</option>
                                     </c:forEach>
                                 </select>
+                                <div class="invalid-feedback">請選擇假別</div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -125,7 +121,8 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class='fal fa-file-edit'></i></span>
                                 </div>
-                                <textarea id="description" name="description" class="form-control"></textarea>
+                                <textarea id="description" name="description" class="form-control" required=""></textarea>
+                                <div class="invalid-feedback">描述不能空白</div>
                             </div>
                         </div>
                     </form>
@@ -137,20 +134,105 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
             </div>
         </div>
     </div>
+    <div class="modal fade" id="leaveReview" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title">檢視請假單</h1>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="text-muted">日期</h5>
+                    <span style="font-size:x-large;" data="timetableDate"></span>
+                    <h5 class="text-muted">時段</h5>
+                    <span style="font-size:x-large;" data="periodText"></span>
+                    <h5 class="text-muted">課程</h5>
+                    <span style="font-size:x-large;" data="courseName"></span>
+                    <h5 class="text-muted">假別</h5>
+                    <span style="font-size:x-large;" data="typeText"></span>
+                    <h5 class="text-muted">狀態</h5>
+                    <span style="font-size:x-large;" data="statusText"></span>
+                    <h5 class="text-muted">事由</h5>
+                    <p style="font-size: x-large;" data="description"></p>
+                </div>
+            </div>
+        </div>
+    </div>
     <%@ include file="/front-end/template/quick_menu.jsp" %>
     <%@ include file="/front-end/template/messager.jsp" %>
     <%@ include file="/front-end/template/basic_js.jsp" %>
     <script src="<%=request.getContextPath() %>/SmartAdmin4/js/miscellaneous/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="<%=request.getContextPath() %>/SmartAdmin4/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
     <script>
         'use strict';
+        var action = "new"
         // 把java取值得結果，先放入var變數
         var ContextPath = '<%=request.getContextPath()%>';
         $(document).ready(function () {
             var leaveForm = document.getElementById('leaveForm');
 
-            $('#leaveTable').dataTable({
+            var columnSet = [
+                {
+                    title: "日期",
+                    id: "timetableDate",
+                    data: "timetableDate",
+                    type: "text"
+                },
+                {
+                    title: "時段",
+                    id: "periodText",
+                    data: "periodText",
+                    type: "text"
+                },
+                {
+                    title: "課程",
+                    id: "courseName",
+                    data: "courseName",
+                    type: "text"
+                },
+                {
+                    title: "假別",
+                    id: "typeText",
+                    data: "typeText",
+                    type: "text"
+                },
+                {
+                    title: "狀態",
+                    id: "statusText",
+                    data: "statusText",
+                    type: "text"
+                },
+                {
+                    title: "操作",
+                    id: "action",
+                    data: "action",
+                    render(data, type, row, meta) {
+                        let html = `<button type="button" class="review btn btn-primary" leaveNo="${"${row.action.id}"}">檢視</button>`;
+                        if (row.action.cando == 1)
+                            html = `<button type="button" class="update btn btn-info" leaveNo="${"${row.action.id}"}">修改</button>
+                                         <button type="button" class="cancel btn btn-danger" leaveNo="${"${row.action.id}"}">取消</button>`;
+                        if (row.action.cando == 2)
+                            html += ` <button type="button" class="cancel btn btn-danger" leaveNo="${"${row.action.id}"}">取消</button>`;
+                        return html;
+                    }
+                }]
+
+
+            var leaveTable = $('#leaveTable').DataTable({
                 responsive: true,
-                language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' }
+                language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' },
+                columns: columnSet,
+                ajax: {
+                    url: '<%=request.getContextPath()%>/leave/student',
+                    type: 'GET',
+                    async: true,
+                    cache: false,
+                    data: {
+                        studentNo: '${studentVO.studentNo}'
+                    }
+                }
             });
 
             var calendarEl = document.getElementById('calendar');
@@ -161,24 +243,17 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
                 editable: false,
                 displayEventTime: false,
                 locale: 'zh-tw',
-                events: [
-                    <c:forEach var="timetableVO" items="${leaveSvc.getTimetableEvents(studentVO.studentNo)}">
-                        {
-                            id:'${timetableVO.timetableNo}',
-                            title: '${timetableVO.periodEnum.text},${timetableVO.courseVO.courseName}',
-                            start: '${timetableVO.timetableDate}T${timetableVO.periodEnum.start}',
-                            borderColor:'white',
-                            extendedProps:{'timetableInfo':'${timetableVO.timetableDate},${timetableVO.periodEnum.text},${timetableVO.courseVO.courseName}'}
-                        },
-                    </c:forEach >
-                ],
+                events: '<%=request.getContextPath()%>/leave/calendar?studentNo=${studentVO.studentNo}',
                 eventClick: function (info) {
                     calendar.getEvents().forEach(e => {
-                        e.setProp('borderColor','white');
+                        e.setProp('borderColor', '');
                     });
-                    info.event.setProp('borderColor','red');
+                    info.event.setProp('borderColor', 'red');
                     $('#timetableNo').val(info.event.id);
                     $('#timetableInfo').html(info.event.extendedProps.timetableInfo);
+                },
+                eventRender:function(event){
+                    event.el.setAttribute('timetableNo',event.event.id)
                 }
             });
 
@@ -186,20 +261,152 @@ pageContext.setAttribute("list",leaveSvc.getLeaveWithStudent(studentVO.getStuden
                 calendar.render();
             });
 
-            $('#save').click(function(){
-                $.ajax({
-                    type:'post',
-                    url:'<%=request.getContextPath()%>/leave/add',
-                    data:$(leaveForm).serialize(),
-                    success(res){
-                        if(res=='ok'){
-                            $('#leaveEditor').modal('hide');
+            $('#leaveEditor').on('hidden.bs.modal', function () {
+                resetLeaveForm();
+            });
+
+            $('#new').click(function () {
+                resetLeaveForm();
+                action = "new";
+            });
+
+            $('#save').click(function (event) {
+                if ($('#timetableNo').val() == '') {
+                    Swal.fire("請問請哪節課?", "請在課表中選取課堂", "question");
+                    return;
+                }
+
+                if (leaveForm.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    leaveForm.classList.add('was-validated');
+                    return;
+                } else {
+                    leaveForm.classList.add('was-validated');
+                }
+
+                if (action == 'new') {
+                    $.ajax({
+                        type: 'POST',
+                        url: '<%=request.getContextPath()%>/leave/add',
+                        data: $(leaveForm).serialize(),
+                        success(res) {
+                            if (res == 'ok') {
+                                $('#leaveEditor').modal('hide');
+                                resetLeaveForm();
+                            }
+                        },
+                        error(err) {
+                            console.log(err);
                         }
+                    });
+                } else if (action == 'update') {
+                    $.ajax({
+                        type: 'POST',
+                        url: '<%=request.getContextPath()%>/leave/updatestudentleave',
+                        data: $(leaveForm).serialize(),
+                        success(res) {
+                            if (res == 'ok') {
+                                $('#leaveEditor').modal('hide');
+                                resetLeaveForm();
+                            }
+                        },
+                        error(err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+
+            function resetLeaveForm() {
+                leaveForm.classList.remove('was-validated');
+                calendar.getEvents().forEach(e => {
+                    e.setProp('borderColor', '');
+                });
+                leaveTable.ajax.reload(null, false);
+                calendar.removeAllEvents()
+                calendar.refetchEvents();
+                calendar.today();
+                $('#timetableInfo').html('未選擇');
+                $('#leaveNo').val('');
+                $('#timetableNo').val('');
+                $('#type').val('0');
+                $('#description').val('');
+            }
+
+            $(document).on('click', 'button.update', function (event) {
+                resetLeaveForm();
+                action = "update";
+                let leaveNo = this.getAttribute('leaveNo');
+                $.ajax({
+                    type: 'GET',
+                    url: '<%=request.getContextPath()%>/leave/getforupdate',
+                    data: {
+                        leaveNo: leaveNo
                     },
-                    error(err){
-                        console.log(err);
+                    success(res) {
+                        if (res != null) {
+                            $('#leaveNo').val(res.leaveNo);
+                            $('#timetableNo').val(res.timetableNo);
+                            $('#type').val(res.type);
+                            $('#description').val(res.description);
+                            $('#leaveEditor').modal('show');
+                            calendar.addEvent(res.timetableEvent);
+                            $('#timetableInfo').html(res.timetableEvent.extendedProps.timetableInfo);
+                        }
+                    }
+                });
+            });
+
+            $(document).on('click', 'button.review', function (event) {
+                let leaveNo = this.getAttribute('leaveNo');
+                $.ajax({
+                    type: 'GET',
+                    url: '<%=request.getContextPath()%>/leave/one',
+                    data: {
+                        leaveNo: leaveNo
+                    },
+                    success(res) {
+                        if (res != null) {
+                            let review = $('#leaveReview .modal-body');
+                            review.find('[data*=timetableDate]').text(res.timetableDate);
+                            review.find('[data*=periodText]').text(res.periodText);
+                            review.find('[data*=courseName]').text(res.courseName);
+                            review.find('[data*=typeText]').text(res.typeText);
+                            review.find('[data*=statusText]').text(res.statusText);
+                            review.find('[data*=description]').text(res.description);
+                            $('#leaveReview').modal('show');
+                        }
                     }
                 })
+            });
+
+            $(document).on('click', 'button.cancel', function (event) {
+                let leaveNo = this.getAttribute('leaveNo');
+                Swal.fire({
+                    title: "你確定要取消該請假申請嗎?",
+                    text: "如果取消後，無法復原，需要重新申請!",
+                    type: "warning",
+                    showCancelButton: true,
+                    cancelButtonText: "先不要",
+                    confirmButtonText: "是的，我要取消!"
+                }).then(function (result) {
+                    if (result.value) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '<%=request.getContextPath()%>/leave/cancel',
+                            data: {
+                                leaveNo: leaveNo
+                            },
+                            success(res) {
+                                if (res == 'ok') {
+                                    leaveTable.ajax.reload(null, false);
+                                    Swal.fire("取消!", "你的請假申請已經取消", "成功");
+                                }
+                            }
+                        });
+                    }
+                });
             });
         });
     </script>
