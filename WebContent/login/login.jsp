@@ -40,8 +40,7 @@ if(userVO!=null){
                             </div>
                             
                         </div>
-                    </div>
-                    
+                    </div>                    
                                 <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4 ml-auto">
                                     <h1 class="text-white fw-300 mb-3 d-sm-block d-md-none">
                                         Secure login

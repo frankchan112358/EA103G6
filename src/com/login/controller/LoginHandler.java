@@ -38,7 +38,6 @@ public class LoginHandler extends HttpServlet {
 			String account = req.getParameter("account").trim().toLowerCase();
 			String password = req.getParameter("password").trim();
 				
-			System.out.println(account);
 			UserService userSvc = new UserService();
 			UserVO userVO = userSvc.UserLogin(account, password, type);
 			
