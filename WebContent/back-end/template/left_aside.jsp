@@ -54,31 +54,35 @@
                 </ul>
             </li>
             <li>
-                <a href="<%=request.getContextPath()%>/banji/banji.manage" title="養成班管理">
-                    <i class="fal fa-users-class"></i>
-                    <span class="nav-link-text">養成班管理</span>
-                </a>
-                <jsp:useBean id="as_banjiSvc" scope="page" class="com.banji.model.BanjiService" />
-                <jsp:useBean id="as_banjiTypeSvc" scope="page" class="com.banjitype.model.BanjiTypeService" />
-                <c:if test="${as_banjiSvc.getBanjiGroup(empVO.empNo).keySet().size()>0}">
-                    <ul>
-                        <c:forEach var="key" items="${as_banjiSvc.getBanjiGroup(empVO.empNo).keySet()}">
-                            <li>
-                                <a href="#" title="${as_banjiTypeSvc.getOneBanjiType(key).banjiTypeName}">
-                                    <span class="nav-link-text">${as_banjiTypeSvc.getOneBanjiType(key).banjiTypeName}</span>
-                                </a>
-                                <ul>
-                                    <c:forEach var="banjiVO" items="${as_banjiSvc.getBanjiGroup(empVO.empNo).get(key).values()}">
-                                        <li>
-                                            <a href="<%=request.getContextPath()%>/banji/banji.manage?action=read&banjiNo=${banjiVO.banjiNo}" title="${banjiVO.banjiName}">
-                                                <span class="nav-link-text">${banjiVO.banjiName}</span>
-                                            </a>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                            </li>
-                        </c:forEach>
-                    </ul>
+                <c:if test="${userVO!=null && userVO.type==2}">
+                    <a href="<%=request.getContextPath()%>/banji/banji.manage" title="養成班管理">
+                        <i class="fal fa-users-class"></i>
+                        <span class="nav-link-text">養成班管理</span>
+                    </a>
+                    <jsp:useBean id="as_banjiSvc" scope="page" class="com.banji.model.BanjiService" />
+                    <jsp:useBean id="as_banjiTypeSvc" scope="page" class="com.banjitype.model.BanjiTypeService" />
+                    <c:if test="${as_banjiSvc.getBanjiGroup(empVO.empNo).keySet().size()>0}">
+                        <ul>
+                            <c:forEach var="key" items="${as_banjiSvc.getBanjiGroup(empVO.empNo).keySet()}">
+                                <li>
+                                    <a href="#" title="${as_banjiTypeSvc.getOneBanjiType(key).banjiTypeName}">
+                                        <span class="nav-link-text">${as_banjiTypeSvc.getOneBanjiType(key).banjiTypeName}</span>
+                                    </a>
+                                    <ul>
+                                        <c:forEach var="banjiVO" items="${as_banjiSvc.getBanjiGroup(empVO.empNo).get(key).values()}">
+                                            <li>
+                                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.manage">
+                                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="nav-link-text">${banjiVO.banjiName}</span></a></button>
+                                                    <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
+                                                    <input type="hidden" name="action" value="read">
+                                                </form>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </c:if>
                 </c:if>
             </li>
             <li>
