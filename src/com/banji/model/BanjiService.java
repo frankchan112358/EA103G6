@@ -1,7 +1,12 @@
 package com.banji.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
+
+import com.emp.model.EmpService;
+import com.emp.model.EmpVO;
 
 public class BanjiService {
 	private BanjiDAO_interface dao;
@@ -73,5 +78,22 @@ public class BanjiService {
 				list.add(banjiVO);
 		}
 		return list;
+	}
+
+	public HashMap<String, TreeMap<String,BanjiVO>> getBanjiGroup(String empNo) {
+		EmpVO empVO = new EmpService().getOneEmp(empNo);
+		HashMap<String, TreeMap<String,BanjiVO>> map = new HashMap<String, TreeMap<String,BanjiVO>>();
+		for (BanjiVO banjiVO : empVO.getBanjiList()) {
+			Object obj = map.get(banjiVO.getBanjiTypeNo());
+			if (obj == null) {
+				TreeMap<String,BanjiVO> treeMap = new TreeMap<String,BanjiVO>();
+				treeMap.put(banjiVO.getBanjiName(), banjiVO);
+				map.put(banjiVO.getBanjiTypeNo(), treeMap);				
+			}else {
+				TreeMap<String,BanjiVO> treeMap = (TreeMap<String,BanjiVO>)obj;
+				treeMap.put(banjiVO.getBanjiName(), banjiVO);
+			}
+		}
+		return map;
 	}
 }

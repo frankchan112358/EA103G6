@@ -3,8 +3,14 @@ package com.banji.model;
 import java.sql.Date;
 import java.util.List;
 
+import com.banjitype.model.BanjiTypeService;
+import com.banjitype.model.BanjiTypeVO;
+import com.emp.model.EmpService;
+import com.emp.model.EmpVO;
 import com.student.model.StudentService;
 import com.student.model.StudentVO;
+import com.teacher.model.TeacherService;
+import com.teacher.model.TeacherVO;
 
 public class BanjiVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
@@ -115,4 +121,11 @@ public class BanjiVO implements java.io.Serializable {
 		return new StudentService().getAllWithBanji(banjiNo);
 	}
 	
+	public EmpVO getTeacherVO() {
+		return new EmpService().getOneEmp(this.empNo);
+	}
+	
+	public BanjiTypeVO getBanjiTypeVO() {
+		return new BanjiTypeService().getOneBanjiType(this.banjiTypeNo);
+	}	
 }

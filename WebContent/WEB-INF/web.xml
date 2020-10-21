@@ -207,6 +207,16 @@
 		<servlet-name>BanjiServlet</servlet-name>
 		<url-pattern>/banji/banji.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>BanjiManage</servlet-name>
+		<servlet-class>com.banji.controller.BanjiManage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BanjiManage</servlet-name>
+		<url-pattern>/banji/banji.manage</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>BanjiTypeServlet</servlet-name>
 		<servlet-class>com.banjitype.controller.BanjiTypeServlet</servlet-class>

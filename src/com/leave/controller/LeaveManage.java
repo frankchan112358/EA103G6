@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
 import com.leave.model.LeaveService;
 import com.leave.model.LeaveStatus;
@@ -23,7 +25,7 @@ public class LeaveManage extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-		res.setContentType("text/html; charset=UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 		UserVO userVO = (UserVO) session.getAttribute("userVO");
 		if (userVO == null || userVO.getType() != 2) {
@@ -31,6 +33,8 @@ public class LeaveManage extends HttpServlet {
 			return;
 		}
 		EmpVO empVO = (EmpVO) session.getAttribute("empVO");
+		if(empVO==null)
+			empVO=new EmpService().getOneEmpByUserNo(userVO.getUserNo());
 		String action = req.getParameter("action");
 		if (action == null) {
 //			String banjiNo = req.getParameter("banjiNo");
@@ -40,6 +44,7 @@ public class LeaveManage extends HttpServlet {
 			String url = "/back-end/leave/leave.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
+			return;
 		}
 		if ("read".equals(action)) {
 			String leaveNo = req.getParameter("leaveNo");
@@ -48,6 +53,7 @@ public class LeaveManage extends HttpServlet {
 			String url = "/back-end/leave/readLeave.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
+			return;
 		}
 		if ("review".equals(action)) {
 			String leaveNo = req.getParameter("leaveNo");
@@ -56,6 +62,7 @@ public class LeaveManage extends HttpServlet {
 			String url = "/back-end/leave/readLeave.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
+			return;
 		}
 		if ("decide".equals(action)) {
 			String leaveNo = req.getParameter("leaveNo");
@@ -72,7 +79,7 @@ public class LeaveManage extends HttpServlet {
 			String url = "/back-end/leave/leave.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
+			return;
 		}
-
 	}
 }

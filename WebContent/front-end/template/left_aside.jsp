@@ -19,7 +19,7 @@
         </div>
         <ul id="js-nav-menu" class="nav-menu" style="justify-content:center;">
             <li>
-                <a href="#" title="後台首頁">
+                <a href="<%=request.getContextPath()%>/front-end/index/index.jsp" title="前台首頁">
                     <i class="fal fa-chart-area"></i>
                     <span class="nav-link-text">後台首頁</span>
                 </a>

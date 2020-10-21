@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <aside class="page-sidebar">
     <div class="page-logo">
         <a href="#" class="page-logo-link press-scale-down d-flex align-items-center position-relative" data-toggle="modal" data-target="#modal-shortcut">
@@ -19,7 +20,7 @@
         </div>
         <ul id="js-nav-menu" class="nav-menu" style="justify-content:center;">
             <li>
-                <a href="#" title="後台首頁">
+                <a href="<%=request.getContextPath()%>/back-end/index/index.jsp" title="後台首頁">
                     <i class="fal fa-chart-area"></i>
                     <span class="nav-link-text">後台首頁</span>
                 </a>
@@ -53,44 +54,32 @@
                 </ul>
             </li>
             <li>
-                <a href="#" title="養成班管理">
+                <a href="<%=request.getContextPath()%>/banji/banji.manage" title="養成班管理">
                     <i class="fal fa-users-class"></i>
                     <span class="nav-link-text">養成班管理</span>
                 </a>
-                <ul>
-                    <li>
-                        <a href="#" title="Java雲端">
-                            <span class="nav-link-text">Java雲端</span>
-                        </a>
-                        <ul>
+                <jsp:useBean id="as_banjiSvc" scope="page" class="com.banji.model.BanjiService" />
+                <jsp:useBean id="as_banjiTypeSvc" scope="page" class="com.banjitype.model.BanjiTypeService" />
+                <c:if test="${as_banjiSvc.getBanjiGroup(empVO.empNo).keySet().size()>0}">
+                    <ul>
+                        <c:forEach var="key" items="${as_banjiSvc.getBanjiGroup(empVO.empNo).keySet()}">
                             <li>
-                                <a href="#" title="EA101">
-                                    <span class="nav-link-text">EA101</span>
+                                <a href="#" title="${as_banjiTypeSvc.getOneBanjiType(key).banjiTypeName}">
+                                    <span class="nav-link-text">${as_banjiTypeSvc.getOneBanjiType(key).banjiTypeName}</span>
                                 </a>
+                                <ul>
+                                    <c:forEach var="banjiVO" items="${as_banjiSvc.getBanjiGroup(empVO.empNo).get(key).values()}">
+                                        <li>
+                                            <a href="<%=request.getContextPath()%>/banji/banji.manage?action=read&banjiNo=${banjiVO.banjiNo}" title="${banjiVO.banjiName}">
+                                                <span class="nav-link-text">${banjiVO.banjiName}</span>
+                                            </a>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
                             </li>
-                            <li>
-                                <a href="#" title="EA102">
-                                    <span class="nav-link-text">EA102</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" title="EA103">
-                                    <span class="nav-link-text">EA103</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" title="前端設計">
-                            <span class="nav-link-text">前端設計</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="大數據分析">
-                            <span class="nav-link-text">大數據分析</span>
-                        </a>
-                    </li>
-                </ul>
+                        </c:forEach>
+                    </ul>
+                </c:if>
             </li>
             <li>
                 <a href="#" title="課程管理">
@@ -120,7 +109,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>                        
+            </li>
             <li>
                 <a href="#" title="基本課程管理">
                     <i class="fal fa-book-open"></i>
