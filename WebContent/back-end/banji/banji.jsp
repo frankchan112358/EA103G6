@@ -41,7 +41,10 @@
                                 <button class="dropdown-item" type="button">公告管理</button>
                                 <button class="dropdown-item" type="button">課程管理</button>
                                 <button class="dropdown-item" type="button">課表管理</button>
-                                <button class="dropdown-item" type="button">請假管理</button>
+                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.leave">
+                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">請假管理</button>
+                                    <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
+                                </form>
                                 <button class="dropdown-item" type="button">出缺勤管理</button>
                                 <button class="dropdown-item" type="button">討論區管理</button>
                             </div>
@@ -77,9 +80,10 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <span class="text-info">請假管理</span>
-                                                </a>
+                                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.leave">
+                                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="text-info">請假管理</span></a></button>
+                                                    <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
+                                                </form>
                                             </li>
                                             <li>
                                                 <a href="#">

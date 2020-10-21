@@ -218,6 +218,15 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>BanjiLeave</servlet-name>
+		<servlet-class>com.banji.controller.BanjiLeave</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BanjiLeave</servlet-name>
+		<url-pattern>/banji/banji.leave</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
 		<servlet-name>BanjiTypeServlet</servlet-name>
 		<servlet-class>com.banjitype.controller.BanjiTypeServlet</servlet-class>
 	</servlet>
