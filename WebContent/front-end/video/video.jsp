@@ -175,9 +175,7 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
 			$(".in-sb").click(function(e){
 				e.preventDefault();
 				vIndex = $(".in-sb").index(this);
-				console.log("1-"+vIndex);
 				path = $('.vpath:eq('+vIndex+')').attr('href');
-				console.log(path);
 				$("video").attr('src',path);
 			})
 
