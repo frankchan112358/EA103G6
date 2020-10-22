@@ -84,10 +84,8 @@ public class NotifyServlet {
 		
 		//判斷目前是否有連線，有連線才需要推播
 		if(sessionsMap.get(userNo)!=null) {
-			System.out.println(1);
 			//直接送出給前端時間設定0表示即時訊息，由前端進行判斷顯示時間
-			WebsocketNotifyVO notifyNow =new WebsocketNotifyVO(title, content, 0L);
-			String notifyJsonNow = gson.toJson(notifyNow);
+			String notifyJsonNow = gson.toJson(notify);
 			sessionsMap.get(userNo).getAsyncRemote().sendText(notifyJsonNow);
 			System.out.println("直接傳送至前台的訊息"+notifyJsonNow);
 
