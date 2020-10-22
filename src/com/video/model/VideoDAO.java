@@ -25,7 +25,7 @@ public class VideoDAO implements VideoDAO_interface{
 	}
 	
 	private static final String INSERT_STMT =
-			"INSERT INTO VIDEO (videoNo, timetableNo, videoName, video) VALUES (VIDEO_SEQ.nextval, ?, ?, ?)";
+			"INSERT INTO VIDEO (videoNo, timetableNo, videoName) VALUES (VIDEO_SEQ.nextval, ?, ?)";
 	private static final String GET_ALL_STMT =
 			"SELECT videoNo, timetableNo, videoName, video FROM video order by to_number(videoNo)";
 	private static final String GET_ONE_STMT = 
@@ -35,7 +35,7 @@ public class VideoDAO implements VideoDAO_interface{
 	private static final String DELETE_VIDEOLOG = 
 			"DELETE FROM videoLog where videoNo = ?";
 	private static final String UPDATE = 
-			"UPDATE video set timetableNo=?, videoName=?, video=? where videoNo = ?";
+			"UPDATE video set timetableNo=?, videoName=? where videoNo = ?";
 
 	@Override
 	public void insert(VideoVO videoVO) {
@@ -49,7 +49,6 @@ public class VideoDAO implements VideoDAO_interface{
 			
 			pstmt.setString(1, videoVO.getTimetableNo());
 			pstmt.setString(2, videoVO.getVideoName());
-			pstmt.setBytes(3, videoVO.getVideo());
 
 			pstmt.executeUpdate();
 			
@@ -79,8 +78,7 @@ public class VideoDAO implements VideoDAO_interface{
 			
 			pstmt.setString(1, videoVO.getTimetableNo());
 			pstmt.setString(2, videoVO.getVideoName());
-			pstmt.setBytes(3, videoVO.getVideo());
-			pstmt.setString(4, videoVO.getVideoNo());
+			pstmt.setString(3, videoVO.getVideoNo());
 			
 			pstmt.executeUpdate();
 

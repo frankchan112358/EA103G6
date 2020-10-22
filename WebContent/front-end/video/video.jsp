@@ -116,7 +116,7 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
                                         	</c:forEach>
                                         	</div>
                                         <div class="player">
-	<video src="#"   type="video/mp4" loop controls ></video>
+                                        	<video src="#"   type="video/mp4" loop controls ></video>
                                         </div>
                                     </div>
                                 </div>
