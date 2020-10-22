@@ -42,6 +42,7 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
             top:0px;
             bottom:0px;
             background-color: black;
+            overflow: hidden;
         }
         .panel-content {
             height:500px;
@@ -49,8 +50,23 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
         .in-sb {
         	border-bottom:5px #9EDF56 double;
         	height:20%;
-            font-size: medium;
+            font-size: large;
+            margin:auto;
         }
+        .fa-pencil-alt:hover {
+            transform: scale(1.5);
+        }
+		video{
+		position:absolute;
+		width:100%;
+		margin:auto;
+        align-self: center;
+		}
+		
+		a {
+		color:black;
+		}
+		
     </style>
 </head>
 
@@ -83,23 +99,24 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
                                     <div class="panel-content">
                                         <div class="slide-bar">
                                         	<c:forEach var="videoVO" items="${videoList}">
-                                        		<div class="in-sb">
+                                                    <a class=vpath href="<%=request.getContextPath()%>/videos/${videoVO.videoName}.mp4"  target="player">
+                                        		<div class="in-sb" > 
                                                     <input type="hidden" name="videoNo" value="${videoVO.videoNo}">
-                                                    ${videoVO.videoNo}<br>
-                                                    <input type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
-                                                    ${videoVO.timetableNo}<br>
-                                                    <input type="hidden" name="videoName" value="${videoVO.videoName}">
-                                        			${videoVO.videoName}<br>
-                                        			<div class="in-sb-log">
-                                                        <i class="fas fa-pencil-alt" style="color: green;">
-                                                        </i>#要放教學日誌連結orz</div>
+                                                    <input  type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
+                                        	          	上課日期 : ${videoVO.timetableVO.timetableDate}<br>
+                                                    <input class="videoname" type="hidden" name="videoName" value="${videoVO.videoName}">
+                                       		 			影片名稱 : ${videoVO.videoName}<br>
+                                        				<div class="in-sb-log">
+                                        					<div class="log">
+                                        					<button type="button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size:small;">教學日誌</button>
+                                                     	   </div>
+                                                    	</div>
                                         		</div>
+                                                    </a>
                                         	</c:forEach>
                                         	</div>
                                         <div class="player">
-                                        	<video loop="true" autoplay="autoplay"  muted="true" >
-                                                
-                                            </video>
+	<video src="#"   type="video/mp4" loop controls ></video>
                                         </div>
                                     </div>
                                 </div>
@@ -144,18 +161,27 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
     <script>
         'use strict';
         $(document).ready(function () {
-            //這裡是click可以連接到日誌
-        	$(".in-sb-log").hover(function(){
-        		$(this).click(function(){
-        		
-        	    })
+            //這裡是滑鼠進入slide-bar會讓區塊變色
+        	$(".in-sb").hover(function(){
+                $(this).css("background-color", "#a9ec62");},
+                function(){
+                $(this).css("background-color", " #c3dbaa");
             })
+
             
-            //這裡是click可以播放影片
+            var vIndex=8;
+            var path = null;
+            //這裡是click(slide-bar)可以開啟影片
+			$(".in-sb").click(function(e){
+				e.preventDefault();
+				vIndex = $(".in-sb").index(this);
+				path = $('.vpath:eq('+vIndex+')').attr('href');
+				$("video").attr('src',path);
+			})
+
+            
+            //這裡是click(in-sb-log)可以查看日誌
             $(".in-sb-log").hover(function(){
-        		$(this).click(function(){
-                    
-        	    })
             })            
         });
     </script>
