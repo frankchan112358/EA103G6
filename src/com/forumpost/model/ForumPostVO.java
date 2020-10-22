@@ -9,6 +9,7 @@ public class ForumPostVO implements java.io.Serializable {
 	private String studentNo;
 	private String title;
 	private String content;
+	private Integer forumPostViews;
     private Timestamp updateTime;
 	private Timestamp createTime;
 	
@@ -51,6 +52,14 @@ public class ForumPostVO implements java.io.Serializable {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public Integer getForumPostViews() {
+		return forumPostViews;
+	}
+
+	public void setForumPostViews(Integer forumPostViews) {
+		this.forumPostViews = forumPostViews;
 	}
 
 	public Timestamp getUpdateTime() {
