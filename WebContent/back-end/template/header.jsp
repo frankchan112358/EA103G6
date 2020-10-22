@@ -66,7 +66,7 @@
                 <div class="tab-content tab-notification">
                     <div class="tab-pane" id="tab-1" role="tabpanel">
                         <div class="custom-scroll h-100">
-                            <ul class="notification">
+                            <ul class="notification" id="decorateForNotification">
                                 <li class="unread">
                                     <div class="d-flex align-items-center show-child-on-hover">
                                         <span class="d-flex flex-column flex-1">
