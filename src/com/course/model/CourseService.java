@@ -1,5 +1,6 @@
 package com.course.model;
 
+import java.io.InputStream;
 import java.sql.Date;
 import java.util.List;
 
@@ -12,7 +13,8 @@ public class CourseService {
 	}
 
 	public CourseVO addCourse(String banjiNo, String teacherNo, String classroomNo, String basicCourseNo,
-			String courseName, String courseOutline, Integer lesson, Date startDate, Date endDate, Integer status) {
+			String courseName, String courseOutline, Integer lesson, Date startDate, Date endDate, InputStream courseImg,
+			Integer status) {
 
 		CourseVO courseVO = new CourseVO();
 
@@ -25,6 +27,7 @@ public class CourseService {
 		courseVO.setLesson(lesson);
 		courseVO.setStartDate(startDate);
 		courseVO.setEndDate(endDate);
+		courseVO.setCourseImg(courseImg);
 		courseVO.setStatus(status);
 		dao.insert(courseVO);
 
@@ -32,7 +35,7 @@ public class CourseService {
 	}
 
 	public CourseVO updateCourse(String courseNo, String banjiNo, String teacherNo, String classroomNo,
-			String basicCourseNo, String courseName, String courseOutline, Integer lesson, Date startDate, Date endDate,
+			String basicCourseNo, String courseName, String courseOutline, Integer lesson, Date startDate, Date endDate, InputStream courseImg,
 			Integer status) {
 
 		CourseVO courseVO = new CourseVO();
@@ -47,6 +50,7 @@ public class CourseService {
 		courseVO.setLesson(lesson);
 		courseVO.setStartDate(startDate);
 		courseVO.setEndDate(endDate);
+		courseVO.setCourseImg(courseImg);
 		courseVO.setStatus(status);
 		dao.update(courseVO);
 
@@ -64,7 +68,6 @@ public class CourseService {
 	public List<CourseVO> getAll() {
 		return dao.getAll();
 	}
-	
 
 	public CourseStatus[] getCourseStatusAll() {
 		return CourseStatus.values();
@@ -72,6 +75,10 @@ public class CourseService {
 
 	public String getCourseStatusText(Integer num) {
 		return CourseStatus.findByNum(num).getText();
+	}
+
+	public InputStream getCourseImg(String courseNo) {
+		return dao.getCourseImg(courseNo);
 	}
 
 }

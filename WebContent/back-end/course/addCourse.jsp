@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.course.model.*"%>
+<%@ page import="com.course.model.*"%>xw
 
 <%
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
@@ -10,181 +10,200 @@
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService"/>
 <jsp:useBean id="classroomSvc" scope="page" class="com.classroom.model.ClassroomService"/>
 
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>課程資料新增</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/vendors/bootstrap/css/bootstrap.min.css">
-<script src="<%=request.getContextPath()%>/vendors/jquery/jquery-3.4.1.min.js"></script>
-<script src="<%=request.getContextPath()%>/vendors/popper/popper.min.js"></script>
-<script src="<%=request.getContextPath()%>/vendors/bootstrap/js/bootstrap.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ <%@ include file="/back-end/template/head.jsp" %> 
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 
 
 <style>
-table#table-1 {
-	border-bottom: 2px solid #0e6e95;
-    text-align: center;
-    margin-left:auto;
-    margin-right:auto;
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
 }
 
-  .h3-1 {
-    margin: 10px;
-  }
-  
- table#table-3 {
-    text-align: center;
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
 }
 
+ #showphoto2{ 
+  text-align:center;  
+  }  
 
-h5{
-	margin: 5px auto;
-	text-align: left;
-}
-  
-</style>
-
-<style>
-table {
-	width: 550px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	margin-left:auto;
-	margin-right:auto;
-}
-
-table, th, td {
-	border: 0px solid #CCCCFF;
-}
-
-th, td {
-	padding: 1px;
-}
-
-.swal-text {
-  background-color: #FEFAE3;
-  padding: 17px;
-  border: 1px solid #F0E1A1;
-  font-size: 17px;
-  font-weight:bold;
-  display: block;
-  margin: 22px;
-  text-align: center;
-  color: #F56455;
-}
+  #showphoto2 img {  
+   	width: 320px;  
+    margin: 40px;   
+   	border:2px #C4B1B1 dashed;  
+    text-align:center;  
+  }  
+  img {  
+    vertical-align: sub;  
+    width: 100%;  
+  	height: auto;  
+  }  
 
 </style>
 </head>
-<body bgcolor='white'>
-<div class="container">
 
-	<table id="table-1">
-	<tr><td>
-		 <h3 class="h3-1">課程資料新增</h3>
-		 <h4><a href="<%=request.getContextPath()%>/back-end/course/select_page.jsp"><img src="<%=request.getContextPath()%>/images/homepage.svg" width="80" height="50" border="0">Home</a></h4>
-	</td></tr>
-	</table>
-	
+<body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
+	<script>
+		var classHolder = document.getElementsByTagName("BODY")[0];
+	</script>
 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" name="form1" >
-		<table id="table-3">
-				
-				<tr><td><h5>基本課程編號</h5></td></tr>
-				<tr><td><input id="basicCourseNo" type="TEXT" name="basicCourseNo" size="67" 
-					value="${courseVO.basicCourseNo}"/><font color=red>${errorMsgs.basicCourseNo}</font></td></tr>
+	<div class="page-wrapper">
+		<div class="page-inner">
+			<%@ include file="/back-end/template/left_aside.jsp"%>
+			<div class="page-content-wrapper">
+				<%@ include file="/back-end/template/header.jsp"%>
+				<main id="js-page-content" role="main" class="page-content">
+					<ol class="breadcrumb page-breadcrumb">
+						<li class="breadcrumb-item">
+							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a>
+						</li>
+						<li class="breadcrumb-item">
+							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>
+						</li>
+						<li class="breadcrumb-item">課程資料新增</li>
+					</ol>
+					<div class="subheader">
+						<h1 class="subheader-title">
+							<i class='subheader-icon far fa-plus-circle mr-1'></i>
+							課程資料新增
+						</h1>
+					</div>
+					<div class="row justify-content-center">
+						<div class="col-xl-8">
+							<div id="panel-2" class="panel">
+								<div class="panel-hdr bg-primary-800 bg-gradient-info">
+									<h2>課程新增</h2>
+								</div>
+								<div class="panel-container show">
+									<div class="panel-content">
 
-			
-				<tr><td><h5>課程名稱</h5></td></tr>
-				<tr><td><input id="courseName" type="TEXT" name="courseName" size="67" 
-					value="${courseVO.courseName}" /><font color=red>${errorMsgs.courseName}</font></td></tr>
-					
-					
-				<tr><td><h5>課程大綱</h5></td></tr> 
-				<tr><td><textarea id="courseOutline" name="courseOutline" rows="8"  style= "width: 550px; resize:none" >${courseVO.courseOutline}</textarea></td></tr>
-			
-			
-				<tr><td><h5>班級</h5></td></tr>
-				<tr><td>
-					<select size="1" name="banjiNo" style="font-size:16px; width:550px; height:26px;">
-					<option value="">請選擇班級</option>
-					<c:forEach var="banjiVO" items="${banjiSvc.all}">
-         					<option value="${banjiVO.banjiNo}" ${(courseVO.banjiNo==banjiVO.banjiNo)?'selected':'' }>${banjiVO.banjiName} </option>
-				</c:forEach>
-          			</select>
-          		<font color=red>${errorMsgs.banjiNo}</font>
-          		</td></tr>
-				
-						
-				<tr><td><h5>講師</h5></td></tr>
-				<tr><td>
-					<select size="1" name="teacherNo" style="font-size:16px; width:550px; height:26px;">
-					<option value="">請選擇講師</option>
-					<c:forEach var="teacherVO" items="${teacherSvc.all}">
-         					<option value="${teacherVO.teacherNo}" ${(courseVO.teacherNo==teacherVO.teacherNo)?'selected':'' }>${teacherVO.teacherName} </option>
-				</c:forEach>
-          			</select>
-          		<font color=red>${errorMsgs.teacherNo}</font>
-          		</td></tr>			
-				
-								
-				<tr><td><h5>教室</h5></td></tr>
-				<tr><td>
-					<select size="1" name="classroomNo" style="font-size:16px; width:550px; height:26px;">
-					<option value="">請選擇教室</option>
-					<c:forEach var="classroomVO" items="${classroomSvc.all}">
-         					<option value="${classroomVO.classroomNo}" ${(courseVO.classroomNo==classroomVO.classroomNo)?'selected':'' }>${classroomVO.classroomName} </option>
-				</c:forEach>
-          			</select>
-          		<font color=red>${errorMsgs.classroomNo}</font>
-          		</td></tr>		
-			
-			
-				<tr><td><h5>堂數</h5></td></tr>
-				<tr><td><input id="lesson" type="number" name="lesson" min="0" style="width: 550px;"
-					value="${courseVO.lesson}" /><font color=red>${errorMsgs.lesson}</font></td></tr>
-			
-			
-				<tr><td><h5>開始日期</h5></td></tr>
-				<tr><td><input name="startDate" id="f_date1" type="TEXT" size="67" onfocus="this.blur()"><font color=red>${errorMsgs.startDate}</font></td></tr>
-			
-			
-				<tr><td><h5>結束日期</h5></td></tr>
-				<tr><td><input name="endDate" id="f_date2" type="TEXT" size="67" onfocus="this.blur()"><font color=red>${errorMsgs.endDate}</font></td></tr>
-			
-			
-				<tr><td><h5>狀態</h5></td></tr>
-				<tr><td>
-					<select size="1" name="status" style="font-size:16px; width:550px; height:26px;">
-         					<option value="0"${(courseVO.status==0)?'selected':'' }>課程未開始 </option>
-							<option value="1"${(courseVO.status==1)?'selected':'' }>課程進行中 </option>
-							<option value="2"${(courseVO.status==2)?'selected':'' }>課程結束 </option>
-          			</select>
-          		</td></tr> 
-					
-				
-		</table>	
-		<br> 
-		
-		<div class="form-row align-items-center justify-content-center">
-		<input type="hidden" name="action" value="insert"> 
-        <input class="btn btn-primary justify-content-center" type="submit" value="Submit">&emsp;
-        <input class="btn btn-secondary justify-content-center" type="reset" value="Reset">&emsp;
-       	</div>
-       	
-       	<br>
-       	
-       	<div class="form-row align-items-center justify-content-center">
-        <input type="button"  class="btn btn-outline-light" value="神奇小按鈕" id="button">
-       	</div>
-       	
-		</FORM>
+										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" enctype="multipart/form-data" name="form1">
 
-</div>	
+											<div class="form-group">
+												<label class="form-label">基本課程編號</label>
+												<input id="basicCourseNo" type="text" name="basicCourseNo" class="form-control" value="${courseVO.basicCourseNo}" />
+												<font color=red>${errorMsgs.basicCourseNo}</font>
+											</div>
 
 
-</body>
+												<div class="form-group">
+												<label class="form-label">課程名稱</label>
+												<input id="courseName" type="text" name="courseName" class="form-control" value="${courseVO.courseName}" />
+												<font color=red>${errorMsgs.courseName}</font>
+											</div>
+
+
+											<div class="form-group">
+												<label class="form-label">課程大綱</label>
+												<textarea id="courseOutline" class="form-control" name="courseOutline" rows="5">${courseVO.courseOutline}</textarea>
+											</div>
+
+
+											<div class="form-group">
+												<label class="form-label">班級</label>
+												<select class="custom-select form-control" name="banjiNo">
+													<option value="">請選擇班級</option>
+													<c:forEach var="banjiVO" items="${banjiSvc.all}">
+														<option value="${banjiVO.banjiNo}" ${(courseVO.banjiNo==banjiVO.banjiNo)?'selected':'' }>${banjiVO.banjiName}</option>
+													</c:forEach>
+												</select>
+												<font color=red>${errorMsgs.banjiNo}</font>
+											</div>
+
+
+											<div class="form-group">
+												<label class="form-label">講師</label>
+												<select class="custom-select form-control" name="teacherNo">
+													<option value="">請選擇講師</option>
+													<c:forEach var="teacherVO" items="${teacherSvc.all}">
+														<option value="${teacherVO.teacherNo}" ${(courseVO.teacherNo==teacherVO.teacherNo)?'selected':'' }>${teacherVO.teacherName}</option>
+													</c:forEach>
+												</select>
+												<font color=red>${errorMsgs.teacherNo}</font>
+											</div>
+
+
+											<div class="form-group">
+												<label class="form-label">教室</label>
+												<select class="custom-select form-control" name="classroomNo">
+													<option value="">請選擇教室</option>
+													<c:forEach var="classroomVO" items="${classroomSvc.all}">
+														<option value="${classroomVO.classroomNo}" ${(courseVO.classroomNo==classroomVO.classroomNo)?'selected':'' }>${classroomVO.classroomName}</option>
+													</c:forEach>
+												</select>
+												<font color=red>${errorMsgs.classroomNo}</font>
+											</div>
+
+
+											<div class="form-group">
+												<label class="form-label">堂數</label>
+												<input class="form-control" type="number" name="lesson" min="0" value="${courseVO.lesson}">
+												<font color=red>${errorMsgs.lesson}</font>
+											</div>
+
+
+											<div class="form-group">
+												<label class="form-label">開始日期</label>
+												<input class="form-control" id="f_date1" type="text" name="startDate" onfocus="this.blur()">
+												<font color=red>${errorMsgs.startDate}</font>
+											</div>
+
+											<div class="form-group">
+												<label class="form-label">結束日期</label>
+												<input class="form-control" id="f_date2" type="text" name="endDate" onfocus="this.blur()">
+												<font color=red>${errorMsgs.endDate}</font>
+											</div>
+
+
+											<div class="form-group">
+												<label class="form-label">狀態</label>
+												<select class="custom-select form-control" name="status">
+													<option value="0" ${(courseVO.status==0)?'selected':'' }>課程未開始</option>
+													<option value="1" ${(courseVO.status==1)?'selected':'' }>課程進行中</option>
+													<option value="2" ${(courseVO.status==2)?'selected':'' }>課程結束</option>
+												</select>                                                   
+												 </div>
+												                                                   
+												<div class="form-group mb-3">
+												<label class="form-label">上傳課程圖片</label>
+												 <div class="custom-file">
+												 <input type="file" class="custom-file-input"  name="courseImg" accept="image/*" onchange="show(courseImg)">
+												 <label class="custom-file-label" for="customFile">Choose Image</label>
+												    <div id="showphoto2">
+                                                        <c:if test="${courseVO.courseImg eq null}">
+															<img src="<%=request.getContextPath() %>/images/尚無圖片.jpg">
+														</c:if>
+														<c:if test="${courseVO.courseImg ne null}">
+															<img src="<%=request.getContextPath() %>/course/course.do?action=getCourseImg&courseNo=${courseVO.courseNo}">
+														</c:if>
+                                                  	</div>	
+							                      </div>
+							                      </div>
+							
+											<div class="form-row align-items-center justify-content-center">
+												<input type="hidden" name="action" value="insert">
+												<button type="submit" class="btn btn-primary justify-content-center" id="addCourse" >送出</button>
+											</div>
+										</FORM>
+									</div>
+								</div>
+							</div>
+							</div>
+							</div>
+							</main>
+						</div>
+					</div>	
+			</div>
+
+     <%@ include file="/back-end/template/footer.jsp" %>
+     
+    <%@ include file="/back-end/template/quick_menu.jsp" %>
+    <%@ include file="/back-end/template/messager.jsp" %>
+    <%@ include file="/back-end/template/basic_js.jsp" %> 
+
 
 <% 
  	java.sql.Date startDate = null;
@@ -203,20 +222,11 @@ th, td {
 	   endDate = new java.sql.Date(System.currentTimeMillis());
    }
 %>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+
+
+ <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
+     
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-
-
-<style>
-  .xdsoft_datetimepicker .xdsoft_datepicker {
-           width:  300px;   /* width:  300px; */
-  }
-  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-           height: 151px;   /* height:  151px; */
-  }
-</style>
 
 <script>
     
@@ -250,29 +260,16 @@ th, td {
 			timepicker : false
 		});
 	});
-
-	$("#button").click(
-			function() {
-				$("#basicCourseNo").val("BC002");
-				$("#courseName").val("HTML5");
-				$("#courseOutline").val("HTML5 是HTML 最新的修訂版本，由全球資訊網協會(W3C) 於2014 年10 月完成標準制定，HTML5 在目前主流的瀏覽器幾乎都有支援了。 常聽到的HTML5 其實是廣義的包括HTML、JavaScript 和CSS 在內的一套新技術組合！");
-				$("#banjiNo").val("B002");
-				$("#teacherNo").val("T000002");
-				$("#classroomNo").val("2");
-				$("#lesson").val("10");
-				$("#f_date1").val('2020-11-05');
-				$("#f_date2").val('2020-11-15');
-	});
-		
-	<c:if test="${not empty errorMsgs}">
-	<c:forEach var="message" items="${errorMsgs}">
-		swal({
-			icon:'error',
-			title:'手指是否有問題',
-			text:'⚠有項目未填⚠'
-			});
-	</c:forEach>
-	</c:if>
+        
+		var courseImg = $("#courseImg");
+		function show(courseImg) {
+			let img = URL.createObjectURL(courseImg.files[0]);
+			document.getElementById("showphoto2").innerHTML = "<img src =" + img
+					+ " width='100%' height='100%'>";
+		}
+        
 	
 </script>
+
+</body>
 </html>

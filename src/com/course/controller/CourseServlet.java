@@ -4,9 +4,13 @@ import java.io.*;
 import java.util.*;
 
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
 import com.course.model.*;
+
+@MultipartConfig
+
 
 public class CourseServlet extends HttpServlet {
 
@@ -18,6 +22,26 @@ public class CourseServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+
+		if ("getCourseImg".equals(action)) {
+
+			String courseNo = req.getParameter("courseNo");
+
+			CourseService courseSvc = new CourseService();
+			InputStream in = courseSvc.getCourseImg(courseNo);
+
+			ServletOutputStream out = res.getOutputStream();
+			res.setContentType("image/gif");
+
+			byte[] buf = new byte[4 * 1024];
+			int len = 0;
+
+			while ((len = in.read(buf)) > 0) {
+				out.write(buf, 0, len);
+			}
+			out.flush();
+			in.close();
+		}
 
 		if ("getOne_For_Display".equals(action)) {
 
@@ -150,6 +174,17 @@ public class CourseServlet extends HttpServlet {
 					errorMsgs.put("endDate", "⚠請輸入結束日期⚠");
 				}
 
+				Part part = req.getPart("courseImg");
+				InputStream courseImg = null;
+				String form = part.getContentType().toLowerCase();
+
+				CourseService courseSvc1 = new CourseService();
+				courseImg = courseSvc1.getCourseImg(courseNo);
+
+				if (form.contains("image") && errorMsgs.isEmpty()) {
+					courseImg = part.getInputStream();
+				}
+
 				Integer status = new Integer(req.getParameter("status").trim());
 
 				CourseVO courseVO = new CourseVO();
@@ -163,18 +198,20 @@ public class CourseServlet extends HttpServlet {
 				courseVO.setLesson(lesson);
 				courseVO.setStartDate(startDate);
 				courseVO.setEndDate(endDate);
+				courseVO.setCourseImg(courseImg);
 				courseVO.setStatus(status);
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("courseVO", courseVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/course/update_course_input.jsp");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back-end/course/update_course_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 
 				CourseService courseSvc = new CourseService();
 				courseVO = courseSvc.updateCourse(courseNo, banjiNo, teacherNo, classroomNo, basicCourseNo, courseName,
-						courseOutline, lesson, startDate, endDate, status);
+						courseOutline, lesson, startDate, endDate, courseImg, status);
 
 				req.setAttribute("courseVO", courseVO);
 				String url = "/back-end/course/listOneCourse.jsp";
@@ -244,6 +281,17 @@ public class CourseServlet extends HttpServlet {
 					endDate = new java.sql.Date(System.currentTimeMillis());
 					errorMsgs.put("endDate", "⚠請輸入結束日期⚠");
 				}
+				
+				Part part = req.getPart("courseImg");
+				InputStream courseImg = null;
+				String form = part.getContentType().toLowerCase();
+
+				if (form.contains("image") && errorMsgs.isEmpty()) {
+					courseImg = part.getInputStream();
+				}
+				
+				System.out.println(part);
+				
 
 				Integer status = new Integer(req.getParameter("status").trim());
 
@@ -257,6 +305,7 @@ public class CourseServlet extends HttpServlet {
 				courseVO.setLesson(lesson);
 				courseVO.setStartDate(startDate);
 				courseVO.setEndDate(endDate);
+				courseVO.setCourseImg(courseImg);
 				courseVO.setStatus(status);
 
 				if (!errorMsgs.isEmpty()) {
@@ -268,7 +317,7 @@ public class CourseServlet extends HttpServlet {
 
 				CourseService courseSvc = new CourseService();
 				courseVO = courseSvc.addCourse(banjiNo, teacherNo, classroomNo, basicCourseNo, courseName,
-						courseOutline, lesson, startDate, endDate, status);
+						courseOutline, lesson, startDate, endDate, courseImg, status);
 
 				String url = "/back-end/course/listAllCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);

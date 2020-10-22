@@ -31,7 +31,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" title="我的課程">
+                <a href="<%=request.getContextPath() %>/front-end/course/selectCourse.jsp" title="我的課程">
                     <i class="fal fa-book"></i>
                     <span class="nav-link-text">我的課程</span>
                 </a>

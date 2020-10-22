@@ -1,5 +1,6 @@
 package com.course.model;
 
+import java.io.InputStream;
 import java.sql.Date;
 
 public class CourseVO implements java.io.Serializable {
@@ -13,6 +14,7 @@ public class CourseVO implements java.io.Serializable {
 	private Integer lesson;
 	private Date startDate;
 	private Date endDate;
+	private InputStream courseImg;
 	private Integer status;
 
 	public String getCourseNo() {
@@ -95,6 +97,14 @@ public class CourseVO implements java.io.Serializable {
 		this.endDate = endDate;
 	}
 
+	public InputStream getCourseImg() {
+		return courseImg;
+	}
+
+	public void setCourseImg(InputStream courseImg) {
+		this.courseImg = courseImg;
+	}
+
 	public Integer getStatus() {
 		return status;
 	}
@@ -102,5 +112,6 @@ public class CourseVO implements java.io.Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-
+	
+	
 }
