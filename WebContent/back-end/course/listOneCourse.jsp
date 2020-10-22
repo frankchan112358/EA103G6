@@ -1,7 +1,8 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.*"%>
+<%-- <%@ include file="/back-end/template/check.jsp"%> --%>
 <%@ page import="com.course.model.*"%>
+<%@ page import="java.util.*"%>
 
 
 <%
@@ -10,119 +11,156 @@
     pageContext.setAttribute("list",list);
 %>
 
-<jsp:useBean id="banjiSvc" scope="page" class="com.banji.model.BanjiService"/>
-<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService"/>
-<jsp:useBean id="classroomSvc" scope="page" class="com.classroom.model.ClassroomService"/>
+<jsp:useBean id="banjiSvc" scope="page" class="com.banji.model.BanjiService" />
+<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
+<jsp:useBean id="classroomSvc" scope="page" class="com.classroom.model.ClassroomService" />
 
+<!DOCTYPE html>
 <html>
 <head>
-<title>課程資料</title>
-
-<link rel="stylesheet" href="<%=request.getContextPath()%>/vendors/bootstrap/css/bootstrap.min.css">
-<script src="<%=request.getContextPath()%>/vendors/jquery/jquery-3.4.1.min.js"></script>
-<script src="<%=request.getContextPath()%>/vendors/popper/popper.min.js"></script>
-<script src="<%=request.getContextPath()%>/vendors/bootstrap/js/bootstrap.min.js"></script>
+ <%@ include file="/back-end/template/head.jsp" %> 
+    <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/datagrid/datatables/datatables.bundle.css">
 
 <style>
-  table#table-1 {
-  	border-bottom: 2px solid #0e6e95;
-    text-align: center;
-  }
-  
-  .h3-1 {
-    margin: 10px;
-  }
- 
- .table-responsive {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+
+.table th, .table td {
+    vertical-align: middle;
+    text-align: center;  
 }
- 
-</style>
 
-<style>
-  table {
-  	width:100%;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
-    
-  }
-  table, th, td {
-  	border-bottom: 2px solid #0e6e95;
-    
-  }
-  th, td {
-    padding: 5px;
-    text-align: center;    
-  }
-  
-    
 </style>
 
 </head>
-<body>
-
-<div class="container-fluid">
-<div class="table-responsive">
-
-	<table id="table-1">
-		<tr><td>
-				<h3 class="h3-1">課程資料</h3>
-		 <h4><a href="<%=request.getContextPath()%>/back-end/course/select_page.jsp"><img src="<%=request.getContextPath()%>/images/homepage.svg" width="80" height="50" border="0">Home</a></h4>
-		</td></tr>
-	</table>
-
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+<body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
 
 
-	<table>
-		<tr>
-			<th>課程編號</th>
-			<th>課程名稱</th>
-			<th width="30%">課程大綱</th>
-			<th>班級</th>
-			<th>講師</th>
-			<th>教室</th>
-			<th>堂數</th>
-			<th>開始日期</th>
-			<th>結束日期</th>
-			<th>狀態</th>
-		</tr>
-
-		<tr>
-			<td>${courseVO.courseNo}</td>
-			<td>${courseVO.courseName}</td>
-			<td>${courseVO.courseOutline}</td>
-			<td>${banjiSvc.getOneBanji(courseVO.banjiNo).banjiName}</td>
-			<td>${teacherSvc.getOneTeacher(courseVO.teacherNo).teacherName}</td>
-			<td>${classroomSvc.getOneClassroom(courseVO.classroomNo).classroomName}</td>
-			<td>${courseVO.lesson}</td>
-			<td>${courseVO.startDate}</td>
-			<td>${courseVO.endDate}</td>
-			<td>
-			<c:choose>
-				<c:when test="${courseVO.status=='0'}">課程未開始</c:when>   
-				<c:when test="${courseVO.status=='1'}">課程進行中</c:when>
-				<c:when test="${courseVO.status=='2'}">課程結束</c:when> 					 					    
-			</c:choose>
-			</td>
-		</tr>
-
-	</table>
-	
-</div>
-</div>
 
 
+		<script>
+		var classHolder = document.getElementsByTagName("BODY")[0];
+	</script>
+
+	<div class="page-wrapper">
+		<div class="page-inner">
+			<%@ include file="/back-end/template/left_aside.jsp"%>
+			<div class="page-content-wrapper">
+				<%@ include file="/back-end/template/header.jsp"%>
+				<main id="js-page-content" role="main" class="page-content">
+					<ol class="breadcrumb page-breadcrumb">
+						<li class="breadcrumb-item">
+							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a>
+						</li>
+						<li class="breadcrumb-item">
+							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>
+						</li>
+							<li class="breadcrumb-item">
+							課程列表
+						</li>
+					</ol>
+					<div class="subheader">
+						<h1 class="subheader-title">
+							<i class='subheader-icon far fa-book'></i>
+							課程列表
+						</h1>
+					</div>
+					<div class="row">
+						<div class="col-xl-12">
+							<div id="panel-1" class="panel">
+								<div class="panel-hdr bg-primary-800 bg-gradient-info">
+									<h2>課程列表</h2>
+								</div>
+								<div class="panel-container show">
+									<div class="panel-content">
+
+										<!-- datatable start -->
+                                            <table id="coursetable" class="table table-bordered table-hover table-striped w-100">
+											<thead style="background-color:#E5F4FF;">
+												<tr>
+													<th>課程編號</th>
+													<th>課程名稱</th>
+													<th width="25%">課程大綱</th>
+													<th>班級</th>
+													<th>講師</th>
+													<th>教室</th>
+													<th>堂數</th>
+													<th>開始日期</th>
+													<th>結束日期</th>
+													<th>狀態</th>
+													<th>修改</th>																										
+												</tr>
+											</thead>
+											<tbody>
+													<tr>
+														<td>${courseVO.courseNo}</td>
+														<td>${courseVO.courseName}</td>
+														<td>${courseVO.courseOutline}</td>
+														<td>${banjiSvc.getOneBanji(courseVO.banjiNo).banjiName}</td>
+														<td>${teacherSvc.getOneTeacher(courseVO.teacherNo).teacherName}</td>
+														<td>${classroomSvc.getOneClassroom(courseVO.classroomNo).classroomName}</td>
+														<td>${courseVO.lesson}</td>
+														<td>${courseVO.startDate}</td>
+														<td>${courseVO.endDate}</td>
+														<td>
+															<c:choose>
+																<c:when test="${courseVO.status=='0'}">課程未開始</c:when>
+																<c:when test="${courseVO.status=='1'}">課程進行中</c:when>
+																<c:when test="${courseVO.status=='2'}">課程結束</c:when>
+															</c:choose>
+														</td>
+															<td>
+															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
+																<button type="submit" class="btn btn-sm btn-outline-primary">
+																<span class="fal fa-edit mr-1"></span>	
+																<span>修改</span>
+                                                                 </button>
+																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+																<input type="hidden" name="action" value="getOne_For_Update">   
+															</FORM>
+														</td>
+													</tr>
+											</tbody>
+
+										</table>
+										<!-- datatable end -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
+											
+		
+              <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
+                <%@ include file="/back-end/template/footer.jsp" %>
+            </div>
+        </div>
+    </div>
+    
+    
+    <%@ include file="/back-end/template/quick_menu.jsp" %>
+    <%@ include file="/back-end/template/messager.jsp" %>
+    <%@ include file="/back-end/template/basic_js.jsp" %>
+    
+    
+     
+    
+    <script>
+    $(document).ready(function(){
+        $('#coursetable').dataTable({
+            responsive: true,
+			"columnDefs":[{
+			"targets": all,
+			"orderable":false,
+		
+	}]
+
+        });
+       
+    });
+     
+     
+            
+     
+     </script>
 </body>
 </html>

@@ -145,11 +145,11 @@ StudentVO studentVOForShow = (StudentVO) request.getAttribute("studentVOForShow"
                                             	<input type="hidden" name="action" value="delete">
                                             	<input type="hidden" name="userNo" value="<%=userVOForShow.getUserNo()%>"> 
                                             </form>
-                                             <%-- <form method="post" action="<%=request.getContextPath()%>/user.do">
+                                              <form method="post" action="<%=request.getContextPath()%>/user.do">
                                             	<input type="hidden" name="userNo" value="<%=userVOForShow.getUserNo()%>"> 
 												<input type="hidden" name="action" value="getOne_For_Update">
-                                            	<button id="submitUpdateTeacher" class="btn btn-primary ml-auto" <% if(teacherVOForShow.getTeacherStatus()==0) out.print("disabled='disabled'");%>>修改</button>
-                                            </form>--%>
+                                            	<button id="submitUpdateStudent" class="btn btn-primary ml-auto" <% if(studentVOForShow.getStudentStatus()==0) out.print("disabled='disabled'");%>>修改</button>
+                                            </form>
                                             </div>
                                             <!-- datatable end -->
                                         </div>

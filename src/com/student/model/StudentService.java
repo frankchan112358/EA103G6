@@ -31,16 +31,14 @@ public class StudentService {
 
 		return studentVO;
 	}
-	public StudentVO updateStudent(String studentNo,String userNo,String studentName,String banjiNo,String faceId,
+	public StudentVO updateStudent(String studentNo,String userNo,String studentName,String banjiNo,
 			String studentDescription,Integer studentStatus) {
 		
 		StudentVO studentVO = new StudentVO();
 		studentVO.setStudentNo(studentNo);
 		studentVO.setUserNo(userNo);
-	studentVO.setBanjiNo(banjiNo);
+		studentVO.setBanjiNo(banjiNo);
 		studentVO.setStudentName(studentName);
-		studentVO.setFaceId(faceId);
-//		studentVO.setFace(face);
 		studentVO.setStudentDescription(studentDescription);
 		studentVO.setStudentStatus(studentStatus);
 		dao.update(studentVO);

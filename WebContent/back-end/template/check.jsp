@@ -9,7 +9,7 @@ if(userVO == null){
 	response.sendRedirect(request.getContextPath() + "/back-end/test/login.jsp");
 	return;
 } else if(((UserVO)userVO).getType() == 0){
-	response.sendRedirect(request.getContextPath() + "/fornt-end/index/index.jsp");
+	response.sendRedirect(request.getContextPath() + "/back-end/index/index.jsp");
 	return;
 } else if(((UserVO)userVO).getType() == 1){
 	TeacherVO teacherVO = (TeacherVO)session.getAttribute("teacherVO");

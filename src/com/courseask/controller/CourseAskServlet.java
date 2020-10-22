@@ -212,12 +212,6 @@ public class CourseAskServlet extends HttpServlet {
 		
 		
 		
-		
-		
-		
-		
-		
-		
 		if ("insert".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);

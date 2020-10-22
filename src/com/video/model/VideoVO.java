@@ -36,8 +36,13 @@ public class VideoVO implements java.io.Serializable{
 	public void setVideo(byte[] video) {
 		this.video = video;
 	}
-	
+
 	public TimetableVO getTimtTimetableVO() {
 		return new TimetableService().getOneTimetable(this.timetableNo);
 	}
+
+	public TimetableVO getTimetableVO() {
+		return new TimetableService().getOneTimetable(this.timetableNo);
+	}
+
 }
