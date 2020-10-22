@@ -17,7 +17,6 @@
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));
 	var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
-
 	var webSocket;
 	
 	function connect(){
@@ -31,13 +30,41 @@
 		
 		webSocket.onmessage = function(event) {			
 			var jsonObj = JSON.parse(event.data);
+			var dateForNow=new Date().getTime();
 			
-			console.log(Array.isArray(jsonObj))
+			
 			if(Array.isArray(jsonObj)){
 				if(jsonObj !== null){
 					for(let i=0;i<jsonObj.length;i++){
 						var detailJson =JSON.parse(jsonObj[i])
-						$("#notifySpace").prepend("<div>"+detailJson.content+"</div>");
+						var a=detailJson.content;
+								
+						//進行時間處理
+						var countTimeForShow=detailJson.time
+						var dateForLong=dateForNow-countTimeForShow;
+						var showNotifyDay;
+					
+						if(dateForLong <= (1000*60*60)){ //時間短於一小時
+							showNotifyDay=new Date(mitime).getMinutes();
+							showNotifyDay=showNotifyDay+"分鐘前";
+							
+						}else if(dateForLong <= (1000*60*60*24)){ //時間短於一天
+							
+							showNotifyDay=new Date(dateForLong).getHours();
+							showNotifyDay=showNotifyDay+(new Date().getTimezoneOffset()/60); //小時要忽略時區故要計算
+							showNotifyDay=showNotifyDay+"小時前";
+							
+						}else if(dateForLong <= (1000*60*60*24*30)){ //時間短於三十天
+							showNotifyDay=new Date(dateForLong).getDate()+"天前";
+							
+						}else{ //時間長於一小時
+							showNotifyDay="一個月前";
+						}
+						
+						//時間處理結束
+						
+						
+						$("#notifySpace").prepend(`<div>${'${showNotifyDay}'}</div>`);
 						
 					}
 				}
