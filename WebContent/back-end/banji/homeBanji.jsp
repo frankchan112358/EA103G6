@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/back-end/template/check.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="banjiSvc" scope="page" class="com.banji.model.BanjiService" />
+<%@ page import="com.banji.model.*" %>
+<%@page import="java.util.*"%>
 <%
-//init code
+    BanjiService banjiSvc = new BanjiService();
+    List<BanjiVO> list = banjiSvc.getAll();
+    pageContext.setAttribute("list",list);
 %>
 
 <!DOCTYPE html>
@@ -11,6 +14,13 @@
 
 <head>
     <%@ include file="/back-end/template/head.jsp" %>
+    <style type="text/css">
+    #add{
+    position:absolute;
+    top:65px;
+	right:70px;
+    }
+    </style>
 </head>
 
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
@@ -27,11 +37,19 @@
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
                         <li class="breadcrumb-item">養成班管理</li>
                     </ol>
+                    
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-users-class'></i> 養成班管理
+                            <i class='subheader-icon fal fa-users-class' ></i> 養成班管理
                         </h1>
                     </div>
+                    <div id="add">
+							<input type="hidden" name="action" > 
+							<button type="submit" id="btn-add" style="width:150px;heigh:50px;" onclick="location.href='<%=request.getContextPath()%>/back-end/banji/addBanji.jsp'" style="margin-bottom: 0px'"
+								class="btn-write btn btn-sm btn-primary" >
+								<strong>新增養成班</strong>
+							</button>
+						</div>
                     <div class="row">
                         <div class="col col-xl-12">
                             <div id="panel-1" class="panel">
@@ -51,7 +69,9 @@
                                                     <th>上課時數</th>
                                                     <th>學員人數</th>
                                                     <th>教室</th>
+                                                    <th>內容</th>
                                                     <th>狀態</th>
+                                                    <th>刪除</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -64,13 +84,24 @@
                                                         <td>${banjiVO.classHours}</td>
                                                         <td>${banjiVO.numberOfStudent}</td>
                                                         <td>${banjiVO.classroomNo}</td>
-                                                        <td class="d-flex p-1">
+                                                        <td>${banjiVO.banjiContent}</td>
+                                                        <td>
                                                             <form method="post" action="<%=request.getContextPath()%>/banji/banji.manage" class="m-1">
                                                                 <button type="submit" class="btn btn-sm btn-success">
                                                                     <span class="fal fa-edit mr-1"></span>
                                                                     <span>管理</span>
                                                                 </button>
                                                                 <input type="hidden" name="action" value="read">
+                                                                <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
+                                                            </form>
+                                                        </td>
+                                                        <td>
+                                                            <form method="post" action="<%=request.getContextPath()%>/banji/banji.do" class="m-1">
+                                                                <button type="submit" class="btn btn-sm btn-success">
+                                                                    <span class="fal fa-edit mr-1"></span>
+                                                                    <span>刪除</span>
+                                                                </button>
+                                                                <input type="hidden" name="action" value="delete">
                                                                 <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
                                                             </form>
                                                         </td>
