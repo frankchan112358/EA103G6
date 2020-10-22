@@ -42,6 +42,7 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
             top:0px;
             bottom:0px;
             background-color: black;
+            overflow: hidden;
         }
         .panel-content {
             height:500px;
@@ -49,8 +50,23 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
         .in-sb {
         	border-bottom:5px #9EDF56 double;
         	height:20%;
-            font-size: medium;
+            font-size: large;
+            margin:auto;
         }
+        .fa-pencil-alt:hover {
+            transform: scale(1.5);
+        }
+		video{
+		position:absolute;
+		width:100%;
+		margin:auto;
+        align-self: center;
+		}
+		
+		a {
+		color:black;
+		}
+		
     </style>
 </head>
 
@@ -83,23 +99,24 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
                                     <div class="panel-content">
                                         <div class="slide-bar">
                                         	<c:forEach var="videoVO" items="${videoList}">
-                                        		<div class="in-sb">
+                                                    <a class=vpath href="<%=request.getContextPath()%>/videos/${videoVO.videoName}.mp4"  target="player">
+                                        		<div class="in-sb" > 
                                                     <input type="hidden" name="videoNo" value="${videoVO.videoNo}">
-                                                    ${videoVO.videoNo}<br>
-                                                    <input type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
-                                                    ${videoVO.timetableNo}<br>
-                                                    <input type="hidden" name="videoName" value="${videoVO.videoName}">
-                                        			${videoVO.videoName}<br>
-                                        			<div class="in-sb-log">
-                                                        <i class="fas fa-pencil-alt" style="color: green;">
-                                                        </i>#要放教學日誌連結orz</div>
+                                                    <input  type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
+                                        	          	上課日期 : ${videoVO.timetableVO.timetableDate}<br>
+                                                    <input class="videoname" type="hidden" name="videoName" value="${videoVO.videoName}">
+                                       		 			影片名稱 : ${videoVO.videoName}<br>
+                                        				<div class="in-sb-log">
+                                        					<div class="log">
+                                        					<button timeteableNo="${videoVO.timetableVO.timetableNo}" type="button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size:small;">教學日誌</button>
+                                                     	   </div>
+                                                    	</div>
                                         		</div>
+                                                    </a>
                                         	</c:forEach>
                                         	</div>
                                         <div class="player">
-                                        	<video loop="true" autoplay="autoplay"  muted="true" >
-                                                
-                                            </video>
+	<video src="#"   type="video/mp4" loop controls ></video>
                                         </div>
                                     </div>
                                 </div>
@@ -112,28 +129,16 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
             </div>
         </div>
     </div>
-    <div class="modal fade" id="democratEditor" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="sbLogModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Modal
-                        <small class="m-0 text-muted">描述</small>
-                    </h4>
+                    <h4 class="modal-title">教學日誌</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form id="democratForm" class="needs-validation" novalidate>
-                        <div class="form-group">
-                            ...
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel">取消</button>
-                    <button type="button" class="btn btn-primary" id="save">送出</button>
-                </div>
+                <div id="sbLog" class="modal-body"></div>
             </div>
         </div>
     </div>
@@ -144,19 +149,43 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
     <script>
         'use strict';
         $(document).ready(function () {
-            //這裡是click可以連接到日誌
-        	$(".in-sb-log").hover(function(){
-        		$(this).click(function(){
-        		
-        	    })
+            //這裡是滑鼠進入slide-bar會讓區塊變色
+        	$(".in-sb").hover(function(){
+                $(this).css("background-color", "#a9ec62");},
+                function(){
+                $(this).css("background-color", " #c3dbaa");
             })
+
             
-            //這裡是click可以播放影片
-            $(".in-sb-log").hover(function(){
-        		$(this).click(function(){
-                    
-        	    })
-            })            
+            var vIndex=8;
+            var path = null;
+            //這裡是click(slide-bar)可以開啟影片
+			$(".in-sb").click(function(e){
+				e.preventDefault();
+				vIndex = $(".in-sb").index(this);
+				path = $('.vpath:eq('+vIndex+')').attr('href');
+				$("video").attr('src',path);
+			})
+
+            
+            //這裡是click(in-sb-log)可以查看日誌
+            $(document).on('click', '.in-sb-log button', function (event) {
+                let timeteableNo = this.getAttribute('timeteableNo');
+                $.ajax({
+                    type: 'GET',
+                    url: '<%=request.getContextPath()%>/video/video.getsblog',
+                    data: {
+                        timetableNo: timeteableNo
+                    },
+                    success(res) {
+                        if (res != null) {
+                            $('#sbLog').html('');
+                            $('#sbLog').html(res);
+                            $('#sbLogModal').modal('show');
+                        }
+                    }
+                });
+            });   
         });
     </script>
 </body>

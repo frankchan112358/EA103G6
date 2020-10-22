@@ -1,7 +1,11 @@
 package com.timetable.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.course.model.CourseService;
+import com.course.model.CourseVO;
 
 public class TimetableService {
 
@@ -58,5 +62,21 @@ public class TimetableService {
 	
 	public String getTimetablePeriondText(Integer num) {
 		return TimetablePeriod.findByNum(num).getText();
+	}
+	
+	public List<TimetableVO> getAllWithCourseNo(String courseNo) {
+		List<TimetableVO> list = new ArrayList<TimetableVO>();
+		for (TimetableVO timetableVO : getAll()) {
+			if (courseNo.equals(timetableVO.getCourseNo()))
+				list.add(timetableVO);
+		}
+		return list;
+	}
+	
+	public List<TimetableVO> getAllWithBanjiNo(String banjiNo) {
+		List<TimetableVO> list = new ArrayList<TimetableVO>();
+		for (CourseVO courseVO : new CourseService().getAllWithBanjiNo(banjiNo))
+			list.addAll(courseVO.getTimetableList());
+		return list;
 	}
 }

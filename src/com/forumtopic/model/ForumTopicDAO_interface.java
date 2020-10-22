@@ -10,5 +10,6 @@ public interface ForumTopicDAO_interface {
     public void delete(String forumTopicNo);
     public ForumTopicVO findByPrimaryKey(String forumTopicNo);
     public List<ForumTopicVO> getAll();
+    public List<ForumTopicVO> getByBanJiNo(String banjiNo);
 
 }

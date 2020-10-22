@@ -23,6 +23,7 @@ public class ForumTopicJDBCDAO implements ForumTopicDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT forumtopicno, banjino, forumtopicname, content, rule, posttemplete FROM forumtopic where forumtopicno = ?";
 	private static final String DELETE = "UPDATE forumtopic set isDelete=1 where forumtopicno = ?";
 	private static final String UPDATE = "UPDATE forumtopic set banjino=?, forumtopicname=?, content=?, rule=?, posttemplete=? where forumtopicno = ?";
+	private static final String GETBYBANJINO = "select * from forumtopic where banjino = ?";
 
 	@Override
 	public void insert(ForumTopicVO forumTopicVO) {
@@ -323,6 +324,69 @@ public class ForumTopicJDBCDAO implements ForumTopicDAO_interface {
 			System.out.print(aForumTopic.getPostTemplete() + ",");
 			System.out.println();
 		}
+	}
+
+	@Override
+	public List<ForumTopicVO> getByBanJiNo(String banjiNo) {
+		List<ForumTopicVO> list = new ArrayList<ForumTopicVO>();
+		ForumTopicVO forumTopicVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GETBYBANJINO);
+			
+			pstmt.setString(1, banjiNo);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				forumTopicVO = new ForumTopicVO();
+				forumTopicVO.setForumTopicNo(rs.getString("forumTopicNo"));
+				forumTopicVO.setBanjiNo(rs.getString("banjiNo"));
+				forumTopicVO.setForumTopicName(rs.getString("forumTopicName"));
+				forumTopicVO.setContent(rs.getString("content"));
+				forumTopicVO.setRule(rs.getString("rule"));
+				forumTopicVO.setPostTemplete(rs.getString("postTemplete"));
+				list.add(forumTopicVO);
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 	}
 
 }

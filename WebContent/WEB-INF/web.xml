@@ -162,6 +162,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>GetSbLog</servlet-name>
+		<servlet-class>com.video.controller.GetSbLog</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetSbLog</servlet-name>
+		<url-pattern>/video/video.getsblog</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>Login</servlet-name>
 		<servlet-class>com.login.controller.LoginHandler</servlet-class>
 	</servlet>
@@ -224,6 +233,24 @@
 	<servlet-mapping>
 		<servlet-name>BanjiLeave</servlet-name>
 		<url-pattern>/banji/banji.leave</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>BanjiCalendar</servlet-name>
+		<servlet-class>com.banji.controller.BanjiCalendar</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BanjiCalendar</servlet-name>
+		<url-pattern>/banji/banji.calendar</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>BanjiTimetable</servlet-name>
+		<servlet-class>com.banji.controller.BanjiTimetable</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BanjiTimetable</servlet-name>
+		<url-pattern>/banji/banji.timetable</url-pattern>
 	</servlet-mapping>
 		
 	<servlet>

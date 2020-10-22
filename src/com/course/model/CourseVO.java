@@ -2,8 +2,16 @@ package com.course.model;
 
 import java.io.InputStream;
 import java.sql.Date;
+import java.util.List;
+
+import com.teacher.model.TeacherService;
+import com.teacher.model.TeacherVO;
+import com.timetable.model.TimetableService;
+import com.timetable.model.TimetableVO;
 
 public class CourseVO implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private String courseNo;
 	private String banjiNo;
 	private String teacherNo;
@@ -112,6 +120,14 @@ public class CourseVO implements java.io.Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+
+	public List<TimetableVO> getTimetableList() {
+		return new TimetableService().getAllWithCourseNo(this.courseNo);
+	}
 	
-	
+	public TeacherVO getTeacherVO() {
+		return new TeacherService().getOneTeacher(this.teacherNo);
+	}
 }
+
+
