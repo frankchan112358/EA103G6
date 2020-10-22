@@ -9,11 +9,6 @@
 	pageContext.setAttribute("list", list);
 %>
 
-<%
-	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
-%>
-
-
 <jsp:useBean id="banjiSvc" scope="page" class="com.banji.model.BanjiService" />
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 <jsp:useBean id="classroomSvc" scope="page" class="com.classroom.model.ClassroomService" />
@@ -22,7 +17,18 @@
 <html>
 <head>
     <%@ include file="/back-end/template/head.jsp" %> 
-    <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/datagrid/datatables/datatables.bundle.css">
+    <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath()%>/SmartAdmin4/css/datagrid/datatables/datatables.bundle.css">
+
+
+<style>
+
+.table th, .table td {
+    vertical-align: middle;
+    text-align: center;  
+}
+
+
+</style>
 
 </head>
 
@@ -47,7 +53,7 @@
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class='subheader-icon far fa-book'></i>
+							<i class='subheader-icon fal fa-book'></i>
 							課程總覽
 						</h1>
 					</div>
@@ -59,10 +65,17 @@
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
-
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
+                                        <button id="addCourse" type="submit" class="btn btn-primary waves-effect waves-themed float-left">
+                                       <span class="far fa-plus-circle mr-1"></span>
+                                        <span>新增</span>                 
+                                        </button>
+                                        <input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+										<input type="hidden" name="action" value="insert">
+										</FORM>
 										<!-- datatable start -->
                                             <table id="coursetable" class="table table-bordered table-hover table-striped w-100">
-											<thead>
+											<thead style="background-color:#E5F4FF;">
 												<tr>
 													<th>課程編號</th>
 													<th>課程名稱</th>
@@ -98,16 +111,23 @@
 															</c:choose>
 														</td>
 														<td>
-<%-- 															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do"> --%>
-															   	<button type="submit" class="btn btn-success" data-toggle="modal" data-target="#default-example-modal-lg">Revise</button>
-<!-- 																<button type="submit" class="btn btn-success">Revise</button> -->
+															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
+																<button type="submit" class="btn btn-sm btn-outline-primary">
+																<span class="fal fa-edit mr-1"></span>	
+																<span>修改</span>
+                                                                 </button>
 																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
 																<input type="hidden" name="action" value="getOne_For_Update">
-<!-- 															</FORM> -->
+                                                                    
+															</FORM>
 														</td>
 														<td>
-															<FORM id="delete" METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
-																<button type="submit" class="btn btn-danger">Delete</button>
+															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
+																<button type="submit" class="btn btn-sm btn-outline-danger">
+																<span class="fal fa-times mr-1"></span>	
+																<span>刪除</span>
+																</button>
+																
 																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
 																<input type="hidden" name="action" value="delete">
 															</FORM>
@@ -124,118 +144,6 @@
 						</div>
 					</div>
 				</main>
-												<div class="modal fade" id="default-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-                                                <div class="modal-dialog modal-lg" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Modal title</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true"><i class="fal fa-times"></i></span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" name="form1">
-
-											<div class="form-group">
-												<label class="form-label">課程編號</label>
-												<input type="text" name="courseNo" class="form-control" value="${courseVO.courseNo}" disabled />
-											</div>
-
-											<div class="form-group">
-												<label class="form-label">基本課程編號</label>
-												<input type="text" name="basicCourseNo" class="form-control" value="${courseVO.basicCourseNo}" />
-												<font color=red>${errorMsgs.basicCourseNo}</font>
-											</div>
-
-											<div class="form-group">
-												<label class="form-label">課程名稱</label>
-												<input type="text" name="courseName" class="form-control" value="${courseVO.courseName}" />
-												<font color=red>${errorMsgs.courseName}</font>
-											</div>
-
-
-											<div class="form-group">
-												<label class="form-label">課程大綱</label>
-												<textarea class="form-control" name="courseOutline" rows="5">${courseVO.courseOutline}</textarea>
-											</div>
-
-
-											<div class="form-group">
-												<label class="form-label">班級</label>
-												<select class="custom-select form-control" name="banjiNo">
-													<option value="">請選擇班級</option>
-													<c:forEach var="banjiVO" items="${banjiSvc.all}">
-														<option value="${courseVO.banjiNo}" ${(courseVO.banjiNo==banjiVO.banjiNo)?'selected':'' }>${banjiVO.banjiName}</option>
-													</c:forEach>
-												</select>
-												<font color=red>${errorMsgs.banjiNo}</font>
-											</div>
-
-
-											<div class="form-group">
-												<label class="form-label">講師</label>
-												<select class="custom-select form-control" name="teacherNo">
-													<option value="">請選擇講師</option>
-													<c:forEach var="teacherVO" items="${teacherSvc.all}">
-														<option value="${courseVO.teacherNo}" ${(courseVO.teacherNo==teacherVO.teacherNo)?'selected':'' }>${teacherVO.teacherName}</option>
-													</c:forEach>
-												</select>
-												<font color=red>${errorMsgs.teacherNo}</font>
-											</div>
-
-
-											<div class="form-group">
-												<label class="form-label">教室</label>
-												<select class="custom-select form-control" name="classroomNo">
-													<option value="">請選擇教室</option>
-													<c:forEach var="classroomVO" items="${classroomSvc.all}">
-														<option value="${courseVO.classroomNo}" ${(courseVO.classroomNo==classroomVO.classroomNo)?'selected':'' }>${classroomVO.classroomName}</option>
-													</c:forEach>
-												</select>
-												<font color=red>${errorMsgs.classroomNo}</font>
-											</div>
-
-
-											<div class="form-group">
-												<label class="form-label">堂數</label>
-												<input class="form-control" type="number" name="lesson" min="0" value="${courseVO.lesson}">
-												<font color=red>${errorMsgs.lesson}</font>
-											</div>
-
-
-											<div class="form-group">
-												<label class="form-label">開始日期</label>
-												<input class="form-control" id="f_date1" type="text" name="startDate" onfocus="this.blur()">
-												<font color=red>${errorMsgs.startDate}</font>
-											</div>
-
-											<div class="form-group">
-												<label class="form-label">結束日期</label>
-												<input class="form-control" id="f_date2" type="text" name="endDate" onfocus="this.blur()">
-												<font color=red>${errorMsgs.endDate}</font>
-											</div>
-
-
-											<div class="form-group">
-												<label class="form-label">狀態</label>
-												<select class="custom-select form-control" name="status">
-													<option value="0" ${(courseVO.status==0)?'selected':'' }>課程未開始</option>
-													<option value="1" ${(courseVO.status==1)?'selected':'' }>課程進行中</option>
-													<option value="2" ${(courseVO.status==2)?'selected':'' }>課程結束</option>
-												</select>
-											</div>
-
-										</FORM>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel">取消</button>
-                                                            <button type="button" class="btn btn-primary" id="save">儲存</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
 
 		
               <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
@@ -250,22 +158,24 @@
     <%@ include file="/back-end/template/basic_js.jsp" %>
     
     
-        <script src="<%=request.getContextPath() %>/SmartAdmin4/js/vendors.bundle.js"></script>
-        <script src="<%=request.getContextPath() %>/SmartAdmin4/js/app.bundle.js"></script>
         <script src="<%=request.getContextPath() %>/SmartAdmin4/js/datagrid/datatables/datatables.bundle.js"></script>
-    
-    <script>
+     <script>
     
      
-            $(document).ready(function(){
-                $('#coursetable').dataTable({
-                 	responsive: true,
+            $(document).ready(function()
+            {
+                $('#coursetable').dataTable(
+                {
+                    responsive: true,
                     language:{url:'<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json'},
-
+					"columnDefs":[{
+						"targets":[ -1, -2 ],
+						"orderable":false,
+					
+				}]
                 });
+           
             });
-            
-            
      </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.course.model;
 
+import java.io.InputStream;
 import java.util.*;
 
 public interface CourseDAO_interface {
@@ -13,5 +14,8 @@ public interface CourseDAO_interface {
 	public CourseVO findByPrimaryKey(String courseNo);
 
 	public List<CourseVO> getAll();
+
+	public InputStream getCourseImg(String courseNo);
+
 
 }
