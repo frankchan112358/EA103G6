@@ -42,6 +42,7 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
             top:0px;
             bottom:0px;
             background-color: black;
+            overflow: hidden;
         }
         .panel-content {
             height:500px;
@@ -55,7 +56,16 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
         .fa-pencil-alt:hover {
             transform: scale(1.5);
         }
-
+		video{
+		position:absolute;
+		width:100%;
+		margin:auto;
+        align-self: center;
+		}
+		
+		a {
+		color:black;
+		}
     </style>
 </head>
 
@@ -88,24 +98,26 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
                                     <div class="panel-content">
                                         <div class="slide-bar">
                                         	<c:forEach var="videoVO" items="${videoList}">
-                                        		<div class="in-sb">
-                                                    
+                                                    <a class=vpath href="<%=request.getContextPath()%>/videos/${videoVO.videoName}.mp4"  target="player">
+                                        		<div class="in-sb" > 
                                                     <input type="hidden" name="videoNo" value="${videoVO.videoNo}">
-                                                    <input type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
+                                                    <input  type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
                                                     ${videoVO.timetableVO.timetableDate}<br>
-                                                    <input type="hidden" name="videoName" value="${videoVO.videoName}">
+                                                    <input class="videoname" type="hidden" name="videoName" value="${videoVO.videoName}">
                                         			${videoVO.videoName}<br>
-                                        			<div class="in-sb-log">
-                                        				<div class="log">
-                                        				#要放教學日誌連結orz
-                                                        <i class="fas fa-pencil-alt" style="color: green;"></i>
-                                                        </div>
-                                        			</div>
+                                        				<div class="in-sb-log">
+                                        					<div class="log">
+                                        					#要放教學日誌連結orz
+                                                    	   <i class="fas fa-pencil-alt" style="color: green;"></i>
+                                                     	   </div>
+                                                    	</div>
                                         		</div>
+                                                    </a>
                                         	</c:forEach>
                                         	</div>
                                         <div class="player">
-
+                                        
+	<video src="<%=request.getContextPath()%>/videos/202010211002.mp4"   type="video/mp4" loop controls ></video>
                                         </div>
                                     </div>
                                 </div>
@@ -156,9 +168,19 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
                 function(){
                 $(this).css("background-color", " #c3dbaa");
             })
+
             
+            var vIndex=8;
+            var path = null;
             //這裡是click(slide-bar)可以開啟影片
-			
+			$(".in-sb").click(function(e){
+				e.preventDefault();
+				vIndex = $(".in-sb").index(this);
+				console.log("1-"+vIndex);
+				path = $('.vpath:eq('+vIndex+')').attr('href');
+				console.log(path);
+				$("video").attr('src',path);
+			})
 
             
             //這裡是click(in-sb-log)可以查看日誌
