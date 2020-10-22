@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.sql.Date;
 import java.util.List;
 
+import com.banji.model.BanjiService;
+import com.banji.model.BanjiVO;
 import com.teacher.model.TeacherService;
 import com.teacher.model.TeacherVO;
 import com.timetable.model.TimetableService;
@@ -127,6 +129,10 @@ public class CourseVO implements java.io.Serializable {
 	
 	public TeacherVO getTeacherVO() {
 		return new TeacherService().getOneTeacher(this.teacherNo);
+	}
+	
+	public BanjiVO getBanjiVO() {
+		return new BanjiService().getOneBanji(this.banjiNo);
 	}
 }
 
