@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.course.model.*"%>xw
+<%@ page import="com.course.model.*"%>
 
 <%
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
@@ -15,7 +15,6 @@
 <head>
  <%@ include file="/back-end/template/head.jsp" %> 
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-
 
 <style>
 .xdsoft_datetimepicker .xdsoft_datepicker {
@@ -167,7 +166,7 @@
 												</select>                                                   
 												 </div>
 												                                                   
-												<div class="form-group mb-3">
+ 												<div class="form-group mb-3">
 												<label class="form-label">上傳課程圖片</label>
 												 <div class="custom-file">
 												 <input type="file" class="custom-file-input"  name="courseImg" accept="image/*" onchange="show(courseImg)">

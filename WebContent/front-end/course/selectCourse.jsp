@@ -16,6 +16,37 @@
 <html>
 <head>
     <%@ include file="/front-end/template/head.jsp" %> 
+    
+    <style>
+/* .card-columns { */
+/*   padding: 10px; */
+/* } */
+.card {
+  color: #aaaa55;
+  border: 2px solid #aaaa55;
+}
+@media (min-width: 576px) {
+  .card-columns {
+    column-count: 2;
+  }
+}
+@media (min-width: 768px) {
+  .card-columns {
+    column-count: 3;
+  }
+}
+@media (min-width: 992px) {
+  .card-columns {
+    column-count: 4;
+  }
+}
+@media (min-width: 1200px) {
+  .card-columns {
+    column-count: 4;
+  }
+}
+    
+    </style>
 </head>
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
     <script>
@@ -36,71 +67,54 @@
                             <i class='subheader-icon fal fa-book'></i> 我的課程
                         </h1>
                     </div>
-                     <div class="row">
+                     <div class="row ">
                         <div class="col">
                             <div id="panel-1" class="panel">
                                     <div class="panel-hdr bg-primary-800 bg-success-gradient ">
                                         <h2 class="text-white">我的課程總覽</h2>
                                     </div>
-                                    
-                                    <div class="panel-container show">
-                                        <div class="panel-content">
-                                                <div class="card border m-auto m-lg-0" style="max-width: 320px; max-hiegth: auto">
-                                                <img src="<%=request.getContextPath()%>/images/JAVA.jpg" class="card-img-top" alt="...">
+								<div class="container-fluid">	
+								 <div class="card-columns ">
+  								       <a href="<%=request.getContextPath()%>/front-end/index/index.jsp">
+  								       
+                                         <c:forEach var="courseVO" items="${studentVO.courseList}" >
+                                           <div class="card border my-3 " >
+                                              <c:if test="${courseVO.courseImg eq null}">
+                                              <div class="img1">
+												<img src="<%=request.getContextPath() %>/images/尚無圖片.jpg" class="card-img-top img-fluid"  alt="課程封面圖" >
+												</div>
+												</c:if>
+												
+												<c:if test="${courseVO.courseImg ne null}">
+												<div class="img1">
+												<img src="<%=request.getContextPath() %>/course/course.do?action=getCourseImg&courseNo=${courseVO.courseNo}" class="card-img-top img-fluid" alt="課程封面圖">
+                                               </div>
+                                                </c:if>
                                                 <div class="card-body">
-                     							     <table id="tableEvaluation" class="table table-bordered table-hover table-striped w-100">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>課程</th>
-                                                            <th>講師</th>
-                                                            <th>狀態</th>
-                                                            <th>填寫</th>
-                                                        </tr>                                                            
-                                                    </thead>
-                                                    <tbody>
-                                                    	<c:forEach var="courseVO" items="${studentVO.getCourseList()}" >
-                                                        <tr>
-                                                            <td>${courseVO.courseName }</td>
-                                                            <td>${teacherSvc.getOneTeacher(courseVO.teacherNo).getTeacherName() }</td>
-                                                            <td>${courseSvc.getCourseStatusText(courseVO.status) }</td>
-                                                            <td>
-                                                            <c:if test="${addedList.contains(courseVO.courseNo)}" var="toDo" scope="page">
-                                                                <button todo="update" courseStatus="${courseVO.status}" courseNo="${courseVO.courseNo}" type="button" class="btn-write btn btn-sm btn-info" data-toggle="modal" data-target="#editorEvaluation">
-                                                                    <span class="fal fa-edit mr-1"></span>
-                                                                    <span>修改</span>
-                                                                </button>                                                            
-                                                            </c:if>
-											                <c:if test="${toDo == false}">
-                                                                <button todo="add" courseStatus="${courseVO.status}" courseNo="${courseVO.courseNo}" type="button" class="btn-write btn btn-sm btn-primary" data-toggle="modal" data-target="#editorEvaluation">
-                                                                    <span class="fal fa-edit mr-1"></span>
-                                                                    <span>填寫</span>
-                                                                </button>  
-											                </c:if>                                                            
-                                                            </td>
-                                                        </tr>
-                                                        </c:forEach>
-                                                    </tbody>
-                                                </table>
-                                                
+                                                    <h5 class="card-title">${courseVO.courseName}</h5>
                                                 </div>
-                                                
-                                                <div class="card-body">
-                                                    <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                                                  <div class="card-footer"> 
+                                                 <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>  
                                             </div>
-                                                </div>
+                                           </div>
                                             </div>
-                                            
-                                        </div>
-                                        </div>
-                                        </div>
+                                            </c:forEach>
+                                            </a>
+                                           
                                         </div>
                                     </div>
-                                </main>
-                               </div>
-                          </div>
-                     </div>
-                      
+                                </div>    
+                              </div>
+                        </div>
+                            </main>
+                        
+                        </div>
+                        </div>
+                       
+        </div>
+ 
+            
                 
                 <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
                 <%@ include file="/front-end/template/footer.jsp" %>
@@ -122,11 +136,7 @@
                 {
                     responsive: true,
                     language:{url:'<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json'},
-					"columnDefs":[{
-						"targets":[ -1, -2 ],
-						"orderable":false,
-					
-				}]
+				
                 });
            
             });
