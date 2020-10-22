@@ -53,4 +53,8 @@ public class ForumTopicService {
 	public List<ForumTopicVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public List<ForumTopicVO> getByBanJiNo(String banJiNo) {
+		return dao.getByBanJiNo(banJiNo);
+	}
 }
