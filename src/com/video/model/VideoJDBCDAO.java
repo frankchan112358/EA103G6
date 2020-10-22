@@ -15,7 +15,7 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 	String passwd = "123456";
 	
 	private static final String INSERT_STMT =
-			"INSERT INTO VIDEO (videoNo, timetableNo, videoName, video) VALUES (VIDEO_SEQ.nextval, ?, ?, ?)";
+			"INSERT INTO VIDEO (videoNo, timetableNo, videoName) VALUES (VIDEO_SEQ.nextval, ?, ?)";
 	private static final String GET_ALL_STMT =
 			"SELECT videoNo, timetableNo, videoName, video FROM video order by to_number(videoNo)";
 	private static final String GET_ONE_STMT = 
@@ -25,7 +25,7 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 	private static final String DELETE_VIDEOLOG = 
 			"DELETE FROM videoLog where videoNo = ?";
 	private static final String UPDATE = 
-			"UPDATE video set timetableNo=?, videoName=?, video=? where videoNo = ?";
+			"UPDATE video set timetableNo=?, videoName=? where videoNo = ?";
 
 	@Override
 	public void insert(VideoVO videoVO) {
@@ -39,7 +39,6 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 			
 			pstmt.setString(1, videoVO.getTimetableNo());
 			pstmt.setString(2, videoVO.getVideoName());
-			pstmt.setBytes(3, videoVO.getVideo());
 
 			pstmt.executeUpdate();
 			
@@ -72,8 +71,7 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 			
 			pstmt.setString(1, videoVO.getTimetableNo());
 			pstmt.setString(2, videoVO.getVideoName());
-			pstmt.setBytes(3, videoVO.getVideo());
-			pstmt.setString(4, videoVO.getVideoNo());
+			pstmt.setString(3, videoVO.getVideoNo());
 			
 			pstmt.executeUpdate();
 
@@ -263,10 +261,8 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 
 		// 新增
 		VideoVO videoVO1 = new VideoVO();
-
 		videoVO1.setTimetableNo("TT000001");
 		videoVO1.setVideoName("2020-01-02 早上");
-
 		dao.insert(videoVO1);
 
 		// 修改
@@ -280,7 +276,7 @@ public class VideoJDBCDAO implements VideoDAO_interface{
 		dao.delete("1");
 
 		// 查詢
-		VideoVO videoVO3 = dao.findByPrimaryKey("5");
+		VideoVO videoVO3 = dao.findByPrimaryKey("44");
 		System.out.print(videoVO3 );
 		System.out.println("---------------------");
 		System.out.print(videoVO3.getVideoNo() );
