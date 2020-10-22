@@ -1,5 +1,8 @@
 package com.video.model;
 
+import com.timetable.model.TimetableService;
+import com.timetable.model.TimetableVO;
+
 public class VideoVO implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	private String videoNo;
@@ -33,5 +36,8 @@ public class VideoVO implements java.io.Serializable{
 	public void setVideo(byte[] video) {
 		this.video = video;
 	}
-		
+	
+	public TimetableVO getTimtTimetableVO() {
+		return new TimetableService().getOneTimetable(this.timetableNo);
+	}
 }

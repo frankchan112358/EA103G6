@@ -40,7 +40,10 @@
                                 <button class="dropdown-item" type="button">班級設定</button>
                                 <button class="dropdown-item" type="button">公告管理</button>
                                 <button class="dropdown-item" type="button">課程管理</button>
-                                <button class="dropdown-item" type="button">課表管理</button>
+                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.timetable">
+                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">課表管理</button>
+                                    <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
+                                </form>
                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.leave">
                                     <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">請假管理</button>
                                     <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
@@ -75,9 +78,10 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <span class="text-info">課表管理</span>
-                                                </a>
+                                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.timetable">
+                                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="text-info">課表管理</span></a></button>
+                                                    <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
+                                                </form>
                                             </li>
                                             <li>
                                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.leave">
@@ -103,7 +107,7 @@
                         <div class="col-xl-7 col-lg-8 col-md-12 col-sm-12 col-xs-12">
                             <div id="panel-1" class="panel">
                                 <div class="panel-hdr bg-info-300 bg-info-gradient ">
-                                    <h2 class="js-get-date"></h2>
+                                    <h2></h2>
                                 </div>
                                 <div class="panel-container show">
                                     <div class="panel-content">
@@ -210,8 +214,9 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 plugins: ['dayGrid', 'list', 'timeGrid', 'interaction', 'bootstrap'],
                 themeSystem: 'bootstrap',
-                timeZone: 'UTC',
-                //dateAlignment: "month", //week, month
+                editable: false,
+                locale: 'zh-tw',
+                displayEventTime: false,
                 buttonText: {
                     today: '今天',
                     month: '月',
@@ -235,20 +240,15 @@
                     center: '',
                     right: ''
                 },
-                editable: true,
-                eventLimit: true, // allow "more" link when too many events
-                events: [],
+                eventLimit: true,
+                events: '<%=request.getContextPath()%>/banji/banji.calendar?action=events&banjiNo=${banjiVO.banjiNo}',
                 viewSkeletonRender: function () {
                     $('.fc-toolbar .btn-default').addClass('btn-sm');
                     $('.fc-header-toolbar h2').addClass('fs-md');
                     $('#calendar').addClass('fc-reset-order')
-                },
-
+                }
             });
-
             calendar.render();
-
-
         });
     </script>
 </body>

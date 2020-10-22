@@ -1,7 +1,11 @@
 package com.course.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.student.model.StudentService;
+import com.student.model.StudentVO;
 
 public class CourseService {
 
@@ -74,4 +78,13 @@ public class CourseService {
 		return CourseStatus.findByNum(num).getText();
 	}
 
+	public List<CourseVO> getAllWithBanjiNo(String banjiNo) {
+		List<CourseVO> list = new ArrayList<CourseVO>();
+		for (CourseVO courseVO : getAll()) {
+			if (banjiNo.equals(courseVO.getBanjiNo()))
+				list.add(courseVO);
+		}
+		return list;
+	}
+	
 }

@@ -1,12 +1,10 @@
 package com.student.model;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.banji.model.BanjiService;
 import com.banji.model.BanjiVO;
-import com.course.model.CourseService;
 import com.course.model.CourseVO;
 import com.leave.model.LeaveService;
 import com.leave.model.LeaveVO;
@@ -78,13 +76,7 @@ public class StudentVO implements java.io.Serializable{
 	}
 	
 	public List<CourseVO>getCourseList(){
-		List<CourseVO> list = new ArrayList<CourseVO>();
-		for (CourseVO courseVO : new CourseService().getAll()) {
-			if (courseVO.getBanjiNo().equals(this.banjiNo)) {
-				list.add(courseVO);
-			}
-		}
-		return list;
+		return getBanjiVO().getCourseList();
 	}
 	
 	public List<LeaveVO> getLeaveList(){
