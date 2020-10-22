@@ -289,10 +289,7 @@ public class CourseServlet extends HttpServlet {
 				if (form.contains("image") && errorMsgs.isEmpty()) {
 					courseImg = part.getInputStream();
 				}
-				
-				System.out.println(part);
-				
-
+								
 				Integer status = new Integer(req.getParameter("status").trim());
 
 				CourseVO courseVO = new CourseVO();

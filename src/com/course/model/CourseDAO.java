@@ -25,7 +25,7 @@ public class CourseDAO implements CourseDAO_interface {
 	private static final String GET_ALL_STMT = "SELECT COURSENO, BANJINO, TEACHERNO, CLASSROOMNO, BASICCOURSENO, COURSENAME, COURSEOUTLINE, LESSON, TO_CHAR(STARTDATE,'YYYY-MM-DD') STARTDATE, TO_CHAR(ENDDATE,'YYYY-MM-DD') ENDDATE, COURSEIMG, STATUS FROM COURSE WHERE ISDELETE=0 ORDER BY COURSENO";
 	private static final String GET_ONE_STMT = "SELECT COURSENO, BANJINO, TEACHERNO, CLASSROOMNO, BASICCOURSENO, COURSENAME, COURSEOUTLINE, LESSON, TO_CHAR(STARTDATE,'YYYY-MM-DD') STARTDATE, TO_CHAR(ENDDATE,'YYYY-MM-DD') ENDDATE, COURSEIMG, STATUS FROM COURSE WHERE COURSENO =?";
 	private static final String DELETE = "UPDATE COURSE SET ISDELETE=1 WHERE COURSENO=?";
-	private static final String UPDATE = "UPDATE COURSE SET BANJINO=?, TEACHERNO=?, CLASSROOMNO=?, BASICCOURSENO=?, COURSENAME=?, COURSEOUTLINE=?, LESSON=?, STARTDATE=?, ENDDATE=?, COURSEIMG, STATUS=? WHERE COURSENO=? ";
+	private static final String UPDATE = "UPDATE COURSE SET BANJINO=?, TEACHERNO=?, CLASSROOMNO=?, BASICCOURSENO=?, COURSENAME=?, COURSEOUTLINE=?, LESSON=?, STARTDATE=?, ENDDATE=?, COURSEIMG=?, STATUS=? WHERE COURSENO=? ";
 	private static final String UPDATE_NOIMG = "UPDATE COURSE SET BANJINO=?, TEACHERNO=?, CLASSROOMNO=?, BASICCOURSENO=?, COURSENAME=?, COURSEOUTLINE=?, LESSON=?, STARTDATE=?, ENDDATE=?, STATUS=? WHERE COURSENO=?";
 	private static final String GET_IMG = "SELECT COURSEIMG FROM COURSE WHERE COURSEIMG IS NOT NULL AND COURSENO=?";
 
@@ -81,7 +81,6 @@ public class CourseDAO implements CourseDAO_interface {
 
 		try {
 			con = ds.getConnection();
-System.out.println("111");
 			if (courseVO.getCourseImg() == null) {
 				pstmt = con.prepareStatement(UPDATE_NOIMG);
 				pstmt.setString(1, courseVO.getBanjiNo());
@@ -96,7 +95,6 @@ System.out.println("111");
 				pstmt.setInt(10, courseVO.getStatus());
 				pstmt.setString(11, courseVO.getCourseNo());
 			} else {
-	System.out.println("22222");
 				pstmt = con.prepareStatement(UPDATE);
 				pstmt.setString(1, courseVO.getBanjiNo());
 				pstmt.setString(2, courseVO.getTeacherNo());
