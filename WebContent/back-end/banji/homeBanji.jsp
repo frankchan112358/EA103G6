@@ -97,7 +97,7 @@
                                                         </td>
                                                         <td>
                                                             <form method="post" action="<%=request.getContextPath()%>/banji/banji.do" class="m-1">
-                                                                <button type="submit" class="btn btn-sm btn-success">
+                                                                <button type="submit" class="btn btn-sm btn-danger">
                                                                     <span class="fal fa-edit mr-1"></span>
                                                                     <span>刪除</span>
                                                                 </button>
