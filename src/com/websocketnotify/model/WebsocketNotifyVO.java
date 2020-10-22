@@ -1,6 +1,6 @@
 package com.websocketnotify.model;
 
-public class NotifyVO implements java.io.Serializable{
+public class WebsocketNotifyVO implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -8,7 +8,7 @@ public class NotifyVO implements java.io.Serializable{
 	private String content;
 	private Long time;
 	
-	public NotifyVO(String title,String content,Long time) {
+	public WebsocketNotifyVO(String title,String content,Long time) {
 		super();
 		this.title=title;
 		this.content=content;

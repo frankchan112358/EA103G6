@@ -31,6 +31,7 @@ import com.user.model.UserService;
 import com.user.model.UserVO;
 import com.userpermission.model.UserPermissionService;
 import com.userpermission.model.UserPermissionVO;
+import com.websocketnotify.controller.NotifyServlet;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 
@@ -284,6 +285,14 @@ public class UserServlet extends HttpServlet {
 						return;
 						// 錯誤導導師頁面
 					} else {
+						
+						/**************** start測試提醒用 *****************/
+						
+						NotifyServlet notify = new NotifyServlet();
+						notify.broadcast("U000002", "測試", "猜猜我是誰3");
+
+						/**************** end測試提醒用 *****************/
+						
 						req.setAttribute("userVOForInsert", userVO);
 						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/empList.jsp");
 						failureView.forward(req, res);
@@ -306,6 +315,7 @@ public class UserServlet extends HttpServlet {
 					StudentService studentSvc = new StudentService();
 					String banjiNo = req.getParameter("banjiNo");
 					studentSvc.addStudent(userNo, banjiNo, name);
+
 				} else if (type.equals(1)) {
 					// 新增講師table
 
@@ -697,6 +707,7 @@ public class UserServlet extends HttpServlet {
 					studentStatus = java.lang.Integer.valueOf(req.getParameter("studentStatus"));
 
 				}
+
 				/*********************** 取得講師資料 *************************/
 
 				String teacherNo = req.getParameter("teacherNo");
@@ -991,7 +1002,6 @@ public class UserServlet extends HttpServlet {
 			String gotoPlace = req.getParameter("goto");
 
 			if ("empList".equals(gotoPlace)) {
-
 				if (userVO.getType().equals(1)) {
 
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
@@ -1006,6 +1016,7 @@ public class UserServlet extends HttpServlet {
 						failureView.forward(req, res);
 						return;
 					} else {
+
 						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
 						failureView.forward(req, res);
 						return;
