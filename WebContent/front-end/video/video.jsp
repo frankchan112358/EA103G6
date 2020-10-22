@@ -66,6 +66,7 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
 		a {
 		color:black;
 		}
+		
     </style>
 </head>
 
@@ -102,13 +103,12 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
                                         		<div class="in-sb" > 
                                                     <input type="hidden" name="videoNo" value="${videoVO.videoNo}">
                                                     <input  type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
-                                                    ${videoVO.timetableVO.timetableDate}<br>
+                                        	          	上課日期 : ${videoVO.timetableVO.timetableDate}<br>
                                                     <input class="videoname" type="hidden" name="videoName" value="${videoVO.videoName}">
-                                        			${videoVO.videoName}<br>
+                                       		 			影片名稱 : ${videoVO.videoName}<br>
                                         				<div class="in-sb-log">
                                         					<div class="log">
-                                        					#要放教學日誌連結orz
-                                                    	   <i class="fas fa-pencil-alt" style="color: green;"></i>
+                                        					<button type="button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size:small;">教學日誌</button>
                                                      	   </div>
                                                     	</div>
                                         		</div>
@@ -116,7 +116,6 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
                                         	</c:forEach>
                                         	</div>
                                         <div class="player">
-                                        
 	<video src="<%=request.getContextPath()%>/videos/202010211002.mp4"   type="video/mp4" loop controls ></video>
                                         </div>
                                     </div>
