@@ -108,7 +108,7 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
                                        		 			影片名稱 : ${videoVO.videoName}<br>
                                         				<div class="in-sb-log">
                                         					<div class="log">
-                                        					<button type="button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size:small;">教學日誌</button>
+                                        					<button timeteableNo="${videoVO.timetableVO.timetableNo}" type="button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size:small;">教學日誌</button>
                                                      	   </div>
                                                     	</div>
                                         		</div>
@@ -129,28 +129,16 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
             </div>
         </div>
     </div>
-    <div class="modal fade" id="democratEditor" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="sbLogModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Modal
-                        <small class="m-0 text-muted">描述</small>
-                    </h4>
+                    <h4 class="modal-title">教學日誌</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form id="democratForm" class="needs-validation" novalidate>
-                        <div class="form-group">
-                            ...
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel">取消</button>
-                    <button type="button" class="btn btn-primary" id="save">送出</button>
-                </div>
+                <div id="sbLog" class="modal-body"></div>
             </div>
         </div>
     </div>
@@ -181,8 +169,23 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
 
             
             //這裡是click(in-sb-log)可以查看日誌
-            $(".in-sb-log").hover(function(){
-            })            
+            $(document).on('click', '.in-sb-log button', function (event) {
+                let timeteableNo = this.getAttribute('timeteableNo');
+                $.ajax({
+                    type: 'GET',
+                    url: '<%=request.getContextPath()%>/video/video.getsblog',
+                    data: {
+                        timetableNo: timeteableNo
+                    },
+                    success(res) {
+                        if (res != null) {
+                            $('#sbLog').html('');
+                            $('#sbLog').html(res);
+                            $('#sbLogModal').modal('show');
+                        }
+                    }
+                });
+            });   
         });
     </script>
 </body>
