@@ -421,12 +421,12 @@ public class UserServlet extends HttpServlet {
 				if (userVO.getType().equals(0)) {
 					StudentService studentSvc = new StudentService();
 					StudentVO studentVO = studentSvc.findByPrimaryKeyByuserNo(userNo);
-					if (studentVO == null) {// 若離職頁面轉至此跳刪除建議，但目前新版面離職的人會抓不到
-						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back-end/user/update_user_input.jsp");
-						failureView.forward(req, res);
-						return;
-					}
+//					if (studentVO == null) {// 若離職頁面轉至此跳刪除建議，但目前新版面離職的人會抓不到
+//						RequestDispatcher failureView = req
+//								.getRequestDispatcher("/back-end/user/update_user_input.jsp");
+//						failureView.forward(req, res);
+//						return;
+//					}
 					
 					req.setAttribute("studentVOForUpdate", studentVO);
 					RequestDispatcher successView = req.getRequestDispatcher("/back-end/student/updateStudent.jsp");
@@ -701,7 +701,7 @@ public class UserServlet extends HttpServlet {
 				/*********************** 取得學生資料 *************************/
 				String studentNo = req.getParameter("studentNo");
 				String banjiNo = req.getParameter("banjiNo");
-
+				
 				Integer studentStatus =null;
 				if(req.getParameter("studentStatus")!=null) {
 					studentStatus = java.lang.Integer.valueOf(req.getParameter("studentStatus"));

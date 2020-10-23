@@ -27,7 +27,7 @@ public class StudentDAO implements StudentDAO_interface {
 	private static final String GET_ONE_STMT_USERNO = "SELECT STUDENTNO,USERNO,BANJINO,Studentname,faceid,face,studentdescription,studentstatus FROM  student where USERNO = ? ";
 	private static final String GET_PIC = "SELECT PHOTO FROM WJLUSER WHERE PHOTO IS NOT NULL AND USERNO=";
 	private static final String GET_ALL_STMT = "SELECT studentno,userno,banjino,studentname,faceid,face,studentdescription,studentstatus FROM student  WHERE studentstatus<3 ";
-	private static final String UPDATE = "UPDATE student set userno=?,banjino=?,studentname=?, faceid=?, face=?, studentdescription=?, studentstatus=? where studentno = ?";
+//	private static final String UPDATE = "UPDATE student set userno=?,banjino=?,studentname=?, faceid=?, face=?, studentdescription=?, studentstatus=? where studentno = ?";
 	private static final String UPDATE_NOPIC = "UPDATE student set userno=?,banjino=?,studentname=?, studentdescription=?, studentstatus=? where studentno = ?";
 	
 	@Override
@@ -249,7 +249,7 @@ public class StudentDAO implements StudentDAO_interface {
 			
 			
 
-			if (studentVO.getFace() == null) {
+//			if (studentVO.getFace() == null) {
 				pstmt = con.prepareStatement(UPDATE_NOPIC);
 				pstmt.setString(1, studentVO.getUserNo());
 				pstmt.setString(2, studentVO.getBanjiNo());
@@ -257,17 +257,17 @@ public class StudentDAO implements StudentDAO_interface {
 				pstmt.setString(4, studentVO.getStudentDescription());
 				pstmt.setInt(5, studentVO.getStudentStatus());
 				pstmt.setString(6, studentVO.getStudentNo());
-			} else {
-				pstmt = con.prepareStatement(UPDATE);
-				pstmt.setString(1, studentVO.getUserNo());
-				pstmt.setString(2, studentVO.getBanjiNo());
-				pstmt.setString(3, studentVO.getStudentName());
-				pstmt.setString(4, studentVO.getFaceId());
-				pstmt.setBinaryStream(5, studentVO.getFace());
-				pstmt.setString(6, studentVO.getStudentDescription());
-				pstmt.setInt(7, studentVO.getStudentStatus());
-				pstmt.setString(8, studentVO.getStudentNo());
-			}
+//			} else {
+//				pstmt = con.prepareStatement(UPDATE);
+//				pstmt.setString(1, studentVO.getUserNo());
+//				pstmt.setString(2, studentVO.getBanjiNo());
+//				pstmt.setString(3, studentVO.getStudentName());
+//				pstmt.setString(4, studentVO.getFaceId());
+//				pstmt.setBinaryStream(5, studentVO.getFace());
+//				pstmt.setString(6, studentVO.getStudentDescription());
+//				pstmt.setInt(7, studentVO.getStudentStatus());
+//				pstmt.setString(8, studentVO.getStudentNo());
+//			}
 
 			pstmt.executeUpdate();
 
