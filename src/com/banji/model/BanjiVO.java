@@ -123,10 +123,6 @@ public class BanjiVO implements java.io.Serializable {
 		return new StudentService().getAllWithBanji(banjiNo);
 	}
 
-	public EmpVO getTeacherVO() {
-		return new EmpService().getOneEmp(this.empNo);
-	}
-
 	public BanjiTypeVO getBanjiTypeVO() {
 		return new BanjiTypeService().getOneBanjiType(this.banjiTypeNo);
 	}

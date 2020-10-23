@@ -11,7 +11,6 @@
 
 <head>
     <%@ include file="/front-end/template/head.jsp" %>
-    <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/miscellaneous/fullcalendar/fullcalendar.bundle.css">
     <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/notifications/sweetalert2/sweetalert2.bundle.css">
     <style>
         .swal2-container {
@@ -160,7 +159,6 @@
     <%@ include file="/front-end/template/quick_menu.jsp" %>
     <%@ include file="/front-end/template/messager.jsp" %>
     <%@ include file="/front-end/template/basic_js.jsp" %>
-    <script src="<%=request.getContextPath() %>/SmartAdmin4/js/miscellaneous/fullcalendar/fullcalendar.bundle.js"></script>
     <script src="<%=request.getContextPath() %>/SmartAdmin4/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
     <script>
         'use strict';

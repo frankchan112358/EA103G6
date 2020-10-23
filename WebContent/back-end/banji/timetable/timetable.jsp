@@ -50,6 +50,25 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="addTimetableModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title"></h1>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addTimetableForm" class="needs-validation" novalidate></form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="add">送出</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <%@ include file="/back-end/template/quick_menu.jsp" %>
     <%@ include file="/back-end/template/messager.jsp" %>
     <%@ include file="/back-end/template/basic_js.jsp" %>
@@ -58,6 +77,7 @@
         $(document).ready(function () {
             var calendarEl = document.getElementById('calendar');
             var events = {};
+            var _courseVO = {};
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 plugins: ['dayGrid', 'list', 'timeGrid', 'interaction', 'bootstrap'],
@@ -93,14 +113,42 @@
                     $('.fc-toolbar .btn-default').addClass('btn-sm');
                     $('.fc-header-toolbar h2').addClass('fs-md');
                     $('#calendar').addClass('fc-reset-order')
+                },
+                dateClick: function (info) {
+                    let radios = {
+                        morning: true,
+                        afternoon: true,
+                        evening: true,
+                    }
+                    for (let i = 0; i < calendar.getEvents().length; i++) {
+                        let e = calendar.getEvents()[i];
+                        let eD = e.start;
+                        let iD = info.date;
+                        if (eD.getDate() == iD.getDate() && eD.getMonth() == iD.getMonth() && eD.getFullYear() == iD.getFullYear()) {
+                            switch (e.extendedProps.timetablePeriod) {
+                                case 0:
+                                    radios.morning = false;
+                                    break;
+                                case 1:
+                                    radios.afternoon = false;
+                                    break;
+                                case 2:
+                                    radios.evening = false;
+                                    break;
+                            }
+                        }
+                    }
+                    console.log(radios);
+
+
+                    let addTimetableModal = $('#addTimetableModal');
+                    addTimetableModal.find('h1.modal-title').html(info.dateStr + ' 新增 ' + _courseVO.courseName + ' 課表');
+                    addTimetableModal.modal('show');
                 }
             });
             calendar.render();
 
             $(document).on('click', 'button.course', function (event) {
-                calendar.removeAllEvents()
-                calendar.refetchEvents();
-                calendar.today();
                 let courseNo = this.getAttribute('courseNo');
                 let banjiNo = this.getAttribute('banjiNo');
                 $.ajax({
@@ -113,7 +161,9 @@
                     },
                     success(res) {
                         if (res != null) {
-                            calendar.addEventSource(res);
+                            calendar.removeAllEvents();
+                            calendar.addEventSource(res.events);
+                            _courseVO = JSON.parse(res._courseVO);
                         }
                     }
                 });
