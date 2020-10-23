@@ -79,7 +79,7 @@
 												<tr>
 													<th>課程編號</th>
 													<th>課程名稱</th>
-													<th width="25%">課程大綱</th>
+													<th width="30%">課程大綱</th>
 													<th>班級</th>
 													<th>講師</th>
 													<th>教室</th>
@@ -87,13 +87,11 @@
 													<th>開始日期</th>
 													<th>結束日期</th>
 													<th>狀態</th>
-													<th>修改</th>
-													<th>刪除</th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach var="courseVO" items="${list}">
-													<tr>
+												<tr onclick="location.href='<%=request.getContextPath()%>/course/course.do?action=getOne_For_Display&courseNo=${courseVO.courseNo}';">
 														<td>${courseVO.courseNo}</td>
 														<td>${courseVO.courseName}</td>
 														<td>${courseVO.courseOutline}</td>
@@ -109,28 +107,6 @@
 																<c:when test="${courseVO.status=='1'}">課程進行中</c:when>
 																<c:when test="${courseVO.status=='2'}">課程結束</c:when>
 															</c:choose>
-														</td>
-														<td>
-															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
-																<button type="submit" class="btn btn-sm btn-outline-primary">
-																<span class="fal fa-edit mr-1"></span>	
-																<span>修改</span>
-                                                                 </button>
-																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																<input type="hidden" name="action" value="getOne_For_Update">
-                                                                    
-															</FORM>
-														</td>
-														<td>
-															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
-																<button type="submit" class="btn btn-sm btn-outline-danger">
-																<span class="fal fa-times mr-1"></span>	
-																<span>刪除</span>
-																</button>
-																
-																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																<input type="hidden" name="action" value="delete">
-															</FORM>
 														</td>
 													</tr>
 												</c:forEach>
@@ -151,7 +127,7 @@
             </div>
         </div>
     </div>
-    
+														
     
     <%@ include file="/back-end/template/quick_menu.jsp" %>
     <%@ include file="/back-end/template/messager.jsp" %>
@@ -168,11 +144,6 @@
                 {
                     responsive: true,
                     language:{url:'<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json'},
-					"columnDefs":[{
-						"targets":[ -1, -2 ],
-						"orderable":false,
-					
-				}]
                 });
            
             });
