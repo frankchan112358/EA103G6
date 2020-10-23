@@ -42,6 +42,15 @@ public class CourseTTServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher("/back-end/video/listAllVideo2.jsp");
 			successView.forward(req, res);
 		}
+		
+		if ("getTFDisplayList".equals(action)) {
+			String courseNo = req.getParameter("courseNo");
+			CourseService courseSvc = new CourseService();
+			CourseVO courseVO = courseSvc.getOneCourse(courseNo);
+			req.setAttribute("courseVO", courseVO);
+			RequestDispatcher successView = req.getRequestDispatcher("/back-end/teachingFile/listAllTeachingFile2.jsp");
+			successView.forward(req, res);
+		}
 
 	}
 
