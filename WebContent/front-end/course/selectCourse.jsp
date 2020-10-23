@@ -28,23 +28,39 @@
 @media (min-width: 576px) {
   .card-columns {
     column-count: 2;
-  }
+    }
+       .card-img-top { 
+     height: 23vw;
+     }
 }
 @media (min-width: 768px) {
   .card-columns {
     column-count: 3;
+    }
+     .card-img-top { 
+     height: 18vw;
+     }
   }
-}
 @media (min-width: 992px) {
   .card-columns {
-    column-count: 4;
-  }
+    column-count: 3;
+    }  
+     .card-img-top { 
+     height: 16vw;
+     }
 }
 @media (min-width: 1200px) {
   .card-columns {
-    column-count: 4;
+    column-count: 5;
   }
+   .card-img-top { 
+     height: 11vw;
+     }
 }
+
+ .card-img-top {
+     object-fit:cover  ; 
+ } 
     
     </style>
 </head>
@@ -73,22 +89,18 @@
                                     <div class="panel-hdr bg-primary-800 bg-success-gradient ">
                                         <h2 class="text-white">我的課程總覽</h2>
                                     </div>
-								<div class="container-fluid">	
-								 <div class="card-columns ">
+								<div class="container-fluid ">	
+								 <div class="card-columns">
   								       <a href="<%=request.getContextPath()%>/front-end/index/index.jsp">
   								       
                                          <c:forEach var="courseVO" items="${studentVO.courseList}" >
-                                           <div class="card border my-3 " >
+                                           <div class="card border my-3" >
                                               <c:if test="${courseVO.courseImg eq null}">
-                                              <div class="img1">
-												<img src="<%=request.getContextPath() %>/images/尚無圖片.jpg" class="card-img-top img-fluid"  alt="課程封面圖" >
-												</div>
+                                                    <img src="<%=request.getContextPath() %>/images/尚無圖片.jpg" class="card-img-top img-fluid"  alt="課程封面圖">
 												</c:if>
 												
 												<c:if test="${courseVO.courseImg ne null}">
-												<div class="img1">
 												<img src="<%=request.getContextPath() %>/course/course.do?action=getCourseImg&courseNo=${courseVO.courseNo}" class="card-img-top img-fluid" alt="課程封面圖">
-                                               </div>
                                                 </c:if>
                                                 <div class="card-body">
                                                     <h5 class="card-title">${courseVO.courseName}</h5>
@@ -101,8 +113,8 @@
                                             </div>
                                             </c:forEach>
                                             </a>
-                                           
-                                        </div>
+                                                                                   </div>
+
                                     </div>
                                 </div>    
                               </div>
