@@ -169,6 +169,26 @@ img {
 												<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
 												<input type="hidden" name="action" value="delete">
 											</FORM>
+											&emsp;
+											<FORM METHOD="post" ACTION="">
+												<button type="submit" class="btn btn-outline-success">
+													<i class="fal fa-bug"></i>
+													<span>管理</span>
+												</button>
+
+												<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+												<input type="hidden" name="action" value="delete">
+											</FORM>
+											&emsp;
+											<FORM METHOD="post" ACTION="">
+												<button type="submit" class="btn btn-outline-success">
+													<span class="fal fa-bug"></span>
+													<span>管理</span>
+												</button>
+
+												<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+												<input type="hidden" name="action" value="delete">
+											</FORM>
 										</div>
 
 
