@@ -1,5 +1,6 @@
 package com.websocketnotify.model;
 import java.util.List;
+import com.websocket.jedispool.JedisPoolUtil;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
