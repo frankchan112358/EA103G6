@@ -60,11 +60,25 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="addTimetableForm" class="needs-validation" novalidate></form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" id="add">送出</button>
+                    <form id="timetableActive" class="needs-validation" novalidate>
+                        <c:forEach var="period" items="${timetableSvc.timetablePeriodAll}">
+
+                            <button active="update" periodNum="${period.num}" type="button" class="btn btn-lg btn-outline-info">
+                                <span class="fal fa-book-reader mr-1"></span>
+                                ${period.text}
+                            </button>
+
+                        </c:forEach>
+
+                        <button active="delete" type="button" class="btn btn-lg btn-outline-danger">
+                            <span class="fal fa-times mr-1"></span>
+                            刪除
+                        </button>
+                        <button type="button" class="btn btn-lg btn-outline-dark" data-dismiss="modal">
+                            <span class="fal  fa-eject mr-1"></span>
+                            取消
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -115,7 +129,7 @@
                     $('#calendar').addClass('fc-reset-order')
                 },
                 dateClick: function (info) {
-                    let radios = {
+                    let period = {
                         morning: true,
                         afternoon: true,
                         evening: true,
@@ -127,19 +141,25 @@
                         if (eD.getDate() == iD.getDate() && eD.getMonth() == iD.getMonth() && eD.getFullYear() == iD.getFullYear()) {
                             switch (e.extendedProps.timetablePeriod) {
                                 case 0:
-                                    radios.morning = false;
+                                    period.morning = false;
                                     break;
                                 case 1:
-                                    radios.afternoon = false;
+                                    period.afternoon = false;
                                     break;
                                 case 2:
-                                    radios.evening = false;
+                                    period.evening = false;
                                     break;
                             }
                         }
                     }
-                    console.log(radios);
-
+                    console.log(period);
+                    $('[periodNum]').hide();
+                    if (period.morning)
+                        $('[periodNum=0]').show();
+                    if (period.afternoon)
+                        $('[periodNum=1]').show();
+                    if (period.evening)
+                        $('[periodNum=2]').show();
 
                     let addTimetableModal = $('#addTimetableModal');
                     addTimetableModal.find('h1.modal-title').html(info.dateStr + ' 新增 ' + _courseVO.courseName + ' 課表');
