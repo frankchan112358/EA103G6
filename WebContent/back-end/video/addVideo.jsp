@@ -3,11 +3,11 @@
 <%@ page import="com.video.model.*"%>
 <%@ page import="com.timetable.model.*"%>
 <%
-	VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
-	String timetableNO = request.getParameter("timetableNO");
-	TimetableService timetableSvc = new TimetableService();
-	TimetableVO choose_timetableNo =  timetableSvc.getOneTimetable("timetableNO");
-	pageContext.setAttribute("choose_timetableNo", choose_timetableNo);
+VideoVO videoVO = (VideoVO)request.getAttribute("videoVO");
+String timetableNo = request.getParameter("timetableNo");
+TimetableService timetableSvc = new TimetableService();
+TimetableVO choose_timetableVO =  timetableSvc.getOneTimetable(timetableNo);
+pageContext.setAttribute("choose_timetableVO", choose_timetableVO);
 %>
 <html>
 

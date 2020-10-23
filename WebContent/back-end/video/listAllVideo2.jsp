@@ -111,7 +111,7 @@ TimetableVO timetableVO = (TimetableVO) request.getAttribute("timetableVO");
                                                      		</c:if>
                                                      		
                                                     		<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)==null}">
-                                                    			<FORM METHOD="Get" ACTION="<%=request.getContextPath()%>/back-end/video/addVideo.jsp">
+                                                    			<FORM METHOD="Post" ACTION="<%=request.getContextPath()%>/back-end/video/addVideo.jsp">
 																<button type="submit"  class="btn btn-outline-success ">
 																<span class="fal fa-bug"></span>
 																<span>新增</span>
