@@ -53,20 +53,20 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>${choose_courseVO.courseName}/影片管理
+							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>${choose_courseVO.courseName}/教材管理
 						</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
 							<i class="fas fa-video" style="color: #374EFA;"></i>
-							影片管理
+							教材管理
 						</h1>
 					</div>
 					<div class="row">
 						<div class="col-xl-12">
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
-									<h2>影片列表</h2>
+									<h2>教材列表</h2>
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
@@ -77,7 +77,7 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 													<th width="15%">課表編號</th>
 													<th width="15%">上課日期</th>
 													<th width="10%">時段</th>
-													<th>影片</th>
+
 
 												</tr>
 											</thead>
@@ -90,11 +90,6 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
                                                     		<td>${timetableVO.timetableNo}</td>
                                                     		<td>${timetableVO.timetableDate}</td>
                                                     		<td>${timetableVO.periodText}</td>
-<%--                                                     		<c:choose> --%>
-<%--                                                     			<c:when test="${timetableVO.timetablePeriod==0}">早上</c:when> --%>
-<%--                                                     			<c:when test="${timetableVO.timetablePeriod==1}">下午</c:when> --%>
-<%--                                                     			<c:when test="${timetableVO.timetablePeriod==2}">晚上</c:when> --%>
-<%--                                                     		</c:choose> --%>
                                                      		<c:if test="${timetableSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)!=null}">
                                                      			
                                                      		</c:if>
