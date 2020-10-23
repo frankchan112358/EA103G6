@@ -8,7 +8,8 @@
     List<BanjiVO> list = banjiSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
-
+<jsp:useBean id="classroomSvc" scope="page"
+			class="com.classroom.model.ClassroomService" />
 <!DOCTYPE html>
 <html>
 
@@ -71,6 +72,7 @@
                                                     <th>教室</th>
                                                     <th>內容</th>
                                                     <th>狀態</th>
+                                                    <th>管理</th>
                                                     <th>刪除</th>
                                                 </tr>
                                             </thead>
@@ -83,8 +85,16 @@
                                                         <td>${banjiVO.endDay}</td>
                                                         <td>${banjiVO.classHours}</td>
                                                         <td>${banjiVO.numberOfStudent}</td>
-                                                        <td>${banjiVO.classroomNo}</td>
+                                                        <td>${classroomSvc.getOneClassroom(banjiVO.classroomNo).classroomName}</td>
                                                         <td>${banjiVO.banjiContent}</td>
+                                                        <td>
+                                                        <c:choose>
+																<c:when test="${banjiVO.status=='0'}">結業</c:when>
+																<c:when test="${banjiVO.status=='1'}">開課</c:when>
+																<c:when test="${banjiVO.status=='2'}">延期</c:when>
+																<c:when test="${banjiVO.status=='3'}">未開課</c:when>
+															</c:choose>
+															</td>
                                                         <td>
                                                             <form method="post" action="<%=request.getContextPath()%>/banji/banji.manage" class="m-1">
                                                                 <button type="submit" class="btn btn-sm btn-success">
