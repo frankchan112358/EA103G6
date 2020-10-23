@@ -91,6 +91,7 @@ th, td {
 			<tr>
 				<td>課表編號:</td>
 				<td>${choose_timetableVO.timetableNo}</td>
+				<input type="hidden" name="timetableNo" value="${choose_timetableVO.timetableNo}">
 			</tr>
 			<tr>
 				<td>影片名稱:</td>
