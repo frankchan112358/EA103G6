@@ -77,22 +77,6 @@
                                             <table id="coursetable" class="table table-bordered table-hover table-striped w-100">
 											<thead style="background-color:#E5F4FF;">
 												<tr>
-<<<<<<< HEAD
-													<th width="6%">課程編號</th>
-													<th width="6%">課程名稱</th>
-													<th width="20%">課程大綱</th>
-													<th width="6%">班級</th>
-													<th width="7%">講師</th>
-													<th width="6%">教室</th>
-													<th width="6%">堂數</th>
-													<th width="6%">開始日期</th>
-													<th width="6%">結束日期</th>
-													<th width="7%">狀態</th>
-													<th width="7%">修改</th>
-													<th width="7%">刪除</th>
-													<th width="5%">影片管理</th>
-													<th width="5%">教材管理</th>
-=======
 													<th>課程編號</th>
 													<th>課程名稱</th>
 													<th width="30%">課程大綱</th>
@@ -103,7 +87,6 @@
 													<th>開始日期</th>
 													<th>結束日期</th>
 													<th>狀態</th>
->>>>>>> refs/heads/Angela
 												</tr>
 											</thead>
 											<tbody>
@@ -125,54 +108,6 @@
 																<c:when test="${courseVO.status=='2'}">課程結束</c:when>
 															</c:choose>
 														</td>
-<<<<<<< HEAD
-														<td>
-															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
-																<button type="submit" class="btn btn-sm btn-outline-primary">
-																<span class="fal fa-edit mr-1"></span>	<br>
-																<span>修改</span>
-                                                                 </button>
-																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																<input type="hidden" name="action" value="getOne_For_Update">
-                                                                    
-															</FORM>
-														</td>
-														<td>
-															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
-																<button type="submit" class="btn btn-sm btn-outline-danger">
-																<i class="fal fa-times mr-1"></i><br>
-																<span>刪除</span>
-																</button>
-																
-																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																<input type="hidden" name="action" value="delete">
-															</FORM>
-														</td>
-														<td>
-															<FORM METHOD="post" ACTION="">
-																<button type="submit"  class="btn btn-outline-success btn-icon waves-effect waves-themed">
-																<i class="fal fa-bug"></i>	<br>
-																<span>管理</span>
-																</button>
-																
-																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																<input type="hidden" name="action" value="delete">
-															</FORM>
-														</td>
-														<td>
-															<FORM METHOD="post" ACTION="">
-																<button type="submit"  class="btn btn-outline-success btn-icon waves-effect waves-themed">
-																<span class="fal fa-bug"></span>	<br>
-																<span>管理</span>
-																</button>
-																
-																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																<input type="hidden" name="action" value="delete">
-															</FORM>
-														</td>
-														
-=======
->>>>>>> refs/heads/Angela
 													</tr>
 												</c:forEach>
 											</tbody>
