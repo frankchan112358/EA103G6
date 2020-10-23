@@ -13,5 +13,6 @@
 <script src="<%=request.getContextPath() %>/SmartAdmin4/js/statistics/flot/flot.bundle.js"></script>
 <script src="<%=request.getContextPath() %>/SmartAdmin4/js/miscellaneous/jqvmap/jqvmap.bundle.js"></script>
 <script src="<%=request.getContextPath() %>/SmartAdmin4/js/datagrid/datatables/datatables.bundle.js"></script>
-<script>var MyPoint = "/NotifyServlet/${sessionScope.userVO.userNo}"</script>
+<script>var NotifyMyPoint = "/NotifyServlet/${sessionScope.userVO.userNo}"</script>
 <script src="<%=request.getContextPath() %>/notify/websocketNotify.js"></script>
+<script src="<%=request.getContextPath() %>/SmartAdmin4/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
