@@ -130,19 +130,19 @@
 																<span>刪除</span>
 																</button>
 																
-																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+																<input type="hidden" name="courseNo" value="<%=request.getContextPath()%>/course/course.do">
 																<input type="hidden" name="action" value="delete">
 															</FORM>
 														</td>
 														<td>
-															<FORM METHOD="post" ACTION="">
+															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/courseTT.do">
 																<button type="submit"  class="btn btn-outline-success btn-icon waves-effect waves-themed">
 																<i class="fal fa-bug"></i>	<br>
 																<span>管理</span>
 																</button>
 																
 																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																<input type="hidden" name="action" value="delete">
+																<input type="hidden" name="action" value="getTTDisplayList">
 															</FORM>
 														</td>
 														<td>
@@ -153,7 +153,7 @@
 																</button>
 																
 																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																<input type="hidden" name="action" value="delete">
+																<input type="hidden" name="action" value="">
 															</FORM>
 														</td>
 														
