@@ -45,4 +45,13 @@ public class VideoService {
 	public List<VideoVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public VideoVO getOneVideoWithTimetableNo(String timetableNo) {
+		VideoVO videoVO = null;
+		for(VideoVO item : getAll()) {
+			if(item.getTimetableNo().equals(timetableNo))
+				videoVO = item;
+		}
+		return videoVO;
+	}
 }

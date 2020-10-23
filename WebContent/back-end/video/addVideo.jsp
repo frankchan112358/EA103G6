@@ -1,54 +1,55 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.video.model.*" %>
-
+<%@ page import="com.video.model.*"%>
+<%@ page import="com.timetable.model.*"%>
 <%
 	VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
+	String timetableNO = request.getParameter("timetableNO");
+	TimetableService timetableSvc = new TimetableService();
+	TimetableVO choose_timetableNo =  timetableSvc.getOneTimetable("timetableNO");
+	pageContext.setAttribute("choose_timetableNo", choose_timetableNo);
 %>
 <html>
 
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<title>影片新增資料 - addVideo.jsp</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>影片新增資料 - addVideo.jsp</title>
 
-	<style>
-		table#table-1 {
-			background-color: #CCCCFF;
-			border: 2px solid black;
-			text-align: center;
-		}
+<style>
+table#table-1 {
+	background-color: #CCCCFF;
+	border: 2px solid black;
+	text-align: center;
+}
 
-		table#table-1 h4 {
-			color: red;
-			display: block;
-			margin-bottom: 1px;
-		}
+table#table-1 h4 {
+	color: red;
+	display: block;
+	margin-bottom: 1px;
+}
 
-		h4 {
-			color: blue;
-			display: inline;
-		}
-	</style>
+h4 {
+	color: blue;
+	display: inline;
+}
+</style>
 
-	<style>
-		table {
-			width: 450px;
-			background-color: white;
-			margin-top: 1px;
-			margin-bottom: 1px;
-		}
+<style>
+table {
+	width: 450px;
+	background-color: white;
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
 
-		table,
-		th,
-		td {
-			border: 0px solid #CCCCFF;
-		}
+table, th, td {
+	border: 0px solid #CCCCFF;
+}
 
-		th,
-		td {
-			padding: 1px;
-		}
-	</style>
+th, td {
+	padding: 1px;
+}
+</style>
 
 </head>
 
@@ -60,7 +61,12 @@
 				<h3>影片新增 - addVideo</h3>
 			</td>
 			<td>
-				<h4><a href="<%=request.getContextPath() %>/back-end/video/select_page.jsp"><img src="<%=request.getContextPath() %>/images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+				<h4>
+					<a
+						href="<%=request.getContextPath()%>/back-end/video/select_page.jsp"><img
+						src="<%=request.getContextPath()%>/images/back1.gif" width="100"
+						height="32" border="0">回首頁</a>
+				</h4>
 			</td>
 		</tr>
 	</table>
@@ -70,25 +76,26 @@
 	<%-- 錯誤列表 --%>
 
 	<c:if test="${not empty errorMsgs}">
-		<font style="color:red">請修正以下錯誤:</font>
+		<font style="color: red">請修正以下錯誤:</font>
 		<ul>
 			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color:red">${message}</li>
+				<li style="color: red">${message}</li>
 			</c:forEach>
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/video/video.do" name="form1" enctype="multipart/form-data">
+	<FORM METHOD="post"
+		ACTION="<%=request.getContextPath()%>/video/video.do" name="form1"
+		enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td>課表編號:</td>
-				<td><input type="TEXT" name="timetableNo" size="45"
-								 value="<%= (videoVO==null)? "TT000002" : videoVO.getTimetableNo()%>" /></td>
+				<td>${choose_timetableVO.timetableNo}</td>
 			</tr>
 			<tr>
 				<td>影片名稱:</td>
 				<td><input type="TEXT" name="videoName" size="45"
-								 value="<%= (videoVO==null)? "2020-10-10 上午" : videoVO.getVideoName()%>" /></td>
+					value="<%=(videoVO == null) ? "" : videoVO.getVideoName()%>" /></td>
 			</tr>
 			<tr>
 				<td>影片上傳:</td>
@@ -96,9 +103,8 @@
 			</tr>
 
 		</table>
-		<br>
-		<input type="hidden" name="action" value="insert">
-		<input type="submit" value="送出新增">
+		<br> <input type="hidden" name="action" value="insert"> <input
+			type="submit" value="送出新增">
 	</FORM>
 </body>
 

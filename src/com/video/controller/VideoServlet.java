@@ -202,6 +202,7 @@ public class VideoServlet extends HttpServlet {
 		if ("insert".equals(action)) { // 來自addVideojsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+
 			try {
 				String timetableNo = req.getParameter("timetableNo");
 				if (timetableNo == null || timetableNo.trim().length() == 0) {

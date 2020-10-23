@@ -290,6 +290,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>CourseTTServlet</servlet-name>
+		<servlet-class>com.course.controller.CourseTTServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CourseTTServlet</servlet-name>
+		<url-pattern>/course/courseTT.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>BasicCourseServlet</servlet-name>
 		<servlet-class>com.basiccourse.controller.BasicCourseServlet</servlet-class>
 	</servlet>
