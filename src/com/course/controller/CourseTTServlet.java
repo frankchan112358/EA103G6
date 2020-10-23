@@ -35,10 +35,10 @@ public class CourseTTServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		if ("getTTDisplayList".equals(action)) {
-			String videoNo = req.getParameter("videoNo");
-			VideoService videoSvc = new VideoService();
-			VideoVO videoVO = videoSvc.getOneVideo(videoNo);
-			req.setAttribute("videoVO", videoVO);
+			String courseNo = req.getParameter("courseNo");
+			CourseService courseSvc = new CourseService();
+			CourseVO courseVO = courseSvc.getOneCourse(courseNo);
+			req.setAttribute("courseVO", courseVO);
 			RequestDispatcher successView = req.getRequestDispatcher("/back-end/video/listAllVideo2.jsp");
 			successView.forward(req, res);
 		}
