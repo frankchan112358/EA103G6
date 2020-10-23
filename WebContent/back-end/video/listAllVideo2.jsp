@@ -97,7 +97,7 @@ TimetableVO timetableVO = (TimetableVO) request.getAttribute("timetableVO");
                                                     		<td>${timetableVO.timetableDate}</td>
                                                     		<td>${timetableVO.periodText}</td>
                                                     		<td>
-                                                     		<c:if test="${timetableSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)!=null}">
+                                                     		<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)!=null}">
                                                      			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/video/video.do">
 																<button type="submit"  class="btn btn-outline-success ">
 																<span class="fal fa-bug"></span>
@@ -111,8 +111,8 @@ TimetableVO timetableVO = (TimetableVO) request.getAttribute("timetableVO");
 															</FORM>
                                                      		</c:if>
                                                      		
-                                                    		<c:if test="${timetableSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)==null}">
-                                                    			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/video/addVideo.jsp">
+                                                    		<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)==null}">
+                                                    			<FORM METHOD="Get" ACTION="<%=request.getContextPath()%>/back-end/video/addVideo.jsp">
 																<button type="submit"  class="btn btn-outline-success ">
 																<span class="fal fa-bug"></span>
 																<span>新增</span>
@@ -120,9 +120,6 @@ TimetableVO timetableVO = (TimetableVO) request.getAttribute("timetableVO");
 																
 																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
 																<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
-																<input type="hidden" name="videoNo" value="${videoVO.videoNo}">
-																<input type="hidden" name="videoName" value="${videoVO.videoName}">
-																<input type="hidden" name="action" value="insert">
 															</FORM>
                                                     		</c:if>
                                                     		</td>
