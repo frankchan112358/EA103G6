@@ -54,7 +54,7 @@ public class CourseServlet extends HttpServlet {
 					errorMsgs.add("⚠請輸入課程編號⚠");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failuresView = req.getRequestDispatcher("/back-end/course/select_page.jsp");
+					RequestDispatcher failuresView = req.getRequestDispatcher("/back-end/course/listAllCourse.jsp");
 					failuresView.forward(req, res);
 					return;
 				}
@@ -65,7 +65,7 @@ public class CourseServlet extends HttpServlet {
 					errorMsgs.add("⚠課程編號格式不正確⚠");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/course/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/course/listAllCourse.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -76,7 +76,7 @@ public class CourseServlet extends HttpServlet {
 					errorMsgs.add("⚠查無資料⚠");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/course/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/course/listAllCourse.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -87,7 +87,7 @@ public class CourseServlet extends HttpServlet {
 
 			} catch (Exception e) {
 				errorMsgs.add("⚠無法取得資料⚠:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/course/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/course/listAllCourse.jsp");
 				failureView.forward(req, res);
 			}
 		}

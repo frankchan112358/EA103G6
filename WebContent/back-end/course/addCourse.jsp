@@ -30,8 +30,8 @@
   }  
 
   #showphoto2 img {  
-   	width: 320px;  
-    margin: 40px;   
+   	width: 300px;  
+    margin: 20px;   
    	border:2px #C4B1B1 dashed;  
     text-align:center;  
   }  
@@ -70,8 +70,8 @@
 							課程資料新增
 						</h1>
 					</div>
-					<div class="row justify-content-center">
-						<div class="col-xl-8">
+					<div class="row align-items-center justify-content-center">
+						<div class="col-10">
 							<div id="panel-2" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
 									<h2>課程新增</h2>

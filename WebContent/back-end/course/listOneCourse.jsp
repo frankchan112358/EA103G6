@@ -6,9 +6,9 @@
 
 
 <%
-    CourseService courseSvc = new CourseService();
-    List<CourseVO> list = courseSvc.getAll();
-    pageContext.setAttribute("list",list);
+	CourseService courseSvc = new CourseService();
+	List<CourseVO> list = courseSvc.getAll();
+	pageContext.setAttribute("list", list);
 %>
 
 <jsp:useBean id="banjiSvc" scope="page" class="com.banji.model.BanjiService" />
@@ -18,16 +18,31 @@
 <!DOCTYPE html>
 <html>
 <head>
- <%@ include file="/back-end/template/head.jsp" %> 
-    <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/datagrid/datatables/datatables.bundle.css">
+<%@ include file="/back-end/template/head.jsp"%>
+<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath()%>/SmartAdmin4/css/datagrid/datatables/datatables.bundle.css">
 
 <style>
-
 .table th, .table td {
-    vertical-align: middle;
-    text-align: center;  
+	vertical-align: middle;
+	text-align: center;
 }
 
+#showphoto2 {
+	text-align: center;
+}
+
+#showphoto2 img {
+	width: 300px;
+	margin: 20px;
+	border: 2px #C4B1B1 dashed;
+	text-align: center;
+}
+
+img {
+	vertical-align: sub;
+	width: 100%;
+	height: auto;
+}
 </style>
 
 </head>
@@ -36,7 +51,7 @@
 
 
 
-		<script>
+	<script>
 		var classHolder = document.getElementsByTagName("BODY")[0];
 	</script>
 
@@ -53,74 +68,112 @@
 						<li class="breadcrumb-item">
 							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>
 						</li>
-							<li class="breadcrumb-item">
-							課程列表
-						</li>
+						<li class="breadcrumb-item">課程資料</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
 							<i class='subheader-icon far fa-book'></i>
-							課程列表
+							課程資料
 						</h1>
 					</div>
-					<div class="row">
-						<div class="col-xl-12">
+					<div class="row align-items-center justify-content-center">
+						<div class="col-10">
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
-									<h2>課程列表</h2>
+									<h2>課程資料</h2>
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
 
 										<!-- datatable start -->
-                                            <table id="coursetable" class="table table-bordered table-hover table-striped w-100">
-											<thead style="background-color:#E5F4FF;">
-												<tr>
-													<th>課程編號</th>
-													<th>課程名稱</th>
-													<th width="25%">課程大綱</th>
-													<th>班級</th>
-													<th>講師</th>
-													<th>教室</th>
-													<th>堂數</th>
-													<th>開始日期</th>
-													<th>結束日期</th>
-													<th>狀態</th>
-													<th>修改</th>																										
-												</tr>
-											</thead>
-											<tbody>
-													<tr>
-														<td>${courseVO.courseNo}</td>
-														<td>${courseVO.courseName}</td>
-														<td>${courseVO.courseOutline}</td>
-														<td>${banjiSvc.getOneBanji(courseVO.banjiNo).banjiName}</td>
-														<td>${teacherSvc.getOneTeacher(courseVO.teacherNo).teacherName}</td>
-														<td>${classroomSvc.getOneClassroom(courseVO.classroomNo).classroomName}</td>
-														<td>${courseVO.lesson}</td>
-														<td>${courseVO.startDate}</td>
-														<td>${courseVO.endDate}</td>
-														<td>
-															<c:choose>
-																<c:when test="${courseVO.status=='0'}">課程未開始</c:when>
-																<c:when test="${courseVO.status=='1'}">課程進行中</c:when>
-																<c:when test="${courseVO.status=='2'}">課程結束</c:when>
-															</c:choose>
-														</td>
-															<td>
-															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
-																<button type="submit" class="btn btn-sm btn-outline-primary">
-																<span class="fal fa-edit mr-1"></span>	
-																<span>修改</span>
-                                                                 </button>
-																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																<input type="hidden" name="action" value="getOne_For_Update">   
-															</FORM>
-														</td>
-													</tr>
-											</tbody>
+										<table id="coursetable" class="table table-bordered table-hover table-striped w-100">
+											<tr>
+												<td colspan="2">
+													<div id="showphoto2">
+														<c:if test="${courseVO.courseImg eq null}">
+															<img src="<%=request.getContextPath()%>/images/尚無圖片.jpg">
+														</c:if>
+														<c:if test="${courseVO.courseImg ne null}">
+															<img src="<%=request.getContextPath() %>/course/course.do?action=getCourseImg&courseNo=${courseVO.courseNo}">
+														</c:if>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<th width="20%">課程編號</th>
+												<td>${courseVO.courseNo}</td>
+											</tr>
+
+											<tr>
+												<th>課程名稱</th>
+												<td>${courseVO.courseName}</td>
+											</tr>
+											<tr>
+												<th>課程大綱</th>
+												<td>${courseVO.courseOutline}</td>
+											</tr>
+											<tr>
+												<th>班級</th>
+												<td>${banjiSvc.getOneBanji(courseVO.banjiNo).banjiName}</td>
+											</tr>
+											<tr>
+
+												<th>講師</th>
+												<td>${teacherSvc.getOneTeacher(courseVO.teacherNo).teacherName}</td>
+											</tr>
+											<tr>
+												<th>教室</th>
+												<td>${classroomSvc.getOneClassroom(courseVO.classroomNo).classroomName}</td>
+											</tr>
+											<tr>
+												<th>堂數</th>
+												<td>${courseVO.lesson}</td>
+											</tr>
+											<tr>
+												<th>開始日期</th>
+												<td>${courseVO.startDate}</td>
+											</tr>
+											<tr>
+												<th>結束日期</th>
+												<td>${courseVO.endDate}</td>
+											</tr>
+											<tr>
+												<th>狀態</th>
+												<td>
+													<c:choose>
+														<c:when test="${courseVO.status=='0'}">課程未開始</c:when>
+														<c:when test="${courseVO.status=='1'}">課程進行中</c:when>
+														<c:when test="${courseVO.status=='2'}">課程結束</c:when>
+													</c:choose>
+												</td>
+											</tr>
 
 										</table>
+
+										<div class="form-row align-items-center justify-content-center">
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
+												<button type="submit" class="btn btn-primary">
+													<span class="fal fa-edit mr-1"></span>
+													<span>修改</span>
+												</button>
+												<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+												<input type="hidden" name="action" value="getOne_For_Update">
+											</FORM>
+											&emsp;
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
+												<button type="submit" class="btn btn-danger">
+													<span class="fal fa-times mr-1"></span>
+													<span>刪除</span>
+												</button>
+
+												<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+												<input type="hidden" name="action" value="delete">
+											</FORM>
+										</div>
+
+
+
+
 										<!-- datatable end -->
 									</div>
 								</div>
@@ -128,39 +181,24 @@
 						</div>
 					</div>
 				</main>
-											
-		
-              <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
-                <%@ include file="/back-end/template/footer.jsp" %>
-            </div>
-        </div>
-    </div>
-    
-    
-    <%@ include file="/back-end/template/quick_menu.jsp" %>
-    <%@ include file="/back-end/template/messager.jsp" %>
-    <%@ include file="/back-end/template/basic_js.jsp" %>
-    
-    
-     
-    
-    <script>
-    $(document).ready(function(){
-        $('#coursetable').dataTable({
-            responsive: true,
-			"columnDefs":[{
-			"targets": all,
-			"orderable":false,
-		
-	}]
 
-        });
-       
-    });
-     
-     
-            
-     
-     </script>
+
+				<div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
+				<%@ include file="/back-end/template/footer.jsp"%>
+			</div>
+		</div>
+	</div>
+
+
+	<%@ include file="/back-end/template/quick_menu.jsp"%>
+	<%@ include file="/back-end/template/messager.jsp"%>
+	<%@ include file="/back-end/template/basic_js.jsp"%>
+
+
+
+
+	<script>
+		
+	</script>
 </body>
 </html>

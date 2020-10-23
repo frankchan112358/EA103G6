@@ -30,8 +30,8 @@
   }  
 
   #showphoto2 img {  
-   	width: 320px;  
-    margin: 40px;   
+   	width: 300px;  
+    margin: 20px auto;   
    	border:2px #C4B1B1 dashed;  
     text-align:center;  
   }  
@@ -70,8 +70,8 @@
 							課程資料修改
 						</h1>
 					</div>
-					<div class="row justify-content-center">
-						<div class="col-xl-8">
+					<div class="row align-items-center justify-content-center">
+						<div class="col-10">
 							<div id="panel-2" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
 									<h2>課程新增</h2>
@@ -185,9 +185,8 @@
                                                   	</div>	
 							                      </div>
 							                      </div>
-											
 											    <div class="form-row align-items-center justify-content-center">
-											  	<button id="js-sweetalert2-example-8" class="btn btn-primary justify-content-center">修改</button> 
+											  	<button id="js-sweetalert2-example-8" class="btn btn-primary justify-content-center">送出</button> 
 											  	</div>  
 												<input type="hidden" name="action" value="update">
 												<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
