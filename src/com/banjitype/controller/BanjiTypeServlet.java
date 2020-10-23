@@ -56,7 +56,8 @@ public class BanjiTypeServlet extends HttpServlet {
 		if ("getOne_For_Display".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			
+			
 			try {
 				String str = req.getParameter("banjiTypeNo");
 				if (str == null || (str.trim()).length() == 0) {
@@ -92,7 +93,7 @@ public class BanjiTypeServlet extends HttpServlet {
 				}
 				req.setAttribute("banjiTypeVO", banjiTypeVO);
 
-				String url = "/back-end/banjiType/listOneBanjiType.jsp";
+				String url = "/back-end/banjiType/update_BanjiType_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -109,7 +110,6 @@ public class BanjiTypeServlet extends HttpServlet {
 
 			try {
 				String banjiTypeNo = req.getParameter("banjiTypeNo");
-
 				BanjiTypeService banjiTypeSvc = new BanjiTypeService();
 				BanjiTypeVO banjiTypeVO = banjiTypeSvc.getOneBanjiType(banjiTypeNo);
 				req.setAttribute("banjiTypeVO", banjiTypeVO);
@@ -172,7 +172,7 @@ public class BanjiTypeServlet extends HttpServlet {
 						banjiTypeEnable);
 
 				req.setAttribute("banjiTypeVO", banjiTypeVO);
-				String url = "/back-end/banjiType/listOneBanjiType.jsp";
+				String url = "/back-end/banjiType/homeBanjiType.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {
@@ -183,34 +183,35 @@ public class BanjiTypeServlet extends HttpServlet {
 			}
 		}
 		if ("insert".equals(action)) {
-			List<String> errorMsgs = new LinkedList<String>();
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			
 			try {
 				String banjiTypeName = req.getParameter("banjiTypeName");
 				String banjiTypeNameReg = "^[(\u4e00-\u9fd5)(a-zA-Z0-9_)]{2,10}$";
 				if (banjiTypeName == null || banjiTypeName.trim().length() == 0) {
-					errorMsgs.add("班種名稱:請勿空白");
+					errorMsgs.put("banjiTypeName","班種名稱:請勿空白");
 				} else if (!banjiTypeName.trim().matches(banjiTypeNameReg)) {
-					errorMsgs.add("班種只能是中英數字");
+					errorMsgs.put("banjiTypeName","班種只能是中英數字");
 				}
 
 				Integer classHours = null;
 				try {
 					classHours = new Integer(req.getParameter("classHours").trim());
 				} catch (NumberFormatException e) {
-					errorMsgs.add("請填寫上課時數");
+					errorMsgs.put("classHours","請填寫上課時數");
 				}
 
 				String banjiTypeContent = req.getParameter("banjiTypeContent");
 				if (banjiTypeContent == null || banjiTypeContent.trim().length() == 0) {
-					errorMsgs.add("班級內容請勿空白");
+					errorMsgs.put("banjiTypeContent","班級內容請勿空白");
 				}
 
 				Integer banjiTypeEnable = null;
 				try {
 					banjiTypeEnable = new Integer(req.getParameter("banjiTypeEnable").trim());
 				} catch (NumberFormatException e) {
-					errorMsgs.add("班種未啟用");
+					errorMsgs.put("banjiTypeEnable","班種未啟用");
 				}
 
 				BanjiTypeVO banjiTypeVO = new BanjiTypeVO();
@@ -228,11 +229,11 @@ public class BanjiTypeServlet extends HttpServlet {
 				BanjiTypeService banjiTypeSvc = new BanjiTypeService();
 				banjiTypeVO = banjiTypeSvc.addBanjiType(banjiTypeName, classHours, banjiTypeContent, banjiTypeEnable);
 
-				String url = "/back-end/banjiType/listAllBanjiType.jsp";
+				String url = "/back-end/banjiType/homeBanjiType.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
+				errorMsgs.put("新增失敗",e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banjiType/addBanjiType.jsp");
 				failureView.forward(req, res);
 			}
@@ -247,7 +248,7 @@ public class BanjiTypeServlet extends HttpServlet {
 				BanjiTypeService banjiTypeSvc = new BanjiTypeService();
 				banjiTypeSvc.deleteBanjiType(banjiTypeNo);
 
-				String url = "/back-end/banjiType/listAllBanjiType.jsp";
+				String url = "/back-end/banjiType/homeBanjiType.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {

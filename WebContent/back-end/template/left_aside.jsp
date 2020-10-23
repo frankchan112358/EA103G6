@@ -92,7 +92,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" title="班種管理">
+                <a href="<%=request.getContextPath()%>/back-end/banjiType/homeBanjiType.jsp" title="班種管理">
                     <i class="fal fa-chalkboard-teacher"></i>
                     <span class="nav-link-text">班種管理</span>
                 </a>

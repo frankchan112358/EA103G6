@@ -48,7 +48,9 @@
                                                     <select  class="custom-select form-control"  name="banjiTypeNo">
                                                     <option value="" >請選擇班種</option>
 													<c:forEach var="banjiTypeVO" items="${banjiTypeSvc.all}">
+													<c:if test="${ banjiTypeVO.banjiTypeEnable==1}">
 															<option value="${banjiTypeVO.banjiTypeNo}"${(banjiVO.banjiTypeNo==banjiTypeVO.banjiTypeNo)? 'selected':'' }>${banjiTypeVO.banjiTypeName}
+													</c:if>
 													</c:forEach>
 													</select>
 													 <font color=red>${errorMsgs.banjiTypeNo}</font>
@@ -118,7 +120,7 @@
 													<option value="1" ${(banjiVO.status==1)?'selected':'' }>開課</option>
 													<option value="0" ${(banjiVO.status==0)?'selected':'' }>結訓</option>
 													<option value="2" ${(banjiVO.status==2)?'selected':'' }>延期</option>
-													<option value="" ${(banjiVO.status==3)?'selected':'' }>未開課</option>
+													<option value="3" ${(banjiVO.status==3)?'selected':'' }>未開課</option>
 												</select>           
                                                 <font color=red>${errorMsgs.status}</font>
                                                 </div>
