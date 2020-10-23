@@ -14,6 +14,7 @@ List<TimetableVO> timetableList = timetableSvc.getAll();
 VideoService videoSvc =new VideoService();
 List<VideoVO> videoList = videoSvc.getAll();
 
+pageContext.setAttribute("videoSvc", videoSvc);
 pageContext.setAttribute("courseList", courseList);
 pageContext.setAttribute("timetableList", timetableList);
 pageContext.setAttribute("videoList", videoList);
