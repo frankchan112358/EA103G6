@@ -49,7 +49,14 @@
                                     <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
                                 </form>
                                 <button class="dropdown-item" type="button">出缺勤管理</button>
-                                <button class="dropdown-item" type="button">討論區管理</button>
+                                
+                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.forumtopic">
+                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">討論區主題管理</button>
+                                    <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
+                                </form>
+                                
+                                <button class="dropdown-item" type="button">討論區檢舉管理</button>
+                                
                             </div>
                         </div>
                     </div>

@@ -80,7 +80,7 @@
 						</div>
 						
 					</div>
-				<%@ include file="page1.file" %> 
+					<%@ include file="page1_ByCompositeQuery.file"%>
 				<hr>
 				
 					<div class="container">
@@ -167,7 +167,7 @@
 							</div>
 							<hr>
 
-						<%@ include file="page2.file"%>
+						<%@ include file="page2_ByCompositeQuery.file"%>
 					</div>
 										</div>
 										</div>

@@ -234,6 +234,24 @@
 		<servlet-name>BanjiLeave</servlet-name>
 		<url-pattern>/banji/banji.leave</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>BanjiForumTopic</servlet-name>
+		<servlet-class>com.banji.controller.BanjiForumTopic</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BanjiForumTopic</servlet-name>
+		<url-pattern>/banji/banji.forumtopic</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>BanjiForumReport</servlet-name>
+		<servlet-class>com.banji.controller.BanjiForumReport</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BanjiForumReport</servlet-name>
+		<url-pattern>/banji/banji.forumreport</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>BanjiCalendar</servlet-name>
