@@ -320,6 +320,21 @@ public class ForumPostServlet extends HttpServlet {
 		if("getByTopicNo".equals(action)) {
 			String topicNo = req.getParameter("forumTopicNo");
 			
+			
+			HttpSession session = req.getSession();
+			
+            if (req.getParameter("whichPage") == null){
+            	session.setAttribute("topicNo", topicNo);
+            } else {
+            	String topicNo2 = (String)session.getAttribute("topicNo");
+            	ForumPostService forumpostSvc = new ForumPostService();
+    			List<ForumPostVO> list = forumpostSvc.getByTopicNo(topicNo2);
+    			req.setAttribute("list", list);
+    			String url = "/front-end/forumtopic/selectByTopic.jsp";
+    			RequestDispatcher successView = req.getRequestDispatcher(url);
+    			successView.forward(req, res);
+    			return;
+            }
 			ForumPostService forumpostSvc = new ForumPostService();
 			List<ForumPostVO> list = forumpostSvc.getByTopicNo(topicNo);
 			

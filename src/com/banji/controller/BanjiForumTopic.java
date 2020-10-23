@@ -1,4 +1,4 @@
-package com.forumtopic.controller;
+package com.banji.controller;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -10,16 +10,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.banji.model.BanjiService;
+import com.banji.model.BanjiVO;
+import com.emp.model.EmpService;
+import com.emp.model.EmpVO;
 import com.forumtopic.model.ForumTopicService;
 import com.forumtopic.model.ForumTopicVO;
+import com.leave.model.LeaveService;
+import com.leave.model.LeaveVO;
+import com.user.model.UserVO;
 
-@WebServlet("/ForumTopicServlet")
-public class ForumTopicServlet extends HttpServlet {
+public class BanjiForumTopic extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public ForumTopicServlet() {
-		super();
-	}
+	
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -27,7 +33,33 @@ public class ForumTopicServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
+		HttpSession session = req.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("userVO");
+		if (userVO == null || userVO.getType() != 2) {
+			res.sendRedirect(req.getContextPath() + "/login/login.jsp");
+			return;
+		}
+		String banjiNo = req.getParameter("banjiNo");
+		if (banjiNo ==null) {
+			res.sendRedirect(req.getContextPath() + "/banji/banji.manage");
+			return;
+		}
+		BanjiVO banjiVO = new BanjiService().getOneBanji(banjiNo);
+		EmpVO empVO = (EmpVO) session.getAttribute("empVO");
+		if(empVO==null)
+			empVO=new EmpService().getOneEmpByUserNo(userVO.getUserNo());
 		String action = req.getParameter("action");
+		if (action == null) {
+			List<LeaveVO> list = new LeaveService().getAllWithBanji(banjiNo);
+			req.setAttribute("list", list);
+			req.setAttribute("banjiVO", banjiVO);
+			String url = "/back-end/banji/forumtopic/forumTopic.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			return;
+		}
+
 		if ("getOne_For_Display".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -35,7 +67,7 @@ public class ForumTopicServlet extends HttpServlet {
 				String forumTopicNo = req.getParameter("forumTopicNo");
 				if (forumTopicNo == null || (forumTopicNo.trim()).length() == 0) {
 					errorMsgs.add("請輸入主題編號");
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/forumtopic/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/forumtopic/forumTopic.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -43,39 +75,20 @@ public class ForumTopicServlet extends HttpServlet {
 				ForumTopicVO forumTopicVO = forumtopicSvc.getOneForumTopic(forumTopicNo);
 				if (forumTopicVO == null) {
 					errorMsgs.add("查無資料");
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/forumtopic/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/forumtopic/forumTopic.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				req.setAttribute("forumTopicVO", forumTopicVO);
-				String url = "/back-end/forumtopic/listOneForumTopic.jsp";
+				String url = "/back-end/banji/forumtopic/forumTopic.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/forumtopic/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/forumtopic/forumTopic.jsp");
 				failureView.forward(req, res);
 			}
 		}
-		
-		if ("getOneBanjiTopic".equals(action)) {
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-			try {
-				String banjiNo = req.getParameter("banjiNo");
-				
-				
-				req.setAttribute("banjiNo", banjiNo);
-				String url = "/back-end/forumtopic/forumTopic.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
-			} catch (Exception e) {
-				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/forumtopic/select_page.jsp");
-				failureView.forward(req, res);
-			}
-		}
-		
 		if ("getOne_For_Update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -84,12 +97,12 @@ public class ForumTopicServlet extends HttpServlet {
 				ForumTopicService forumtopicSvc = new ForumTopicService();
 				ForumTopicVO forumTopicVO = forumtopicSvc.getOneForumTopic(forumTopicNo);
 				req.setAttribute("forumTopicVO", forumTopicVO);
-				String url = "/back-end/forumtopic/update_forumTopic_input.jsp";
+				String url = "/back-end/banji/forumtopic/forumTopic.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/forumtopic/listAllForumTopic.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/forumtopic/forumTopic.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -98,7 +111,6 @@ public class ForumTopicServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
 				String forumTopicNo = req.getParameter("forumTopicNo");
-				String banjiNo = req.getParameter("banjiNo");
 				String forumTopicName = req.getParameter("forumTopicName");
 				String content = req.getParameter("content");
 				String rule = req.getParameter("rule");
@@ -116,12 +128,12 @@ public class ForumTopicServlet extends HttpServlet {
 				ForumTopicService forumtopicSvc = new ForumTopicService();
 				forumTopicVO = forumtopicSvc.updateForumTopic(forumTopicNo, banjiNo, forumTopicName, content, rule, postTemplete);
 				req.setAttribute("forumTopicVO", forumTopicVO);
-				String url = "/back-end/forumtopic/listOneForumTopic.jsp";
+				String url = "/back-end/banji/forumtopic/forumTopic.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/forumtopic/update_forumTopic_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/forumtopic/forumTopic.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -130,7 +142,6 @@ public class ForumTopicServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 			try {
-				String banjiNo = req.getParameter("banjiNo");
 				String forumTopicName = req.getParameter("forumTopicName");
 				String content = req.getParameter("content");
 				String rule = req.getParameter("rule");
@@ -145,12 +156,12 @@ public class ForumTopicServlet extends HttpServlet {
 				forumTopicVO.setPostTemplete(postTemplete);
 				ForumTopicService forumtopicSvc = new ForumTopicService();
 				forumTopicVO = forumtopicSvc.addForumTopic(banjiNo, forumTopicName, content, rule, postTemplete);
-				String url = "/back-end/forumtopic/listAllForumTopic.jsp";
+				String url = "/back-end/banji/forumtopic/forumTopic.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("新增資料失敗" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/forumtopic/addForumTopic.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/forumtopic/forumTopic.jsp");
 				failureView.forward(req, res);
 			}
 		}
