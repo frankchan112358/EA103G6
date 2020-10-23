@@ -120,7 +120,12 @@ StudentVO studentVOForShow = (StudentVO) request.getAttribute("studentVOForShow"
                                                
                                                 <tr>
 													<th>帳號狀態</th>
-													<td>${userVOForShow.enable==0?"停用中":"啟用中"}</td>									
+													<td><c:choose>
+                                                    			<c:when test="${userVOForShow.enable==1}">啟用中</c:when>
+                                                    			<c:when test="${userVOForShow.enable==2}">停用中</c:when>
+                                                    			
+                                                    	</c:choose>		
+													</td>									
 												</tr>
                                                 <tr>
 													<th>學員狀態</th>
@@ -148,10 +153,10 @@ StudentVO studentVOForShow = (StudentVO) request.getAttribute("studentVOForShow"
                                               <form method="post" action="<%=request.getContextPath()%>/user.do">
                                             	<input type="hidden" name="userNo" value="<%=userVOForShow.getUserNo()%>"> 
 												<input type="hidden" name="action" value="getOne_For_Update">
-                                            	<button id="submitUpdateStudent" class="btn btn-primary ml-auto" <% if(studentVOForShow.getStudentStatus()==0) out.print("disabled='disabled'");%>>修改</button>
+                                            	<button id="submitUpdateStudent" class="btn btn-primary ml-auto" >修改</button>
                                             </form>
                                             </div>
-                                            <!-- datatable end -->
+                                            <!-- datatable end <% if(studentVOForShow.getStudentStatus()==0) out.print("disabled='disabled'");%>-->
                                         </div>
                                     </div>
                                 </div>
