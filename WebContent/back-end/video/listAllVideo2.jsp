@@ -106,7 +106,6 @@ TimetableVO timetableVO = (TimetableVO) request.getAttribute("timetableVO");
 																
 																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
 																<input type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
-																<input type="hidden" name="videoName" value="${videoVO.videoName}">
 																<input type="hidden" name="action" value="update">
 															</FORM>
                                                      		</c:if>
