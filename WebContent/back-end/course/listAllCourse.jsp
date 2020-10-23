@@ -79,13 +79,13 @@
 												<tr>
 													<th width="6%">課程編號</th>
 													<th width="6%">課程名稱</th>
-													<th width="20%">課程大綱</th>
+													<th width="10%">課程大綱</th>
 													<th width="6%">班級</th>
 													<th width="7%">講師</th>
 													<th width="6%">教室</th>
 													<th width="6%">堂數</th>
-													<th width="6%">開始日期</th>
-													<th width="6%">結束日期</th>
+													<th width="5%">開始日期</th>
+													<th width="5%">結束日期</th>
 													<th width="7%">狀態</th>
 													<th width="7%">修改</th>
 													<th width="7%">刪除</th>
@@ -136,7 +136,7 @@
 														</td>
 														<td>
 															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/courseTT.do">
-																<button type="submit"  class="btn btn-outline-success btn-icon waves-effect waves-themed">
+																<button type="submit"  class="btn btn-outline-success">
 																<i class="fal fa-bug"></i>	<br>
 																<span>管理</span>
 																</button>
@@ -147,7 +147,7 @@
 														</td>
 														<td>
 															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/courseTT.do">
-																<button type="submit"  class="btn btn-outline-success btn-icon waves-effect waves-themed">
+																<button type="submit"  class="btn btn-outline-success">
 																<span class="fal fa-bug"></span>	<br>
 																<span>管理</span>
 																</button>

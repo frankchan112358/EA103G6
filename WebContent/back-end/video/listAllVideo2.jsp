@@ -20,6 +20,8 @@ pageContext.setAttribute("videoList", videoList);
 
 CourseVO choose_courseVO = (CourseVO) request.getAttribute("courseVO");
 pageContext.setAttribute("choose_courseVO", choose_courseVO);
+VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
+TimetableVO timetableVO = (TimetableVO) request.getAttribute("timetableVO");
 %>
 
 <!DOCTYPE html>
@@ -81,7 +83,7 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 													<th width="15%">課表編號</th>
 													<th width="15%">上課日期</th>
 													<th width="10%">時段</th>
-													<th>影片</th>
+													<th width="60%">影片</th>
 
 												</tr>
 											</thead>
@@ -94,17 +96,36 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
                                                     		<td>${timetableVO.timetableNo}</td>
                                                     		<td>${timetableVO.timetableDate}</td>
                                                     		<td>${timetableVO.periodText}</td>
-<%--                                                     		<c:choose> --%>
-<%--                                                     			<c:when test="${timetableVO.timetablePeriod==0}">早上</c:when> --%>
-<%--                                                     			<c:when test="${timetableVO.timetablePeriod==1}">下午</c:when> --%>
-<%--                                                     			<c:when test="${timetableVO.timetablePeriod==2}">晚上</c:when> --%>
-<%--                                                     		</c:choose> --%>
+                                                    		<td>
                                                      		<c:if test="${timetableSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)!=null}">
-                                                     			
+                                                     			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/video/video.do">
+																<button type="submit"  class="btn btn-outline-success ">
+																<span class="fal fa-bug"></span>
+																<span>修改</span>
+																</button>
+																
+																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+																<input type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
+																<input type="hidden" name="videoName" value="${videoVO.videoName}">
+																<input type="hidden" name="action" value="update">
+															</FORM>
                                                      		</c:if>
+                                                     		
                                                     		<c:if test="${timetableSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)==null}">
-                                                    			
+                                                    			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/video/addVideo.jsp">
+																<button type="submit"  class="btn btn-outline-success ">
+																<span class="fal fa-bug"></span>
+																<span>新增</span>
+																</button>
+																
+																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+																<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
+																<input type="hidden" name="videoNo" value="${videoVO.videoNo}">
+																<input type="hidden" name="videoName" value="${videoVO.videoName}">
+																<input type="hidden" name="action" value="insert">
+															</FORM>
                                                     		</c:if>
+                                                    		</td>
                                                     		</tr>
                                                     	</c:if>
                                                     </c:forEach>

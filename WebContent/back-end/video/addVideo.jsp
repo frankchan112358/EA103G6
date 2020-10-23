@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.video.model.*" %>
-
+<%@ page import="com.timetable.model.*" %>
 <%
 	VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
 %>
@@ -82,13 +82,13 @@
 		<table>
 			<tr>
 				<td>課表編號:</td>
-				<td><input type="TEXT" name="timetableNo" size="45"
-								 value="<%= (videoVO==null)? "TT000002" : videoVO.getTimetableNo()%>" /></td>
+				<td><input type="TEXT" name="videoName" size="45"
+								 value="<%= (videoVO==null)? "" : videoVO.getVideoName()%>" /></td>
 			</tr>
 			<tr>
 				<td>影片名稱:</td>
 				<td><input type="TEXT" name="videoName" size="45"
-								 value="<%= (videoVO==null)? "2020-10-10 上午" : videoVO.getVideoName()%>" /></td>
+								 value="<%= (videoVO==null)? "" : videoVO.getVideoName()%>" /></td>
 			</tr>
 			<tr>
 				<td>影片上傳:</td>
