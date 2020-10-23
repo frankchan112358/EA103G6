@@ -1,15 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/back-end/template/check.jsp" %>
 <%@ page import="com.forumtopic.model.*"%>
+<%@ page import="com.banji.model.*"%>
 <%@ page import="java.util.*"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="forumtopicSvc" scope="page" class="com.forumtopic.model.ForumTopicService" />
 <%
+BanjiVO banjiVO = (BanjiVO)request.getAttribute("banjiVO");
+
+
 ForumTopicService forumtopicSvcList =new ForumTopicService();
-List<ForumTopicVO> forumTopicList =forumtopicSvcList.getAll();
+List<ForumTopicVO> forumTopicList =forumtopicSvcList.getByBanJiNo(banjiVO.getBanjiNo());
 
 pageContext.setAttribute("forumTopicList", forumTopicList);
+
+request.setAttribute("banjiVO", banjiVO);
 
 %>
 
@@ -47,6 +53,13 @@ pageContext.setAttribute("forumTopicList", forumTopicList);
                                 <div class="panel-hdr bg-primary-800 bg-success-gradient ">
                                     <h2 class="text-white">總覽</h2>
                                 </div>
+                                <div id="add">
+							<input type="hidden" name="action" > 
+							<button type="submit" id="btn-add" style="width:100px;heigh:50px;" onclick="location.href='<%=request.getContextPath()%>/back-end/banji/forumtopic/addforumTopic.jsp?banjiNo=${banjiVO.banjiNo}'" style="margin-bottom: 0px'"
+								class="btn-write btn btn-sm btn-primary" >
+								<strong>新增</strong>
+							</button>
+						</div>
                                 <div class="panel-container show">
                                     <div class="panel-content">
                                         <!-- datatable start -->
@@ -68,24 +81,18 @@ pageContext.setAttribute("forumTopicList", forumTopicList);
                                                         <td>${forumTopicVO.forumTopicName}</td>
                                                         
                                                         <td class="d-flex p-1">
+
+                                                        </td>
+                                                        
+                                                        <td>
                                                             <form method="post" action="<%=request.getContextPath()%>/banji/banji.forumtopic" class="m-1">
-                                                                <button type="submit" class="btn btn-sm btn-success">
+                                                                <button type="submit" class="btn btn-sm btn-danger">
                                                                     <span class="fal fa-edit mr-1"></span>
-                                                                    <span>檢視</span>
+                                                                    <span>刪除</span>
                                                                 </button>
-<%--                                                                 <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}"> --%>
-                                                                <input type="hidden" name="forumTopicNo" value="${forumTopicVO.forumTopicNo}">
-                                                                <input type="hidden" name="action" value="read">                                                            
+                                                                <input type="hidden" name="action" value="delete">
+                                                                <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
                                                             </form>
-<%--                                                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.forumtopic" class="m-1"> --%>
-<!--                                                                     <button type="submit" class="btn btn-sm btn-info"> -->
-<!--                                                                         <span class="fal fa-edit mr-1"></span> -->
-<!--                                                                         <span>審核</span> -->
-<!--                                                                     </button> -->
-<%--                                                                     <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}"> --%>
-<%--                                                                     <input type="hidden" name="forumTopicNo" value="${forumTopicVO.forumTopicNo}"> --%>
-<!--                                                                     <input type="hidden" name="action" value="review"> -->
-<!--                                                                 </form> -->
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

@@ -18,11 +18,11 @@ public class ForumTopicJDBCDAO implements ForumTopicDAO_interface {
 	String userid = "EA103G6";
 	String passwd = "123456";
 
-	private static final String INSERT_STMT = "INSERT INTO forumtopic (forumtopicno, banjino, forumtopicname, content, rule, posttemplete) VALUES (forumtopic_seq.NEXTVAL,?,?,?,?,?)";
-	private static final String GET_ALL_STMT = "SELECT forumtopicno, banjino, forumtopicname, content, rule, posttemplete FROM forumtopic where isDelete = 0 order by to_number(forumtopicno)";
-	private static final String GET_ONE_STMT = "SELECT forumtopicno, banjino, forumtopicname, content, rule, posttemplete FROM forumtopic where forumtopicno = ?";
+	private static final String INSERT_STMT = "INSERT INTO forumtopic (forumtopicno, banjino, forumtopicname) VALUES (forumtopic_seq.NEXTVAL,?,?)";
+	private static final String GET_ALL_STMT = "SELECT forumtopicno, banjino, forumtopicname FROM forumtopic where isDelete = 0 order by to_number(forumtopicno)";
+	private static final String GET_ONE_STMT = "SELECT forumtopicno, banjino, forumtopicname FROM forumtopic where forumtopicno = ?";
 	private static final String DELETE = "UPDATE forumtopic set isDelete=1 where forumtopicno = ?";
-	private static final String UPDATE = "UPDATE forumtopic set banjino=?, forumtopicname=?, content=?, rule=?, posttemplete=? where forumtopicno = ?";
+	private static final String UPDATE = "UPDATE forumtopic set banjino=?, forumtopicname=?";
 	private static final String GETBYBANJINO = "select * from forumtopic where banjino = ?";
 
 	@Override
@@ -39,10 +39,7 @@ public class ForumTopicJDBCDAO implements ForumTopicDAO_interface {
 
 			pstmt.setString(1, forumTopicVO.getBanjiNo());
 			pstmt.setString(2, forumTopicVO.getForumTopicName());
-			pstmt.setString(3, forumTopicVO.getContent());
-			pstmt.setString(4, forumTopicVO.getRule());
-			pstmt.setString(5, forumTopicVO.getPostTemplete());
-
+			
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -84,9 +81,7 @@ public class ForumTopicJDBCDAO implements ForumTopicDAO_interface {
 
 			pstmt.setString(1, forumTopicVO.getBanjiNo());
 			pstmt.setString(2, forumTopicVO.getForumTopicName());
-			pstmt.setString(3, forumTopicVO.getContent());
-			pstmt.setString(4, forumTopicVO.getRule());
-			pstmt.setString(5, forumTopicVO.getPostTemplete());
+			
 			pstmt.setString(6, forumTopicVO.getForumTopicNo());
 
 			pstmt.executeUpdate();
@@ -182,9 +177,7 @@ public class ForumTopicJDBCDAO implements ForumTopicDAO_interface {
 				forumTopicVO.setForumTopicNo(rs.getString("forumTopicNo"));
 				forumTopicVO.setBanjiNo(rs.getString("banjiNo"));
 				forumTopicVO.setForumTopicName(rs.getString("forumTopicName"));
-				forumTopicVO.setContent(rs.getString("content"));
-				forumTopicVO.setRule(rs.getString("rule"));
-				forumTopicVO.setPostTemplete(rs.getString("postTemplete"));
+				
 
 			}
 
@@ -243,9 +236,7 @@ public class ForumTopicJDBCDAO implements ForumTopicDAO_interface {
 				forumTopicVO.setForumTopicNo(rs.getString("forumTopicNo"));
 				forumTopicVO.setBanjiNo(rs.getString("banjiNo"));
 				forumTopicVO.setForumTopicName(rs.getString("forumTopicName"));
-				forumTopicVO.setContent(rs.getString("content"));
-				forumTopicVO.setRule(rs.getString("rule"));
-				forumTopicVO.setPostTemplete(rs.getString("postTemplete"));
+				
 				list.add(forumTopicVO);
 			}
 
@@ -283,48 +274,48 @@ public class ForumTopicJDBCDAO implements ForumTopicDAO_interface {
 
 	}
 
-	public static void main(String[] args) {
-		ForumTopicJDBCDAO dao = new ForumTopicJDBCDAO();
-
-		ForumTopicVO forumTopicVO1 = new ForumTopicVO();
-		forumTopicVO1.setBanjiNo("B003");
-		forumTopicVO1.setForumTopicName("學術版");
-		forumTopicVO1.setContent("學員可以在這討論程式相關問題");
-		forumTopicVO1.setRule("嚴禁色情暴力言語霸凌等字言");
-		forumTopicVO1.setPostTemplete("學術版-發文樣板");
-		dao.insert(forumTopicVO1);
-
-		ForumTopicVO forumTopicVO2 = new ForumTopicVO();
-		forumTopicVO2.setForumTopicNo("2");
-		forumTopicVO2.setBanjiNo("B002");
-		forumTopicVO2.setForumTopicName("閒聊版");
-		forumTopicVO2.setContent("學員可以在這打屁聊天");
-		forumTopicVO2.setRule("嚴禁色情暴力言語霸凌等字言");
-		forumTopicVO2.setPostTemplete("閒聊版發文格式");
-		dao.update(forumTopicVO2);
-
-		dao.delete("1");
-
-		ForumTopicVO forumTopicVO3 = dao.findByPrimaryKey("2");
-		System.out.print(forumTopicVO3.getForumTopicNo() + ",");
-		System.out.print(forumTopicVO3.getBanjiNo() + ",");
-		System.out.print(forumTopicVO3.getForumTopicName() + ",");
-		System.out.print(forumTopicVO3.getContent() + ",");
-		System.out.print(forumTopicVO3.getRule() + ",");
-		System.out.print(forumTopicVO3.getPostTemplete() + ",");
-		System.out.println("---------------------");
-
-		List<ForumTopicVO> list = dao.getAll();
-		for (ForumTopicVO aForumTopic : list) {
-			System.out.print(aForumTopic.getForumTopicNo() + ",");
-			System.out.print(aForumTopic.getBanjiNo() + ",");
-			System.out.print(aForumTopic.getForumTopicName() + ",");
-			System.out.print(aForumTopic.getContent() + ",");
-			System.out.print(aForumTopic.getRule() + ",");
-			System.out.print(aForumTopic.getPostTemplete() + ",");
-			System.out.println();
-		}
-	}
+//	public static void main(String[] args) {
+//		ForumTopicJDBCDAO dao = new ForumTopicJDBCDAO();
+//
+//		ForumTopicVO forumTopicVO1 = new ForumTopicVO();
+//		forumTopicVO1.setBanjiNo("B003");
+//		forumTopicVO1.setForumTopicName("學術版");
+//		forumTopicVO1.setContent("學員可以在這討論程式相關問題");
+//		forumTopicVO1.setRule("嚴禁色情暴力言語霸凌等字言");
+//		forumTopicVO1.setPostTemplete("學術版-發文樣板");
+//		dao.insert(forumTopicVO1);
+//
+//		ForumTopicVO forumTopicVO2 = new ForumTopicVO();
+//		forumTopicVO2.setForumTopicNo("2");
+//		forumTopicVO2.setBanjiNo("B002");
+//		forumTopicVO2.setForumTopicName("閒聊版");
+//		forumTopicVO2.setContent("學員可以在這打屁聊天");
+//		forumTopicVO2.setRule("嚴禁色情暴力言語霸凌等字言");
+//		forumTopicVO2.setPostTemplete("閒聊版發文格式");
+//		dao.update(forumTopicVO2);
+//
+//		dao.delete("1");
+//
+//		ForumTopicVO forumTopicVO3 = dao.findByPrimaryKey("2");
+//		System.out.print(forumTopicVO3.getForumTopicNo() + ",");
+//		System.out.print(forumTopicVO3.getBanjiNo() + ",");
+//		System.out.print(forumTopicVO3.getForumTopicName() + ",");
+//		System.out.print(forumTopicVO3.getContent() + ",");
+//		System.out.print(forumTopicVO3.getRule() + ",");
+//		System.out.print(forumTopicVO3.getPostTemplete() + ",");
+//		System.out.println("---------------------");
+//
+//		List<ForumTopicVO> list = dao.getAll();
+//		for (ForumTopicVO aForumTopic : list) {
+//			System.out.print(aForumTopic.getForumTopicNo() + ",");
+//			System.out.print(aForumTopic.getBanjiNo() + ",");
+//			System.out.print(aForumTopic.getForumTopicName() + ",");
+//			System.out.print(aForumTopic.getContent() + ",");
+//			System.out.print(aForumTopic.getRule() + ",");
+//			System.out.print(aForumTopic.getPostTemplete() + ",");
+//			System.out.println();
+//		}
+//	}
 
 	@Override
 	public List<ForumTopicVO> getByBanJiNo(String banjiNo) {
@@ -350,9 +341,7 @@ public class ForumTopicJDBCDAO implements ForumTopicDAO_interface {
 				forumTopicVO.setForumTopicNo(rs.getString("forumTopicNo"));
 				forumTopicVO.setBanjiNo(rs.getString("banjiNo"));
 				forumTopicVO.setForumTopicName(rs.getString("forumTopicName"));
-				forumTopicVO.setContent(rs.getString("content"));
-				forumTopicVO.setRule(rs.getString("rule"));
-				forumTopicVO.setPostTemplete(rs.getString("postTemplete"));
+				
 				list.add(forumTopicVO);
 			}
 

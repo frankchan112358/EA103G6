@@ -26,11 +26,11 @@ public class ForumTopicJNDIDAO implements ForumTopicDAO_interface {
 	}
 
 
-	private static final String INSERT_STMT = "INSERT INTO forumtopic (forumtopicno, banjino, forumtopicname, content, rule, posttemplete) VALUES (forumtopic_seq.NEXTVAL,?,?,?,?,?)";
-	private static final String GET_ALL_STMT = "SELECT forumtopicno, banjino, forumtopicname, content, rule, posttemplete FROM forumtopic where isDelete = 0 order by to_number(forumtopicno)";
-	private static final String GET_ONE_STMT = "SELECT forumtopicno, banjino, forumtopicname, content, rule, posttemplete FROM forumtopic where forumtopicno = ?";
+	private static final String INSERT_STMT = "INSERT INTO forumtopic (forumtopicno, banjino, forumtopicname) VALUES (forumtopic_seq.NEXTVAL,?,?)";
+	private static final String GET_ALL_STMT = "SELECT forumtopicno, banjino, forumtopicname FROM forumtopic where isDelete = 0 order by to_number(forumtopicno)";
+	private static final String GET_ONE_STMT = "SELECT forumtopicno, banjino, forumtopicname FROM forumtopic where forumtopicno = ?";
 	private static final String DELETE = "UPDATE forumtopic set isDelete=1 where forumtopicno = ?";
-	private static final String UPDATE = "UPDATE forumtopic set banjino=?, forumtopicname=?, content=?, rule=?, posttemplete=? where forumtopicno = ?";
+	private static final String UPDATE = "UPDATE forumtopic set banjino=?, forumtopicname=?";
 	private static final String GETBYBANJINO = "select * from forumtopic where banjino = ?";
 
 	@Override
@@ -47,9 +47,7 @@ public class ForumTopicJNDIDAO implements ForumTopicDAO_interface {
 
 			pstmt.setString(1, forumTopicVO.getBanjiNo());
 			pstmt.setString(2, forumTopicVO.getForumTopicName());
-			pstmt.setString(3, forumTopicVO.getContent());
-			pstmt.setString(4, forumTopicVO.getRule());
-			pstmt.setString(5, forumTopicVO.getPostTemplete());
+			
 
 			pstmt.executeUpdate();
 
@@ -89,9 +87,7 @@ public class ForumTopicJNDIDAO implements ForumTopicDAO_interface {
 
 			pstmt.setString(1, forumTopicVO.getBanjiNo());
 			pstmt.setString(2, forumTopicVO.getForumTopicName());
-			pstmt.setString(3, forumTopicVO.getContent());
-			pstmt.setString(4, forumTopicVO.getRule());
-			pstmt.setString(5, forumTopicVO.getPostTemplete());
+			
 			pstmt.setString(6, forumTopicVO.getForumTopicNo());
 
 			pstmt.executeUpdate();
@@ -181,9 +177,7 @@ public class ForumTopicJNDIDAO implements ForumTopicDAO_interface {
 				forumTopicVO.setForumTopicNo(rs.getString("forumTopicNo"));
 				forumTopicVO.setBanjiNo(rs.getString("banjiNo"));
 				forumTopicVO.setForumTopicName(rs.getString("forumTopicName"));
-				forumTopicVO.setContent(rs.getString("content"));
-				forumTopicVO.setRule(rs.getString("rule"));
-				forumTopicVO.setPostTemplete(rs.getString("postTemplete"));
+				
 
 			}
 
@@ -240,9 +234,7 @@ public class ForumTopicJNDIDAO implements ForumTopicDAO_interface {
 				forumTopicVO.setForumTopicNo(rs.getString("forumTopicNo"));
 				forumTopicVO.setBanjiNo(rs.getString("banjiNo"));
 				forumTopicVO.setForumTopicName(rs.getString("forumTopicName"));
-				forumTopicVO.setContent(rs.getString("content"));
-				forumTopicVO.setRule(rs.getString("rule"));
-				forumTopicVO.setPostTemplete(rs.getString("postTemplete"));
+				
 				list.add(forumTopicVO);
 			}
 
@@ -301,9 +293,7 @@ public class ForumTopicJNDIDAO implements ForumTopicDAO_interface {
 				forumTopicVO.setForumTopicNo(rs.getString("forumTopicNo"));
 				forumTopicVO.setBanjiNo(rs.getString("banjiNo"));
 				forumTopicVO.setForumTopicName(rs.getString("forumTopicName"));
-				forumTopicVO.setContent(rs.getString("content"));
-				forumTopicVO.setRule(rs.getString("rule"));
-				forumTopicVO.setPostTemplete(rs.getString("postTemplete"));
+				
 				list.add(forumTopicVO);
 			}
 

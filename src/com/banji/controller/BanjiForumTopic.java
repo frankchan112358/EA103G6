@@ -51,7 +51,7 @@ public class BanjiForumTopic extends HttpServlet {
 			empVO=new EmpService().getOneEmpByUserNo(userVO.getUserNo());
 		String action = req.getParameter("action");
 		if (action == null) {
-			List<LeaveVO> list = new LeaveService().getAllWithBanji(banjiNo);
+			List<ForumTopicVO> list = new ForumTopicService().getAllWithBanji(banjiNo);
 			req.setAttribute("list", list);
 			req.setAttribute("banjiVO", banjiVO);
 			String url = "/back-end/banji/forumtopic/forumTopic.jsp";
@@ -141,29 +141,30 @@ public class BanjiForumTopic extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-			try {
+//			try {
 				String forumTopicName = req.getParameter("forumTopicName");
-				String content = req.getParameter("content");
-				String rule = req.getParameter("rule");
-				String postTemplete = req.getParameter("postTemplete");
+				String banjiNo2 = req.getParameter("banjiNo");
 				
 				ForumTopicVO forumTopicVO = new ForumTopicVO();
 				
 				forumTopicVO.setBanjiNo(banjiNo);
 				forumTopicVO.setForumTopicName(forumTopicName);
-				forumTopicVO.setContent(content);
-				forumTopicVO.setRule(rule);
-				forumTopicVO.setPostTemplete(postTemplete);
+				System.out.println(banjiNo2);
+				System.out.println(forumTopicName);
 				ForumTopicService forumtopicSvc = new ForumTopicService();
-				forumTopicVO = forumtopicSvc.addForumTopic(banjiNo, forumTopicName, content, rule, postTemplete);
+				forumTopicVO = forumtopicSvc.addForumTopic(banjiNo2, forumTopicName);
+				
+				BanjiVO banjiVO2 = new BanjiService().getOneBanji(banjiNo);
+				req.setAttribute("banjiVO", banjiVO2);
+				
 				String url = "/back-end/banji/forumtopic/forumTopic.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-			} catch (Exception e) {
-				errorMsgs.add("新增資料失敗" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/forumtopic/forumTopic.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.add("新增資料失敗" + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/forumtopic/forumTopic.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 		if ("delete".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
@@ -172,12 +173,12 @@ public class BanjiForumTopic extends HttpServlet {
 				String forumTopicNo = req.getParameter("forumTopicNo");
 				ForumTopicService forumTopicService = new ForumTopicService();
 				forumTopicService.deleteForumTopic(forumTopicNo);
-				String url = "/back-end/forumtopic/listAllForumTopic.jsp";
+				String url = "/back-end/banji/forumtopic/forumTopic.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/forumtopic/listAllForumTopic.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/forumtopic/forumTopic.jsp");
 				failureView.forward(req, res);
 			}
 		}

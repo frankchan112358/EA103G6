@@ -1,25 +1,26 @@
 package com.forumtopic.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.banji.model.BanjiService;
+import com.banji.model.BanjiVO;
+
 
 public class ForumTopicService {
 
 	private ForumTopicDAO_interface dao;
 
 	public ForumTopicService() {
-		dao = new ForumTopicJDBCDAO();
+		dao = new ForumTopicJNDIDAO();
 	}
 
-	public ForumTopicVO addForumTopic(String banjiNo, String forumTopicName, String content, String rule,
-			String postTemplete) {
+	public ForumTopicVO addForumTopic(String banjiNo, String forumTopicName) {
 
 		ForumTopicVO forumTopicVO = new ForumTopicVO();
 
 		forumTopicVO.setBanjiNo(banjiNo);
 		forumTopicVO.setForumTopicName(forumTopicName);
-		forumTopicVO.setContent(content);
-		forumTopicVO.setRule(rule);
-		forumTopicVO.setPostTemplete(postTemplete);
 		dao.insert(forumTopicVO);
 
 		return forumTopicVO;
@@ -56,5 +57,11 @@ public class ForumTopicService {
 	
 	public List<ForumTopicVO> getByBanJiNo(String banJiNo) {
 		return dao.getByBanJiNo(banJiNo);
+	}
+	public List<ForumTopicVO> getAllWithBanji(String banjiNo) {
+		List<ForumTopicVO>list = new ArrayList<ForumTopicVO>();
+		BanjiVO banjiVO = new BanjiService().getOneBanji(banjiNo);
+		
+		return list;
 	}
 }

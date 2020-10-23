@@ -144,7 +144,7 @@ public class ForumTopicServlet extends HttpServlet {
 				forumTopicVO.setRule(rule);
 				forumTopicVO.setPostTemplete(postTemplete);
 				ForumTopicService forumtopicSvc = new ForumTopicService();
-				forumTopicVO = forumtopicSvc.addForumTopic(banjiNo, forumTopicName, content, rule, postTemplete);
+				forumTopicVO = forumtopicSvc.addForumTopic(banjiNo, forumTopicName);
 				String url = "/back-end/forumtopic/listAllForumTopic.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -166,7 +166,7 @@ public class ForumTopicServlet extends HttpServlet {
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/forumtopic/listAllForumTopic.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/forumtopic/forumTopic.jsp");
 				failureView.forward(req, res);
 			}
 		}
