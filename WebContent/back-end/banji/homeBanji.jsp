@@ -46,7 +46,7 @@
                     </div>
                     <div id="add">
 							<input type="hidden" name="action" > 
-							<button type="submit" id="btn-add" style="width:150px;heigh:50px;" onclick="location.href='<%=request.getContextPath()%>/back-end/banji/addBanji.jsp'" style="margin-bottom: 0px'"
+							<button type="submit" id="btn-add" style="width:150px;heigh:50px;" onclick="location.href='<%=request.getContextPath()%>/back-end/banji/addbanji.jsp'" style="margin-bottom: 0px'"
 								class="btn-write btn btn-sm btn-primary" >
 								<strong>新增養成班</strong>
 							</button>
