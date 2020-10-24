@@ -137,6 +137,8 @@ public class VideoServlet extends HttpServlet {
 						videoVO.setTimetableNo(timetableNo);
 						req.setAttribute("videoVO", videoVO);
 						
+						errorMsgs.add("請上傳影片 =) ");
+						
 						RequestDispatcher failureView = req
 								.getRequestDispatcher("/back-end/video/update_video_input.jsp");
 						failureView.forward(req, res);
