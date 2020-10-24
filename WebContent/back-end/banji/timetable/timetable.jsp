@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="addTimetableModal" tabindex="-1" role="dialog">
+    <div class="modal fade" id="editorTimetableModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -63,14 +63,14 @@
                     <form id="timetableActive" class="needs-validation" novalidate>
                         <c:forEach var="period" items="${timetableSvc.timetablePeriodAll}">
 
-                            <button active="update" periodNum="${period.num}" type="button" class="btn btn-lg btn-outline-info">
+                            <button periodNum="${period.num}" timetableNo="" dateStr="" type="button" class="timetableBtn editor btn btn-lg btn-outline-info">
                                 <span class="fal fa-book-reader mr-1"></span>
                                 ${period.text}
                             </button>
 
                         </c:forEach>
 
-                        <button active="delete" type="button" class="btn btn-lg btn-outline-danger">
+                        <button timetableNo="" type="button" class="timetableBtn delete btn btn-lg btn-outline-danger">
                             <span class="fal fa-times mr-1"></span>
                             刪除
                         </button>
@@ -92,7 +92,8 @@
             var calendarEl = document.getElementById('calendar');
             var events = {};
             var _courseVO = {};
-
+            var _banjiNo = '${banjiVO.banjiNo}';
+            var _active = 'no';
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 plugins: ['dayGrid', 'list', 'timeGrid', 'interaction', 'bootstrap'],
                 themeSystem: 'bootstrap',
@@ -129,6 +130,7 @@
                     $('#calendar').addClass('fc-reset-order')
                 },
                 dateClick: function (info) {
+                    _active = 'new';
                     let period = {
                         morning: true,
                         afternoon: true,
@@ -152,18 +154,58 @@
                             }
                         }
                     }
-                    console.log(period);
-                    $('[periodNum]').hide();
+                    $('.timetableBtn').hide();
+                    $('.timetableBtn').attr('dateStr', info.dateStr);
                     if (period.morning)
-                        $('[periodNum=0]').show();
+                        $('.timetableBtn[periodNum=0]').show();
                     if (period.afternoon)
-                        $('[periodNum=1]').show();
+                        $('.timetableBtn[periodNum=1]').show();
                     if (period.evening)
-                        $('[periodNum=2]').show();
+                        $('.timetableBtn[periodNum=2]').show();
 
-                    let addTimetableModal = $('#addTimetableModal');
-                    addTimetableModal.find('h1.modal-title').html(info.dateStr + ' 新增 ' + _courseVO.courseName + ' 課表');
-                    addTimetableModal.modal('show');
+                    let editorTimetableModal = $('#editorTimetableModal');
+                    editorTimetableModal.find('h1.modal-title').html(info.dateStr + ' 新增 ' + _courseVO.courseName + ' 課表');
+                    editorTimetableModal.modal('show');
+                },
+                eventClick: function (info) {
+                    _active = 'update';
+                    console.log(info);
+                    let period = {
+                        morning: true,
+                        afternoon: true,
+                        evening: true,
+                    }
+                    for (let i = 0; i < calendar.getEvents().length; i++) {
+                        let e = calendar.getEvents()[i];
+                        let eD = e.start;
+                        let iD = info.event.start;
+                        if (eD.getDate() == iD.getDate() && eD.getMonth() == iD.getMonth() && eD.getFullYear() == iD.getFullYear()) {
+                            switch (e.extendedProps.timetablePeriod) {
+                                case 0:
+                                    period.morning = false;
+                                    break;
+                                case 1:
+                                    period.afternoon = false;
+                                    break;
+                                case 2:
+                                    period.evening = false;
+                                    break;
+                            }
+                        }
+                    }
+                    $('.timetableBtn').hide();
+                    $('.timetableBtn').attr('dateStr', info.event.start);
+                    $('.timetableBtn').attr('timetableNo', info.event.id);
+                    if (period.morning)
+                        $('.timetableBtn[periodNum=0]').show();
+                    if (period.afternoon)
+                        $('.timetableBtn[periodNum=1]').show();
+                    if (period.evening)
+                        $('.timetableBtn[periodNum=2]').show();
+                    $('.timetableBtn.delete').show();
+                    let editorTimetableModal = $('#editorTimetableModal');
+                    editorTimetableModal.find('h1.modal-title').html(info.event.start.toLocaleDateString() + ' 修改 ' + _courseVO.courseName + ' 課表');
+                    editorTimetableModal.modal('show');
                 }
             });
             calendar.render();
@@ -189,7 +231,95 @@
                 });
             });
 
+            $(document).on('click', 'button.timetableBtn.editor', function (event) {
+                if (_active == 'new') {
+                    let courseNo = _courseVO.courseNo;
+                    let banjiNo = _banjiNo;
+                    let timetablePeriod = this.getAttribute('periodNum');
+                    let timetableDate = this.getAttribute('dateStr');
+                    $.ajax({
+                        type: 'POST',
+                        url: '<%=request.getContextPath()%>/banji/banji.timetable',
+                        data: {
+                            action: 'insert',
+                            banjiNo: banjiNo,
+                            courseNo: courseNo,
+                            timetablePeriod: timetablePeriod,
+                            timetableDate: timetableDate
+                        },
+                        success(res) {
+                            if (res != null) {
+                                calendar.removeAllEvents();
+                                calendar.addEventSource(res.events);
+                                _courseVO = JSON.parse(res._courseVO);
+                                $('#editorTimetableModal').modal('hide');
+                            }
+                        }
+                    });
+                }
+                else if (_active == 'update') {
+                    let courseNo = _courseVO.courseNo;
+                    let banjiNo = _banjiNo;
+                    let timetablePeriod = this.getAttribute('periodNum');
+                    let timetableNo = this.getAttribute('timetableNo');
+                    $.ajax({
+                        type: 'POST',
+                        url: '<%=request.getContextPath()%>/banji/banji.timetable',
+                        data: {
+                            action: 'update_period',
+                            banjiNo: banjiNo,
+                            courseNo: courseNo,
+                            timetablePeriod: timetablePeriod,
+                            timetableNo: timetableNo
+                        },
+                        success(res) {
+                            if (res != null) {
+                                calendar.removeAllEvents();
+                                calendar.addEventSource(res.events);
+                                _courseVO = JSON.parse(res._courseVO);
+                                $('#editorTimetableModal').modal('hide');
+                            }
+                        }
+                    });
+                }
+            });
 
+            $(document).on('click', 'button.timetableBtn.delete', function (event) {
+                let courseNo = _courseVO.courseNo;
+                let banjiNo = _banjiNo;
+                let timetableNo = this.getAttribute('timetableNo');
+                $.ajax({
+                    type: 'POST',
+                    url: '<%=request.getContextPath()%>/banji/banji.timetable',
+                    data: {
+                        action: 'delete',
+                        banjiNo: banjiNo,
+                        courseNo: courseNo,
+                        timetableNo: timetableNo
+                    },
+                    success(res) {
+                        if (res != null) {
+                            calendar.removeAllEvents();
+                            calendar.addEventSource(res.events);
+                            _courseVO = JSON.parse(res._courseVO);
+                            $('#editorTimetableModal').modal('hide');
+                        }
+                    }
+                });
+            });
+
+            function resetTimetableModal() {
+                _active = 'no';
+                $('.timetableBtn').hide();
+                $('.timetableBtn[dateStr]').attr('dateStr', '');
+                $('.timetableBtn[timetableNo]').attr('timetableNo', '');
+            }
+
+            $('#editorTimetableModal').on('hidden.bs.modal', function () {
+                resetTimetableModal();
+            });
+
+            
         });
     </script>
 </body>
