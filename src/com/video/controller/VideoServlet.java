@@ -31,7 +31,6 @@ public class VideoServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		System.out.println("Servlet - action: " + action);
 
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求，查詢單個影片觀看紀錄的資料
 
@@ -127,7 +126,6 @@ public class VideoServlet extends HttpServlet {
 					CourseVO courseVO = new CourseVO();
 					courseVO.setCourseNo(courseNo);
 					req.setAttribute("courseVO", courseVO);
-					System.out.println("Servlet 141 courseNo:" + courseVO.getCourseNo());
 					
 					String url = "/back-end/video/listAllVideo2.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -177,11 +175,18 @@ public class VideoServlet extends HttpServlet {
 				// 要存值到videoVO了
 				VideoVO videoVO = new VideoVO();
 				videoVO.setTimetableNo(timetableNo);
+				
+				String courseNo = req.getParameter("courseNo");
+
 				String Destination = "/videos";
 				String filePath = getServletContext().getRealPath(Destination);
 
 				VideoService videoSvc = new VideoService();
 				videoVO = videoSvc.addVideo(videoVO.getTimetableNo(), " ", filePath, video);
+				
+				CourseVO courseVO = new CourseVO();
+				courseVO.setCourseNo(courseNo);
+				req.setAttribute("courseVO", courseVO);
 
 				String url = "/back-end/video/listAllVideo2.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);

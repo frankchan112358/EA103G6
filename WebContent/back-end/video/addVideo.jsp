@@ -5,7 +5,6 @@
 <%
 String courseNo =request.getParameter("courseNo");
 pageContext.setAttribute("courseNo", courseNo);
-System.out.print("courseNo = " + courseNo);
 
 VideoVO videoVO = (VideoVO)request.getAttribute("videoVO");
 pageContext.setAttribute("videoVO", videoVO);
@@ -106,8 +105,10 @@ th, td {
 			</tr>
 
 		</table>
-		<br> <input type="hidden" name="action" value="insert"> <input
-			type="submit" value="送出新增">
+		<br> 
+		<input type="hidden" name="action" value="insert"> 
+		<input type="hidden" name="courseNo" value="<%=courseNo%>">
+		<input type="submit" value="送出新增">
 	</FORM>
 </body>
 

@@ -7,7 +7,6 @@
 <%
 String courseNo =request.getParameter("courseNo");
 pageContext.setAttribute("courseNo", courseNo);
-System.out.print("courseNo = " + courseNo);
 
 VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
 pageContext.setAttribute("videoVO", videoVO);
