@@ -1,9 +1,20 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.video.model.*"%>
-
+<%@ page import="com.timetable.model.*"%>
+<usebean>
 <%
-	VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
+VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
+String timetableNo = request.getParameter("timetableNo");
+TimetableService timetableSvc = new TimetableService();
+TimetableVO timetableVO =  timetableSvc.getOneTimetable(timetableNo);
+pageContext.setAttribute("timetableVO", timetableVO);
+System.out.println("update__timetableNo: " + timetableNo);
+System.out.println("update__timetableVO: " + timetableVO);
+pageContext.setAttribute("videoVO", videoVO);
+pageContext.setAttribute("timetableVO", timetableVO);
+
+
 %>
 
 <html>
@@ -66,20 +77,18 @@
 </c:if>
 
 <FORM METHOD="post" ACTION="<%=request.getContextPath() %>/video/video.do" NAME="form1" ENCTYPE="multipart/form-data">
-<input type="hidden" name="oriVideoName" value="<%=videoVO.getVideoName()%>">
 <table>
 	<tr>
 		<td>影片編號:<font color=red><b>*</b></font></td>
-		<td><%=videoVO.getVideoNo()%></td>
+		<td>${videoVO.videoNo}</td>
 	</tr>
 	<tr>
 		<td>課表編號:</td>
-		<td><input type="TEXT" name="timetableNo" size="45" value="<%=videoVO.getTimetableNo()%>"></td>
+		<td>課表編號:</td>
+				<td>${choose_timetableVO.timetableNo}</td>
+				<input type="hidden" name="timetableNo" value="${choose_timetableVO.timetableNo}">
 	</tr>
-	<tr>
-		<td>影片名稱:</td>
-		<td><input type="TEXT" name="videoName" size="45" value="<%=videoVO.getVideoName()%>"></td>
-	</tr>
+
 	<tr>
 		<td>影片:</td>
 		<td><input type="file" name="upfile2" ></td>

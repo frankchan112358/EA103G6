@@ -99,7 +99,7 @@ TimetableVO timetableVO = (TimetableVO) request.getAttribute("timetableVO");
                                                     		<td>${timetableVO.periodText}</td>
                                                     		<td>
                                                      		<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)!=null}">
-                                                     			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/video/update_video_input.jsp">
+                                                     			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/video/video.do">
 																<button type="submit"  class="btn btn-outline-success ">
 																<span class="fal fa-bug"></span>
 																<span>修改</span>
@@ -107,14 +107,14 @@ TimetableVO timetableVO = (TimetableVO) request.getAttribute("timetableVO");
 																
 																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
 																<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
-																<input type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
-																<input type="hidden" name="action" value="update">
+																<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
+																<input type="hidden" name="action" value="getOne_For_Update">
 															</FORM>
                                                      		</c:if>
                                                      		
                                                     		<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)==null}">
                                                     			<FORM METHOD="Post" ACTION="<%=request.getContextPath()%>/back-end/video/addVideo.jsp">
-																<button type="submit"  class="btn btn-outline-success ">
+																<button type="submit"  class="btn btn-outline-info ">
 																<span class="fal fa-bug"></span>
 																<span>新增</span>
 																</button>

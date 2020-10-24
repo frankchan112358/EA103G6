@@ -35,6 +35,7 @@ public class VideoServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		System.out.println("action: " + action);
 
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求，查詢單個影片觀看紀錄的資料
 
@@ -209,7 +210,7 @@ public class VideoServlet extends HttpServlet {
 					return;
 				}
 
-				// 要存直到videoVO了
+				// 要存值到videoVO了
 				VideoVO videoVO = new VideoVO();
 				videoVO.setTimetableNo(timetableNo);
 				String Destination = "/videos";
