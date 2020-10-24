@@ -2,15 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.video.model.*"%>
 <%@ page import="com.timetable.model.*"%>
-<usebean>
+
 <%
 VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
 String timetableNo = request.getParameter("timetableNo");
 TimetableService timetableSvc = new TimetableService();
 TimetableVO timetableVO =  timetableSvc.getOneTimetable(timetableNo);
 pageContext.setAttribute("timetableVO", timetableVO);
-System.out.println("update__timetableNo: " + timetableNo);
-System.out.println("update__timetableVO: " + timetableVO);
 pageContext.setAttribute("videoVO", videoVO);
 pageContext.setAttribute("timetableVO", timetableVO);
 
@@ -84,9 +82,8 @@ pageContext.setAttribute("timetableVO", timetableVO);
 	</tr>
 	<tr>
 		<td>課表編號:</td>
-		<td>課表編號:</td>
-				<td>${choose_timetableVO.timetableNo}</td>
-				<input type="hidden" name="timetableNo" value="${choose_timetableVO.timetableNo}">
+		<td>${timetableVO.timetableNo}</td>
+				<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
 	</tr>
 
 	<tr>
