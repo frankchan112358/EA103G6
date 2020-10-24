@@ -2,15 +2,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.video.model.*"%>
 <%@ page import="com.timetable.model.*"%>
+<%@ page import="com.course.model.*"%>
 
 <%
+String courseNo =request.getParameter("courseNo");
+pageContext.setAttribute("courseNo", courseNo);
+System.out.print("courseNo = " + courseNo);
+
 VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
-String timetableNo = request.getParameter("timetableNo");
+pageContext.setAttribute("videoVO", videoVO);
+
+String timetableNo = request.getParameter("timetableNo"); 
 TimetableService timetableSvc = new TimetableService();
 TimetableVO timetableVO =  timetableSvc.getOneTimetable(timetableNo);
 pageContext.setAttribute("timetableVO", timetableVO);
-pageContext.setAttribute("videoVO", videoVO);
-pageContext.setAttribute("timetableVO", timetableVO);
+
+
 
 
 %>
@@ -83,7 +90,6 @@ pageContext.setAttribute("timetableVO", timetableVO);
 	<tr>
 		<td>課表編號:</td>
 		<td>${timetableVO.timetableNo}</td>
-				<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
 	</tr>
 
 	<tr>
@@ -93,7 +99,10 @@ pageContext.setAttribute("timetableVO", timetableVO);
 </table>
 <br>
 <input type="hidden" name="action" value="update">
+
 <input type="hidden" name="videoNo" value="<%=videoVO.getVideoNo()%>">
+<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
+<input type="hidden" name="courseNo" value="<%=courseNo%>">
 <input type="submit" value="送出修改">
 </FORM>
 </body>

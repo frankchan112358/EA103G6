@@ -3,12 +3,17 @@
 <%@ page import="com.video.model.*"%>
 <%@ page import="com.timetable.model.*"%>
 <%
+String courseNo =request.getParameter("courseNo");
+pageContext.setAttribute("courseNo", courseNo);
+System.out.print("courseNo = " + courseNo);
+
 VideoVO videoVO = (VideoVO)request.getAttribute("videoVO");
+pageContext.setAttribute("videoVO", videoVO);
+
 String timetableNo = request.getParameter("timetableNo");
 TimetableService timetableSvc = new TimetableService();
 TimetableVO choose_timetableVO =  timetableSvc.getOneTimetable(timetableNo);
 pageContext.setAttribute("choose_timetableVO", choose_timetableVO);
-pageContext.setAttribute("videoVO", videoVO);
 %>
 <html>
 

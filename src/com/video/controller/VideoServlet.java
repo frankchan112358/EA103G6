@@ -1,12 +1,7 @@
 package com.video.controller;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.course.model.CourseVO;
 import com.video.model.VideoService;
 import com.video.model.VideoVO;
 
@@ -35,6 +31,7 @@ public class VideoServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		System.out.println("Servlet - action: " + action);
 
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求，查詢單個影片觀看紀錄的資料
 
@@ -107,78 +104,46 @@ public class VideoServlet extends HttpServlet {
 			try {
 				String videoNo = req.getParameter("videoNo");
 				String timetableNo = req.getParameter("timetableNo");
-				String videoName = req.getParameter("videoName");
-
 				Part update_video = req.getPart("upfile2");
-				byte[] videos = null;
-				// 如果有新增影片，先驗證格是是否正確 > 重新取得影片、設定檔名
+				
+				String courseNo = req.getParameter("courseNo");
+				
+				// 如果有新增影片，先驗證格式是否正確 > 之後重新存入 
 				if (update_video.getSize() != 0) {
-
 					if (!"video/mp4".equals(update_video.getContentType().toLowerCase())) {
 						errorMsgs.add("請上傳mp4格式影片");
 					}
 
-					// 就算有error，一樣把輸入值保留(所以要先存入再forward)
-					if (!errorMsgs.isEmpty()) {
+					// video儲存到資料夾(取路徑 > 建立資料夾 > getName > 存入file)
+					String Destination = "/videos";
+					String filePath = getServletContext().getRealPath(Destination);
+					File fDestination = new File(filePath);
+					if (!fDestination.exists())
+						fDestination.mkdirs();
+
+					File f = new File(fDestination, videoNo + ".mp4");
+					update_video.write(f.toString());
+					
+					CourseVO courseVO = new CourseVO();
+					courseVO.setCourseNo(courseNo);
+					req.setAttribute("courseVO", courseVO);
+					System.out.println("Servlet 141 courseNo:" + courseVO.getCourseNo());
+					
+					String url = "/back-end/video/listAllVideo2.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+
+				} else { // 如果影片名稱有改，則重取檔案 > 重新命名 > 重新存入
 						VideoVO videoVO = new VideoVO();
+						videoVO.setVideoNo(videoNo);
 						videoVO.setTimetableNo(timetableNo);
-						videoVO.setVideoName(videoName);
 						req.setAttribute("videoVO", videoVO);
+						
 						RequestDispatcher failureView = req
 								.getRequestDispatcher("/back-end/video/update_video_input.jsp");
 						failureView.forward(req, res);
 						return;
-					}
-
-					Part DBvideo = req.getPart("upfile2");
-
-					// video儲存到資料夾(取路徑 > 建立資料夾 > getName > 存入file)
-					String Destination = "/videos";
-					String realPath = getServletContext().getRealPath(Destination);
-					File fDestination = new File(realPath);
-					if (!fDestination.exists())
-						fDestination.mkdirs();
-
-					File f = new File(fDestination, videoName + ".mp4");
-					update_video.write(f.toString());
-				} else { // 如果影片名稱有改，則重取檔案 > 重新命名 > 重新存入
-
-					String Destination = "/videos";
-					String realPath = getServletContext().getRealPath(Destination);
-
-					/// 存入file(找檔案 > 設定好output檔案 > 建立水管 > read)
-					InputStream fin = new FileInputStream(new File(realPath + "\\" + videoNo + ".mp4"));
-					videos = new byte[fin.available()];
-					OutputStream fos = new FileOutputStream(new File(realPath + "\\" + videoNo + ".mp4"));
-					File fDestination = new File(realPath);
-					if (!fDestination.exists())
-						fDestination.mkdirs();
-					fin.read(videos);
-					fos.write(videos);
-					fos.close();
-					fin.close();
-
 				}
-
-				VideoVO videoVO = new VideoVO();
-				videoVO.setVideoNo(videoNo);
-				videoVO.setTimetableNo(timetableNo);
-				videoVO.setVideoName(videoName);
-				videoVO.setVideo(videos);
-
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("videoVO", videoVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/video/update_video_input.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-				VideoService videoSvc = new VideoService();
-				videoVO = videoSvc.updateVideo(videoNo, timetableNo, videoName, videos);
-
-				req.setAttribute("videoVO", videoVO);
-				String url = "/back-end/video/listOneVideo.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
 
 			} catch (Exception e) {
 				e.getStackTrace();
