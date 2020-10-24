@@ -2,6 +2,8 @@ package com.timetable.model;
 
 import java.sql.Date;
 
+import com.classroom.model.ClassroomService;
+import com.classroom.model.ClassroomVO;
 import com.course.model.CourseService;
 import com.course.model.CourseVO;
 
@@ -70,5 +72,9 @@ public class TimetableVO implements java.io.Serializable{
 	
 	public TimetablePeriod getPeriodEnum() {
 		return TimetablePeriod.findByNum(this.timetablePeriod);
+	}
+	
+	public ClassroomVO getClassroomVO() {
+		return new ClassroomService().getOneClassroom(this.classroomNo);
 	}
 }

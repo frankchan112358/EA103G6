@@ -134,6 +134,11 @@ public class CourseVO implements java.io.Serializable {
 	public BanjiVO getBanjiVO() {
 		return new BanjiService().getOneBanji(this.banjiNo);
 	}
+	
+	public String getStatusText() {
+		return CourseStatus.findByNum(this.status).getText();
+	}
+
 }
 
 

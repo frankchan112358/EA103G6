@@ -36,12 +36,48 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <c:forEach var="courseVO" items="${banjiVO.courseList}">
-                                <button class="course" courseNo="${courseVO.courseNo}" banjiNo="${banjiVO.banjiNo}">${courseVO.courseName}</button>
-                            </c:forEach>
+                            <div id="panel-2" class="panel">
+                                <div class="panel-hdr">
+                                    <h2>
+                                        課程 <span class="fw-300">列表</span>
+                                    </h2>
+                                </div>
+                                <div class="panel-container show">
+                                    <div class="panel-content">
+                                        <div class="d-flex justify-content-start flex-wrap demo">
+                                            <div class="btn-group mr-2" role="group">
+                                                <button type="button" class="banji btn btn-lg btn-primary" courseNo="" banjiNo="${banjiVO.banjiNo}"><span class="fal fa-book mr-1"></span>目前課表</button>
+                                                <c:forEach var="courseVO" items="${banjiVO.courseList}">
+                                                    <button type="button" class="course btn btn-lg btn-outline-danger" courseNo="${courseVO.courseNo}" banjiNo="${banjiVO.banjiNo}"><span class="fal fa-book mr-1"></span>${courseVO.courseName}</button>
+                                                </c:forEach>
+                                            </div>
+                                        </div>
+                                        <div class="desc-body">
+                                            <div class="desc-name">班級:${banjiVO.banjiName}</div>
+                                            <div class="desc-person">導師:${banjiVO.empVO.empName}</div>
+                                            <div class="desc-status">狀態:${banjiVO.statusText}</div>
+                                            <div class="desc-start">開始:${banjiVO.startDay}</div>
+                                            <div class="desc-end">結束:${banjiVO.endDay}</div>
+                                            <div class="desc-plan">預計時數:${banjiVO.classHours}</div>
+                                            <div class="desc-now">目前時數:${banjiVO.timetableList.size()*3}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-12">
-                            <div id="calendar"></div>
+                            <div id="panel-1" class="panel">
+                                <div class="panel-hdr">
+                                    <h2>
+                                        ${banjiVO.banjiName} <span class="fw-300">課表</span>
+                                    </h2>
+                                </div>
+                                <div class="panel-container show">
+                                    <div class="panel-content">
+                                        <div id="calendar"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </main>
@@ -50,35 +86,33 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="editorTimetableModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal fade" id="editorTimetableModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-transparent" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title"></h1>
+                    <h4 class="modal-title text-white"></h4>
                     <button type="button" class="close" data-dismiss="modal">
                         <span><i class="fal fa-times"></i></span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="timetableActive" class="needs-validation" novalidate>
-                        <c:forEach var="period" items="${timetableSvc.timetablePeriodAll}">
-
-                            <button periodNum="${period.num}" timetableNo="" dateStr="" type="button" class="timetableBtn editor btn btn-lg btn-outline-info">
-                                <span class="fal fa-book-reader mr-1"></span>
-                                ${period.text}
-                            </button>
-
-                        </c:forEach>
-
-                        <button timetableNo="" type="button" class="timetableBtn delete btn btn-lg btn-outline-danger">
-                            <span class="fal fa-times mr-1"></span>
-                            刪除
+                    <h5 class="text-white"></h5>
+                </div>
+                <div class="modal-footer">
+                    <c:forEach var="period" items="${timetableSvc.timetablePeriodAll}">
+                        <button periodNum="${period.num}" timetableNo="" dateStr="" type="button" class="timetableBtn editor btn btn-lg btn-info">
+                            <span class="fal fa-book-reader mr-1"></span>
+                            ${period.text}
                         </button>
-                        <button type="button" class="btn btn-lg btn-outline-dark" data-dismiss="modal">
-                            <span class="fal  fa-eject mr-1"></span>
-                            取消
-                        </button>
-                    </form>
+                    </c:forEach>
+                    <button timetableNo="" type="button" class="timetableBtn delete btn btn-lg btn-danger">
+                        <span class="fal fa-times mr-1"></span>
+                        刪除
+                    </button>
+                    <button type="button" class="timetableBtn cancel btn btn-lg btn-dark" data-dismiss="modal">
+                        <span class="fal  fa-eject mr-1"></span>
+                        取消
+                    </button>
                 </div>
             </div>
         </div>
@@ -90,8 +124,9 @@
         'use strict';
         $(document).ready(function () {
             var calendarEl = document.getElementById('calendar');
-            var events = {};
-            var _courseVO = {};
+            var _banjiVO = JSON.parse('${jsonData}')._banjiVO;
+            var _courseVO = null;
+
             var _banjiNo = '${banjiVO.banjiNo}';
             var _active = 'no';
             var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -113,24 +148,24 @@
                 },
                 navLinks: true,
                 header: {
-                    left: 'title',
-                    center: '',
-                    right: 'today prev,next'
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth'
                 },
                 footer: {
-                    left: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
+                    left: '',
                     center: '',
                     right: ''
                 },
                 eventLimit: true,
-                events: JSON.parse('${events}'),
+                events: JSON.parse('${jsonData}').events,
                 viewSkeletonRender: function () {
                     $('.fc-toolbar .btn-default').addClass('btn-sm');
                     $('.fc-header-toolbar h2').addClass('fs-md');
                     $('#calendar').addClass('fc-reset-order')
                 },
                 dateClick: function (info) {
-                    _active = 'new';
+                    _active = 'insert';
                     let period = {
                         morning: true,
                         afternoon: true,
@@ -162,14 +197,19 @@
                         $('.timetableBtn[periodNum=1]').show();
                     if (period.evening)
                         $('.timetableBtn[periodNum=2]').show();
-
+                    $('.timetableBtn.cancel').show();
                     let editorTimetableModal = $('#editorTimetableModal');
-                    editorTimetableModal.find('h1.modal-title').html(info.dateStr + ' 新增 ' + _courseVO.courseName + ' 課表');
+                    editorTimetableModal.find('h4.modal-title').html(`新增${"${_courseVO.courseName}"}課表在${"${info.dateStr}"}`);
+                    if (period.morning || period.afternoon || period.evening)
+                        editorTimetableModal.find('.modal-body h5').html(`請選擇你要安排的時段`);
+                    else
+                        editorTimetableModal.find('.modal-body h5').html(`在${"${info.dateStr}"}已無任何時段可供排課`);
                     editorTimetableModal.modal('show');
                 },
                 eventClick: function (info) {
-                    _active = 'update';
-                    console.log(info);
+                    if (_courseVO == null || info.event.extendedProps.courseNo != _courseVO.courseNo)
+                        return;
+                    _active = 'update_period';
                     let period = {
                         morning: true,
                         afternoon: true,
@@ -194,7 +234,7 @@
                         }
                     }
                     $('.timetableBtn').hide();
-                    $('.timetableBtn').attr('dateStr', info.event.start);
+                    $('.timetableBtn').attr('dateStr', info.event.start.toLocaleDateString());
                     $('.timetableBtn').attr('timetableNo', info.event.id);
                     if (period.morning)
                         $('.timetableBtn[periodNum=0]').show();
@@ -203,16 +243,67 @@
                     if (period.evening)
                         $('.timetableBtn[periodNum=2]').show();
                     $('.timetableBtn.delete').show();
+                    $('.timetableBtn.cancel').show();
                     let editorTimetableModal = $('#editorTimetableModal');
-                    editorTimetableModal.find('h1.modal-title').html(info.event.start.toLocaleDateString() + ' 修改 ' + _courseVO.courseName + ' 課表');
+                    editorTimetableModal.find('h4.modal-title').html(`調整${"${info.event.start.toLocaleDateString()}"}${"${info.event.extendedProps.periodText}"}的${"${_courseVO.courseName}"}課表`);
+                    editorTimetableModal.find('.modal-body h5').html(`請進行你的調整，注意 ! 課表刪除後無法復原`);
+                    editorTimetableModal.modal('show');
+                }, eventDragStart: function (info) {
+
+                }, eventDragStop: function (info) {
+
+                }, eventDrop: function (info) {
+                    _active = 'update_date';
+                    let period = {
+                        morning: true,
+                        afternoon: true,
+                        evening: true,
+                    }
+                    for (let i = 0; i < calendar.getEvents().length; i++) {
+                        let e = calendar.getEvents()[i];
+                        let eD = e.start;
+                        let iD = info.event.start;
+                        if (e.id != info.event.id) {
+                            if (eD.getDate() == iD.getDate() && eD.getMonth() == iD.getMonth() && eD.getFullYear() == iD.getFullYear()) {
+                                switch (e.extendedProps.timetablePeriod) {
+                                    case 0:
+                                        period.morning = false;
+                                        break;
+                                    case 1:
+                                        period.afternoon = false;
+                                        break;
+                                    case 2:
+                                        period.evening = false;
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                    $('.timetableBtn').hide();
+                    $('.timetableBtn').attr('dateStr', info.event.start.toLocaleDateString());
+                    $('.timetableBtn').attr('timetableNo', info.event.id);
+                    if (period.morning)
+                        $('.timetableBtn[periodNum=0]').show();
+                    if (period.afternoon)
+                        $('.timetableBtn[periodNum=1]').show();
+                    if (period.evening)
+                        $('.timetableBtn[periodNum=2]').show();
+                    $('.timetableBtn.cancel').show();
+                    let editorTimetableModal = $('#editorTimetableModal');
+                    editorTimetableModal.find('h4.modal-title').html(`把${"${info.oldEvent.start.toLocaleDateString()}"}${"${info.event.extendedProps.periodText}"}的${"${_courseVO.courseName}"}調課到${"${info.event.start.toLocaleDateString()}"}`);
+                    if (period.morning || period.afternoon || period.evening)
+                        editorTimetableModal.find('.modal-body h5').html(`請選擇你要安排的時段`);
+                    else
+                        editorTimetableModal.find('.modal-body h5').html(`在${"${info.event.start.toLocaleDateString()}"}已無任何時段可供排課`);
                     editorTimetableModal.modal('show');
                 }
             });
             calendar.render();
 
             $(document).on('click', 'button.course', function (event) {
+                let _this = this;
                 let courseNo = this.getAttribute('courseNo');
-                let banjiNo = this.getAttribute('banjiNo');
+                let banjiNo = _banjiNo;
                 $.ajax({
                     type: 'POST',
                     url: '<%=request.getContextPath()%>/banji/banji.timetable',
@@ -226,13 +317,74 @@
                             calendar.removeAllEvents();
                             calendar.addEventSource(res.events);
                             _courseVO = JSON.parse(res._courseVO);
+                            courseDescChange(_courseVO);
+                            courseBtnChange($(_this), courseNo);
                         }
                     }
                 });
             });
 
+            $(document).on('click', 'button.banji', function (event) {
+                let _this = this;
+                let banjiNo = _banjiNo;
+                $.ajax({
+                    type: 'POST',
+                    url: '<%=request.getContextPath()%>/banji/banji.timetable',
+                    data: {
+                        action: 'now',
+                        banjiNo: banjiNo
+                    },
+                    success(res) {
+                        if (res != null) {
+                            calendar.removeAllEvents();
+                            calendar.addEventSource(res.events);
+                            _courseVO = null;
+                            _banjiVO = res._banjiVO;
+                            courseDescChange(_banjiVO);
+                            courseBtnChange($(_this), '');
+                        }
+                    }
+                });
+            });
+
+            function courseBtnChange(btn, courseNo) {
+                if (btn.hasClass('banji')) {
+                    $('button.banji').addClass('btn-primary').removeClass('btn-outline-primary');
+                    $('button.course.btn-danger').addClass('btn-outline-danger').removeClass('btn-danger');
+                } else {
+                    $('button.banji.btn-primary').addClass('btn-outline-primary').removeClass('btn-primary');
+                    $('button.course.btn-danger').addClass('btn-outline-danger').removeClass('btn-danger');
+                    $(`button.course[courseNo=${"${courseNo}"}]`).addClass('btn-danger').removeClass('btn-outline-danger');
+                }
+            }
+
+            function courseDescChange(obj){
+                let desc = $('.desc-body');
+                if(_courseVO!=null){               
+                    desc.find('.desc-name').html(`${"課程 : ${obj.courseName}"}`);
+                    desc.find('.desc-person').html(`${"講師 : ${obj.teacherName}"}`);
+                    desc.find('.desc-status').html(`${"狀態 : ${obj.statusText}"}`);
+                    desc.find('.desc-start').html(`${"開始 : ${obj.startDate}"}`);
+                    desc.find('.desc-end').html(`${"結束 : ${obj.endDate}"}`);
+                    desc.find('.desc-plan').html(`${"預計堂數 : ${obj.lesson}"}`);
+                    desc.find('.desc-now').html(`${"目前堂數 : ${obj.timetableSize}"}`);
+                }else{
+                    desc.find('.desc-name').html(`${"班級 : ${obj.banjiName}"}`);
+                    desc.find('.desc-person').html(`${"導師 : ${obj.empName}"}`);
+                    desc.find('.desc-status').html(`${"狀態 : ${obj.statusText}"}`);
+                    desc.find('.desc-start').html(`${"開始 : ${obj.startDay}"}`);
+                    desc.find('.desc-end').html(`${"結束 : ${obj.endDay}"}`);
+                    desc.find('.desc-plan').html(`${"預計時數 : ${obj.classHours}"}`);
+                    desc.find('.desc-now').html(`${"目前時數 : ${obj.timetableSize*3}"}`);
+                }
+            }
+
+            $(document).on('click', 'button.timetableBtn.cancel', function (event) {
+
+            });
+
             $(document).on('click', 'button.timetableBtn.editor', function (event) {
-                if (_active == 'new') {
+                if (_active == 'insert') {
                     let courseNo = _courseVO.courseNo;
                     let banjiNo = _banjiNo;
                     let timetablePeriod = this.getAttribute('periodNum');
@@ -248,16 +400,13 @@
                             timetableDate: timetableDate
                         },
                         success(res) {
-                            if (res != null) {
-                                calendar.removeAllEvents();
-                                calendar.addEventSource(res.events);
-                                _courseVO = JSON.parse(res._courseVO);
+                            if (res == 'ok') {
                                 $('#editorTimetableModal').modal('hide');
                             }
                         }
                     });
                 }
-                else if (_active == 'update') {
+                else if (_active == 'update_period') {
                     let courseNo = _courseVO.courseNo;
                     let banjiNo = _banjiNo;
                     let timetablePeriod = this.getAttribute('periodNum');
@@ -273,10 +422,31 @@
                             timetableNo: timetableNo
                         },
                         success(res) {
-                            if (res != null) {
-                                calendar.removeAllEvents();
-                                calendar.addEventSource(res.events);
-                                _courseVO = JSON.parse(res._courseVO);
+                            if (res == 'ok') {
+                                $('#editorTimetableModal').modal('hide');
+                            }
+                        }
+                    });
+                }
+                else if (_active == 'update_date') {
+                    let courseNo = _courseVO.courseNo;
+                    let banjiNo = _banjiNo;
+                    let timetablePeriod = this.getAttribute('periodNum');
+                    let timetableNo = this.getAttribute('timetableNo');
+                    let timetableDate = this.getAttribute('dateStr');
+                    $.ajax({
+                        type: 'POST',
+                        url: '<%=request.getContextPath()%>/banji/banji.timetable',
+                        data: {
+                            action: 'update_date',
+                            banjiNo: banjiNo,
+                            courseNo: courseNo,
+                            timetablePeriod: timetablePeriod,
+                            timetableNo: timetableNo,
+                            timetableDate: timetableDate
+                        },
+                        success(res) {
+                            if (res == 'ok') {
                                 $('#editorTimetableModal').modal('hide');
                             }
                         }
@@ -298,10 +468,7 @@
                         timetableNo: timetableNo
                     },
                     success(res) {
-                        if (res != null) {
-                            calendar.removeAllEvents();
-                            calendar.addEventSource(res.events);
-                            _courseVO = JSON.parse(res._courseVO);
+                        if (res == 'ok') {
                             $('#editorTimetableModal').modal('hide');
                         }
                     }
@@ -313,13 +480,35 @@
                 $('.timetableBtn').hide();
                 $('.timetableBtn[dateStr]').attr('dateStr', '');
                 $('.timetableBtn[timetableNo]').attr('timetableNo', '');
+                let editorTimetableModal = $('#editorTimetableModal');
+                editorTimetableModal.find('h4.modal-title').html('');
+                editorTimetableModal.find('.modal-body h5').html('');
             }
 
-            $('#editorTimetableModal').on('hidden.bs.modal', function () {
-                resetTimetableModal();
+            $('#editorTimetableModal').on('hide.bs.modal', function () {
+                let courseNo = _courseVO.courseNo;
+                let banjiNo = _banjiNo;
+                $.ajax({
+                    type: 'POST',
+                    url: '<%=request.getContextPath()%>/banji/banji.timetable',
+                    data: {
+                        action: 'banji_and_teacher_timetable',
+                        banjiNo: banjiNo,
+                        courseNo: courseNo
+                    },
+                    success(res) {
+                        if (res != null) {
+                            calendar.removeAllEvents();
+                            calendar.addEventSource(res.events);
+                            _courseVO = JSON.parse(res._courseVO);
+                            courseDescChange(_courseVO);
+                            resetTimetableModal();
+                        }
+                    }
+                });
             });
 
-            
+
         });
     </script>
 </body>

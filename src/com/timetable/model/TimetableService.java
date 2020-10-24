@@ -1,10 +1,12 @@
 package com.timetable.model;
 
-import java.io.PrintWriter;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.banji.model.BanjiService;
+import com.banji.model.BanjiVO;
 import com.course.model.CourseService;
 import com.course.model.CourseVO;
 import com.google.gson.Gson;
@@ -94,6 +96,7 @@ public class TimetableService {
 			jsonObject.addProperty("id", timetableVO.getTimetableNo());
 			jsonObject.addProperty("title", String.format("%s %s %s",timetableVO.getPeriodText(),timetableVO.getCourseVO().getCourseName(),timetableVO.getCourseVO().getTeacherVO().getTeacherName()));
 			jsonObject.addProperty("start", String.format("%sT%s", timetableVO.getTimetableDate(),timetableVO.getPeriodEnum().getStart()));
+			jsonObject.addProperty("end", String.format("%sT%s", timetableVO.getTimetableDate(),timetableVO.getPeriodEnum().getEnd()));
 			jsonObject.addProperty("borderColor", "");
 			jsonObject.addProperty("editable", false);
 			JsonObject extendedProps = new JsonObject();
@@ -105,79 +108,9 @@ public class TimetableService {
 		return jsonStr;
 	}
 	
-	public String getAllJsonWithBanjiNoCourseNo (String banjiNo,String courseNo) {
-		TeacherVO teacherVO = new CourseService().getOneCourse(courseNo).getTeacherVO();
-		String teacherNo = teacherVO.getTeacherNo();		
+	public String getAllByJsonStrWithBanjiNoCourseNo(String banjiNo,String courseNo) {		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		JsonArray jsonArray = new JsonArray();
-		for (TimetableVO ttVO : getAll()) {
-			String ttCourseNo = ttVO.getCourseNo();
-			String ttTeacherNo = ttVO.getCourseVO().getTeacherVO().getTeacherNo();
-			String ttBanjiNo = ttVO.getCourseVO().getBanjiNo();
-			JsonObject jsonObject = new JsonObject();
-			if (ttBanjiNo.equals(banjiNo)&&ttCourseNo.equals(courseNo)) {
-				jsonObject.addProperty("title", String.format("%s %s %s",ttVO.getPeriodText(),ttVO.getCourseVO().getCourseName(),ttVO.getCourseVO().getTeacherVO().getTeacherName()));				
-				jsonObject.addProperty("backgroundColor", "red");
-				jsonObject.addProperty("editable", true);
-			}else if(ttBanjiNo.equals(banjiNo)){
-				jsonObject.addProperty("title", String.format("%s %s %s",ttVO.getPeriodText(),ttVO.getCourseVO().getCourseName(),ttVO.getCourseVO().getTeacherVO().getTeacherName()));				
-				jsonObject.addProperty("backgroundColor", "gray");
-				jsonObject.addProperty("editable", false);
-			}else if (ttTeacherNo.equals(teacherNo)) {
-				jsonObject.addProperty("title", String.format("%s %s %s %s",ttVO.getPeriodText(),ttVO.getCourseVO().getBanjiVO().getBanjiName(),ttVO.getCourseVO().getCourseName(),ttVO.getCourseVO().getTeacherVO().getTeacherName()));				
-				jsonObject.addProperty("backgroundColor", "green");
-				jsonObject.addProperty("editable", false);
-			}else {
-				continue;
-			}
-			jsonObject.addProperty("id", ttVO.getTimetableNo());
-			jsonObject.addProperty("start", String.format("%sT%s", ttVO.getTimetableDate(),ttVO.getPeriodEnum().getStart()));
-			jsonObject.addProperty("borderColor", "");
-			jsonArray.add(jsonObject);
-		}
-		String jsonStr = gson.toJson(jsonArray);
-		return jsonStr;
-	}
-	
-	public JsonArray getAllJsonArrayWithBanjiNoCourseNo (String banjiNo,String courseNo) {
-		TeacherVO teacherVO = new CourseService().getOneCourse(courseNo).getTeacherVO();
-		String teacherNo = teacherVO.getTeacherNo();		
-		JsonArray jsonArray = new JsonArray();
-		for (TimetableVO ttVO : getAll()) {
-			String ttCourseNo = ttVO.getCourseNo();
-			String ttTeacherNo = ttVO.getCourseVO().getTeacherVO().getTeacherNo();
-			String ttBanjiNo = ttVO.getCourseVO().getBanjiNo();
-			JsonObject jsonObject = new JsonObject();
-			if (ttBanjiNo.equals(banjiNo)&&ttCourseNo.equals(courseNo)) {
-				jsonObject.addProperty("title", String.format("%s %s %s",ttVO.getPeriodText(),ttVO.getCourseVO().getCourseName(),ttVO.getCourseVO().getTeacherVO().getTeacherName()));				
-				jsonObject.addProperty("backgroundColor", "red");
-				jsonObject.addProperty("editable", true);
-			}else if(ttBanjiNo.equals(banjiNo)){
-				jsonObject.addProperty("title", String.format("%s %s %s",ttVO.getPeriodText(),ttVO.getCourseVO().getCourseName(),ttVO.getCourseVO().getTeacherVO().getTeacherName()));				
-				jsonObject.addProperty("backgroundColor", "gray");
-				jsonObject.addProperty("editable", false);
-			}else if (ttTeacherNo.equals(teacherNo)) {
-				jsonObject.addProperty("title", String.format("%s %s %s %s",ttVO.getPeriodText(),ttVO.getCourseVO().getBanjiVO().getBanjiName(),ttVO.getCourseVO().getCourseName(),ttVO.getCourseVO().getTeacherVO().getTeacherName()));				
-				jsonObject.addProperty("backgroundColor", "green");
-				jsonObject.addProperty("editable", false);
-			}else {
-				continue;
-			}
-			jsonObject.addProperty("id", ttVO.getTimetableNo());
-			jsonObject.addProperty("start", String.format("%sT%s", ttVO.getTimetableDate(),ttVO.getPeriodEnum().getStart()));
-			jsonObject.addProperty("borderColor", "");
-			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-			jsonObject.addProperty("extendedProps", gson.toJson(ttVO));
-			jsonArray.add(jsonObject);
-		}
-		return jsonArray;
-	}
-	
-	public String getAllByJsonStrWithBanjiNoCourseNo(String banjiNo,String courseNo) {
-		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		JsonObject jsonObject = new JsonObject();
-		
+		JsonObject jsonObject = new JsonObject();		
 		TeacherVO teacherVO = new CourseService().getOneCourse(courseNo).getTeacherVO();
 		String teacherNo = teacherVO.getTeacherNo();		
 		JsonArray jsonArray = new JsonArray();
@@ -188,29 +121,89 @@ public class TimetableService {
 			JsonObject jsonObj = new JsonObject();
 			if (ttBanjiNo.equals(banjiNo)&&ttCourseNo.equals(courseNo)) {
 				jsonObj.addProperty("title", String.format("%s %s %s",ttVO.getPeriodText(),ttVO.getCourseVO().getCourseName(),ttVO.getCourseVO().getTeacherVO().getTeacherName()));				
-				jsonObj.addProperty("backgroundColor", "red");
+				jsonObj.addProperty("backgroundColor", "#fd3995");
+				jsonObj.addProperty("borderColor", "#fd3995");
 				jsonObj.addProperty("editable", true);
 			}else if(ttBanjiNo.equals(banjiNo)){
 				jsonObj.addProperty("title", String.format("%s %s %s",ttVO.getPeriodText(),ttVO.getCourseVO().getCourseName(),ttVO.getCourseVO().getTeacherVO().getTeacherName()));				
-				jsonObj.addProperty("backgroundColor", "gray");
+				jsonObj.addProperty("backgroundColor", "#868e96");
+				jsonObj.addProperty("borderColor", "#868e96");
 				jsonObj.addProperty("editable", false);
 			}else if (ttTeacherNo.equals(teacherNo)) {
 				jsonObj.addProperty("title", String.format("%s %s %s %s",ttVO.getPeriodText(),ttVO.getCourseVO().getBanjiVO().getBanjiName(),ttVO.getCourseVO().getCourseName(),ttVO.getCourseVO().getTeacherVO().getTeacherName()));				
-				jsonObj.addProperty("backgroundColor", "green");
+				jsonObj.addProperty("backgroundColor", "#1dc9b7");
+				jsonObj.addProperty("borderColor", "#1dc9b7");
 				jsonObj.addProperty("editable", false);
 			}else {
 				continue;
 			}
 			jsonObj.addProperty("id", ttVO.getTimetableNo());
 			jsonObj.addProperty("start", String.format("%sT%s", ttVO.getTimetableDate(),ttVO.getPeriodEnum().getStart()));
-			jsonObj.addProperty("borderColor", "");
-			jsonObj.add("extendedProps",gson.fromJson(gson.toJson(ttVO), JsonObject.class) );
+			jsonObj.addProperty("end", String.format("%sT%s", ttVO.getTimetableDate(),ttVO.getPeriodEnum().getEnd()));			
+			JsonObject extendedProps = gson.fromJson(gson.toJson(ttVO), JsonObject.class);
+			extendedProps.addProperty("courseName", ttVO.getCourseVO().getCourseName());
+			extendedProps.addProperty("classroomName", ttVO.getClassroomVO().getClassroomName());
+			extendedProps.addProperty("periodText", ttVO.getPeriodText());
+			extendedProps.addProperty("teacherName", ttVO.getCourseVO().getTeacherVO().getTeacherName());			
+			jsonObj.add("extendedProps", extendedProps);
 			jsonArray.add(jsonObj);
-		}			
-		
-		jsonObject.add("events", jsonArray);		
-		jsonObject.addProperty("_courseVO",gson.toJson(new CourseService().getOneCourse(courseNo)));
+		}					
+		jsonObject.add("events", jsonArray);			
+		CourseVO courseVO = new CourseService().getOneCourse(courseNo);
+		JsonObject _courseVO = gson.fromJson(gson.toJson(courseVO), JsonObject.class);
+		_courseVO.addProperty("teacherName", courseVO.getTeacherVO().getTeacherName());
+		_courseVO.addProperty("statusText", courseVO.getStatusText());
+		_courseVO.addProperty("timetableSize", getAllWithCourseNo(courseNo).size());
+		jsonObject.addProperty("_courseVO",gson.toJson(_courseVO));
 		String jsonStr = gson.toJson(jsonObject);
 		return jsonStr;
 	}
+		
+	public String getAllByJsonStrWithBanjiNo(String banjiNo) {		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();				
+		JsonArray jsonArray = new JsonArray();
+		for (TimetableVO ttVO :getAll()) {
+			String ttBanjiNo = ttVO.getCourseVO().getBanjiNo();
+			JsonObject jsonObj = new JsonObject();
+			if (ttBanjiNo.equals(banjiNo)) {
+				jsonObj.addProperty("title", String.format("%s %s %s",ttVO.getPeriodText(),ttVO.getCourseVO().getCourseName(),ttVO.getCourseVO().getTeacherVO().getTeacherName()));				
+				jsonObj.addProperty("backgroundColor", "#2198F3");
+				jsonObj.addProperty("borderColor", "#2198F3");	
+				jsonObj.addProperty("editable", false);
+				jsonObj.addProperty("id", ttVO.getTimetableNo());
+				jsonObj.addProperty("start", String.format("%sT%s", ttVO.getTimetableDate(),ttVO.getPeriodEnum().getStart()));
+				jsonObj.addProperty("end", String.format("%sT%s", ttVO.getTimetableDate(),ttVO.getPeriodEnum().getEnd()));
+				JsonObject extendedProps = gson.fromJson(gson.toJson(ttVO), JsonObject.class);
+				extendedProps.addProperty("courseName", ttVO.getCourseVO().getCourseName());
+				extendedProps.addProperty("classroomName", ttVO.getClassroomVO().getClassroomName());
+				extendedProps.addProperty("periodText", ttVO.getPeriodText());
+				extendedProps.addProperty("teacherName", ttVO.getCourseVO().getTeacherVO().getTeacherName());				
+				jsonObj.add("extendedProps", extendedProps);
+				jsonArray.add(jsonObj);
+			}
+		}							
+		BanjiVO banjiVO = new BanjiService().getOneBanji(banjiNo);
+		JsonObject _banjiVO = gson.fromJson(gson.toJson(banjiVO), JsonObject.class);
+		_banjiVO.addProperty("empName", banjiVO.getEmpVO().getEmpName());
+		_banjiVO.addProperty("statusText", banjiVO.getStatusText());
+		_banjiVO.addProperty("timetableSize", getAllWithBanjiNo(banjiNo).size());		
+		JsonObject jsonObject = new JsonObject();	
+		jsonObject.add("events", jsonArray);
+		jsonObject.add("_banjiVO",_banjiVO);		
+		String jsonStr = gson.toJson(jsonObject);
+		return jsonStr;
+	}
+	
+	public java.sql.Date jsonStrTimeConvertToSqlDate(String jsonStrTime, String formatStr) {
+		try {
+			SimpleDateFormat format = new SimpleDateFormat(formatStr);
+			java.util.Date uDate = format.parse(jsonStrTime);
+			return new java.sql.Date(uDate.getTime());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
 }

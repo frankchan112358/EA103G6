@@ -134,4 +134,12 @@ public class BanjiVO implements java.io.Serializable {
 	public List<TimetableVO> getTimetableList() {
 		return new TimetableService().getAllWithBanjiNo(this.banjiNo);
 	}
+	
+	public EmpVO getEmpVO() {
+		return new EmpService().getOneEmp(this.empNo);
+	}
+	
+	public String getStatusText() {
+		return BanjiStatus.findByNum(this.status).getText();
+	}
 }
