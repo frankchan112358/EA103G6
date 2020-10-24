@@ -99,7 +99,7 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
                                     <div class="panel-content">
                                         <div class="slide-bar">
                                         	<c:forEach var="videoVO" items="${videoList}">
-                                                    <a class=vpath href="<%=request.getContextPath()%>/videos/${videoVO.videoName}.mp4"  target="player">
+                                                    <a class=vpath href="<%=request.getContextPath()%>/videos/${videoVO.videoNo}.mp4"  target="player">
                                         		<div class="in-sb" > 
                                                     <input type="hidden" name="videoNo" value="${videoVO.videoNo}">
                                                     <input  type="hidden" name="timetableNo" value="${videoVO.timetableNo}">

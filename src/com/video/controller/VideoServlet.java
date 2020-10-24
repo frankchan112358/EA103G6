@@ -106,26 +106,14 @@ public class VideoServlet extends HttpServlet {
 
 			try {
 				String videoNo = req.getParameter("videoNo");
-
 				String timetableNo = req.getParameter("timetableNo");
-				String timetableReg = "[T]{2}[0-9]{6}";
-				if (timetableNo == null || timetableNo.trim().length() == 0) {
-					errorMsgs.add("課表編號: 請勿空白");
-				} else if (!timetableNo.trim().matches(timetableReg)) {
-					errorMsgs.add("課表編號格式錯誤");
-				}
-
-				String oriVideoName = req.getParameter("oriVideoName");
 				String videoName = req.getParameter("videoName");
-				if (videoName == null || videoName.trim().length() == 0) {
-					errorMsgs.add("影片名稱: 請勿空白");
-				}
 
 				Part update_video = req.getPart("upfile2");
 				byte[] videos = null;
 				// 如果有新增影片，先驗證格是是否正確 > 重新取得影片、設定檔名
-				if (update_video.getSize()!= 0) {
-					
+				if (update_video.getSize() != 0) {
+
 					if (!"video/mp4".equals(update_video.getContentType().toLowerCase())) {
 						errorMsgs.add("請上傳mp4格式影片");
 					}
@@ -136,13 +124,14 @@ public class VideoServlet extends HttpServlet {
 						videoVO.setTimetableNo(timetableNo);
 						videoVO.setVideoName(videoName);
 						req.setAttribute("videoVO", videoVO);
-						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/video/update_video_input.jsp");
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/back-end/video/update_video_input.jsp");
 						failureView.forward(req, res);
 						return;
 					}
 
 					Part DBvideo = req.getPart("upfile2");
-					
+
 					// video儲存到資料夾(取路徑 > 建立資料夾 > getName > 存入file)
 					String Destination = "/videos";
 					String realPath = getServletContext().getRealPath(Destination);
@@ -152,15 +141,15 @@ public class VideoServlet extends HttpServlet {
 
 					File f = new File(fDestination, videoName + ".mp4");
 					update_video.write(f.toString());
-				} else {   // 如果影片名稱有改，則重取檔案 > 重新命名 > 重新存入
-					
+				} else { // 如果影片名稱有改，則重取檔案 > 重新命名 > 重新存入
+
 					String Destination = "/videos";
 					String realPath = getServletContext().getRealPath(Destination);
-					
-					///存入file(找檔案 > 設定好output檔案 > 建立水管 > read)
-					InputStream fin = new FileInputStream(new File(realPath + "\\" + oriVideoName + ".mp4"));
+
+					/// 存入file(找檔案 > 設定好output檔案 > 建立水管 > read)
+					InputStream fin = new FileInputStream(new File(realPath + "\\" + videoNo + ".mp4"));
 					videos = new byte[fin.available()];
-					OutputStream fos = new FileOutputStream(new File (realPath + "\\" + videoName + ".mp4"));
+					OutputStream fos = new FileOutputStream(new File(realPath + "\\" + videoNo + ".mp4"));
 					File fDestination = new File(realPath);
 					if (!fDestination.exists())
 						fDestination.mkdirs();
@@ -168,9 +157,9 @@ public class VideoServlet extends HttpServlet {
 					fos.write(videos);
 					fos.close();
 					fin.close();
-					
+
 				}
-				
+
 				VideoVO videoVO = new VideoVO();
 				videoVO.setVideoNo(videoNo);
 				videoVO.setTimetableNo(timetableNo);
@@ -205,16 +194,7 @@ public class VideoServlet extends HttpServlet {
 
 			try {
 				String timetableNo = req.getParameter("timetableNo");
-				if (timetableNo == null || timetableNo.trim().length() == 0) {
-					errorMsgs.add("課表編號: 請勿空白");
-				} else if (!timetableNo.trim().matches("[T]{2}[0-9]{6}")) {
-					errorMsgs.add("課表編號格式錯誤");
-				}
-				String videoName = req.getParameter("videoName");
-				if (videoName == null || videoName.trim().length() == 0) {
-					errorMsgs.add("影片名稱: 請勿空白");
-				}
-				Part video = req.getPart("upfile2"); // Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
+				Part video = req.getPart("upfile2");
 				if (!"video/mp4".equals(video.getContentType().toLowerCase())) {
 					errorMsgs.add("請上傳mp4格式影片");
 				}
@@ -223,41 +203,27 @@ public class VideoServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					VideoVO videoVO = new VideoVO();
 					videoVO.setTimetableNo(timetableNo);
-					videoVO.setVideoName(videoName);
 					req.setAttribute("videoVO", videoVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/video/addVideo.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 
-				// 利用inputStream、outputStream把video存入DB(給儲存資料byte > 取影片 > 利用資料流讀取資料 )
-				Part DBvideo = req.getPart("upfile2");
-
-				
-				InputStream in = DBvideo.getInputStream();
-				byte[] videos = new byte[in.available()];
-
-				// video儲存到資料夾(取路徑 > 建立資料夾 > getName > 存入file)
-				String Destination = "/videos";
-				String realPath = getServletContext().getRealPath(Destination);
-				File fDestination = new File(realPath);
-				if (!fDestination.exists())
-					fDestination.mkdirs();
-
-				File f = new File(fDestination, videoName + ".mp4");
-				video.write(f.toString());
-
+				// 要存直到videoVO了
 				VideoVO videoVO = new VideoVO();
 				videoVO.setTimetableNo(timetableNo);
-				videoVO.setVideoName(videoName);
-				videoVO.setVideo(videos);
+				String Destination = "/videos";
+				String filePath = getServletContext().getRealPath(Destination);
+
 				VideoService videoSvc = new VideoService();
-				videoVO = videoSvc.addVideo(videoVO.getTimetableNo(), videoVO.getVideoName(), videoVO.getVideo());
-				String url = "/back-end/video/listAllVideo.jsp";
+				videoVO = videoSvc.addVideo(videoVO.getTimetableNo(), " ", filePath, video);
+
+				String url = "/back-end/video/listAllVideo2.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/video/addVideo.jsp");
 				failureView.forward(req, res);

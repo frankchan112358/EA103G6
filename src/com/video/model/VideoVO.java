@@ -1,5 +1,7 @@
 package com.video.model;
 
+import java.util.Arrays;
+
 import com.timetable.model.TimetableService;
 import com.timetable.model.TimetableVO;
 
@@ -45,4 +47,9 @@ public class VideoVO implements java.io.Serializable{
 		return new TimetableService().getOneTimetable(this.timetableNo);
 	}
 
+	@Override
+	public String toString() {
+		return "VideoVO [videoNo=" + videoNo + ", timetableNo=" + timetableNo + ", videoName=" + videoName + ", video="
+				+ Arrays.toString(video) + "]";
+	}
 }

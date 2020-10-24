@@ -8,6 +8,7 @@ String timetableNo = request.getParameter("timetableNo");
 TimetableService timetableSvc = new TimetableService();
 TimetableVO choose_timetableVO =  timetableSvc.getOneTimetable(timetableNo);
 pageContext.setAttribute("choose_timetableVO", choose_timetableVO);
+pageContext.setAttribute("videoVO", videoVO);
 %>
 <html>
 
@@ -93,11 +94,7 @@ th, td {
 				<td>${choose_timetableVO.timetableNo}</td>
 				<input type="hidden" name="timetableNo" value="${choose_timetableVO.timetableNo}">
 			</tr>
-			<tr>
-				<td>影片名稱:</td>
-				<td><input type="TEXT" name="videoName" size="45"
-					value="<%=(videoVO == null) ? "" : videoVO.getVideoName()%>" /></td>
-			</tr>
+			
 			<tr>
 				<td>影片上傳:</td>
 				<td><input type="file" name="upfile2">
