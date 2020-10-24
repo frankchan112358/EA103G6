@@ -76,6 +76,8 @@ public class NotifyServlet {
 	
 	public void broadcast(String userNo,String title,String content) {
 		
+		if(userNo==null)return;
+		
 		//將提醒存進redis資料庫
 		WebsocketNotifyVO notify =new WebsocketNotifyVO(title, content, new Date().getTime());
 		String notifyJson = gson.toJson(notify);
