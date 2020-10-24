@@ -1,22 +1,26 @@
 package com.video.model;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.Part;
 
 public class VideoService {
 	private VideoDAO_interface dao;
-	
+
 	public VideoService() {
 		dao = new VideoDAO();
 	}
-	
-	public VideoVO addVideo( String timetableNo, String videoName, byte[] video) {
+
+	public VideoVO addVideo(String timetableNo, String videoName, String filePath, Part video) {
 
 		VideoVO videoVO = new VideoVO();
 
 		videoVO.setTimetableNo(timetableNo);
 		videoVO.setVideoName(videoName);
-		videoVO.setVideo(video);
-		dao.insert(videoVO);
+
+		VideoDAO.insert2(videoVO, video, filePath);
 
 		return videoVO;
 	}
@@ -45,11 +49,11 @@ public class VideoService {
 	public List<VideoVO> getAll() {
 		return dao.getAll();
 	}
-	
+
 	public VideoVO getOneVideoWithTimetableNo(String timetableNo) {
 		VideoVO videoVO = null;
-		for(VideoVO item : getAll()) {
-			if(item.getTimetableNo().equals(timetableNo))
+		for (VideoVO item : getAll()) {
+			if (item.getTimetableNo().equals(timetableNo))
 				videoVO = item;
 		}
 		return videoVO;

@@ -14,6 +14,7 @@ List<TimetableVO> timetableList = timetableSvc.getAll();
 VideoService videoSvc =new VideoService();
 List<VideoVO> videoList = videoSvc.getAll();
 
+pageContext.setAttribute("videoSvc", videoSvc);
 pageContext.setAttribute("courseList", courseList);
 pageContext.setAttribute("timetableList", timetableList);
 pageContext.setAttribute("videoList", videoList);
@@ -98,13 +99,14 @@ TimetableVO timetableVO = (TimetableVO) request.getAttribute("timetableVO");
                                                     		<td>${timetableVO.periodText}</td>
                                                     		<td>
                                                      		<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)!=null}">
-                                                     			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/video/video.do">
+                                                     			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/video/update_video_input.jsp">
 																<button type="submit"  class="btn btn-outline-success ">
 																<span class="fal fa-bug"></span>
 																<span>修改</span>
 																</button>
 																
 																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+																<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
 																<input type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
 																<input type="hidden" name="action" value="update">
 															</FORM>
