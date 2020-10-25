@@ -120,9 +120,7 @@ public class UserServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("userVOForShow", userVO);
-//				String url = "/back-end/user/listOneUser.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url);
-//				successView.forward(req, res);
+
 
 				if (userVO.getType().equals(0)) {
 					StudentService studentSvc = new StudentService();

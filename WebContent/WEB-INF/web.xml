@@ -52,8 +52,12 @@
 	<filter-mapping>
 		<filter-name>userPermissionFilter</filter-name>
 		<url-pattern>/back-end/emp/empList.jsp</url-pattern>
-		<url-pattern>/back-end/emp/listOneEmp.jsp</url-pattern>
-		
+		<url-pattern>/back-end/emp/listOneEmp.jsp</url-pattern>		
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
 
 	<servlet>
