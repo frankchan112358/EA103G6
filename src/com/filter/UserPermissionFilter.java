@@ -37,7 +37,6 @@ public class UserPermissionFilter implements Filter {
 		UserVO userVO = (UserVO) session.getAttribute("userVO");
 
 		if (userVO == null) {
-
 			RequestDispatcher failureView = req.getRequestDispatcher("/error-page/page_error-forPermission.jsp");
 			failureView.forward(req, res);
 			return;
@@ -45,19 +44,22 @@ public class UserPermissionFilter implements Filter {
 
 		String gotoPlace = req.getParameter("goto");
 
+		/*********************導師管理的權限篩選*********************/
 		if ("empList".equals(gotoPlace)) {
+
 			if (userVO.getType().equals(1)) {
 
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
 				failureView.forward(req, res);
+				return;
 
 			} else if (userVO.getType().equals(2)) {
 
 				// 測導師的權限若可讀就導向
 				UserPermissionService checkPermission = new UserPermissionService();
 				if (checkPermission.getOneUserPermission(userVO.getUserNo(), "4").getReadable().equals(1)) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/empList.jsp");
-					failureView.forward(req, res);
+					System.out.println(555);
+					chain.doFilter(request, response);
 					return;
 				} else {
 
@@ -68,7 +70,7 @@ public class UserPermissionFilter implements Filter {
 
 			}
 		}
-
+		/*********************講師管理的權限篩選*********************/
 		if ("teacherList".equals(gotoPlace)) {
 			if (userVO.getType().equals(1)) {
 
@@ -76,11 +78,12 @@ public class UserPermissionFilter implements Filter {
 				failureView.forward(req, res);
 				return;
 			} else {
-
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teacher/teacherList.jsp");
-				failureView.forward(req, res);
+				chain.doFilter(request, response);
+				return;
 			}
 		}
+		
+		/*********************學生管理的權限篩選*********************/
 		if ("studentList".equals(gotoPlace)) {
 			if (userVO.getType().equals(1)) {
 
@@ -88,11 +91,10 @@ public class UserPermissionFilter implements Filter {
 				failureView.forward(req, res);
 				return;
 			} else {
-
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/student/studentList.jsp");
-				failureView.forward(req, res);
+				chain.doFilter(request, response);
+				return;
 			}
 		}
-
+		chain.doFilter(request, response);
 	}
 }
