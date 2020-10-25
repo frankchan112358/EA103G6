@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.course.model.CourseVO;
 import com.teachingfile.model.TeachingFileService;
 import com.teachingfile.model.TeachingFileVO;
 
@@ -245,18 +246,23 @@ public class TeachingFileServlet extends HttpServlet {
 
 			try {
 				String teachingFileNo = req.getParameter("teachingFileNo");
-
+				String courseNo = req.getParameter("courseNo");
+				
 				TeachingFileService teachingFileSvc = new TeachingFileService();
 				teachingFileSvc.deleteTeachingFile(teachingFileNo);
+				
+				CourseVO courseVO = new CourseVO();
+				courseVO.setCourseNo(courseNo);
+				req.setAttribute("courseVO", courseVO);
 
-				String url = "/back-end/teachingFile/listAllTeachingFile.jsp";
+				String url = "/back-end/teachingFile/listAllTeachingFile2.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/teachingFile/listAllTeachingFile.jsp");
+						.getRequestDispatcher("/back-end/teachingFile/listAllTeachingFile2.jsp");
 				failureView.forward(req, res);
 			}
 		}

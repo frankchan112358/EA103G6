@@ -118,8 +118,8 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 																				</button>
 																				<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
 																				<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
-																				<ipnut type="hidden" name="teachingFileNo" value="${teachingFileVO.teachingFileNo}">
-																					<input type="hidden" name="action" value="delete">
+																				<input type="hidden" name="teachingFileNo" value="${teachingFileVO.teachingFileNo}">
+																				<input type="hidden" name="action" value="delete">
 																			</FORM>
 																			</td>
 																		</tr>
