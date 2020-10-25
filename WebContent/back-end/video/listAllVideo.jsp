@@ -89,8 +89,8 @@
 				<input type="hidden" name="videoNo" value="${videoVO.videoNo}">
 				<input type="hidden" name="action" value="getOne_For_Update">
 			</FORM>
-		</td>
-		<td>
+			</td>
+			<td>
 			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/video/video.do" style="margin-bottom:0px;">
 				<input type="submit" value="刪除">
 				<input type="hidden" name="videoNo" value="${videoVO.videoNo}">

@@ -101,11 +101,14 @@ public class VideoJDBCDAO implements VideoDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(DELETE);
-			pstmt = con.prepareStatement(DELETE_VIDEOLOG);
+//			pstmt = con.prepareStatement(DELETE_VIDEOLOG);
+			System.out.println("delete: line106");
+			System.out.println(videoNo);
 
 			pstmt.setString(1, videoNo);
 
 			pstmt.executeUpdate();
+			System.out.println("我應該有執行到delete line 111");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -322,8 +325,8 @@ public class VideoJDBCDAO implements VideoDAO_interface {
 //		videoVO2.setVideoName("2020-12-02 下午");
 //		dao.update(videoVO2);
 //
-//		// 刪除
-//		dao.delete("1");
+		// 刪除
+		dao.delete("58");
 //
 //		// 查詢
 //		VideoVO videoVO3 = dao.findByPrimaryKey("44");
