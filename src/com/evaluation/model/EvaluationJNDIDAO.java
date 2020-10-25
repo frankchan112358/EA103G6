@@ -24,6 +24,9 @@ public class EvaluationJNDIDAO implements EvaluationDAO_interface {
 	private static final String GET_BY_COURSE_STMT = "SELECT evaluationNo,courseNo,studentNo,question,answer FROM Evaluation WHERE courseNo = ? ORDER BY to_number(evaluationNo)";
 	private static final String UPDATE = "UPDATE Evaluation SET courseNo=?,studentNo=?,question=?,answer=? WHERE evaluationNo = ?";
 	private static final String DELETE = "DELETE FROM Evaluation WHERE evaluationNo = ?";
+	private static final String GetEvaluationWithCourseStudent = "SELECT evaluationNo,courseNo,studentNo,question,answer FROM Evaluation WHERE courseNo = ? AND studentNo = ? ORDER BY question";
+	private static final String DeleteWithCourseStudent = "DELETE FROM Evaluation WHERE courseNo = ? AND studentNo = ?";
+	private static final String GetStudentAddedCourseEvaluation = "SELECT DISTINCT courseNo FROM Evaluation WHERE studentNo = ? ORDER BY courseNo";
 
 	@Override
 	public void insert(EvaluationVO evaluationVO) {
@@ -232,6 +235,125 @@ public class EvaluationJNDIDAO implements EvaluationDAO_interface {
 				evaluationVO.setQuestion(rs.getInt("question"));
 				evaluationVO.setAnswer(rs.getInt("answer"));
 				list.add(evaluationVO);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	public List<EvaluationVO> getEvaluationWithCourseStudent(String courseNo, String studentNo) {
+		List<EvaluationVO> list = new ArrayList<EvaluationVO>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GetEvaluationWithCourseStudent);
+			pstmt.setString(1, courseNo);
+			pstmt.setString(2, studentNo);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				EvaluationVO evaluationVO = new EvaluationVO();
+				evaluationVO.setEvaluationNo(rs.getString("evaluationNo"));
+				evaluationVO.setCourseNo(rs.getString("courseNo"));
+				evaluationVO.setStudentNo(rs.getString("studentNo"));
+				evaluationVO.setQuestion(rs.getInt("question"));
+				evaluationVO.setAnswer(rs.getInt("answer"));
+				list.add(evaluationVO);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+
+	public void deleteWithCourseStudent(String courseNo, String studentNo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(DeleteWithCourseStudent);
+			pstmt.setString(1, courseNo);
+			pstmt.setString(2, studentNo);
+			pstmt.executeUpdate();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	public List<String> getStudentAddedCourseEvaluation(String studentNo) {
+		List<String> list = new ArrayList<String>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GetStudentAddedCourseEvaluation);
+			pstmt.setString(1, studentNo);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				list.add(rs.getString("courseNo"));
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());

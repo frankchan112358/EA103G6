@@ -280,6 +280,7 @@ public class EvaluationJDBCDAO implements EvaluationDAO_interface {
 		return list;
 	}
 
+	@Override
 	public List<EvaluationVO> getEvaluationWithCourseStudent(String courseNo, String studentNo) {
 		List<EvaluationVO> list = new ArrayList<EvaluationVO>();
 		Connection con = null;
@@ -331,6 +332,7 @@ public class EvaluationJDBCDAO implements EvaluationDAO_interface {
 		return list;
 	}
 
+	@Override
 	public void deleteWithCourseStudent(String courseNo, String studentNo) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -363,6 +365,7 @@ public class EvaluationJDBCDAO implements EvaluationDAO_interface {
 		}
 	}
 
+	@Override
 	public List<String> getStudentAddedCourseEvaluation(String studentNo) {
 		List<String> list = new ArrayList<String>();
 		Connection con = null;

@@ -6,11 +6,10 @@ import java.util.Map;
 
 public class EvaluationService {
 
-//	private EvaluationDAO_interface dao;
-	private EvaluationJDBCDAO dao = new EvaluationJDBCDAO();
+	private EvaluationDAO_interface dao;
 
 	public EvaluationService() {
-//		dao = new EvaluationJNDIDAO();
+		dao = new EvaluationJNDIDAO();
 	}
 
 	public EvaluationVO addEvaluation(String courseNo, String studentNo, Integer question, Integer answer) {
