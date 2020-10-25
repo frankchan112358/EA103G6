@@ -39,6 +39,10 @@
                             <div class="dropdown-menu dropdown-menu-right">
                                 <button class="dropdown-item" type="button">班級設定</button>
                                 <button class="dropdown-item" type="button">公告管理</button>
+                                <form method="post" action="<%=request.getContextPath()%>/banjiPost/banjiPost">
+                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">班級公告管理</button>
+                                    <input type="hidden" name="banjiPostNo" value="${banjiPostVO.banjiPostNo}">
+                                </form>
                                 <button class="dropdown-item" type="button">課程管理</button>
                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.timetable">
                                     <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">課表管理</button>

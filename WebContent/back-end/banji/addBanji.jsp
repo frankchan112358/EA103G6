@@ -149,9 +149,7 @@
 	} catch (Exception e) {
 		startDay = new java.sql.Date(System.currentTimeMillis());
 	}
-%>
 
-<%
 	java.sql.Date endDay = null;
 	try {
 		endDay = banjiVO.getEndDay();
