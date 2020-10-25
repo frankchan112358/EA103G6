@@ -11,6 +11,29 @@
 
 <head>
     <%@ include file="/back-end/template/head.jsp" %>
+    <style>
+        body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+            overflow-y: visible !important;
+        }
+
+        .fc-other-month {
+            background-image: none;
+            background-color: none;
+            background-size: none;
+        }
+
+        .fc-past {
+            background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.02) 50%, rgba(0, 0, 0, 0.02) 75%, transparent 75%, transparent);
+            background-color: #FAFCFD;
+            background-size: 1rem 1rem;
+        }
+
+        .fc-before-course-end {
+            background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.02) 50%, rgba(0, 0, 0, 0.02) 75%, transparent 75%, transparent);
+            background-color: #FAFCFD;
+            background-size: 1rem 1rem;
+        }
+    </style>
 </head>
 
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
@@ -50,6 +73,10 @@
                                                 <c:forEach var="courseVO" items="${banjiVO.courseList}">
                                                     <button type="button" class="course btn btn-lg btn-outline-danger" courseNo="${courseVO.courseNo}" banjiNo="${banjiVO.banjiNo}"><span class="fal fa-book mr-1"></span>${courseVO.courseName}</button>
                                                 </c:forEach>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="testMode">
+                                                <label class="custom-control-label" for="testMode">測試模式</label>
                                             </div>
                                         </div>
                                         <div class="desc-body">
@@ -126,13 +153,13 @@
             var calendarEl = document.getElementById('calendar');
             var _banjiVO = JSON.parse('${jsonData}')._banjiVO;
             var _courseVO = null;
-
             var _banjiNo = '${banjiVO.banjiNo}';
             var _active = 'no';
+            var mode = 'user';
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 plugins: ['dayGrid', 'list', 'timeGrid', 'interaction', 'bootstrap'],
                 themeSystem: 'bootstrap',
-                locale: 'zh-tw',
+                locale: 'local',
                 displayEventTime: false,
                 buttonText: {
                     today: '今天',
@@ -159,12 +186,24 @@
                 },
                 eventLimit: true,
                 events: JSON.parse('${jsonData}').events,
+                visibleRange: {
+                    start: '2020-10-10',
+                    end: '2020-10-30'
+                },
                 viewSkeletonRender: function () {
                     $('.fc-toolbar .btn-default').addClass('btn-sm');
                     $('.fc-header-toolbar h2').addClass('fs-md');
                     $('#calendar').addClass('fc-reset-order')
                 },
                 dateClick: function (info) {
+                    if (_courseVO == null)
+                        return;
+                    let d = new Date();
+                    d.setDate(d.getDate() - 1);
+                    if (info.date < d && mode != 'test') {
+                        warningMsgPopup('過去的日期不能編輯!');
+                        return;
+                    }
                     _active = 'insert';
                     let period = {
                         morning: true,
@@ -200,8 +239,11 @@
                     $('.timetableBtn.cancel').show();
                     let editorTimetableModal = $('#editorTimetableModal');
                     editorTimetableModal.find('h4.modal-title').html(`新增${"${_courseVO.courseName}"}課表在${"${info.dateStr}"}`);
-                    if (period.morning || period.afternoon || period.evening)
+                    if (period.morning || period.afternoon || period.evening) {
                         editorTimetableModal.find('.modal-body h5').html(`請選擇你要安排的時段`);
+                        if (_courseVO.timetableSize > _courseVO.lesson)
+                            editorTimetableModal.find('.modal-body h5').append(`，注意 ! 目前堂數已經超過預計堂數`);
+                    }
                     else
                         editorTimetableModal.find('.modal-body h5').html(`在${"${info.dateStr}"}已無任何時段可供排課`);
                     editorTimetableModal.modal('show');
@@ -209,6 +251,10 @@
                 eventClick: function (info) {
                     if (_courseVO == null || info.event.extendedProps.courseNo != _courseVO.courseNo)
                         return;
+                    if (info.event.start < new Date() && mode != 'test') {
+                        warningMsgPopup('過去的課表不能編輯!');
+                        return;
+                    }
                     _active = 'update_period';
                     let period = {
                         morning: true,
@@ -253,6 +299,16 @@
                 }, eventDragStop: function (info) {
 
                 }, eventDrop: function (info) {
+                    let d = new Date();
+                    d.setHours(0);
+                    d.setMinutes(0);
+                    d.setSeconds(0);
+                    d.setMinutes(0);
+                    if (info.event.start < d && mode != 'test') {
+                        warningMsgPopup('不能調課到過去的日期!');
+                        info.revert();
+                        return;
+                    }
                     _active = 'update_date';
                     let period = {
                         morning: true,
@@ -296,7 +352,20 @@
                     else
                         editorTimetableModal.find('.modal-body h5').html(`在${"${info.event.start.toLocaleDateString()}"}已無任何時段可供排課`);
                     editorTimetableModal.modal('show');
-                }
+                },
+                viewSkeletonRender(info){
+                    console.log('viewSkeletonRender');
+                },
+                viewSkeletonDestroy(info){
+                    console.log('viewSkeletonDestroy');
+                },
+                datesRender(info){
+                    console.log('datesRender');
+                    renderFcBeforeCourseEnd();
+                },
+                datesDestroy(info){
+                    console.log('datesDestroy');
+                },
             });
             calendar.render();
 
@@ -319,6 +388,7 @@
                             _courseVO = JSON.parse(res._courseVO);
                             courseDescChange(_courseVO);
                             courseBtnChange($(_this), courseNo);
+                            renderFcBeforeCourseEnd();
                         }
                     }
                 });
@@ -342,6 +412,7 @@
                             _banjiVO = res._banjiVO;
                             courseDescChange(_banjiVO);
                             courseBtnChange($(_this), '');
+                            renderFcBeforeCourseEnd();
                         }
                     }
                 });
@@ -358,9 +429,9 @@
                 }
             }
 
-            function courseDescChange(obj){
+            function courseDescChange(obj) {
                 let desc = $('.desc-body');
-                if(_courseVO!=null){               
+                if (_courseVO != null) {
                     desc.find('.desc-name').html(`${"課程 : ${obj.courseName}"}`);
                     desc.find('.desc-person').html(`${"講師 : ${obj.teacherName}"}`);
                     desc.find('.desc-status').html(`${"狀態 : ${obj.statusText}"}`);
@@ -368,7 +439,7 @@
                     desc.find('.desc-end').html(`${"結束 : ${obj.endDate}"}`);
                     desc.find('.desc-plan').html(`${"預計堂數 : ${obj.lesson}"}`);
                     desc.find('.desc-now').html(`${"目前堂數 : ${obj.timetableSize}"}`);
-                }else{
+                } else {
                     desc.find('.desc-name').html(`${"班級 : ${obj.banjiName}"}`);
                     desc.find('.desc-person').html(`${"導師 : ${obj.empName}"}`);
                     desc.find('.desc-status').html(`${"狀態 : ${obj.statusText}"}`);
@@ -378,6 +449,48 @@
                     desc.find('.desc-now').html(`${"目前時數 : ${obj.timetableSize*3}"}`);
                 }
             }
+
+            function warningMsgPopup(msg) {
+                Swal.fire(
+                    {
+                        position: "top-end",
+                        title: msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+            }
+
+            $('#testMode').change(function (event) {
+                if ($(this).prop('checked')) {
+                    Swal.fire("切換測試模式", "沒有任何防呆機制，請小心使用，尤其注意課程開始與結束時間，以免塞入不符合的資料", "warning");
+                    mode = 'test';
+                } else {
+                    mode = 'user';
+                }
+                uploadTimetable();
+            });
+
+            function renderFcBeforeCourseEnd() {
+                $('.fc-before-course-end').removeClass('fc-before-course-end');
+                if (_courseVO != null) {
+                    let array = $('.fc-future[data-date]');
+                    for (let index = 0; index < array.length; index++) {
+                        let element = array[index];
+                        let end = new Date(_courseVO.endDate);
+                        let date = new Date(element.getAttribute('data-date'));
+                        if (date > end)
+                            $(element).addClass('fc-before-course-end');
+                    }
+                }
+            }
+
+            $('.fc-prev-button').click(function () {
+                renderFcBeforeCourseEnd();
+            });
+
+            $('.fc-next-button').click(function () {
+                renderFcBeforeCourseEnd();
+            });
 
             $(document).on('click', 'button.timetableBtn.cancel', function (event) {
 
@@ -397,12 +510,17 @@
                             banjiNo: banjiNo,
                             courseNo: courseNo,
                             timetablePeriod: timetablePeriod,
-                            timetableDate: timetableDate
+                            timetableDate: timetableDate,
+                            mode: mode
                         },
                         success(res) {
                             if (res == 'ok') {
-                                $('#editorTimetableModal').modal('hide');
+                            } else {
+                                warningMsgPopup(res);
                             }
+                        },
+                        complete() {
+                            $('#editorTimetableModal').modal('hide');
                         }
                     });
                 }
@@ -411,6 +529,7 @@
                     let banjiNo = _banjiNo;
                     let timetablePeriod = this.getAttribute('periodNum');
                     let timetableNo = this.getAttribute('timetableNo');
+                    let timetableDate = this.getAttribute('dateStr');
                     $.ajax({
                         type: 'POST',
                         url: '<%=request.getContextPath()%>/banji/banji.timetable',
@@ -419,12 +538,18 @@
                             banjiNo: banjiNo,
                             courseNo: courseNo,
                             timetablePeriod: timetablePeriod,
-                            timetableNo: timetableNo
+                            timetableNo: timetableNo,
+                            timetableDate: timetableDate,
+                            mode: mode
                         },
                         success(res) {
                             if (res == 'ok') {
-                                $('#editorTimetableModal').modal('hide');
+                            } else {
+                                warningMsgPopup(res);
                             }
+                        },
+                        complete() {
+                            $('#editorTimetableModal').modal('hide');
                         }
                     });
                 }
@@ -443,12 +568,17 @@
                             courseNo: courseNo,
                             timetablePeriod: timetablePeriod,
                             timetableNo: timetableNo,
-                            timetableDate: timetableDate
+                            timetableDate: timetableDate,
+                            mode: mode
                         },
                         success(res) {
                             if (res == 'ok') {
-                                $('#editorTimetableModal').modal('hide');
+                            } else {
+                                warningMsgPopup(res);
                             }
+                        },
+                        complete() {
+                            $('#editorTimetableModal').modal('hide');
                         }
                     });
                 }
@@ -486,6 +616,10 @@
             }
 
             $('#editorTimetableModal').on('hide.bs.modal', function () {
+                uploadTimetable();
+            });
+
+            function uploadTimetable() {
                 let courseNo = _courseVO.courseNo;
                 let banjiNo = _banjiNo;
                 $.ajax({
@@ -494,7 +628,8 @@
                     data: {
                         action: 'banji_and_teacher_timetable',
                         banjiNo: banjiNo,
-                        courseNo: courseNo
+                        courseNo: courseNo,
+                        mode: mode
                     },
                     success(res) {
                         if (res != null) {
@@ -503,11 +638,11 @@
                             _courseVO = JSON.parse(res._courseVO);
                             courseDescChange(_courseVO);
                             resetTimetableModal();
+                            renderFcBeforeCourseEnd();
                         }
                     }
                 });
-            });
-
+            }
 
         });
     </script>

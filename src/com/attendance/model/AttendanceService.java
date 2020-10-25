@@ -47,4 +47,8 @@ public class AttendanceService {
 	public List<AttendanceVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public void deleteAttendanceWithTimetableNo(String timetableNo) {
+		dao.delete(timetableNo);
+	}
 }

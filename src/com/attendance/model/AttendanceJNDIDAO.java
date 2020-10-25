@@ -23,7 +23,8 @@ public class AttendanceJNDIDAO implements AttendanceDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT attendanceNo,studentNo,timetableNo,to_char(time,'YYYY-MM-DD HH24:MI:SS') time,status,note FROM attendance where attendanceNo = ?";
 	private static final String DELETE = "DELETE FROM attendance where attendanceNo = ?";
 	private static final String UPDATE = "UPDATE attendance set studentNo=?, timetableNo=?, time=?, status=?, note=? where attendanceNo = ?";
-
+	private static final String DELETE_TIMETABLE = "DELETE FROM attendance where timetableNo = ?";
+	
 	@Override
 	public void insert(AttendanceVO attendanceVO) {
 		Connection con = null;
@@ -214,5 +215,33 @@ public class AttendanceJNDIDAO implements AttendanceDAO_interface {
 			}
 		}
 		return list;
+	}
+	
+	public void deleteWithTimetableNo(String timetableNo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(DELETE_TIMETABLE);
+			pstmt.setString(1, timetableNo);
+			pstmt.executeUpdate();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 	}
 }

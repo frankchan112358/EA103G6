@@ -14,4 +14,10 @@ public interface EvaluationDAO_interface {
 	public List<EvaluationVO> getAll();
 
 	public List<EvaluationVO> findByCourseNo(String courseNo);
+	
+	public List<EvaluationVO> getEvaluationWithCourseStudent(String courseNo, String studentNo);
+	
+	public void deleteWithCourseStudent(String courseNo, String studentNo);
+	
+	public List<String> getStudentAddedCourseEvaluation(String studentNo);
 }

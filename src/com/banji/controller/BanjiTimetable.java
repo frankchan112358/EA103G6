@@ -56,21 +56,10 @@ public class BanjiTimetable extends HttpServlet {
 		}
 		if ("banji_and_teacher_timetable".equals(action)) {
 			res.setContentType("application/json;");
+			String mode = req.getParameter("mode");
 			String courseNo = req.getParameter("courseNo");
 			PrintWriter out = res.getWriter();
-			out.print(new TimetableService().getAllByJsonStrWithBanjiNoCourseNo(banjiNo, courseNo));
-			return;
-		}
-		if ("insert".equals(action)) {
-			res.setContentType("text/html;");
-			String courseNo = req.getParameter("courseNo");
-			Integer timetablePeriod = Integer.parseInt(req.getParameter("timetablePeriod"));
-			java.sql.Date timetableDate = java.sql.Date.valueOf(req.getParameter("timetableDate"));
-			CourseVO courseVO = new CourseService().getOneCourse(courseNo);
-			new TimetableService().addTimetable(courseNo, courseVO.getClassroomNo(), timetablePeriod, timetableDate,
-					"");
-			PrintWriter out = res.getWriter();
-			out.print("ok");
+			out.print(new TimetableService().getAllByJsonStrWithBanjiNoCourseNo(banjiNo, courseNo,mode));
 			return;
 		}
 		if ("delete".equals(action)) {
@@ -82,28 +71,63 @@ public class BanjiTimetable extends HttpServlet {
 			out.print("ok");
 			return;
 		}
+		if ("insert".equals(action)) {
+			res.setContentType("text/html;");
+			PrintWriter out = res.getWriter();
+			String mode = req.getParameter("mode");
+			String courseNo = req.getParameter("courseNo");
+			Integer timetablePeriod = Integer.parseInt(req.getParameter("timetablePeriod"));
+			java.sql.Date timetableDate = java.sql.Date.valueOf(req.getParameter("timetableDate"));
+			String checkStr = new TimetableService().checkInsert(courseNo, timetableDate, timetablePeriod);
+			if (!"test".equals(mode) && !"pass".equals(checkStr)) {
+				out.print(checkStr);
+				return;
+			}
+			CourseVO courseVO = new CourseService().getOneCourse(courseNo);
+			new TimetableService().addTimetable(courseNo, courseVO.getClassroomNo(), timetablePeriod, timetableDate,
+					"");
+			out.print("ok");
+			return;
+		}
 		if ("update_period".equals(action)) {
 			res.setContentType("text/html;");
+			PrintWriter out = res.getWriter();
+			String mode = req.getParameter("mode");
 			String courseNo = req.getParameter("courseNo");
 			String timetableNo = req.getParameter("timetableNo");
 			Integer timetablePeriod = Integer.parseInt(req.getParameter("timetablePeriod"));
+			java.sql.Date timetableDate = new TimetableService()
+					.jsonStrTimeConvertToSqlDate(req.getParameter("timetableDate"), "yyyy/MM/dd");
+			String checkStr = new TimetableService().checkUpdatePeriod(courseNo, timetableNo, timetableDate,
+					timetablePeriod);
+			if (!"test".equals(mode) && !"pass".equals(checkStr)) {
+				out.print(checkStr);
+				return;
+			}
 			TimetableVO timetableVO = new TimetableService().getOneTimetable(timetableNo);
 			new TimetableService().updateTimetable(timetableNo, timetableVO.getCourseNo(), timetableVO.getClassroomNo(),
 					timetablePeriod, timetableVO.getTimetableDate(), timetableVO.getTeachingLog());
-			PrintWriter out = res.getWriter();
 			out.print("ok");
 			return;
 		}
 		if ("update_date".equals(action)) {
 			res.setContentType("text/html;");
+			PrintWriter out = res.getWriter();
+			String mode = req.getParameter("mode");
 			String courseNo = req.getParameter("courseNo");
 			String timetableNo = req.getParameter("timetableNo");
 			Integer timetablePeriod = Integer.parseInt(req.getParameter("timetablePeriod"));
-			java.sql.Date timetableDate = new TimetableService().jsonStrTimeConvertToSqlDate(req.getParameter("timetableDate"), "yyyy/MM/dd");
+			java.sql.Date timetableDate = new TimetableService()
+					.jsonStrTimeConvertToSqlDate(req.getParameter("timetableDate"), "yyyy/MM/dd");
+			String checkStr = new TimetableService().checkUpdateDate(courseNo, timetableNo, timetableDate,
+					timetablePeriod);
+			if (!"test".equals(mode) && !"pass".equals(checkStr)) {
+				out.print(checkStr);
+				return;
+			}
 			TimetableVO timetableVO = new TimetableService().getOneTimetable(timetableNo);
 			new TimetableService().updateTimetable(timetableNo, timetableVO.getCourseNo(), timetableVO.getClassroomNo(),
 					timetablePeriod, timetableDate, timetableVO.getTeachingLog());
-			PrintWriter out = res.getWriter();
 			out.print("ok");
 			return;
 		}

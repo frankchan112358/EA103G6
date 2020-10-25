@@ -364,12 +364,12 @@
                     success(res) {
                         if (res != null) {
                             let review = $('#leaveReview .modal-body');
-                            review.find('[data*=timetableDate]').text(res.timetableDate);
-                            review.find('[data*=periodText]').text(res.periodText);
-                            review.find('[data*=courseName]').text(res.courseName);
-                            review.find('[data*=typeText]').text(res.typeText);
-                            review.find('[data*=statusText]').text(res.statusText);
-                            review.find('[data*=description]').text(res.description);
+                            review.find('[data=timetableDate]').text(res.timetableDate);
+                            review.find('[data=periodText]').text(res.periodText);
+                            review.find('[data=courseName]').text(res.courseName);
+                            review.find('[data=typeText]').text(res.typeText);
+                            review.find('[data=statusText]').text(res.statusText);
+                            review.find('[data=description]').text(res.description);
                             $('#leaveReview').modal('show');
                         }
                     }
