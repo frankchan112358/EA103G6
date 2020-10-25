@@ -49,14 +49,14 @@ public class CoursePostService {
 	}
 
 	public CoursePostVO getOneCoursePost(String coursePostNo) {
-		return dao.findByPrimaryKey(coursePostNo);	
+		return dao.findByPrimaryKey(coursePostNo);
 	}
 
-	public List<CoursePostVO> getAll(){
-		return dao.getAll();	
+	public List<CoursePostVO> getAll() {
+		return dao.getAll();
 	}
-	
-	public List<CoursePostVO> getCoursePostByCourseNo(String courseNo){
-		return dao.getCoursePostByCourseNo(courseNo);
+
+	public List<CoursePostVO> getCoursePostByCourseNo(String courseNo) {
+
 	}
 }
