@@ -122,7 +122,8 @@ public class CoursePostServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("coursePostVO", coursePostVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/update_coursePost_input.jsp");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back-end/coursepost/update_coursePost_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -137,7 +138,8 @@ public class CoursePostServlet extends HttpServlet {
 
 			} catch (Exception e) {
 				errorMsgs.put("⚠修改資料失敗⚠", e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/update_coursePost_input.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back-end/coursepost/update_coursePost_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -208,6 +210,20 @@ public class CoursePostServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/listAllCoursePost.jsp");
 				failureView.forward(req, res);
 			}
+		}
+		if ("listCoursePost_ByCourseNo".equals(action)) {
+
+			String courseNo = new String(req.getParameter("courseNo"));
+
+			CoursePostService coursePostSvc = new CoursePostService();
+			List<CoursePostVO> coursePostVO = coursePostSvc.getCoursePostByCourseNo(courseNo);
+
+			HttpSession session = req.getSession();
+			session.setAttribute("coursePostVO", coursePostVO);
+
+			String url = "/front-end/course/coursePost.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
 		}
 	}
 }

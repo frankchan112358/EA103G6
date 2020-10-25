@@ -31,10 +31,12 @@
 
   #showphoto2 img {  
    	width: 300px;  
-    margin: 20px auto;   
+    margin: 20px;   
    	border:2px #C4B1B1 dashed;  
     text-align:center;  
   }  
+
+
   img {  
     vertical-align: sub;  
     width: 100%;  
@@ -175,14 +177,14 @@
 												 <div class="custom-file">
 												 <input type="file" class="custom-file-input"  name="courseImg" accept="image/*" onchange="show(courseImg)">
 												 <label class="custom-file-label" for="customFile">Choose Image</label>
-												    <div id="showphoto2">
+												 		 <div id="showphoto2">
                                                         <c:if test="${courseVO.courseImg eq null}">
 															<img src="<%=request.getContextPath() %>/images/尚無圖片.jpg">
 														</c:if>
 														<c:if test="${courseVO.courseImg ne null}">
 															<img src="<%=request.getContextPath() %>/course/course.do?action=getCourseImg&courseNo=${courseVO.courseNo}">
 														</c:if>
-                                                  	</div>	
+														</div>
 							                      </div>
 							                      </div>
 											    <div class="form-row align-items-center justify-content-center">
@@ -270,7 +272,7 @@
 			let img = URL.createObjectURL(courseImg.files[0]);
 			document.getElementById("showphoto2").innerHTML = "<img src =" + img
 					+ " width='100%' height='100%'>";
-		}
+		}  
         
 	
 </script>

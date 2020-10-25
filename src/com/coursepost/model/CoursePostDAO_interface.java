@@ -13,5 +13,8 @@ public interface CoursePostDAO_interface {
 	public CoursePostVO findByPrimaryKey(String coursePostNo);
 
 	public List<CoursePostVO> getAll();
+	
+	List<CoursePostVO> getCoursePostByCourseNo(String courseNo);
+
 
 }

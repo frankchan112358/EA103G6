@@ -1,7 +1,12 @@
 package com.coursepost.model;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import com.evaluation.model.EvaluationVO;
 
 public class CoursePostService {
 
@@ -49,5 +54,9 @@ public class CoursePostService {
 
 	public List<CoursePostVO> getAll(){
 		return dao.getAll();	
+	}
+	
+	public List<CoursePostVO> getCoursePostByCourseNo(String courseNo){
+		return dao.getCoursePostByCourseNo(courseNo);
 	}
 }

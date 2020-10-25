@@ -14,7 +14,9 @@ public class CoursePostJDBCDAO implements CoursePostDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT COURSEPOSTNO, COURSENO, TITLE, POSTCONTENT, TO_CHAR(UPDATETIME, 'YYYY-MM-DD HH24:MI:SS')UPDATETIME FROM COURSEPOST WHERE COURSEPOSTNO=?";
 	private static final String DELETE = "DELETE FROM COURSEPOST WHERE COURSEPOSTNO=?";
 	private static final String UPDATE = "UPDATE COURSEPOST SET COURSENO=?, TITLE=?, POSTCONTENT=? WHERE COURSEPOSTNO=?";
+	private static final String GET_COURSEPOST_BY_COURSENO = "SELECT COURSEPOSTNO, COURSENO, TITLE, POSTCONTENT, TO_CHAR(UPDATETIME,'YYYY-MM-DD HH24:MI:SS') UPDATETIME FROM COURSEPOST WHERE COURSENO =?";
 
+	
 	@Override
 	public void insert(CoursePostVO coursePostVO) {
 
@@ -243,6 +245,63 @@ public class CoursePostJDBCDAO implements CoursePostDAO_interface {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<CoursePostVO> getCoursePostByCourseNo(String courseNo) {
+		List<CoursePostVO> list = new ArrayList<CoursePostVO>();
+		CoursePostVO coursePostVO = null;
+	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_COURSEPOST_BY_COURSENO);
+			pstmt.setString(1, courseNo);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+				coursePostVO = new CoursePostVO();
+				coursePostVO.setCoursePostNo(rs.getString("coursePostNo"));
+				coursePostVO.setTitle(rs.getString("title"));
+				coursePostVO.setPostContent(rs.getString("postContent"));
+				coursePostVO.setUpdateTime(rs.getTimestamp("updateTime"));
+				coursePostVO.setCourseNo("courseNo");
+				list.add(coursePostVO); // Store the row in the vector
+			}
+	
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 
 	public static void main(String[] args) {
 
@@ -285,4 +344,5 @@ public class CoursePostJDBCDAO implements CoursePostDAO_interface {
 			System.out.println("===================================");
 		}
 	}
+	
 }

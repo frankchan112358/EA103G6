@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="/back-end/template/check.jsp"%>
+<%-- <%@ include file="/back-end/template/check.jsp"%> --%>
 <%@ page import="com.course.model.*"%>
 <%@ page import="java.util.*"%>
 <%
@@ -27,6 +27,11 @@
     text-align: center;  
 }
 
+  img {  
+    vertical-align: sub;  
+    width: 20%;  
+  	height: auto;  
+  } 
 
 </style>
 
@@ -58,7 +63,7 @@
 						</h1>
 					</div>
 					<div class="row">
-						<div class="col-xl-12">
+						<div class="col-12">
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
 									<h2>課程列表</h2>
@@ -77,7 +82,6 @@
                                             <table id="coursetable" class="table table-bordered table-hover table-striped w-100">
 											<thead style="background-color:#E5F4FF;">
 												<tr>
-
 													<th width="6%">課程編號</th>
 													<th width="6%">課程名稱</th>
 													<th width="10%">課程大綱</th>
@@ -88,11 +92,11 @@
 													<th width="5%">開始日期</th>
 													<th width="5%">結束日期</th>
 													<th width="7%">狀態</th>
+													<th width="5%">課程圖</th>
 													<th width="7%">修改</th>
 													<th width="7%">刪除</th>
 													<th width="5%">影片管理</th>
 													<th width="5%">教材管理</th>
-
 												</tr>
 											</thead>
 											<tbody>
@@ -114,6 +118,17 @@
 																<c:when test="${courseVO.status=='2'}">課程結束</c:when>
 															</c:choose>
 														</td>
+														
+														<td>
+                                                        <c:if test="${courseVO.courseImg eq null}">
+                                                        <span> </span>
+														<i class="fal fa-file fa-2x"></i>
+														</c:if>
+														<c:if test="${courseVO.courseImg ne null}">
+														 <span></span>
+														<i class="fal fa-file-image fa-2x"></i>
+														</c:if>
+                                                  	</td>
 
 														<td>
 															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
@@ -159,7 +174,6 @@
 																<input type="hidden" name="action" value="getTFDisplayList">
 															</FORM>
 														</td>
-														
 													</tr>
 												</c:forEach>
 											</tbody>
