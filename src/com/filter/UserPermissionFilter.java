@@ -36,19 +36,47 @@ public class UserPermissionFilter implements Filter {
 		HttpSession session = req.getSession();
 		UserVO userVO = (UserVO) session.getAttribute("userVO");
 
+		UserPermissionService checkPermission = new UserPermissionService();
+		/*********************檔沒登入者直接入侵*********************/
 		if (userVO == null) {
 			RequestDispatcher failureView = req.getRequestDispatcher("/error-page/page_error-forPermission.jsp");
 			failureView.forward(req, res);
 			return;
 		}
-
+		
+		/*********************start檔沒資格修改的人將前端按鈕解除*********************/
+		String blockGoto=(String) req.getAttribute("goto");
+		if("update".equals(blockGoto)) {
+			if(checkPermission.getOneUserPermission(userVO.getUserNo(), "4").getPermissionEdit().equals(1)) {
+				chain.doFilter(request, response);
+				return;
+			}else {  //若沒資格直接丟去首頁，因為非法入侵
+				req.setAttribute("permission", "forbid");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+		}
+		
+		
+		
+		
+		
+		/*********************end檔沒資格修改的人將前端按鈕解除*********************/
+		
 		String gotoPlace = req.getParameter("goto");
 
+		
 		/*********************導師管理的權限篩選*********************/
-		if ("empList".equals(gotoPlace)) {
-
-			if (userVO.getType().equals(1)) {
-
+		if ("empList".equals(gotoPlace)||"listOneEmp".equals(gotoPlace)) {
+			if(userVO.getType().equals(0)) {
+				req.setAttribute("permission", "forbid");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/index/index.jsp");
+				failureView.forward(req, res);
+				return;
+			}else if (userVO.getType().equals(1)) {
+				
+				req.setAttribute("permission", "forbid");
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
 				failureView.forward(req, res);
 				return;
@@ -56,13 +84,11 @@ public class UserPermissionFilter implements Filter {
 			} else if (userVO.getType().equals(2)) {
 
 				// 測導師的權限若可讀就導向
-				UserPermissionService checkPermission = new UserPermissionService();
 				if (checkPermission.getOneUserPermission(userVO.getUserNo(), "4").getReadable().equals(1)) {
-					System.out.println(555);
 					chain.doFilter(request, response);
 					return;
 				} else {
-
+					req.setAttribute("permission", "forbid");
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
 					failureView.forward(req, res);
 					return;
@@ -70,10 +96,18 @@ public class UserPermissionFilter implements Filter {
 
 			}
 		}
+		
+		
 		/*********************講師管理的權限篩選*********************/
-		if ("teacherList".equals(gotoPlace)) {
-			if (userVO.getType().equals(1)) {
-
+		if ("teacherList".equals(gotoPlace)||"listOneTeacher".equals(gotoPlace)) {
+			if(userVO.getType().equals(0)) {
+				req.setAttribute("permission", "forbid");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/index/index.jsp");
+				failureView.forward(req, res);
+				return;
+				
+			}else if (userVO.getType().equals(1)) {
+				req.setAttribute("permission", "forbid");
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
 				failureView.forward(req, res);
 				return;
@@ -84,9 +118,15 @@ public class UserPermissionFilter implements Filter {
 		}
 		
 		/*********************學生管理的權限篩選*********************/
-		if ("studentList".equals(gotoPlace)) {
-			if (userVO.getType().equals(1)) {
-
+		if ("studentList".equals(gotoPlace)||"listOneStudent".equals(gotoPlace)) {
+			if(userVO.getType().equals(0)) {
+				req.setAttribute("permission", "forbid");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/index/index.jsp");
+				failureView.forward(req, res);
+				return;
+				
+			}else if (userVO.getType().equals(1)) {
+				req.setAttribute("permission", "forbid");
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
 				failureView.forward(req, res);
 				return;

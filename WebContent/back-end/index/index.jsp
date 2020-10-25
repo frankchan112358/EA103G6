@@ -1,6 +1,8 @@
 <%@page import="com.user.model.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/back-end/template/check.jsp" %>
+
+<% String permission =(String)request.getAttribute("permission"); //浩偉權限通知 %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +20,7 @@
                 <%@ include file="/back-end/template/header.jsp" %> 
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁 </a></li>
                         <li class="breadcrumb-item"><a href="javascript:void(0);">養成班管理</a></li>
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Java雲端</a></li>
                         <li class="breadcrumb-item">EA103</li>
@@ -182,5 +184,14 @@
     <%@ include file="/back-end/template/messager.jsp" %>
     <%@ include file="/back-end/template/basic_js.jsp" %>
     <%@ include file="/back-end/index/index_js.jsp" %>
+    
+
+    <script>
+    //浩偉新增權限通知
+		<% if("forbid".equals(permission)){ %>
+		 Swal.fire("無權限", "請向管理者確認權限", "error");
+        
+		<%} %>
+	</script>
 </body>
 </html>

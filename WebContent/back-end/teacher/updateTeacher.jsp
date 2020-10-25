@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.user.model.*,com.teacher.model.*"%>
 <%@ page import="java.util.*"%>
 <%  
@@ -14,8 +13,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
     
-	<!-- notifications 的css連結 -->
-   <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/notifications/sweetalert2/sweetalert2.bundle.css">
 	
 		
 <style>
@@ -48,12 +45,13 @@
                 <%@ include file="/back-end/template/header.jsp" %> 
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
-                        <li class="breadcrumb-item">Democrat</li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/teacher/teacherList.jsp?goto=teacherList">講師管理</a></li>
+                        <li class="breadcrumb-item">修改講師資料</li>
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-democrat'></i> Democrat
+                            <i class='subheader-icon fal fa-democrat'></i>修改講師資料
                         </h1>
                     </div>
            					<div id="panel-2" class="panel">
@@ -284,8 +282,6 @@
     <%@ include file="/back-end/template/messager.jsp" %>
     <%@ include file="/back-end/template/basic_js.jsp" %> 
     
-    <script src="<%=request.getContextPath() %>/SmartAdmin4/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
-        
         
     <script>
   //後端抓到錯誤前端改樣式

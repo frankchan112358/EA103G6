@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/front-end/template/check.jsp" %>
+
+<% String permission =(String)request.getAttribute("permission"); //浩偉權限通知 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -140,5 +143,14 @@
     <%@ include file="/front-end/template/messager.jsp" %>
     <%@ include file="/front-end/template/basic_js.jsp" %>
     <%@ include file="/front-end/index/index_js.jsp" %>
+	
+	<script>
+    //浩偉新增權限通知
+		<% if("forbid".equals(permission)){ %>
+		 Swal.fire("無權限", "請向管理者確認權限", "error");
+        
+		<%} %>
+	</script>
+
 </body>
 </html>

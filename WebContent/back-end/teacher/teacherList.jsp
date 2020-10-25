@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.user.model.*,com.teacher.model.*"%>
 <%@ page import="java.util.*"%>
 <%
@@ -19,8 +18,6 @@
 <html>
 <head>
     <%@ include file="/back-end/template/head.jsp" %> 
-    <!-- notifications 的css連結 -->
-   	<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/notifications/sweetalert2/sweetalert2.bundle.css">
 </head>
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
     <script>
@@ -34,12 +31,12 @@
                 <%@ include file="/back-end/template/header.jsp" %> 
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
-                        <li class="breadcrumb-item">Democrat</li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
+                        <li class="breadcrumb-item">講師管理</li>
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-democrat'></i> Democrat
+                            <i class='subheader-icon fal fa-democrat'></i> 講師管理
                         </h1>
                     </div>
                     <div class="row">
@@ -47,7 +44,7 @@
                                 <div id="panel-1" class="panel">
                                     <div class="panel-hdr">
                                         <h2>
-                                            Example <span class="fw-300"><i>Table</i></span>
+                                            Teacher <span class="fw-300"><i>List</i></span>
                                         </h2>
                                         <div class="panel-toolbar">
                                             <button id="addTeacherBtn" data-toggle="modal" data-target="#addTeacher" type="button" class="btn btn-outline-info btn-pills waves-effect waves-themed">新增講師</button>
@@ -73,7 +70,7 @@
                                                     <c:forEach var="teacherVO" items="${teacherList}">
                                                     <c:forEach var="userVO" items="${userList}">                                                                                                                                                     
                                                     	<c:if test="${teacherVO.userNo eq userVO.userNo}">
-                                                    		<tr onclick="location.href='<%=request.getContextPath()%>/user.do?action=getOne_For_Display&userNo=${userVO.userNo}';">
+                                                    		<tr onclick="location.href='<%=request.getContextPath()%>/user.do?action=getOne_For_Display&userNo=${userVO.userNo}&goto=listOneTeacher';"  style=" cursor: pointer;">
                                                     		<td>${teacherVO.teacherNo}</td>
                                                     		<td>${userVO.name}</td>
                                                     		<td>${userVO.mail}</td>
@@ -254,7 +251,6 @@
     <%@ include file="/back-end/template/quick_menu.jsp" %>
     <%@ include file="/back-end/template/messager.jsp" %>
     <%@ include file="/back-end/template/basic_js.jsp" %>  
-    <script src="<%=request.getContextPath() %>/SmartAdmin4/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
     
     
      <script>
