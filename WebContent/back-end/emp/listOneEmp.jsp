@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.user.model.*,com.emp.model.*"%>
+<%@ page import="com.user.model.*,com.emp.model.*,com.userpermission.model.*"%>
 <%@ page import="java.util.*"%>
 <%
+
+	UserPermissionService checkPermission = new UserPermissionService();
+
 	UserVO userVOForShow = (UserVO) request.getAttribute("userVOForShow"); 
 	EmpVO empVOForShow = (EmpVO) request.getAttribute("empVOForShow"); 
+	
+	pageContext.setAttribute("checkPermission", checkPermission);
+
 	
 %>
 
@@ -123,12 +128,12 @@
                                             </table>
                                             
                                             <div class="demo row">
-                                            <form id="deleteEmp">
+                                            <form id="deleteEmp" method="post" action="<%=request.getContextPath()%>/user.do">
                                             	<button id="submitDeleteEmp" class="btn btn-danger ml-auto">刪除</button>
                                             	<input type="hidden" name="action" value="delete">
                                             	<input type="hidden" name="userNo" value="<%=userVOForShow.getUserNo()%>"> 
                                             </form>
-                                            <form method="post" action="<%=request.getContextPath()%>/user.do">
+                                            <form id="updateEmp" method="post" action="<%=request.getContextPath()%>/user.do" id="updateEmp">
                                             	<input type="hidden" name="userNo" value="<%=userVOForShow.getUserNo()%>"> 
 												<input type="hidden" name="action" value="getOne_For_Update">
                                             	<button id="submitUpdateEmp" class="btn btn-primary ml-auto">修改</button>
@@ -212,7 +217,22 @@ $("#submitDeleteEmp").on("click", function(event)
                     }
                 });
         }); // A message with a custom image and CSS animation disabled
+      
+    
+     //沒權限關按鈕，若自動解開濾器仍有檔   
+    <c:if test="${checkPermission.getOneUserPermission(userVO.getUserNo(),4).permissionEdit eq 0}">
+		$("#deleteEmp").empty();
+	</c:if>
+	
+	<c:if test="${checkPermission.getOneUserPermission(userVO.getUserNo(),4).permissionEdit eq 0}">
+		$("#updateEmp").empty();
+	</c:if>
         
 </script>
+
+
+
+
+
 </body>
 </html>

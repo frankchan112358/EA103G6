@@ -413,6 +413,7 @@ public class UserServlet extends HttpServlet {
 				UserService userSvc = new UserService();
 				UserVO userVO = userSvc.getOneUser(userNo);
 				req.setAttribute("userVOForUpdate", userVO);
+				req.setAttribute("goto","update"); //此為設計給filter去篩選權限用
 
 				/*************************** 2.查詢資料,並準備轉交(Send the Success view) ************/
 
