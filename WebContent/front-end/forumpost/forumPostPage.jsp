@@ -57,45 +57,62 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 								</form>
 							</div>
 						</div>
+<%-- 											<%@ include file="page1_ByCompositeQuery.file"%> --%>
+						
 						<div class="row">
 							<div class="col-md-2" id="studentInfo">
 								<div><b>樓主</b></div>
-								<div id="studentPic"><img src="<%=request.getContextPath()%>/mem/MemPic?mem_id=${forumPostVO.studentNo}" style="width: 100px; height: 100px;">	</div>
-								<div class="col-md-12" id="AstudentName"><b>${studentSvc.getOneStudent(forumPostVO.studentNo).studentName}</b></div>
+								
+                            <c:if test="${userVO.photo != null}" var="condition" scope="page">
+                     	    	<img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${userVO.userNo}" class="rounded-circle profile-image"style="width: 100px; height: 100px;">
+                        	</c:if>
+							<c:if test="${condition == false}">
+								<img src="<%=request.getContextPath() %>/images/noPicture.png" class="rounded-circle profile-image"style="width: 100px; height: 100px;">
+							</c:if>								
+							
+							<div class="col-md-12" id="AstudentName"><b>${studentSvc.getOneStudent(forumPostVO.studentNo).studentName}</b></div>
 							</div>
 							<div class="col-md-10">
 									<div class="row">
 										<div class="col-md-8" style="font-size:26px;"><b>${forumPostVO.title}</b></div>
 										<div class="col-md-4">
-											<div class="reportBtn">
-												<form method="post" action="<%=request.getContextPath() %>/front-end/report/report.do">		
-													<input type="submit" value="檢舉"> 
-													<input type="hidden" name="action" value="getOne_Fp_Report"> 
-													<input type="hidden" name="faId" value="${forumPostVO.forumPostNo}">
-												</form>
-												<input type="submit" value="追蹤">
-												<div id="starImg">
-													<img src="<%=request.getContextPath()%>/images/forum/1.png" style="width: 35px;height: 35px;float: right; margin-right: 15px;">
-													<input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}">
-													<input type="hidden" name="studentNo" value="${sessionScope.studentVO.studentNo}">		
-												</div>
+<!-- 											<div class="reportBtn"> -->
+<%-- 												<form method="post" action="<%=request.getContextPath() %>/front-end/report/report.do">		 --%>
+<!-- 													<input type="submit" value="檢舉">  -->
+<!-- 													<input type="hidden" name="action" value="getOne_Fp_Report">  -->
+<%-- 													<input type="hidden" name="faId" value="${forumPostVO.forumPostNo}"> --%>
+<!-- 												</form> -->
+<!-- 												<input type="submit" value="追蹤"> -->
+<!-- 												<div id="starImg"> -->
+<%-- 													<img src="<%=request.getContextPath()%>/images/forum/1.png" style="width: 35px;height: 35px;float: right; margin-right: 15px;"> --%>
+<%-- 													<input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}"> --%>
+<%-- 													<input type="hidden" name="studentNo" value="${sessionScope.studentVO.studentNo}">		 --%>
+<!-- 												</div> -->
 											</div>
 										</div>
 									</div>
 									<div class="clear"></div>
+									
 									<hr>
 									<div class="row">
 										<div class="col-md-12">${forumPostVO.content}</div>
 									</div>
 							</div>
 						</div>
+						
 						<hr>
 						<c:forEach var="forumCommentVO" items="${list}" varStatus="tag">
 								<div class="row">
 									<div class="col-md-2" id="studentInfo">
 										<div id="reply"><b>${tag.index}樓</b></div>
-										<div class="studentPic" id="studentPic${tag.index}"><img src="<%=request.getContextPath()%>/mem/MemPic?mem_id=${forumCommentVO.studentNo}" style="width: 100px; height: 100px;"></div>
-										<div class="col-md-12" id="studentName${tag.index}"><b>${studentSvc.getOneStudent(forumCommentVO.studentNo).studentName}</b></div>
+                           <c:if test="${userVO.photo != null}" var="condition" scope="page">
+                     	    	<img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${userVO.userNo}" class="rounded-circle profile-image"style="width: 100px; height: 100px;">
+                        	</c:if>
+							<c:if test="${condition == false}">
+								<img src="<%=request.getContextPath() %>/images/noPicture.png" class="rounded-circle profile-image"style="width: 100px; height: 100px;">
+							</c:if>										
+							
+							<div class="col-md-12" id="studentName${tag.index}"><b>${studentSvc.getOneStudent(forumCommentVO.studentNo).studentName}</b></div>
 									</div>
 									<div class="col-md-10">
 										<div class="container">
@@ -106,21 +123,23 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 									</div>
 								</div>
 
-								<form method="post" action="<%=request.getContextPath() %>/front-end/report/report.do">
-									<div class="reportBtn">
-										<input type="submit" value="檢舉"> 
-										<input type="hidden"name="action" value="getOne_Fc_Report"> 
-										<input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}"> 
-										<input type="hidden" name="forumCommentNo" value="${forumCommentVO.forumCommentNo}">
-									</div>
-								</form>
+<%-- 								<form method="post" action="<%=request.getContextPath() %>/front-end/report/report.do"> --%>
+<!-- 									<div class="reportBtn"> -->
+<!-- 										<input type="submit" value="檢舉">  -->
+<!-- 										<input type="hidden"name="action" value="getOne_Fc_Report">  -->
+<%-- 										<input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}">  --%>
+<%-- 										<input type="hidden" name="forumCommentNo" value="${forumCommentVO.forumCommentNo}"> --%>
+<!-- 									</div> -->
+<!-- 								</form> -->
 								<div class="clear"></div>
 								<hr>
 						</c:forEach>
+<%-- 												<%@ include file="page2_ByCompositeQuery.file"%> --%>
+						
 					</div>
 				</div>
 			</div>
-		</div>
+		
 	</section>
 	
 	

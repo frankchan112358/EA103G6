@@ -160,6 +160,12 @@
                 <a href="#" class="dropdown-item fw-500 pt-3 pb-3">
                     <span data-i18n="drpdwn.settings">帳號設定</span>
                 </a>
+                
+                <div class="dropdown-divider m-0"></div>
+                <a href="<%=request.getContextPath() %>/forumPost/forumPost.do" class="dropdown-item fw-500 pt-3 pb-3">
+                    <span data-i18n="drpdwn.page-logout">討論區發文紀錄</span>
+                </a>
+                
                 <div class="dropdown-divider m-0"></div>
                 <a href="<%=request.getContextPath() %>/logout/logout.do" class="dropdown-item fw-500 pt-3 pb-3">
                     <span data-i18n="drpdwn.page-logout">登出</span>
