@@ -77,7 +77,7 @@ img {
 						</h1>
 					</div>
 					<div class="row align-items-center justify-content-center">
-						<div class="col-10">
+						<div class="col-12">
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
 									<h2>課程資料</h2>

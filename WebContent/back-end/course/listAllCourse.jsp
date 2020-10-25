@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="/back-end/template/check.jsp"%>
+<%-- <%@ include file="/back-end/template/check.jsp"%> --%>
 <%@ page import="com.course.model.*"%>
 <%@ page import="java.util.*"%>
 <%
@@ -27,6 +27,11 @@
     text-align: center;  
 }
 
+  img {  
+    vertical-align: sub;  
+    width: 20%;  
+  	height: auto;  
+  } 
 
 </style>
 
@@ -58,7 +63,7 @@
 						</h1>
 					</div>
 					<div class="row">
-						<div class="col-xl-12">
+						<div class="col-12">
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
 									<h2>課程列表</h2>
@@ -87,6 +92,7 @@
 													<th>開始日期</th>
 													<th>結束日期</th>
 													<th>狀態</th>
+													<th>課程圖</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -108,6 +114,16 @@
 																<c:when test="${courseVO.status=='2'}">課程結束</c:when>
 															</c:choose>
 														</td>
+														<td>
+                                                        <c:if test="${courseVO.courseImg eq null}">
+                                                        <span> </span>
+														<i class="fal fa-file fa-2x"></i>
+														</c:if>
+														<c:if test="${courseVO.courseImg ne null}">
+														 <span></span>
+														<i class="fal fa-file-image fa-2x"></i>
+														</c:if>
+                                                  	</td>	
 													</tr>
 												</c:forEach>
 											</tbody>
