@@ -20,8 +20,6 @@
 <html>
 <head>
     <%@ include file="/back-end/template/head.jsp" %> 
-    <!-- notifications 的css連結 -->
-   	<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/notifications/sweetalert2/sweetalert2.bundle.css">
 </head>
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
     <script>
@@ -35,12 +33,12 @@
                 <%@ include file="/back-end/template/header.jsp" %> 
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
-                        <li class="breadcrumb-item">Democrat</li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
+                        <li class="breadcrumb-item">導師管理</li>
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-democrat'></i> Democrat
+                            <i class='subheader-icon fal fa-democrat'></i> 導師管理
                         </h1>
                     </div>
                     <div class="row">
@@ -48,7 +46,7 @@
                                 <div id="panel-1" class="panel">
                                     <div class="panel-hdr">
                                         <h2>
-                                            Example <span class="fw-300"><i>Table</i></span>
+                                            Employee <span class="fw-300"><i>List</i></span>
                                         </h2>
                                         <div class="panel-toolbar">
                                             <button id="addEmpBtn" data-toggle="modal" data-target="#addEmp" type="button" class="btn btn-outline-info btn-pills waves-effect waves-themed">新增導師</button>
@@ -251,7 +249,6 @@
     <%@ include file="/back-end/template/basic_js.jsp" %>  
     
     
-     <script src="<%=request.getContextPath() %>/SmartAdmin4/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
      <script>
             /* demo scripts for change table color */
             /* change background */
