@@ -43,13 +43,25 @@ pageContext.setAttribute("list", list);
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a></li>
                         <li class="breadcrumb-item">討論區</li>
                     </ol>
+                    
+                     <div class="input-group input-group-lg mb-g">
+                                    <input type="text" class="form-control shadow-inset-2" placeholder="Search Discussion">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fal fa-search"></i></span>
+                                    </div>
+                                </div>
+                    
+                    
                     <div class="subheader">
                         <h1 class="subheader-title">
                             <i class='subheader-icon fal fa-democrat'></i> 討論區
                         </h1>
                     </div>
+                    
                     <c:forEach var="forumTopicVO" items="${forumtopicSvc.getByBanJiNo(studentVO.banjiNo)}">
                     	<form method="post" action="<%=request.getContextPath()%>/forumPost/forumPost.do">
+                    	
+                    	
                     		<input type="hidden" name="action" value="getByTopicNo">
                     		<input type="hidden" name="forumTopicNo" value="${forumTopicVO.forumTopicNo}">
                     		<input type="submit" value="${forumTopicVO.forumTopicName}">
