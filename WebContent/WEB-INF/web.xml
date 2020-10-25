@@ -56,7 +56,8 @@
 		<url-pattern>/back-end/emp/updateEmp.jsp</url-pattern>		
 		<url-pattern>/back-end/teacher/teacherList.jsp</url-pattern>
 		<url-pattern>/back-end/teacher/listOneTeacher.jsp</url-pattern>		
-		<url-pattern>/back-end/teacher/updateTeacher.jsp</url-pattern>		
+		<url-pattern>/back-end/teacher/updateTeacher.jsp</url-pattern>	
+		<url-pattern>/back-end/student/studentList.jsp</url-pattern>	
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
