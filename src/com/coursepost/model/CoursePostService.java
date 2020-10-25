@@ -50,4 +50,8 @@ public class CoursePostService {
 	public List<CoursePostVO> getAll(){
 		return dao.getAll();	
 	}
+
+	public List<CoursePostVO> getCoursePostByCourseNo(String courseNo) {
+		return dao.getCoursePostByCourseNo(courseNo);
+	}
 }
