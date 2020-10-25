@@ -36,12 +36,24 @@
 	<filter-mapping>
 		<filter-name>loginFilter</filter-name>
 		<url-pattern>/back-end/index/index.jsp</url-pattern>
+		<url-pattern>/back-end/emp/empList.jsp</url-pattern>
 		<url-pattern>/front-end/index/index.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>userPermissionFilter</filter-name>
+		<filter-class>com.filter.UserPermissionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>userPermissionFilter</filter-name>
+		<url-pattern>/back-end/emp/empList.jsp</url-pattern>
+		<url-pattern>/back-end/emp/listOneEmp.jsp</url-pattern>
+		
 	</filter-mapping>
 
 	<servlet>
@@ -150,6 +162,15 @@
 	<servlet-mapping>
 		<servlet-name>UserServlet</servlet-name>
 		<url-pattern>/user.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>UserPermission</servlet-name>
+		<servlet-class>com.userpermission.controller.userPermissionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserPermission</servlet-name>
+		<url-pattern>/userPermission.do</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
