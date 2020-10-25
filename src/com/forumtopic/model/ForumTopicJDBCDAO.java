@@ -23,7 +23,7 @@ public class ForumTopicJDBCDAO implements ForumTopicDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT forumtopicno, banjino, forumtopicname FROM forumtopic where forumtopicno = ?";
 	private static final String DELETE = "UPDATE forumtopic set isDelete=1 where forumtopicno = ?";
 	private static final String UPDATE = "UPDATE forumtopic set banjino=?, forumtopicname=?";
-	private static final String GETBYBANJINO = "select * from forumtopic where banjino = ?";
+	private static final String GETBYBANJINO = "select * from forumtopic where banjino = ? and isdelete = 0";
 
 	@Override
 	public void insert(ForumTopicVO forumTopicVO) {
@@ -317,6 +317,7 @@ public class ForumTopicJDBCDAO implements ForumTopicDAO_interface {
 //		}
 //	}
 
+
 	@Override
 	public List<ForumTopicVO> getByBanJiNo(String banjiNo) {
 		List<ForumTopicVO> list = new ArrayList<ForumTopicVO>();
@@ -336,13 +337,14 @@ public class ForumTopicJDBCDAO implements ForumTopicDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-
+	
 				forumTopicVO = new ForumTopicVO();
 				forumTopicVO.setForumTopicNo(rs.getString("forumTopicNo"));
 				forumTopicVO.setBanjiNo(rs.getString("banjiNo"));
 				forumTopicVO.setForumTopicName(rs.getString("forumTopicName"));
 				
 				list.add(forumTopicVO);
+			
 			}
 
 			// Handle any driver errors
