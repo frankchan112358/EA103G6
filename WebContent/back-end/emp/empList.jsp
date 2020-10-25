@@ -70,20 +70,20 @@
                                                 <tbody>
                                                     <c:forEach var="empVO" items="${empList}">
                                                     <c:forEach var="userVO" items="${userList}">                                                                                                                                                     
-                                                    	<c:if test="${empVO.userNo eq userVO.userNo}">
-                                                    		<tr onclick="location.href='<%=request.getContextPath()%>/user.do?action=getOne_For_Display&userNo=${userVO.userNo}';">
+                                                    	<c:if test="${empVO.userNo eq userVO.userNo}">                                             		
+                                                    		<tr onclick="location.href='<%=request.getContextPath()%>/user.do?action=getOne_For_Display&userNo=${userVO.userNo}&goto=listOneEmp';" style=" cursor: pointer;">
                                                     		<td>${empVO.empNo}</td>
                                                     		<td>${userVO.name}</td>
                                                     		<td>${userVO.mail}</td>
                                                     		<td>${userVO.phone eq null?"暫無資料":userVO.phone}</td>
-                                                    		<td>
+                                                    		<td>                                                    		
                                                     		<c:choose>
                                                     			<c:when test="${empVO.empStatus==0}">離職</c:when>
                                                     			<c:when test="${empVO.empStatus==1}">在職</c:when>
                                                     			<c:when test="${empVO.empStatus==2}">停職</c:when>
                                                     		</c:choose>
                                                     		</td>
-                                                    		</tr>
+                                                    		</tr>                                                   		
                                                     	</c:if>
                                                     </c:forEach>
                                                     </c:forEach>
@@ -230,6 +230,9 @@
             });
         }, false);
     })();
+    
+    
+   
     
     </script>
                 </main>
