@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.course.model.CourseVO;
 import com.teachingfile.model.TeachingFileService;
 import com.teachingfile.model.TeachingFileVO;
 
@@ -176,16 +177,10 @@ public class TeachingFileServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
+				String courseNo = req.getParameter("courseNo");
 				String timetableNo = req.getParameter("timetableNo");
-				if (timetableNo == null || timetableNo.trim().length() == 0) {
-					errorMsgs.add("課表編號: 請勿空白");
-				} else if (!timetableNo.trim().matches("[T]{2}[0-9]{6}")) {
-					errorMsgs.add("課表編號格式錯誤");
-				}
+				System.out.println("timetableNo(182)" + timetableNo);
 				String teachingFileName = req.getParameter("teachingFileName");
-				if (teachingFileName == null || teachingFileName.trim().length() == 0) {
-					errorMsgs.add("課表名稱: 請勿空白");
-				}
 
 				byte[] teachingFiles = null;
 				Part teachingFile = req.getPart("upfile2"); // Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
@@ -199,6 +194,7 @@ public class TeachingFileServlet extends HttpServlet {
 
 				// 就算有error，一樣把輸入值保留(所以要先存入再forward)
 				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("courseNo", courseNo);
 					TeachingFileVO teachingFileVO = new TeachingFileVO();
 					teachingFileVO.setTimetableNo(timetableNo);
 					teachingFileVO.setTeachingFileName(teachingFileName);
@@ -219,6 +215,10 @@ public class TeachingFileServlet extends HttpServlet {
 				out.write(teachingFiles);
 				out.close();
 				in.close();
+				
+				CourseVO courseVO = new CourseVO();
+				courseVO.setCourseNo(courseNo);
+				req.setAttribute("courseVO", courseVO);
 
 				TeachingFileVO teachingFileVO = new TeachingFileVO();
 				teachingFileVO.setTimetableNo(timetableNo);
@@ -227,7 +227,7 @@ public class TeachingFileServlet extends HttpServlet {
 				TeachingFileService teachingFileSvc = new TeachingFileService();
 				teachingFileVO = teachingFileSvc.addTeachingFile(teachingFileVO.getTimetableNo(),
 						teachingFileVO.getTeachingFileName(), teachingFileVO.getTeachingFile());
-				String url = "/back-end/teachingFile/listAllTeachingFile.jsp";
+				String url = "/back-end/teachingFile/listAllTeachingFile2.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -245,18 +245,23 @@ public class TeachingFileServlet extends HttpServlet {
 
 			try {
 				String teachingFileNo = req.getParameter("teachingFileNo");
-
+				String courseNo = req.getParameter("courseNo");
+				
 				TeachingFileService teachingFileSvc = new TeachingFileService();
 				teachingFileSvc.deleteTeachingFile(teachingFileNo);
+				
+				CourseVO courseVO = new CourseVO();
+				courseVO.setCourseNo(courseNo);
+				req.setAttribute("courseVO", courseVO);
 
-				String url = "/back-end/teachingFile/listAllTeachingFile.jsp";
+				String url = "/back-end/teachingFile/listAllTeachingFile2.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/teachingFile/listAllTeachingFile.jsp");
+						.getRequestDispatcher("/back-end/teachingFile/listAllTeachingFile2.jsp");
 				failureView.forward(req, res);
 			}
 		}
