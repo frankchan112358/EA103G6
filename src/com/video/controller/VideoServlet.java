@@ -205,17 +205,21 @@ public class VideoServlet extends HttpServlet {
 		if ("delete".equals(action))
 
 		{
-
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				String videoNo = req.getParameter("videoNo");
-
+				String courseNo = req.getParameter("courseNo");
+				
 				VideoService videoSvc = new VideoService();
 				videoSvc.deleteVideo(videoNo);
 
-				String url = "/back-end/video/listAllVideo.jsp";
+				CourseVO courseVO = new CourseVO();
+				courseVO.setCourseNo(courseNo);
+				req.setAttribute("courseVO", courseVO);
+				
+				String url = "/back-end/video/listAllVideo2.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 

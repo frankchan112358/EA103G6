@@ -110,6 +110,14 @@ TimetableVO timetableVO = (TimetableVO) request.getAttribute("timetableVO");
 																<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
 																<input type="hidden" name="action" value="getOne_For_Update">
 															</FORM>
+															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/video/video.do" style="margin-bottom:0px;">
+																<button type="submit"  class="btn btn-outline-danger ">
+																<span class="fal fa-bug"></span>
+																<span>刪除</span>
+																<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
+																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+																<input type="hidden" name="action" value="delete">
+															</FORM>
                                                      		</c:if>
                                                      		
                                                     		<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)==null}">
