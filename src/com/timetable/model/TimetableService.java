@@ -15,7 +15,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.leave.model.LeaveService;
-import com.leave.model.LeaveVO;
+import com.leave.model.LeaveStatus;
 import com.teacher.model.TeacherVO;
 import com.teachingfile.model.TeachingFileService;
 import com.teachingfile.model.TeachingFileVO;
@@ -56,6 +56,7 @@ public class TimetableService {
 		timetableVO.setTimetablePeriod(timetablePeriod);
 		timetableVO.setTimetableDate(timetableDate);
 		timetableVO.setTeachingLog(teachingLog);
+		new LeaveService().updateStatusWhenTimetableEdit(timetableNo, LeaveStatus.Reschedule.getNum());
 		dao.update(timetableVO);
 
 		return timetableVO;
@@ -73,11 +74,7 @@ public class TimetableService {
 				teachingFileService.deleteTeachingFile(teachingFileVO.getTeachingFileNo());
 		}
 
-		LeaveService leaveService = new LeaveService();
-		for (LeaveVO leaveVO : leaveService.getAll()) {
-			if (timetableNo.equals(timetableNo))
-				leaveService.deleteLeaveVO(leaveVO.getLeaveNo());
-		}
+		new LeaveService().updateStatusWhenTimetableEdit(timetableNo, LeaveStatus.Reschedule.getNum());
 
 		new AttendanceService().deleteAttendanceWithTimetableNo(timetableNo);
 

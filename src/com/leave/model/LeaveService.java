@@ -9,6 +9,10 @@ import com.course.model.CourseService;
 import com.course.model.CourseVO;
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.student.model.StudentService;
 import com.student.model.StudentVO;
 import com.timetable.model.TimetableService;
@@ -141,11 +145,37 @@ public class LeaveService {
 	}
 
 	public List<LeaveVO> getAllWithBanji(String banjiNo) {
-		List<LeaveVO>list = new ArrayList<LeaveVO>();
+		List<LeaveVO> list = new ArrayList<LeaveVO>();
 		BanjiVO banjiVO = new BanjiService().getOneBanji(banjiNo);
 		for (StudentVO studentVO : banjiVO.getStudentList()) {
 			list.addAll(getLeaveWithStudent(studentVO.getStudentNo()));
 		}
 		return list;
+	}
+
+	public void updateStatusWhenTimetableEdit(String timetableNo, Integer status) {
+		dao.updateStatusWhenTimetableEdit(timetableNo, status);
+	}
+
+	public String getCalenderEventsJson(String studentNo) {
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		JsonArray jsonArray = new JsonArray();
+		for (TimetableVO timetableVO : new LeaveService().getTimetableEvents(studentNo)) {
+			JsonObject jsonObject = new JsonObject();
+			jsonObject.addProperty("id", timetableVO.getTimetableNo());
+			jsonObject.addProperty("title",
+					String.format("%s,%s", timetableVO.getPeriodText(), timetableVO.getCourseVO().getCourseName()));
+			jsonObject.addProperty("start",
+					String.format("%sT%s", timetableVO.getTimetableDate(), timetableVO.getPeriodEnum().getStart()));
+			jsonObject.addProperty("backgroundColor", "#2198F3");
+			jsonObject.addProperty("borderColor", "#2198F3");
+			jsonObject.addProperty("editable", false);
+			JsonObject extendedProps = new JsonObject();
+			extendedProps.addProperty("timetableInfo", String.format("%s,%s,%s", timetableVO.getTimetableDate(),
+					timetableVO.getPeriodEnum().getText(), timetableVO.getCourseVO().getCourseName()));
+			jsonObject.add("extendedProps", extendedProps);
+			jsonArray.add(jsonObject);
+		}
+		return gson.toJson(jsonArray);
 	}
 }

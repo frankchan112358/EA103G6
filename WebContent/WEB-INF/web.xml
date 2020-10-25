@@ -142,6 +142,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>LeaveHandle</servlet-name>
+		<servlet-class>com.leave.controller.LeaveHandle</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LeaveHandle</servlet-name>
+		<url-pattern>/leave/leave.handle</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>TimetableServlet</servlet-name>
 		<servlet-class>com.timetable.controller.TimetableServlet</servlet-class>
 	</servlet>

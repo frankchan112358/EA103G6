@@ -22,6 +22,7 @@ public class LeaveJNDIDAO implements LeaveDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT leaveNo,studentNo,timetableNo,type,description,status FROM Leave WHERE leaveNo = ?";
 	private static final String DELETE = "DELETE FROM Leave WHERE leaveNo = ?";
 	private static final String UPDATE = "UPDATE Leave SET studentNo=?,timetableNo=?,type=?,description=?,status=? WHERE leaveNo = ?";
+	private static final String UPDATE_WHEN_TIMETABLE_CHANGE = "UPDATE Leave SET status=? WHERE timetableNo = ?";
 
 	@Override
 	public void insert(LeaveVO leaveVO) {
@@ -215,4 +216,33 @@ public class LeaveJNDIDAO implements LeaveDAO_interface {
 		return list;
 	}
 
+	@Override
+	public void updateStatusWhenTimetableEdit(String timetableNo, Integer status) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_WHEN_TIMETABLE_CHANGE);
+			pstmt.setString(1, timetableNo);
+			pstmt.setInt(2, status);
+			pstmt.executeUpdate();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
 }

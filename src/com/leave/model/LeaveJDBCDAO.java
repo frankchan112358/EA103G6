@@ -227,6 +227,10 @@ public class LeaveJDBCDAO implements LeaveDAO_interface {
 		return list;
 	}
 
+	@Override
+	public void updateStatusWhenTimetableEdit(String timetableNo, Integer status) {
+	}
+
 	public static void main(String[] args) {
 		LeaveJDBCDAO dao = new LeaveJDBCDAO();
 

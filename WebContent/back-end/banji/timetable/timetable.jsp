@@ -186,10 +186,6 @@
                 },
                 eventLimit: true,
                 events: JSON.parse('${jsonData}').events,
-                visibleRange: {
-                    start: '2020-10-10',
-                    end: '2020-10-30'
-                },
                 viewSkeletonRender: function () {
                     $('.fc-toolbar .btn-default').addClass('btn-sm');
                     $('.fc-header-toolbar h2').addClass('fs-md');

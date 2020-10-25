@@ -12,4 +12,6 @@ public interface LeaveDAO_interface {
 	public LeaveVO findByPribaryKey(String leaveNo);
 
 	public List<LeaveVO> getAll();
+	
+	public void updateStatusWhenTimetableEdit(String timetableNo,Integer status);
 }
