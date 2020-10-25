@@ -16,7 +16,7 @@ public  class ForumPostJDBCDAO implements ForumPostDAO_interface {
 	private static final String GET_ALL_STMT = "SELECT forumpostno,forumtopicno,studentno,title, content,forumpostviews,updatetime,createtime FROM forumpost where isDelete = 0 order by to_number(forumpostno)";
 	private static final String GET_ALL_STMT_HOT = "SELECT * FROM forumpost where isDelete = 0 order by forumPostViews DESC";
 	private static final String GET_ONE_STMT = "SELECT forumpostno,forumtopicno,studentno,title, content,forumpostviews,updatetime,createtime FROM forumpost where forumpostno = ?";
-	private static final String GET_ONE_STUDENT_STMT = "SELECT forumpostno,forumtopicno,studentno,title, content,forumpostviews,updatetime,createtime FROM forumpost where studentno = ?";
+	private static final String GET_ONE_STUDENT_STMT = "SELECT * FROM forumpost where studentno = ?";
 
 	private static final String DELETE = "UPDATE forumpost set isDelete=1 where forumpostno = ?";
 	private static final String UPDATE = "UPDATE forumpost set forumtopicno=?, studentno=?, title=?, content=?, updatetime=? where forumpostno = ?";
@@ -309,7 +309,7 @@ public  class ForumPostJDBCDAO implements ForumPostDAO_interface {
 			pstmt = con.prepareStatement(GET_ONE_STUDENT_STMT);
 			pstmt.setString(1, studentNo);
 			rs = pstmt.executeQuery();
-
+System.out.println(studentNo);
 			while (rs.next()) {
 				if (rs.getInt("isDelete") == 0) {
 					forumPostVO = new ForumPostVO();
@@ -318,13 +318,13 @@ public  class ForumPostJDBCDAO implements ForumPostDAO_interface {
 					forumPostVO.setStudentNo(rs.getString("studentNo"));
 					forumPostVO.setTitle(rs.getString("title"));
 					forumPostVO.setContent(rs.getString("content"));
-//					forumPostVO.setForumPostViews(rs.getInt("forumPostViews"));
+					forumPostVO.setForumPostViews(rs.getInt("forumPostViews"));
 					forumPostVO.setUpdateTime(rs.getTimestamp("updateTime"));
 					forumPostVO.setCreateTime(rs.getTimestamp("createTime"));
 					list.add(forumPostVO);
 				}
 			}
-
+System.out.println("test");
 			// Handle any driver errors ( JDBC 驅動 )
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());

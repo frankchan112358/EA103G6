@@ -7,15 +7,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="forumtopicSvc" scope="page" class="com.forumtopic.model.ForumTopicService" />
 <%
-BanjiVO banjiVO = (BanjiVO)request.getAttribute("banjiVO");
+ BanjiVO banjiVO = (BanjiVO)request.getAttribute("banjiVO");
 
 
-ForumTopicService forumtopicSvcList =new ForumTopicService();
-List<ForumTopicVO> forumTopicList =forumtopicSvcList.getByBanJiNo(banjiVO.getBanjiNo());
+ ForumTopicService forumtopicSvcList =new ForumTopicService();
+ List<ForumTopicVO> forumTopicList =forumtopicSvcList.getByBanJiNo(banjiVO.getBanjiNo());
 
-pageContext.setAttribute("forumTopicList", forumTopicList);
-
-request.setAttribute("banjiVO", banjiVO);
+ pageContext.setAttribute("forumTopicList", forumTopicList);
 
 %>
 
@@ -68,33 +66,35 @@ request.setAttribute("banjiVO", banjiVO);
                                                 <tr>
                                                     <th>主題編號</th>
                                                     <th>班級</th>
-                                                    <th>主題名稱</th>                                                 
+                                                    <th>主題名稱</th>   
+                                                    <th></th>                                              
                                                 </tr>
                                             </thead>
                                             <tbody> 
                                                 <c:forEach var="forumTopicVO" items="${forumTopicList}">
-                                       		<tr onclick="location.href='<%=request.getContextPath()%>/forumTopic/forumTopic.do?action=getOne_For_Display&forumTopicNo=${forumTopicVO.forumTopicNo}';">
+                                               
+                                       		<tr>
                                                         <td>${forumTopicVO.forumTopicNo}</td>
 <%--                                                         <td>${forumTopicVO.studentVO.banjiVO.banjiName}</td> --%>
                                                         <td>${forumTopicVO.banjiNo}</td>
 
                                                         <td>${forumTopicVO.forumTopicName}</td>
                                                         
-                                                        <td class="d-flex p-1">
-
-                                                        </td>
-                                                        
                                                         <td>
                                                             <form method="post" action="<%=request.getContextPath()%>/banji/banji.forumtopic" >
+                                                               
+																<input type="hidden" name="action" value="delete">
+                                                                <input type="hidden" name="forumTopicNo" value="${forumTopicVO.forumTopicNo}">    
+                                                                <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">                                                            
                                                                 <button type="submit" class="btn btn-sm btn-danger">
                                                                     <span class="fal fa-edit mr-1"></span>
                                                                     <span>刪除</span>
                                                                 </button>
-                                                                <input type="hidden" name="action" value="delete">
-                                                                <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
+                                                                
                                                             </form>
                                                         </td>
                                                     </tr>
+                                                    
                                                 </c:forEach>
                                             </tbody>
                                         </table>

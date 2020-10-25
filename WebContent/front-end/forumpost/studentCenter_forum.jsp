@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/front-end/template/check.jsp" %>	
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -12,12 +11,11 @@
 <%@ page import="java.util.*"%>
 
 <%
-// StudentService studentsvc = new StudentService();
-// StudentVO studentVO = studentsvc.getOneStudentByUserNo(userVO.getUserNo());
-//     StudentVO studentVO = (StudentVO) request.getAttribute("studentVO");
-// 	String studentNo = studentVO.getStudentNo();
+	UserVO userVO1 = (UserVO)session.getAttribute("userVO");
+	StudentService studentsvc = new StudentService();
+	StudentVO studentVO1 = studentsvc.getOneStudentByUserNo(userVO1.getUserNo());
 	ForumPostService forumpostSvc = new ForumPostService();
-	List<ForumPostVO> list = forumpostSvc.getOneSTUDENT(studentVO.getStudentNo());
+	List<ForumPostVO> list = forumpostSvc.getOneSTUDENT(studentVO1.getStudentNo());
 	pageContext.setAttribute("list", list);
 %>
 <jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService"/>
@@ -66,20 +64,20 @@
 					
 					
 						<div class="row" id=forum_record>
-							<div class="col-md-8"><a href="<%=request.getContextPath() %>/forumPost/forumPost.do?action=getOne_For_Display&forumPostNo=${forumPostVO.forumPostNo}"> ${forumPostVO.title}</a></div>
+							<div class="col-md-8"><a href="<%=request.getContextPath() %>/forumPost/forumPost.do?action=getOneSTUDENT&forumPostNo=${forumPostVO.forumPostNo}"> ${forumPostVO.title}</a></div>
 							<div class="col-md-2">
 								<fmt:formatDate value="${forumPostVO.updateTime}"
 									pattern="yyyy-MM-dd HH:mm:ss" />
 							</div>
 							<div class="col-md-1">
-							<form method="post" action="<%=request.getContextPath()%>/front-end/forumPost/forumPost.do">
+							<form method="post" action="<%=request.getContextPath()%>forumPost/forumPost.do">
 								<input type="submit" value="修改">
 								<input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}">
 								<input type="hidden" name="action" value="getOne_For_Update">
 							</form>
 							</div>
 							<div class="col-md-1">
-							<form method="post" action="<%=request.getContextPath()%>/front-end/forumPost/forumPost.do">
+							<form method="post" action="<%=request.getContextPath()%>/forumPost/forumPost.do">
 								<input type="submit" value="刪除">
 								<input type="hidden" name="action" value="delete">
 								<input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}">

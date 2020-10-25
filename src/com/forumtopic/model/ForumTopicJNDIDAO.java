@@ -25,13 +25,12 @@ public class ForumTopicJNDIDAO implements ForumTopicDAO_interface {
 		}
 	}
 
-
 	private static final String INSERT_STMT = "INSERT INTO forumtopic (forumtopicno, banjino, forumtopicname) VALUES (forumtopic_seq.NEXTVAL,?,?)";
 	private static final String GET_ALL_STMT = "SELECT forumtopicno, banjino, forumtopicname FROM forumtopic where isDelete = 0 order by to_number(forumtopicno)";
 	private static final String GET_ONE_STMT = "SELECT forumtopicno, banjino, forumtopicname FROM forumtopic where forumtopicno = ?";
 	private static final String DELETE = "UPDATE forumtopic set isDelete=1 where forumtopicno = ?";
 	private static final String UPDATE = "UPDATE forumtopic set banjino=?, forumtopicname=?";
-	private static final String GETBYBANJINO = "select * from forumtopic where banjino = ?";
+	private static final String GETBYBANJINO = "select * from forumtopic where banjino = ? and isdelete = 0";
 
 	@Override
 	public void insert(ForumTopicVO forumTopicVO) {
@@ -47,11 +46,9 @@ public class ForumTopicJNDIDAO implements ForumTopicDAO_interface {
 
 			pstmt.setString(1, forumTopicVO.getBanjiNo());
 			pstmt.setString(2, forumTopicVO.getForumTopicName());
-			
 
 			pstmt.executeUpdate();
 
-			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -87,12 +84,11 @@ public class ForumTopicJNDIDAO implements ForumTopicDAO_interface {
 
 			pstmt.setString(1, forumTopicVO.getBanjiNo());
 			pstmt.setString(2, forumTopicVO.getForumTopicName());
-			
+
 			pstmt.setString(6, forumTopicVO.getForumTopicNo());
 
 			pstmt.executeUpdate();
 
-			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -130,7 +126,6 @@ public class ForumTopicJNDIDAO implements ForumTopicDAO_interface {
 
 			pstmt.executeUpdate();
 
-			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -177,11 +172,9 @@ public class ForumTopicJNDIDAO implements ForumTopicDAO_interface {
 				forumTopicVO.setForumTopicNo(rs.getString("forumTopicNo"));
 				forumTopicVO.setBanjiNo(rs.getString("banjiNo"));
 				forumTopicVO.setForumTopicName(rs.getString("forumTopicName"));
-				
 
 			}
 
-		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -234,11 +227,10 @@ public class ForumTopicJNDIDAO implements ForumTopicDAO_interface {
 				forumTopicVO.setForumTopicNo(rs.getString("forumTopicNo"));
 				forumTopicVO.setBanjiNo(rs.getString("banjiNo"));
 				forumTopicVO.setForumTopicName(rs.getString("forumTopicName"));
-				
+
 				list.add(forumTopicVO);
 			}
 
-			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -283,7 +275,7 @@ public class ForumTopicJNDIDAO implements ForumTopicDAO_interface {
 			con = ds.getConnection();
 
 			pstmt = con.prepareStatement(GETBYBANJINO);
-			
+
 			pstmt.setString(1, banjiNo);
 			rs = pstmt.executeQuery();
 
@@ -293,11 +285,11 @@ public class ForumTopicJNDIDAO implements ForumTopicDAO_interface {
 				forumTopicVO.setForumTopicNo(rs.getString("forumTopicNo"));
 				forumTopicVO.setBanjiNo(rs.getString("banjiNo"));
 				forumTopicVO.setForumTopicName(rs.getString("forumTopicName"));
-				
+
 				list.add(forumTopicVO);
+
 			}
 
-			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
