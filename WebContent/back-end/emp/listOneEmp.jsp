@@ -41,7 +41,7 @@
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
-                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/emp/empList.jsp">導師管理</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/emp/empList.jsp?goto=empList">導師管理</a></li>
                         <li class="breadcrumb-item">個人資料顯示</li>
                     </ol>
                     <div class="subheader">
