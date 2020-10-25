@@ -46,7 +46,7 @@
                     </div>
                     <div id="add">
 							<input type="hidden" name="action" > 
-							<button type="submit" id="btn-add" style="width:150px;heigh:50px;" onclick="location.href='<%=request.getContextPath()%>/back-end/banji/addbanji.jsp'" style="margin-bottom: 0px'"
+							<button type="submit" id="btn-add" style="width:150px;heigh:50px;" onclick="location.href='<%=request.getContextPath()%>/back-end/banji/addBanji.jsp'" style="margin-bottom: 0px'"
 								class="btn-write btn btn-sm btn-primary" >
 								<strong>新增養成班</strong>
 							</button>
@@ -65,6 +65,7 @@
                                                 <tr>
                                                     <th>班種</th>
                                                     <th>班級</th>
+                                                     <th>導師</th>
                                                     <th>開訓日</th>
                                                     <th>結訓日</th>
                                                     <th>上課時數</th>
@@ -78,9 +79,10 @@
                                             </thead>
                                             <tbody>
                                                 <c:forEach var="banjiVO" items="${list}">
-                                                    <tr>
+                                                    <tr onclick="location.href='<%=request.getContextPath()%>/banji/banji.do?action=getOne_For_Update&banjiNo=${banjiVO.banjiNo}';">
                                                         <td>${banjiVO.banjiTypeVO.banjiTypeName}</td>
                                                         <td>${banjiVO.banjiName}</td>
+                                                        <td>${banjiVO.empVO.empName}</td>
                                                         <td>${banjiVO.startDay}</td>
                                                         <td>${banjiVO.endDay}</td>
                                                         <td>${banjiVO.classHours}</td>

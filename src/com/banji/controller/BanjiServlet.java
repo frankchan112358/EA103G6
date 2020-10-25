@@ -76,8 +76,8 @@ public class BanjiServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				String banjiNo = req.getParameter("banjiNo");			
-			
+				String banjiNo = req.getParameter("banjiNo");	
+				
 				BanjiService banjiSvc = new BanjiService();
 				BanjiVO banjiVO = banjiSvc.getOneBanji(banjiNo);
 
@@ -99,11 +99,8 @@ public class BanjiServlet extends HttpServlet {
 
 			try {
 				String banjiNo = req.getParameter("banjiNo");
-
 				String empNo = req.getParameter("empNo");
-
 				String banjiTypeNo = req.getParameter("banjiTypeNo");
-
 				java.sql.Date startDay = null;
 
 				try {
@@ -152,7 +149,6 @@ public class BanjiServlet extends HttpServlet {
 				}
 
 				String classroomNo = req.getParameter("classroomNo");
-//				String classroomNoReg = "^[(\u4e00-\u9fd5)(a-zA-Z0-9_)]{2,10}$";
 				if (classroomNo == null || classroomNo.trim().length() == 0) {
 					errorMsgs.add("教室編號請勿空白");
 				}
@@ -166,7 +162,6 @@ public class BanjiServlet extends HttpServlet {
 				}
 
 				String banjiContent = req.getParameter("banjiContent");
-//				String banjiContentReg = "^[(\u4e00-\u9fd5)(a-zA-Z0-9_)]{2,10}$";
 				if (banjiContent == null || banjiContent.trim().length() == 0) {
 					errorMsgs.add("班級內容請勿空白");
 				}
@@ -195,7 +190,7 @@ public class BanjiServlet extends HttpServlet {
 						numberOfStudent, classroomNo, status, banjiContent);
 
 				req.setAttribute("banjiVO", banjiVO);
-				String url = "/back-end/banji/listOneBanji.jsp";
+				String url = "/back-end/banji/homeBanji.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 
 				successView.forward(req, res);

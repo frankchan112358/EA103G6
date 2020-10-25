@@ -86,7 +86,8 @@ td {
 		<table>
 			<tr>
 				<td>講師名稱:</td>
-				<td>${teacherSvc.getOneTeacher(replyVO.getTeacherNo()).teacherName}</td>
+				<td><input type="TEXT" name=teacherNo size="40"
+					value="<%=replyVO.getTeacherNo()%>" /></td>
 			</tr>
 
 
