@@ -16,3 +16,24 @@
 <script>var NotifyMyPoint = "/NotifyServlet/${sessionScope.userVO.userNo}"</script>
 <script src="<%=request.getContextPath() %>/notify/websocketNotify.js"></script>
 <script src="<%=request.getContextPath() %>/SmartAdmin4/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
+
+<!-- 此為權限篩選 -->
+<script>
+<c:forEach var="userPermissionForcheck" items="${userPermissionForShow}">
+<c:choose>	
+	<c:when test="${userPermissionForcheck.permissionNo eq '1' and userPermissionForcheck.permissionEdit eq 0}">
+		$("#banjiManage").empty();
+	</c:when>
+	<c:when test="${userPermissionForcheck.permissionNo eq '2'and userPermissionForcheck.permissionEdit eq 0}">
+		$("#courseManage").empty();
+	</c:when>
+	<c:when test="${userPermissionForcheck.permissionNo eq '3' and userPermissionForcheck.permissionEdit eq 0}">
+		$("#banjiTypeManage").empty();
+	</c:when>
+	<c:when test="${userPermissionForcheck.permissionNo eq '4' and userPermissionForcheck.permissionEdit eq 0}">
+		$("#menberManage").empty();
+	</c:when>
+</c:choose>
+</c:forEach>
+
+</script>
