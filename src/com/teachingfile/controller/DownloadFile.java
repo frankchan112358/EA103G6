@@ -42,8 +42,6 @@ public class DownloadFile extends HttpServlet {
 			ServletOutputStream sos = res.getOutputStream();
 			byte[] loadFile = new byte[bis.available()];
 			bis.read(loadFile);
-			System.out.println(teachingFileVO.getTeachingFileNo());
-			System.out.println(bis);
 			sos.write(loadFile);
 			sos.close();
 
