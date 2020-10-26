@@ -413,7 +413,6 @@ public class UserServlet extends HttpServlet {
 				UserService userSvc = new UserService();
 				UserVO userVO = userSvc.getOneUser(userNo);
 				req.setAttribute("userVOForUpdate", userVO);
-				req.setAttribute("goto","update"); //此為設計給filter去篩選權限用
 
 				/*************************** 2.查詢資料,並準備轉交(Send the Success view) ************/
 
@@ -449,13 +448,18 @@ public class UserServlet extends HttpServlet {
 
 					EmpService empSvc = new EmpService();
 					EmpVO empVO = empSvc.getOneEmpByUserNo(userNo);
-
+					
+					
+					
 					if (empVO == null) { // 若離職頁面轉至此跳刪除建議，但目前新版面離職的人會抓不到
 						RequestDispatcher failureView = req
 								.getRequestDispatcher("/back-end/user/update_user_input.jsp");
 						failureView.forward(req, res);
 						return;
 					}
+					
+					
+					
 					req.setAttribute("empVOForUpdate", empVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/updateEmp.jsp");
 					failureView.forward(req, res);
@@ -733,6 +737,7 @@ public class UserServlet extends HttpServlet {
 					empStatus = java.lang.Integer.valueOf(req.getParameter("empStatus"));
 				}
 
+				
 				/*********************** 3.資料包裝並開始進行錯誤處理 *************************/
 
 				if (type.equals(0)) {
@@ -817,6 +822,23 @@ public class UserServlet extends HttpServlet {
 					EmpService empSvc = new EmpService();
 					empVO = empSvc.updateEmp(empNo, userNo, empStatus, name);
 
+					/*********************** 修改導師權限資料 *************************/
+					PermissionService permissionSvc = new PermissionService();
+					UserPermissionService userPermissionService = new UserPermissionService();
+					List<PermissionVO> list = permissionSvc.getAll();
+					for (PermissionVO permissionVO : list) {
+						Integer readable = 0;
+						Integer editable = 1;
+
+						
+						if (req.getParameter("editable" + permissionVO.getPermissionNo()) == null) {
+							editable = 0;
+						}
+
+						userPermissionService.updateUserPermission(userNo, permissionVO.getPermissionNo(), readable, editable);
+					}
+					
+					
 					// 當導師改成離職時自動刪除使用者身分
 					if (empStatus.equals(0)) {
 						UserService userSvcDelete = new UserService();

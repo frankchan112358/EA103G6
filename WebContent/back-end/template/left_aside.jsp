@@ -25,7 +25,7 @@
                     <span class="nav-link-text">後台首頁</span>
                 </a>
             </li>
-            <li>
+            <li id="menberManage">
                 <a href="#" title="成員管理">
                     <i class="fal fa-users"></i>
                     <span class="nav-link-text">成員管理</span>
@@ -53,7 +53,7 @@
                     </li>
                 </ul>
             </li>
-            <li>
+            <li id="banjiManage">
                 <c:if test="${userVO!=null && userVO.type==2}">
                     <a href="<%=request.getContextPath()%>/banji/banji.manage" title="養成班管理">
                         <i class="fal fa-users-class"></i>
@@ -85,13 +85,13 @@
                     </c:if>
                 </c:if>
             </li>
-            <li>
+            <li id="courseManage">
                 <a href="#" title="課程管理">
                     <i class="fal fa-book"></i>
                     <span class="nav-link-text">課程管理</span>
                 </a>
             </li>
-            <li>
+            <li id="banjiTypeManage">
                 <a href="<%=request.getContextPath()%>/back-end/banjiType/homeBanjiType.jsp" title="班種管理">
                     <i class="fal fa-chalkboard-teacher"></i>
                     <span class="nav-link-text">班種管理</span>
