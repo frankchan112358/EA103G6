@@ -223,8 +223,9 @@ public class LeaveJNDIDAO implements LeaveDAO_interface {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_WHEN_TIMETABLE_CHANGE);
-			pstmt.setString(1, timetableNo);
-			pstmt.setInt(2, status);
+			pstmt.setInt(1, status);
+			pstmt.setString(2, timetableNo);
+
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
