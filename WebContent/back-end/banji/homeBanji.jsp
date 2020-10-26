@@ -78,7 +78,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach var="banjiVO" items="${list}">
+                                                <c:forEach var="banjiVO" items="${empVO.banjiList}">
                                                     <tr onclick="location.href='<%=request.getContextPath()%>/banji/banji.do?action=getOne_For_Update&banjiNo=${banjiVO.banjiNo}';">
                                                         <td>${banjiVO.banjiTypeVO.banjiTypeName}</td>
                                                         <td>${banjiVO.banjiName}</td>
