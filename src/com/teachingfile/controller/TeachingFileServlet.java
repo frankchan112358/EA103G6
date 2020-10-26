@@ -1,20 +1,13 @@
 package com.teachingfile.controller;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpCookie;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import com.course.model.CourseVO;
-import com.sun.net.httpserver.HttpContext;
 import com.teachingfile.model.TeachingFileService;
 import com.teachingfile.model.TeachingFileVO;
 
@@ -211,7 +203,6 @@ public class TeachingFileServlet extends HttpServlet {
 				// 利用inputStream、outputStream把teachingFile存入DB(給儲存資料byte > 取影片 > 利用資料流讀取資料 )
 				Part DBteachingFile = req.getPart("upfile2");
 
-				System.out.println("DBteachingFile :  " + DBteachingFile);
 				InputStream in = DBteachingFile.getInputStream();
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
 				teachingFiles = new byte[in.available()];
