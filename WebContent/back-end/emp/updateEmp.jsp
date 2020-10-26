@@ -1,10 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.user.model.*,com.emp.model.*"%>
+<%@ page import="com.user.model.*,com.emp.model.*,com.userpermission.model.*"%>
 <%@ page import="java.util.*"%>
 <%  
 
 	UserVO userVOForUpdate = (UserVO) request.getAttribute("userVOForUpdate");
 	EmpVO empVOForUpdate = (EmpVO) request.getAttribute("empVOForUpdate");
+
+	UserPermissionService userPermissionSvc=new UserPermissionService();
+	List<UserPermissionVO> userPermissionList=userPermissionSvc.getAllByThemselves(userVOForUpdate.getUserNo());
+ 
+	pageContext.setAttribute("userPermissionList", userPermissionList);
+
 	
 %>
 
@@ -12,34 +18,30 @@
 <html>
 <head>
     <%@ include file="/back-end/template/head.jsp" %> 
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
 	
+	<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">	
 	
 		
-<style>
-    
+<style>   
     img {
 	max-width: 100%;
 	max-height: 100%;
 	border:2px #C4B1B1 dashed;
-	
-}
+	}
 
-#picDiv{
+	#picDiv{
 	width: 150px;
 	height: 150px;
-
-}
-
+	}
 </style>
-    
 </head>
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
     <script>
         var classHolder = document.getElementsByTagName("BODY")[0];
     </script>
-
     <div class="page-wrapper">
         <div class="page-inner">
             <%@ include file="/back-end/template/left_aside.jsp" %> 
@@ -141,6 +143,34 @@
                                                		</div>
                                                     <div class="form-row form-group">
                                                         
+                                                        <div class="col-md-3 mb-3 " style="text-align:center;">
+                                                            <label class="form-label mb-2">班級管理之權限 <span class="text-danger">*</span></label>
+                                                            <div class="mb-2">
+                                                            	<label for="editable1">可否編輯</label>
+                                                                <input type="checkbox" name="editable1" data-toggle="toggle" data-size="xs" value="0" id="permission1" >
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3" style="text-align:center;">
+                                                            <label class="form-label mb-2">課程管理之權限 <span class="text-danger">*</span></label>
+                                                            <div class="mb-2">
+                                                            <label for="editable2">可否編輯</label>
+                                                                <input type="checkbox" name="editable2" data-toggle="toggle" data-size="xs" value="0" id="permission2">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3" style="text-align:center;">
+                                                            <label class="form-label mb-2">班種管理之權限 <span class="text-danger">*</span></label>
+                                                            <div class="mb-2">
+                                                            <label for="editable3">可否編輯</label>
+                                                                <input type="checkbox" name="editable3" data-toggle="toggle" data-size="xs" value="0" id="permission3" >
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3" style="text-align:center;">
+                                                            <label class="form-label mb-2">成員管理之權限 <span class="text-danger">*</span></label>
+                                                            <div class="mb-2">
+                                                            <label for="editable4">可否編輯</label>
+                                                                <input type="checkbox" name="editable4" data-toggle="toggle" data-size="xs" value="0" id="permission4" >
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row align-items-center">
@@ -249,7 +279,14 @@
                                             });
                                             	
                                             
-                              
+                                          //控制權限之value值 
+                                            <%for(int i=1;i<=4;i++){%>
+                                            	$("#permission<%=i%>").change(function(){
+                                            		if($(this).prop("checked")){
+                                            			$(this).val(1);}
+                                            	});
+                                            <%}%>
+
                                             
                                             </script>
                                         </div>
@@ -298,9 +335,29 @@
     	$("#mail").attr("class","form-control is-invalid");
     	$("#wrongMail").text("${errorMsgs.mail}");
     </c:if>
-
+    
+    
+    
+    //顯示其原本的權限值
+     <c:forEach var="userPermission" items="${userPermissionList}">
+    	<c:choose>	
+    		<c:when test="${userPermission.permissionNo eq '1' and userPermission.permissionEdit eq 1}">
+    			$("#permission1").attr("checked",true);
+    		</c:when>
+    		<c:when test="${userPermission.permissionNo eq '2'and userPermission.permissionEdit eq 1}">
+    			$("#permission2").attr("checked",true);
+    		</c:when>
+    		<c:when test="${userPermission.permissionNo eq '3' and userPermission.permissionEdit eq 1}">
+    			$("#permission3").attr("checked",true);
+    		</c:when>
+    		<c:when test="${userPermission.permissionNo eq '4' and userPermission.permissionEdit eq 1}">
+    			$("#permission4").attr("checked",true);
+    		</c:when>
+    	</c:choose>
+    </c:forEach>
     
     </script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     
 </body>
 </html>
