@@ -105,7 +105,7 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 																			<td>
 																			
 																				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/teachingFile/download.do">
-																				<button id="addCourse" type="submit" class="btn btn-danger">
+																				<button id="addCourse" type="submit" class="btn btn-success">
 																					<span class="far fa-plus-circle mr-1"></span>
 																					<span>預覽</span>
 																				</button>
@@ -114,7 +114,7 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 																				<input type="hidden" name="teachingFileNo" value="${teachingFileVO.teachingFileNo}">
 																				<input type="hidden" name="action" value="preRead">
 																			</FORM>
-																			
+																			<br>
 																				<button id="addCourse" type="submit" class="btn btn-primary">
 																					<a href="<%=request.getContextPath()%>/teachingFile/download.do?${teachingFileVO.teachingFileNo}" download>
 																					<span class="far fa-plus-circle mr-1" style="color:white">下載</span>
@@ -122,7 +122,9 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 																			    	<input type="hidden" name="teachingFileNo" value="${teachingFileVO.teachingFileNo}">
 																			    	</a>
 																				</button>
+																			<br>
 																			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/teachingFile/teachingFile.do">
+																				<br>
 																				<button id="addCourse" type="submit" class="btn btn-danger">
 																					<span class="far fa-plus-circle mr-1"></span>
 																					<span>刪除</span>
