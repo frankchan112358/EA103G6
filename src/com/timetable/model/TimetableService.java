@@ -189,6 +189,7 @@ public class TimetableService {
 		}
 		jsonObject.add("events", jsonArray);
 		CourseVO courseVO = new CourseService().getOneCourse(courseNo);
+		courseVO.setCourseImg(null);
 		JsonObject _courseVO = gson.fromJson(gson.toJson(courseVO), JsonObject.class);
 		_courseVO.addProperty("teacherName", courseVO.getTeacherVO().getTeacherName());
 		_courseVO.addProperty("statusText", courseVO.getStatusText());
