@@ -17,6 +17,7 @@ import com.student.model.StudentService;
 import com.student.model.StudentVO;
 import com.timetable.model.TimetableService;
 import com.timetable.model.TimetableVO;
+import com.websocketnotify.controller.NotifyServlet;
 
 public class LeaveService {
 	private LeaveDAO_interface dao;
@@ -32,7 +33,15 @@ public class LeaveService {
 		leaveVO.setType(type);
 		leaveVO.setDescription(description);
 		leaveVO.setStatus(LeaveStatus.Review.getNum());
-		dao.insert(leaveVO);
+		String next_leaveNo = dao.insert2(leaveVO);
+
+		leaveVO.setLeaveNo(next_leaveNo);
+		String userNo = leaveVO.getStudentVO().getBanjiVO().getEmpVO().getUserNo();
+		TimetableVO timetableVO = leaveVO.getTimetableVO();
+		String string = String.format("%s同學申請%s在%s%s%s", leaveVO.getStudentVO().getStudentName(), leaveVO.getTypeText(),
+				timetableVO.getTimetableDate(), timetableVO.getPeriodText(), timetableVO.getCourseVO().getCourseName());
+		new NotifyServlet().broadcast(userNo, "請假申請", string);
+
 		return leaveVO;
 	}
 
@@ -116,6 +125,21 @@ public class LeaveService {
 		return list;
 	}
 
+	public List<TimetableVO> getTimetableEventsIncludeSelf(String studentNo, String timetableNo) {
+		List<TimetableVO> list = new ArrayList<TimetableVO>();
+		List<LeaveVO> studentLeaveList = getLeaveWithStudent(studentNo);
+		List<TimetableVO> studentTimetableList = getTimetableWithStudent(studentNo);
+		java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		for (TimetableVO timetableVO : studentTimetableList) {
+			if (checkTimetableStatus(timetableVO.getTimetableNo(), studentLeaveList)
+					&& now.before(timetableVO.getTimetableDate())) {
+				list.add(timetableVO);
+			}
+		}
+		list.add(new TimetableService().getOneTimetable(timetableNo));
+		return list;
+	}
+
 	public Boolean checkTimetableStatus(String timetableNo, List<LeaveVO> studentLeaveList) {
 		for (LeaveVO leaveVO : studentLeaveList) {
 			LeaveStatus status = leaveVO.getStatusEnum();
@@ -169,6 +193,31 @@ public class LeaveService {
 					String.format("%sT%s", timetableVO.getTimetableDate(), timetableVO.getPeriodEnum().getStart()));
 			jsonObject.addProperty("backgroundColor", "#2198F3");
 			jsonObject.addProperty("borderColor", "#2198F3");
+			jsonObject.addProperty("editable", false);
+			JsonObject extendedProps = new JsonObject();
+			extendedProps.addProperty("timetableInfo", String.format("%s,%s,%s", timetableVO.getTimetableDate(),
+					timetableVO.getPeriodEnum().getText(), timetableVO.getCourseVO().getCourseName()));
+			jsonObject.add("extendedProps", extendedProps);
+			jsonArray.add(jsonObject);
+		}
+		return gson.toJson(jsonArray);
+	}
+
+	public String getCalenderEventsJson(String studentNo, LeaveVO leaveVO) {
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		JsonArray jsonArray = new JsonArray();
+		for (TimetableVO timetableVO : new LeaveService().getTimetableEventsIncludeSelf(studentNo,
+				leaveVO.getTimetableNo())) {
+			JsonObject jsonObject = new JsonObject();
+			jsonObject.addProperty("id", timetableVO.getTimetableNo());
+			jsonObject.addProperty("title",
+					String.format("%s,%s", timetableVO.getPeriodText(), timetableVO.getCourseVO().getCourseName()));
+			jsonObject.addProperty("start",
+					String.format("%sT%s", timetableVO.getTimetableDate(), timetableVO.getPeriodEnum().getStart()));
+			jsonObject.addProperty("backgroundColor", "#2198F3");
+			jsonObject.addProperty("borderColor", "#2198F3");
+			if (timetableVO.getTimetableNo().equals(leaveVO.getTimetableNo()))
+				jsonObject.addProperty("borderColor", "red");
 			jsonObject.addProperty("editable", false);
 			JsonObject extendedProps = new JsonObject();
 			extendedProps.addProperty("timetableInfo", String.format("%s,%s,%s", timetableVO.getTimetableDate(),

@@ -14,4 +14,6 @@ public interface LeaveDAO_interface {
 	public List<LeaveVO> getAll();
 	
 	public void updateStatusWhenTimetableEdit(String timetableNo,Integer status);
+	
+	public String insert2(LeaveVO leaveVO);
 }

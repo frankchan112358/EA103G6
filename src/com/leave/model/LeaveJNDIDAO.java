@@ -56,6 +56,47 @@ public class LeaveJNDIDAO implements LeaveDAO_interface {
 			}
 		}
 	}
+	
+	@Override
+	public String insert2(LeaveVO leaveVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ds.getConnection();
+			String cols[] = {"leaveNo"};
+			pstmt = con.prepareStatement(INSERT_STMT , cols);
+			pstmt.setString(1, leaveVO.getStudentNo());
+			pstmt.setString(2, leaveVO.getTimetableNo());
+			pstmt.setInt(3, leaveVO.getType());
+			pstmt.setString(4, leaveVO.getDescription());
+			pstmt.setInt(5, leaveVO.getStatus());
+			pstmt.executeUpdate();
+			String next_leaveNo = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				next_leaveNo = rs.getString(1);
+			}
+			rs.close();
+			return next_leaveNo;
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
 
 	@Override
 	public void update(LeaveVO leaveVO) {
