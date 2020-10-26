@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <%@ include file="/back-end/template/head.jsp" %> 
+    <%@include file="/back-end/template/head.jsp" %> 
 </head>
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
     <script>
