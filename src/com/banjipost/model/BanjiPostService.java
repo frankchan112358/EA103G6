@@ -36,7 +36,6 @@ public class BanjiPostService {
 		banjiPostVO.setUpdateTime(updateTime);
 		banjiPostVO.setStatus(status);
 		dao.update(banjiPostVO);
-		
 
 		return banjiPostVO;
 	}
@@ -52,4 +51,5 @@ public class BanjiPostService {
 	public List<BanjiPostVO> getAll() {
 		return dao.getAll();
 	}
+
 }

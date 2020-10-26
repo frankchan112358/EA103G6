@@ -1,4 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.user.model.*,com.userpermission.model.*,java.util.*"%>
+<% //此為抓權限設定
+UserVO userVOForUserPermission = (UserVO) session.getAttribute("userVO"); 
+UserPermissionService userPermissionSvcForShow=new UserPermissionService();
+List<UserPermissionVO>  userPermissionForShow=null;
+
+if(userVOForUserPermission!=null){
+userPermissionForShow=userPermissionSvcForShow.getAllByThemselves(userVOForUserPermission.getUserNo());}
+
+pageContext.setAttribute("userPermissionForShow", userPermissionForShow);
+%>
 <meta charset="utf-8">
 <title>
     Work Join Learn 我就嫩

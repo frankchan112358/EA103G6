@@ -68,10 +68,8 @@ text-align:center ;
 		 								 <div class="form-group" >
                                                     <label class="form-label" for="example-select">狀態:</label>
                                                <select class="custom-select form-control" name="banjiTypeEnable" >
-                                               <c:if test="${ banjiTypeVO.banjiTypeEnable==0}" >
-													<option  value="1" ${(banjiTypeVO.banjiTypeEnable==1)?'selected':'' }>上架</option></c:if>
-												
-													<option value="0" ${(banjiVO.banjiTypeEnable==0)?'selected':'' }>下架</option>
+													<option  value="1" ${(banjiTypeVO.banjiTypeEnable==1)?'selected':'' }>上架</option>
+													<option value="0" ${(banjiTypeVO.banjiTypeEnable==0)?'selected':'' }>下架</option>
 												</select>           
                                                 </div>
                                                 

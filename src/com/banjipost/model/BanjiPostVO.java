@@ -2,6 +2,9 @@ package com.banjipost.model;
 
 import java.sql.*;
 
+import com.banji.model.BanjiService;
+import com.banji.model.BanjiVO;
+
 public class BanjiPostVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private String banjiPostNo;
@@ -61,5 +64,4 @@ public class BanjiPostVO implements java.io.Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-
 }

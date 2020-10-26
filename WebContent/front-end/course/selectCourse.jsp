@@ -71,8 +71,8 @@
 	transition: box-shadow 0.3s ease-in-out;
 }
 
-.img{
-overflow:hidden;
+.img {
+	overflow: hidden;
 }
 
 .img img {
@@ -82,6 +82,19 @@ overflow:hidden;
 
 .img img:hover {
 	transform: scale(1.2, 1.2);
+}
+
+.fa-search {
+    position: absolute;
+    right: 0;
+    top: 12px;
+    display: block;
+    padding: 0 7px;
+    color: #a4a3a4;
+}
+
+input[type=search]::-webkit-search-cancel-button{
+    -webkit-appearance: none;
 }
 
 </style>
@@ -107,8 +120,19 @@ overflow:hidden;
 							<i class='subheader-icon fal fa-book'></i>
 							我的課程
 						</h1>
+						<div class="row">
+						<div class="col-12">
+                             <div class="input-group mb-g">
+							<input type="search" id="search" placeholder="輸入課程關鍵字" name="search" class="searchbox-input form-control form-control-lg" required>
+							<div class="input-group-append">
+							<div class="input-group-text" style="width:40px;">
+							<i class="fal fa-search fa-2x"></i>
+						 </div>
+						 </div>
+						 </div>
+						 </div>
+						</div>
 					</div>
-					<div class="card">
 						<div class="row  align-items-center justify-content-center">
 							<div class="col-12">
 								<div id="panel-1" class="panel">
@@ -116,6 +140,7 @@ overflow:hidden;
 										<h2 class="text-white">我的課程總覽</h2>
 									</div>
 									<div class="container-fluid ">
+									<div class="card">
 										<div class="card-columns">
 											<div class="row justify-content-center">
 												<div class="col">
@@ -177,7 +202,16 @@ overflow:hidden;
 
 
 	<script>
-		
+	$(document).ready(function(){
+		  $('.searchbox-input').on("keyup", function() {
+		    var value = $(this).val().toLowerCase();
+		    $(".card").filter(function() {
+		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		    });
+		  });
+		});
+	
+
 	</script>
 </body>
 </html>

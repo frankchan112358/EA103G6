@@ -37,32 +37,13 @@ public class UserPermissionFilter implements Filter {
 		UserVO userVO = (UserVO) session.getAttribute("userVO");
 
 		UserPermissionService checkPermission = new UserPermissionService();
-		/*********************檔沒登入者直接入侵*********************/
+		/*********************擋沒登入者直接入侵*********************/
 		if (userVO == null) {
 			RequestDispatcher failureView = req.getRequestDispatcher("/error-page/page_error-forPermission.jsp");
 			failureView.forward(req, res);
 			return;
 		}
 		
-		/*********************start檔沒資格修改的人將前端按鈕解除*********************/
-		String blockGoto=(String) req.getAttribute("goto");
-		if("update".equals(blockGoto)) {
-			if(checkPermission.getOneUserPermission(userVO.getUserNo(), "4").getPermissionEdit().equals(1)) {
-				chain.doFilter(request, response);
-				return;
-			}else {  //若沒資格直接丟去首頁，因為非法入侵
-				req.setAttribute("permission", "forbid");
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
-				failureView.forward(req, res);
-				return;
-			}
-		}
-		
-		
-		
-		
-		
-		/*********************end檔沒資格修改的人將前端按鈕解除*********************/
 		
 		String gotoPlace = req.getParameter("goto");
 
@@ -84,7 +65,7 @@ public class UserPermissionFilter implements Filter {
 			} else if (userVO.getType().equals(2)) {
 
 				// 測導師的權限若可讀就導向
-				if (checkPermission.getOneUserPermission(userVO.getUserNo(), "4").getReadable().equals(1)) {
+				if (checkPermission.getOneUserPermission(userVO.getUserNo(), "4").getPermissionEdit().equals(1)) {
 					chain.doFilter(request, response);
 					return;
 				} else {
@@ -135,6 +116,10 @@ public class UserPermissionFilter implements Filter {
 				return;
 			}
 		}
-		chain.doFilter(request, response);
+		
+		//只要filter註冊沒有跑到上面就全擋
+		RequestDispatcher failureView = req.getRequestDispatcher("/error-page/page_error-forPermission.jsp");
+		failureView.forward(req, res);
+		return;
 	}
 }

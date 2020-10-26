@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.user.model.*,com.emp.model.*,com.userpermission.model.*"%>
+<%@ page import="com.user.model.*,com.emp.model.*,com.userpermission.model.*,com.userpermission.model.*"%>
 <%@ page import="java.util.*"%>
 <%
 
@@ -9,7 +9,12 @@
 	EmpVO empVOForShow = (EmpVO) request.getAttribute("empVOForShow"); 
 	
 	pageContext.setAttribute("checkPermission", checkPermission);
-
+	
+	UserPermissionService userPermissionSvc=new UserPermissionService();
+	List<UserPermissionVO> userPermissionList=userPermissionSvc.getAllByThemselves(userVOForShow.getUserNo());
+ 
+	pageContext.setAttribute("userPermissionList", userPermissionList);
+	
 	
 %>
 
@@ -17,6 +22,8 @@
 <html>
 <head>
     <%@ include file="/back-end/template/head.jsp" %> 
+    
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 <style>
     
     img {
@@ -61,6 +68,10 @@
                                         <h2>
                                             ${userVOForShow.name} <span class="fw-300"><i>個人資料</i></span>
                                         </h2>
+                                        
+                                        <div class="panel-toolbar">
+                                            <button id="addEmpBtn" data-toggle="modal" data-target="#addEmp" type="button" class="btn btn-outline-info btn-pills waves-effect waves-themed">顯示權限</button>
+                                        </div>
                                     </div>
                                     <div class="panel-container show">
                                         <div class="panel-content">
@@ -145,8 +156,59 @@
                                 </div>
                             </div>
                         </div>
-                        
-                </main>
+					<div class="modal fade" id="addEmp" tabindex="-1" role="dialog"
+						aria-hidden="true">
+						<div class="modal-dialog modal-md modal-dialog-centered"
+							role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title" style="font-size:2em">顯示權限</h4>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true"><i class="fal fa-times"></i></span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+
+										<div class="mb-3 " style="text-align: center; border-bottom:#21679C 1px solid;">
+											<label class="form-label mb-2" style="font-size:1.5em">班級管理之權限 </label>
+											<div class="mb-2">
+												<label for="editable1">可否編輯</label> <input type="checkbox"
+													name="editable1" data-toggle="toggle" data-size="xs"
+													 id="permission1" disabled>
+											</div>
+										</div>
+										<div class="mb-3" style="text-align: center;border-bottom:#21679C 1px solid;">
+											<label class="form-label mb-2" style="font-size:1.5em">課程管理之權限 </label>
+											<div class="mb-2">
+												<label for="editable2">可否編輯</label> <input type="checkbox"
+													name="editable2" data-toggle="toggle" data-size="xs"
+													 id="permission2" disabled>
+											</div>
+										</div>
+										<div class="mb-3" style="text-align: center;border-bottom:#21679C 1px solid;">
+											<label class="form-label mb-2" style="font-size:1.5em">班種管理之權限 </label>
+											<div class="mb-2">
+												<label for="editable3">可否編輯</label> <input type="checkbox"
+													name="editable3" data-toggle="toggle" data-size="xs"
+													 id="permission3" disabled>
+											</div>
+										</div>
+										<div class="mb-3" style="text-align: center;">
+											<label class="form-label mb-2" style="font-size:1.5em">成員管理之權限</label>
+											<div class="mb-2">
+												<label for="editable4">可否編輯</label> <input type="checkbox"
+													name="editable4" data-toggle="toggle" data-size="xs"
+													 id="permission4" disabled>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
                 <!-- this overlay is activated only when mobile menu is triggered -->
                 <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div> <!-- END Page Content -->
                 
@@ -169,68 +231,61 @@
 
 
 <script>
-
-$("#submitDeleteEmp").on("click", function(event)
-        {
-			event.preventDefault();
-            var swalWithBootstrapButtons = Swal.mixin(
-            {
-                customClass:
-                {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-danger mr-2"
-                },
-                buttonsStyling: false
-            });
-            swalWithBootstrapButtons
-                .fire(
-                {
-                    title: "請再次確認是否刪除",
-                    text: "帳號一旦刪除並無復原可能",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "確定刪除",
-                    cancelButtonText: "暫不刪除",
-                    reverseButtons: true
-                })
-                .then(function(result)
-                {
-                    if (result.value)
-                    {
-                        swalWithBootstrapButtons.fire(
-                            "刪除請求送出",
-                            "請稍等跳轉頁面",
-                            "success"
-                        );
-                        setTimeout(function(){$('#deleteEmp').submit();},1000);
-                    }
-                    else if (
-                        // Read more about handling dismissals
-                        result.dismiss === Swal.DismissReason.cancel
-                    )
-                    {
-                        swalWithBootstrapButtons.fire(
-                            "刪除請求取消",
-                            "刪除帳號請再三確認",
-                            "error"
-                        );
-                    }
-                });
-        }); // A message with a custom image and CSS animation disabled
-      
-    
-     //沒權限關按鈕，若自動解開濾器仍有檔   
-    <c:if test="${checkPermission.getOneUserPermission(userVO.getUserNo(),4).permissionEdit eq 0}">
-		$("#deleteEmp").empty();
-	</c:if>
-	
-	<c:if test="${checkPermission.getOneUserPermission(userVO.getUserNo(),4).permissionEdit eq 0}">
-		$("#updateEmp").empty();
-	</c:if>
-        
+	$("#submitDeleteEmp").on("click", function(event) {
+		event.preventDefault();
+		var swalWithBootstrapButtons = Swal.mixin({
+			customClass : {
+				confirmButton : "btn btn-primary",
+				cancelButton : "btn btn-danger mr-2"
+			},
+			buttonsStyling : false
+		});
+		swalWithBootstrapButtons.fire({
+			title : "請再次確認是否刪除",
+			text : "帳號一旦刪除並無復原可能",
+			type : "warning",
+			showCancelButton : true,
+			confirmButtonText : "確定刪除",
+			cancelButtonText : "暫不刪除",
+			reverseButtons : true
+		}).then(function(result) {
+			if (result.value) {
+				swalWithBootstrapButtons.fire("刪除請求送出", "請稍等跳轉頁面", "success");
+				setTimeout(function() {
+					$('#deleteEmp').submit();
+				}, 1000);
+			} else if (
+			// Read more about handling dismissals
+			result.dismiss === Swal.DismissReason.cancel) {
+				swalWithBootstrapButtons.fire("刪除請求取消", "刪除帳號請再三確認", "error");
+			}
+		});
+	}); // A message with a custom image and CSS animation disabled
 </script>
 
 
+<script>
+//顯示其原本的權限值
+<c:forEach var="userPermission" items="${userPermissionList}">
+	<c:choose>	
+		<c:when test="${userPermission.permissionNo eq '1' and userPermission.permissionEdit eq 1}">
+			$("#permission1").attr("checked",true);
+		</c:when>
+		<c:when test="${userPermission.permissionNo eq '2'and userPermission.permissionEdit eq 1}">
+			$("#permission2").attr("checked",true);
+		</c:when>
+		<c:when test="${userPermission.permissionNo eq '3' and userPermission.permissionEdit eq 1}">
+			$("#permission3").attr("checked",true);
+		</c:when>
+		<c:when test="${userPermission.permissionNo eq '4' and userPermission.permissionEdit eq 1}">
+			$("#permission4").attr("checked",true);
+		</c:when>
+	</c:choose>
+</c:forEach>
+
+</script>
+
+	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
 
 
