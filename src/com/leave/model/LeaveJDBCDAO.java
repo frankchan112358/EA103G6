@@ -55,6 +55,11 @@ public class LeaveJDBCDAO implements LeaveDAO_interface {
 			}
 		}
 	}
+	
+	@Override
+	public String insert2(LeaveVO leaveVO) {
+		return null;
+	}
 
 	@Override
 	public void update(LeaveVO leaveVO) {
