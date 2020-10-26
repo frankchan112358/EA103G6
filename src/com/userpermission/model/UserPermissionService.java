@@ -41,5 +41,9 @@ public class UserPermissionService {
 	public List<UserPermissionVO> getAll(){
 		return dao.getAll();
 	}
+	
+	public List<UserPermissionVO> getAllByThemselves(String userNo){
+		return dao.getAllByThemselves(userNo);
+	}
 
 }

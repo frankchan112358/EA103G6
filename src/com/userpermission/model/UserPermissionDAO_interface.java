@@ -9,4 +9,5 @@ public interface UserPermissionDAO_interface {
 	public void update(UserPermissionVO userPermissionVO);
 	public UserPermissionVO findByFK(String userNo,String permissionNo);
 	public List<UserPermissionVO> getAll();
+	public List<UserPermissionVO> getAllByThemselves(String userNo);
 }

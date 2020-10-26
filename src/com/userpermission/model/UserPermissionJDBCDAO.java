@@ -18,6 +18,7 @@ public class UserPermissionJDBCDAO implements UserPermissionDAO_interface{
 	private static final String UPDATE = "UPDATE USERPERMISSION SET READABLE=?,PERMISSIONEDIT=? WHERE USERNO=? AND PERMISSIONNO=? ";
 	private static final String GET_ONE_STMT = "SELECT USERNO,PERMISSIONNO,READABLE,PERMISSIONEDIT FROM USERPERMISSION WHERE USERNO=? AND PERMISSIONNO=?";
 	private static final String GET_ALL_STMT = "SELECT USERNO,PERMISSIONNO,READABLE,PERMISSIONEDIT FROM USERPERMISSION";
+	private static final String GET_ALL_STMT_BYTHEMSELVES = "SELECT USERNO,PERMISSIONNO,READABLE,PERMISSIONEDIT FROM USERPERMISSION WHERE USERNO=?";
 
 	
 	@Override
@@ -197,6 +198,54 @@ public class UserPermissionJDBCDAO implements UserPermissionDAO_interface{
 		return list;
 	}
 	
+	@Override
+	public List<UserPermissionVO> getAllByThemselves(String userNo) {
+		List<UserPermissionVO> list=new ArrayList<UserPermissionVO>();
+		UserPermissionVO userPermissionVO=null;
+		
+		Connection con=null;
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_STMT_BYTHEMSELVES);
+			pstmt.setString(1, userNo);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				userPermissionVO =new UserPermissionVO();
+				userPermissionVO.setUserNo(rs.getString("USERNO"));
+				userPermissionVO.setPermissionNo(rs.getString("PERMISSIONNO"));
+				userPermissionVO.setReadable(rs.getInt("READABLE"));
+				userPermissionVO.setPermissionEdit(rs.getInt("PERMISSIONEDIT"));
+				list.add(userPermissionVO);
+			}
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
 	public static void main(String[] args) {
 		
 		UserPermissionJDBCDAO dao =new UserPermissionJDBCDAO();
@@ -228,8 +277,19 @@ public class UserPermissionJDBCDAO implements UserPermissionDAO_interface{
 		
 		
 		//getAll
-		List<UserPermissionVO> list=dao.getAll();
-		for(UserPermissionVO userPermissionVO :list) {
+//		List<UserPermissionVO> list=dao.getAll();
+//		for(UserPermissionVO userPermissionVO :list) {
+//			System.out.print(userPermissionVO.getUserNo()+"\t");
+//			System.out.print(userPermissionVO.getPermissionNo()+"\t");
+//			System.out.print(userPermissionVO.getReadable()+"\t");
+//			System.out.println(userPermissionVO.getPermissionEdit()+"\t");
+//			System.out.println("-------------------------------");
+//			
+//		}
+		
+		//getAllBythemselves
+		List<UserPermissionVO> listThem=dao.getAllByThemselves("U000001");
+		for(UserPermissionVO userPermissionVO :listThem) {
 			System.out.print(userPermissionVO.getUserNo()+"\t");
 			System.out.print(userPermissionVO.getPermissionNo()+"\t");
 			System.out.print(userPermissionVO.getReadable()+"\t");
