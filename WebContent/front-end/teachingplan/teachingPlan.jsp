@@ -1,4 +1,6 @@
-<%@page import="com.coursepost.model.*"%>
+<%@page import="com.teachingplan.model.*"%>
+<%@page import="com.course.model.*"%>
+
 
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -7,12 +9,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
+<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+
 
 <%
 	@SuppressWarnings("unchecked")
-	List<CoursePostVO> list = (List<CoursePostVO>) session.getAttribute("coursePostVO");
+	List<TeachingPlanVO> list = (List<TeachingPlanVO>) session.getAttribute("teachingPlanVO");
 	session.setAttribute("list", list);
 %>
+
+
 
 
 
@@ -39,14 +45,14 @@
 							<a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-						<a href="<%=request.getContextPath()%>/front-end/course/selectCourse.jsp">我的課程</a>
+							<a href="<%=request.getContextPath()%>/front-end/course/selectCourse.jsp">我的課程</a>
 						</li>
-						<li class="breadcrumb-item">課程公告</li>
+						<li class="breadcrumb-item">教學計劃</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
 							<i class='subheader-icon fal fa-calendar-exclamation'></i>
-							課程公告
+							教學計劃
 						</h1>
 					</div>
 					<div class="row align-items-center justify-content-center">
@@ -54,49 +60,29 @@
 							<%@ include file="/front-end/course/courseDetail.jsp"%>
 							<div id="panel-2" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-success-gradient ">
-									<h2 class="text-white">課程公告總覽</h2>
+									<h2 class="text-white">教學計劃總覽</h2>
 								</div>
 								<div class="panel-container show" style="margin: 20px 20px;">
-									<div style="text-align: center;">
-										<c:if test="${empty list}">
-											<h2>
-												<i class="fal fa-calendar-times"></i>
-												目前尚無任何課程公告
-												<i class="fal fa-calendar-times"></i>
-											</h2>
-											<h4>講師將會在這發佈與課程相關的公告或是通知課程內容更新的公告。</h4>
-										</c:if>
-									</div>
-									<div class="accordion accordion-outline" id="coursePost">
-										<c:forEach var="coursePostVO" items="${list}">
-											<c:if test="${!empty list}">
-												<div class="card">
-													<div class="card-header">
-														<a href="javascript:void(0);" class="card-title collapsed" data-toggle="collapse" data-target="#coursePost${coursePostVO.coursePostNo}" aria-expanded="false">
-															<i class="fal fa-comment-alt-smile mr-3 fa-2x"></i>
-															<span class="444">
-																<b>【${coursePostVO.title}】</b>
-															</span>
-															<span>
-																<fmt:formatDate value="${coursePostVO.updateTime}" pattern="yyyy年MM月dd日 HH'點'mm'分'" />
-															</span>
-															<span class="ml-auto">
-																<span class="collapsed-reveal">
-																	<i class="fal fa-minus fs-xl"></i>
-																</span>
-																<span class="collapsed-hidden">
-																	<i class="fal fa-plus fs-xl"></i>
-																</span>
-															</span>
-														</a>
-													</div>
-												</div>
-												<div id="coursePost${coursePostVO.coursePostNo}" class="collapse" data-parent="#coursePost">
-													<div class="card-body">
-														<h4>${coursePostVO.postContent}</h4>
-													</div>
-												</div>
-											</c:if>
+									<div class="panel-content">
+										<c:forEach var="teachingPlanVO" items="${list}">
+<table>
+											<tr>
+												<td>${teachingPlanVO.teachingPlanNo}</td>
+											</tr>
+											<tr>
+												<td>${teachingPlanVO.week}</td>
+											</tr>
+											<tr>
+												<td>${teachingPlanVO.lesson}</td>
+											</tr>
+											<tr>
+												<td>${teachingPlanVO.planContent}</td>
+											</tr>
+											
+											
+										</table>	
+
+
 										</c:forEach>
 									</div>
 								</div>
@@ -123,7 +109,16 @@
 
 
 	<script>
-		
+		// 		$(document).ready(function() {
+		// 			$('#dt-basic-example').dataTable({
+		// 				responsive : true,
+		// 				pageLength : 15,
+		// 				order : [ [ 2, 'desc' ] ],
+		// 				rowGroup : {
+		// 					dataSrc : 2
+		// 				}
+		// 			});
+		// 		});
 	</script>
 </body>
 </html>

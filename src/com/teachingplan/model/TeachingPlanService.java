@@ -49,5 +49,9 @@ public class TeachingPlanService {
 	public List<TeachingPlanVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public List<TeachingPlanVO> getTeachingPlanByCourseNo(String courseNo){
+		return dao.getTeachingPlanByCourseNo(courseNo);
+	}
 
 }

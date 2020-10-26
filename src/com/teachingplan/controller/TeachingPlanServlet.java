@@ -86,7 +86,8 @@ public class TeachingPlanServlet extends HttpServlet {
 
 			} catch (Exception e) {
 				errorMsgs.put("⚠無法取得要修改的資料⚠", e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingplan/listAllTeachingPlan.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back-end/teachingplan/listAllTeachingPlan.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -148,7 +149,8 @@ public class TeachingPlanServlet extends HttpServlet {
 
 			} catch (Exception e) {
 				errorMsgs.put("⚠修改資料失敗⚠", e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingplan/update_teachingPlan_input.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back-end/teachingplan/update_teachingPlan_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -188,7 +190,8 @@ public class TeachingPlanServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("teachingPlanVO", teachingPlanVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingplan/addTeachingPlan.jsp");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back-end/teachingplan/addTeachingPlan.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -223,9 +226,25 @@ public class TeachingPlanServlet extends HttpServlet {
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("⚠刪除資料失敗⚠:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingplan/listAllTeachingPlan.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back-end/teachingplan/listAllTeachingPlan.jsp");
 				failureView.forward(req, res);
 			}
+		}
+
+		if ("listTeachingPlan_ByCourseNo".equals(action)) {
+
+			String courseNo = new String(req.getParameter("courseNo").trim());
+
+			TeachingPlanService teachingPlanSvc = new TeachingPlanService();
+			List<TeachingPlanVO> teachingPlanVO = teachingPlanSvc.getTeachingPlanByCourseNo(courseNo);
+
+			HttpSession session = req.getSession();
+			session.setAttribute("teachingPlanVO", teachingPlanVO);
+
+			String url = "/front-end/teachingplan/teachingPlan.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
 		}
 	}
 }
