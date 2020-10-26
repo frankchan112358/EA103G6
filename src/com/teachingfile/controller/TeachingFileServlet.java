@@ -211,7 +211,6 @@ public class TeachingFileServlet extends HttpServlet {
 				// 利用inputStream、outputStream把teachingFile存入DB(給儲存資料byte > 取影片 > 利用資料流讀取資料 )
 				Part DBteachingFile = req.getPart("upfile2");
 
-				System.out.println("DBteachingFile :  " + DBteachingFile);
 				InputStream in = DBteachingFile.getInputStream();
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
 				teachingFiles = new byte[in.available()];
