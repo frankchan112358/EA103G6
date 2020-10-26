@@ -26,11 +26,11 @@
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a></li>
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/leave/leave.handle">請假申請總覽</a></li>
-                        <li class="breadcrumb-item">請假申請</li>
+                        <li class="breadcrumb-item">${mode eq 'new' ? '請假申請':'請假修改'}</li>
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-file-edit'></i> 請假申請
+                            <i class='subheader-icon fal fa-file-edit'></i> ${mode eq 'new' ? '請假申請':'請假修改'}
                         </h1>
                     </div>
                     <div class="row">
@@ -42,11 +42,11 @@
                                 <div class="panel-container show">
                                     <div class="panel-content">
                                         <h1>請務必照實填寫</h1>
-                                        <form method="POST"  action="<%=request.getContextPath()%>/leave/leave.handle" id="leaveForm" class="needs-validation" novalidate>
-                                            <input type="hidden" name="action" value="insert" />
+                                        <form method="POST" action="<%=request.getContextPath()%>/leave/leave.handle" id="leaveForm" class="needs-validation" novalidate>
+                                            <input type="hidden" name="action" value="${mode eq 'new' ? 'insert':'update'}" />
                                             <input id="studentNo" type="hidden" name="studentNo" value="${studentVO.studentNo}" />
-                                            <input id="leaveNo" type="hidden" name="leaveNo" value="" />
-                                            <input id="timetableNo" type="hidden" name="timetableNo" value="" />
+                                            <input id="leaveNo" type="hidden" name="leaveNo" value="${mode eq 'new' ? '':leaveVO.leaveNo}" />
+                                            <input id="timetableNo" type="hidden" name="timetableNo" value="${mode eq 'new' ? '':leaveVO.timetableNo}" />
                                             <div class="form-group">
                                                 <label class="form-label">選擇課堂</label>
                                                 <label class="form-label" id="timetableInfo">未選擇</span>
@@ -60,7 +60,7 @@
                                                     </div>
                                                     <select class="custom-select" id="type" name="type" required="">
                                                         <c:forEach var="type" items="${leaveSvc.getLeaveTypeAll()}">
-                                                            <option value="${type.num}">${type.text}</option>
+                                                            <option value="${type.num}" ${(mode eq 'update' && type.num==leaveVO.type)?'selected':'' }>${type.text}</option>
                                                         </c:forEach>
                                                     </select>
                                                     <div class="invalid-feedback">請選擇假別</div>
@@ -72,7 +72,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class='fal fa-file-edit'></i></span>
                                                     </div>
-                                                    <textarea id="description" name="description" class="form-control" required=""></textarea>
+                                                    <textarea id="description" name="description" class="form-control" required="">${mode eq 'new' ? '':leaveVO.description}</textarea>
                                                     <div class="invalid-feedback">描述不能空白</div>
                                                 </div>
                                             </div>
@@ -94,9 +94,12 @@
     <%@ include file="/front-end/template/basic_js.jsp" %>
     <script>
         'use strict';
-        var action = "new"
+        var action = "${mode}"
 
         $(document).ready(function () {
+            <c:if test="${mode == 'update'}">
+                $('#timetableInfo').html('${timetableInfo}');
+            </c:if>
             var leaveForm = document.getElementById('leaveForm');
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -137,7 +140,7 @@
                 eventClick: function (info) {
                     calendar.getEvents().forEach(e => {
                         e.setProp('borderColor', '#2198F3');
-                    });            
+                    });
                     info.event.setProp('borderColor', 'red');
                     $('#timetableNo').val(info.event.id);
                     $('#timetableInfo').html(info.event.extendedProps.timetableInfo);

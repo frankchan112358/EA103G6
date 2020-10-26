@@ -38,8 +38,12 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <button class="dropdown-item" type="button">班級設定</button>
+                                <form method="post" action="<%=request.getContextPath()%>/back-end/banji/homeBanji.jsp">
+                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">養成班管理</button>
+                                    <input type="hidden" name="banjiNo" value="${banjiPostVO.banjiNo}">
+                                </form>
                                 <button class="dropdown-item" type="button">公告管理</button>
-                                <form method="post" action="<%=request.getContextPath()%>/banjiPost/banjiPost">
+                                <form method="post" action="<%=request.getContextPath()%>/back-end/banjiPost/listAllBanjiPost.jsp">
                                     <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">班級公告管理</button>
                                     <input type="hidden" name="banjiPostNo" value="${banjiPostVO.banjiPostNo}">
                                 </form>

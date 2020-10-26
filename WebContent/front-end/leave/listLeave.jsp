@@ -70,17 +70,17 @@
                                                         <td class="d-flex p-1">
                                                             <button type="button" class="review btn btn-primary m-1" leaveNo="${leaveVO.leaveNo}">檢視</button>
                                                             <c:if test="${leaveVO.status==0}">
-                                                                <form method="post" action="<%=request.getContextPath()%>/leave/leave.manage" class="m-1">
+                                                                <form method="post" action="<%=request.getContextPath()%>/leave/leave.handle" class="m-1">
                                                                     <button type="submit" class="update btn btn-info" leaveNo="${leaveVO.leaveNo}">修改</button>
                                                                     <input type="hidden" name="leaveNo" value="${leaveVO.leaveNo}">
-                                                                    <input type="hidden" name="action" value="update">
+                                                                    <input type="hidden" name="action" value="display_for_update">
                                                                 </form>
                                                             </c:if>
                                                             <c:if test="${leaveVO.status==0||leaveVO.status==1}">
-                                                                <form method="post" action="<%=request.getContextPath()%>/leave/leave.manage" class="m-1">
-                                                                    <button type="submit" class="cancel btn btn-danger" leaveNo="${leaveVO.leaveNo}">取消</button>
+                                                                <form method="post" action="<%=request.getContextPath()%>/leave/leave.handle" class="m-1">
+                                                                    <button type="button" class="cancel btn btn-danger" leaveNo="${leaveVO.leaveNo}">取消</button>
                                                                     <input type="hidden" name="leaveNo" value="${leaveVO.leaveNo}">
-                                                                    <input type="hidden" name="action" value="delete">
+                                                                    <input type="hidden" name="action" value="cancel">
                                                                 </form>
                                                             </c:if>
                                                     </tr>
@@ -161,7 +161,8 @@
             });
 
             $(document).on('click', 'button.cancel', function (event) {
-                let leaveNo = this.getAttribute('leaveNo');
+                event.preventDefault();
+                let _this = $(this);
                 Swal.fire({
                     title: "你確定要取消該請假申請嗎?",
                     text: "如果取消後，無法復原，需要重新申請!",
@@ -170,21 +171,8 @@
                     cancelButtonText: "先不要",
                     confirmButtonText: "是的，我要取消!"
                 }).then(function (result) {
-                    if (result.value) {
-                        $.ajax({
-                            type: 'POST',
-                            url: '<%=request.getContextPath()%>/leave/cancel',
-                            data: {
-                                leaveNo: leaveNo
-                            },
-                            success(res) {
-                                if (res == 'ok') {
-                                    leaveTable.ajax.reload(null, false);
-                                    Swal.fire("取消!", "你的請假申請已經取消", "成功");
-                                }
-                            }
-                        });
-                    }
+                    if (result.value)
+                        _this.parent()[0].submit();
                 });
             });
         });

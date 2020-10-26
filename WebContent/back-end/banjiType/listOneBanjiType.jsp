@@ -40,7 +40,8 @@ text-align: center ;
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
-                        <li class="breadcrumb-item">班種管理</li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/banjiType/homeBanjiType.jsp">班種管理</a></li>
+                     	<li class="breadcrumb-item">總覽</li>
                     </ol>
                     
                     <div class="subheader">

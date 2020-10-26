@@ -1,12 +1,8 @@
 package com.teachingfile.controller;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -179,7 +175,6 @@ public class TeachingFileServlet extends HttpServlet {
 			try {
 				String courseNo = req.getParameter("courseNo");
 				String timetableNo = req.getParameter("timetableNo");
-				System.out.println("timetableNo(182)" + timetableNo);
 				String teachingFileName = req.getParameter("teachingFileName");
 
 				byte[] teachingFiles = null;
@@ -224,6 +219,9 @@ public class TeachingFileServlet extends HttpServlet {
 				teachingFileVO.setTimetableNo(timetableNo);
 				teachingFileVO.setTeachingFileName(teachingFileName);
 				teachingFileVO.setTeachingFile(teachingFiles);
+				System.out.println("this is in TFS line 228");
+				System.out.println(teachingFileVO.getTeachingFile());
+				
 				TeachingFileService teachingFileSvc = new TeachingFileService();
 				teachingFileVO = teachingFileSvc.addTeachingFile(teachingFileVO.getTimetableNo(),
 						teachingFileVO.getTeachingFileName(), teachingFileVO.getTeachingFile());
@@ -266,5 +264,4 @@ public class TeachingFileServlet extends HttpServlet {
 			}
 		}
 	}
-
 }

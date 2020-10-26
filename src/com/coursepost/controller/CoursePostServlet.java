@@ -213,7 +213,7 @@ public class CoursePostServlet extends HttpServlet {
 		}
 		if ("listCoursePost_ByCourseNo".equals(action)) {
 
-			String courseNo = new String(req.getParameter("courseNo"));
+			String courseNo = new String(req.getParameter("courseNo").trim());
 
 			CoursePostService coursePostSvc = new CoursePostService();
 			List<CoursePostVO> coursePostVO = coursePostSvc.getCoursePostByCourseNo(courseNo);

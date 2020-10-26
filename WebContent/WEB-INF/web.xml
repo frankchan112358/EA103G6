@@ -481,6 +481,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>DownloadFile</servlet-name>
+		<servlet-class>com.teachingfile.controller.DownloadFile</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DownloadFile</servlet-name>
+		<url-pattern>/teachingFile/download.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>ReplyServlet</servlet-name>
 		<servlet-class>com.reply.controller.ReplyServlet</servlet-class>
 	</servlet>
