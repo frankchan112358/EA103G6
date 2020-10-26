@@ -14,6 +14,7 @@ public class TeachingPlanJDBCDAO implements TeachingPlanDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT TEACHINGPLANNO, COURSENO, WEEK, LESSON, PLANCONTENT FROM TEACHINGPLAN WHERE TEACHINGPLANNO=?";
 	private static final String DELETE = "DELETE FROM TEACHINGPLAN WHERE TEACHINGPLANNO=?";
 	private static final String UPDATE = "UPDATE TEACHINGPLAN SET COURSENO=?, WEEK=?, LESSON=?, PLANCONTENT=? WHERE TEACHINGPLANNO=?";
+	private static final String GET_TEACHINGPLAN_BY_COURSENO = "SELECT TEACHINGPLANNO, COURSENO, WEEK, LESSON, PLANCONTENT FROM TEACHINGPLAN WHERE COURSENO =?";
 
 	@Override
 	public void insert(TeachingPlanVO teachingPlanVO) {
@@ -216,6 +217,64 @@ public class TeachingPlanJDBCDAO implements TeachingPlanDAO_interface {
 				list.add(teachingPlanVO);
 			}
 
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<TeachingPlanVO> getTeachingPlanByCourseNo(String courseNo) {
+
+		List<TeachingPlanVO> list = new ArrayList<TeachingPlanVO>();
+		TeachingPlanVO teachingPlanVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_TEACHINGPLAN_BY_COURSENO);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				teachingPlanVO = new TeachingPlanVO();
+				teachingPlanVO.setTeachingPlanNo(rs.getString("teachingPlanNo"));
+				teachingPlanVO.setCourseNo(rs.getString("courseNo"));
+				teachingPlanVO.setWeek(rs.getInt("week"));
+				teachingPlanVO.setLesson(rs.getInt("lesson"));
+				teachingPlanVO.setPlanContent(rs.getString("planContent"));
+				list.add(teachingPlanVO);
+
+			}
+			
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {

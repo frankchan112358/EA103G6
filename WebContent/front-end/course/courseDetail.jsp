@@ -3,13 +3,13 @@
 <div id="panel-10" class="panel">
 	<ul class="nav nav-pills nav-justified" role="tablist">
 		<li class="nav-item">
-			<a class="nav-link active" data-toggle="tab" href="#js_change_pill_justified-1" style="font-size: 15px">課程公告</a>
+			<a class="nav-link active"data-toggle="" href="<%=request.getContextPath()%>/front-end/course/coursePost.jsp" style="font-size: 15px">課程公告</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" data-toggle="tab" href="#js_change_pill_justified-3" style="font-size: 15px">教學計劃</a>
+			<a class="nav-link" data-toggle="" href="<%=request.getContextPath()%>/front-end/video/video.jsp" style="font-size: 15px">教學計劃</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" data-toggle="tab" href="#js_change_pill_justified-2" style="font-size: 15px">課程影片</a>
+			<a class="nav-link" data-toggle="" href="<%=request.getContextPath()%>/front-end/video/video.jsp" style="font-size: 15px">課程影片</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" data-toggle="tab" href="#js_change_pill_justified-5" style="font-size: 15px">課程教材</a>

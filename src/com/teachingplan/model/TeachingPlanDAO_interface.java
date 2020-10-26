@@ -13,5 +13,8 @@ public interface TeachingPlanDAO_interface {
 	public TeachingPlanVO findByPrimaryKey(String teachingPlanNo);
 
 	public List<TeachingPlanVO> getAll();
+	
+	List<TeachingPlanVO> getTeachingPlanByCourseNo(String courseNo);
+
 
 }
