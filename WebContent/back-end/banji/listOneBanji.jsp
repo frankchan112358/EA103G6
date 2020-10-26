@@ -43,7 +43,8 @@ text-align: center ;
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
-                        <li class="breadcrumb-item">養成班管理</li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/banji/homeBanji.jsp">養成班管理</a></li>
+                         <li class="breadcrumb-item">總覽</li>
                     </ol>
                     
                     <div class="subheader">
@@ -61,6 +62,11 @@ text-align: center ;
 									<div class="panel-content">
 										<!-- datatable start -->
 										<table id="banjitable" class="table table-bordered table-hover table-striped w-100">
+  											<tr>
+												<th>班級編號:</th>
+												<td>${banjiVO.banjiNo}</td>
+											</tr>
+  											
   											<tr>
 												<th>導師:</th>
 												<td>${banjiVO.empVO.empName}</td>

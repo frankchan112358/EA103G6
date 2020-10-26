@@ -209,7 +209,6 @@ public class BanjiServlet extends HttpServlet {
 
 			try {
 				String banjiNo = req.getParameter("banjiNo");
-				
 				String empNo = req.getParameter("empNo");
 				if (empNo == null || empNo.trim().length() == 0) {
 					errorMsgs.put("empNo","導師選項請勿空白");
@@ -236,7 +235,6 @@ public class BanjiServlet extends HttpServlet {
 
 
 				String banjiName = req.getParameter("banjiName");
-				
 				String banjiNameReg = "^[(\u4e00-\u9fd5)(a-zA-Z0-9_)]{2,10}$";
 				if (banjiName == null || banjiName.trim().length() == 0) {
 					errorMsgs.put("banjiName","班級名稱請勿空白");
@@ -272,7 +270,6 @@ public class BanjiServlet extends HttpServlet {
 				}
 
 				String banjiContent = req.getParameter("banjiContent");
-
 				if (banjiContent == null || banjiContent.trim().length() == 0) {
 					errorMsgs.put("banjiContent","班級內容請勿空白");
 				}
