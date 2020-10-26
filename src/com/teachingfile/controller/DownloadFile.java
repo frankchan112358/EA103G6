@@ -32,17 +32,19 @@ public class DownloadFile extends HttpServlet {
 				//傳檔案名稱進來
 //				String courseNo = req.getParameter("courseNo");
 				String queryString = req.getQueryString();
+				System.out.println(queryString);
 
 				TeachingFileService teachingFileSvc = new TeachingFileService();
-				 TeachingFileVO teachingFileVO= teachingFileSvc.getOneTeachingFile(queryString);
+				TeachingFileVO teachingFileVO= teachingFileSvc.getOneTeachingFile(queryString);
 				
-				//建立資料夾
-				String path = req.getSession().getServletContext().getRealPath(queryString + ".pdf");
-				File file = new File(path);
-				String filename = file.getName();
+				System.out.println("40行"); 
+//				//建立資料夾
+//				String path = req.getSession().getServletContext().getRealPath(queryString + ".pdf");
+				File file = new File(queryString);
 				if (!file.exists())
 					file.mkdirs();
 				
+				System.out.println("47行");
 				//用VO.File取得檔案(byte[])接outputStream
 				ByteArrayInputStream bis = new ByteArrayInputStream(teachingFileVO.getTeachingFile());
 				ServletOutputStream sos = res.getOutputStream();
@@ -51,12 +53,11 @@ public class DownloadFile extends HttpServlet {
 				sos.write(loadFile);
 				sos.close();
 				
-				//回到原本畫面(嗎? 
-				String url = "/back-end/teachingFile/listAllTeachingFile2.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
+				System.out.println("56行");
+
 
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.add("下載資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/back-end/teachingFile/listAllTeachingFile2.jsp");
