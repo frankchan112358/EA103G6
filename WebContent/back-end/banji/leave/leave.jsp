@@ -42,57 +42,20 @@
                                 </div>
                                 <div class="panel-container show">
                                     <div class="panel-content">
-                                        <!-- datatable start -->
                                         <table id="leaveTable" class="table table-bordered table-hover table-striped w-100">
                                             <thead>
                                                 <tr>
-                                                    <th>班級</th>
                                                     <th>學號</th>
                                                     <th>學生</th>
                                                     <th>日期</th>
                                                     <th>時段</th>
+                                                    <th>課程</th>
                                                     <th>假別</th>
                                                     <th>狀態</th>
                                                     <th>操作</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <c:forEach var="leaveVO" items="${list}">
-                                                    <tr>
-                                                        <td>${leaveVO.studentVO.banjiVO.banjiName}</td>
-                                                        <td>${leaveVO.studentVO.studentNo}</td>
-                                                        <td>${leaveVO.studentVO.studentName}</td>
-                                                        <td>${leaveVO.timetableVO.timetableDate}</td>
-                                                        <td>${leaveVO.timetableVO.periodText}</td>
-                                                        <td>${leaveVO.typeText}</td>
-                                                        <td>${leaveVO.statusText}</td>
-                                                        <td class="d-flex p-1">
-                                                            <form method="post" action="<%=request.getContextPath()%>/banji/banji.leave" class="m-1">
-                                                                <button type="submit" class="btn btn-sm btn-success">
-                                                                    <span class="fal fa-edit mr-1"></span>
-                                                                    <span>檢視</span>
-                                                                </button>
-                                                                <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
-                                                                <input type="hidden" name="leaveNo" value="${leaveVO.leaveNo}">
-                                                                <input type="hidden" name="action" value="read">                                                            
-                                                            </form>
-                                                            <c:if test="${leaveVO.status==0}">
-                                                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.leave" class="m-1">
-                                                                    <button type="submit" class="btn btn-sm btn-info">
-                                                                        <span class="fal fa-edit mr-1"></span>
-                                                                        <span>審核</span>
-                                                                    </button>
-                                                                    <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
-                                                                    <input type="hidden" name="leaveNo" value="${leaveVO.leaveNo}">
-                                                                    <input type="hidden" name="action" value="review">
-                                                                </form>
-                                                            </c:if>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
                                         </table>
-                                        <!-- datatable end -->
                                     </div>
                                 </div>
                             </div>
@@ -104,15 +67,233 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="leaveReview" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title">檢視請假單</h1>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex align-items-center mb-g">
+                        <img id="userImg" src="<%=request.getContextPath() %>/images/noPicture.png" class="rounded-circle profile-image mr-3">
+                        <h1 class="fw-300 m-0 l-h-n">
+                            <span class="text-contrast">[學員請假單]</span>
+                            <small class="fw-300 m-0 l-h-n">
+                                work join learn
+                            </small>
+                        </h1>
+                    </div>
+                    <h5 class="text-muted">事由</h5>
+                    <span style="font-size:x-large;" data="description"></span>
+                    <h5 class="text-muted">姓名</h5>
+                    <span style="font-size:x-large;" data="studentName"></span>
+                    <h5 class="text-muted">班級</h5>
+                    <span style="font-size:x-large;" data="banjiName"></span>
+                    <h5 class="text-muted">學號</h5>
+                    <span style="font-size:x-large;" data="studentNo"></span>
+                    <h5 class="text-muted">日期</h5>
+                    <span style="font-size:x-large;" data="timetableDate"></span>
+                    <h5 class="text-muted">時段</h5>
+                    <span style="font-size:x-large;" data="periodText"></span>
+                    <h5 class="text-muted">課程</h5>
+                    <span style="font-size:x-large;" data="courseName"></span>
+                    <h5 class="text-muted">假別</h5>
+                    <span style="font-size:x-large;" data="typeText"></span>
+                    <h5 class="text-muted">狀態</h5>
+                    <span style="font-size:x-large;" data="statusText"></span>
+                </div>
+                <div class="modal-footer">
+                    <button id="rejectBtn" banjiNo="${banjiVO.banjiNo}" leaveNo="" type="button" class="btn btn-success" id="reject">
+                        <span class="fal fa-edit mr-1"></span>
+                        <span>拒絕</span>
+                    </button>
+                    <button id="passBtn" banjiNo="${banjiVO.banjiNo}" leaveNo="" type="button" class="btn btn-danger" id="pass">
+                        <span class="fal fa-edit mr-1"></span>
+                        <span>同意</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <%@ include file="/back-end/template/quick_menu.jsp" %>
     <%@ include file="/back-end/template/messager.jsp" %>
     <%@ include file="/back-end/template/basic_js.jsp" %>
     <script>
         'use strict';
+        var imgSrc = '<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=';
+        var noImgSrc = '<%=request.getContextPath() %>/images/noPicture.png';
         $(document).ready(function () {
-            $('#leaveTable').dataTable({
+            var columnSet = [
+                {
+                    title: "學號",
+                    id: "studentNo",
+                    data: "studentNo",
+                    type: "text"
+                },
+                {
+                    title: "學生",
+                    id: "studentName",
+                    data: "studentName",
+                    type: "text"
+                },
+                {
+                    title: "日期",
+                    id: "timetableDate",
+                    data: "timetableDate",
+                    type: "text"
+                },
+                {
+                    title: "時段",
+                    id: "periodText",
+                    data: "periodText",
+                    type: "text"
+                },
+                {
+                    title: "課程",
+                    id: "courseName",
+                    data: "courseName",
+                    type: "text"
+                },
+                {
+                    title: "假別",
+                    id: "typeText",
+                    data: "typeText",
+                    type: "text"
+                },
+                {
+                    title: "狀態",
+                    id: "statusText",
+                    data: "statusText",
+                    type: "text"
+                },
+                {
+                    title: "操作",
+                    id: "action",
+                    data: "action",
+                    render(data, type, row, meta) {
+                        let html = `<button type="button" class="read btn btn-success" leaveNo="${"${row.action.id}"}">檢視</button>`;
+                        if (row.action.status == 0)
+                            html = `<button type="button" class="decide btn btn-info" leaveNo="${"${row.action.id}"}">審核</button>`;
+                        return html;
+                    }
+                }];
+            var leaveTable = $('#leaveTable').DataTable({
                 responsive: true,
-                language: { url: `<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json` }
+                language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' },
+                columns: columnSet,
+                ajax: {
+                    url: '<%=request.getContextPath()%>/banji/banji.leave',
+                    type: 'GET',
+                    async: true,
+                    cache: false,
+                    data: {
+                        action: 'datatable',
+                        banjiNo: '${banjiVO.banjiNo}'
+                    }
+                }
+            });
+
+            $(document).on('click', 'button.read', function (event) {
+                let leaveNo = this.getAttribute('leaveNo');
+                $.ajax({
+                    type: 'POST',
+                    url: '<%=request.getContextPath()%>/banji/banji.leave',
+                    data: {
+                        action: 'read',
+                        leaveNo: leaveNo,
+                        banjiNo: '${banjiVO.banjiNo}'
+                    },
+                    success(res) {
+                        if (res != null) {
+                            setLeaveModal(res, 'read');
+                            $('#leaveReview').modal('show');
+                        }
+                    }
+                });
+            });
+
+            $(document).on('click', 'button.decide', function (event) {
+                let leaveNo = this.getAttribute('leaveNo');
+                $.ajax({
+                    type: 'POST',
+                    url: '<%=request.getContextPath()%>/banji/banji.leave',
+                    data: {
+                        action: 'decide',
+                        leaveNo: leaveNo,
+                        banjiNo: '${banjiVO.banjiNo}'
+                    },
+                    success(res) {
+                        if (res != null) {
+                            setLeaveModal(res, 'decide');
+                            $('#leaveReview').modal('show');
+                        }
+                    }
+                });
+            });
+
+            function setLeaveModal(res, status) {
+                let review = $('#leaveReview .modal-body');
+                review.find('[data=description]').text(res.description);
+                review.find('[data=studentName]').text(res.studentName);
+                review.find('[data=banjiName]').text(res.banjiName);
+                review.find('[data=studentNo]').text(res.studentNo);
+                review.find('[data=timetableDate]').text(res.timetableDate);
+                review.find('[data=periodText]').text(res.periodText);
+                review.find('[data=courseName]').text(res.courseName);
+                review.find('[data=typeText]').text(res.typeText);
+                review.find('[data=statusText]').text(res.statusText);
+                if (res.hasHeadImg)
+                    $('#userImg').attr('src', imgSrc + res.userNo);
+                else
+                    $('#userImg').attr('src', noImgSrc);
+                $('#rejectBtn').attr('leaveNo', res.leaveNo);
+                $('#passBtn').attr('leaveNo', res.leaveNo);
+                if (status == 'decide')
+                    $('#leaveReview .modal-footer').show();
+                else
+                    $('#leaveReview .modal-footer').hide();
+            }
+
+            $('#passBtn').click(function (event) {
+                let leaveNo = this.getAttribute('leaveNo');
+                $.ajax({
+                    type: 'POST',
+                    url: '<%=request.getContextPath()%>/banji/banji.leave',
+                    data: {
+                        action: 'pass',
+                        leaveNo: leaveNo,
+                        banjiNo: '${banjiVO.banjiNo}'
+                    },
+                    success(res) {
+                        if (res == 'ok') {
+                            leaveTable.ajax.reload(null, false);
+                            $('#leaveReview').modal('hide');
+
+                        }
+                    }
+                });
+            });
+
+            $('#rejectBtn').click(function (event) {
+                let leaveNo = this.getAttribute('leaveNo');
+                $.ajax({
+                    type: 'POST',
+                    url: '<%=request.getContextPath()%>/banji/banji.leave',
+                    data: {
+                        action: 'reject',
+                        leaveNo: leaveNo,
+                        banjiNo: '${banjiVO.banjiNo}'
+                    },
+                    success(res) {
+                        if (res == 'ok') {
+                            leaveTable.ajax.reload(null, false);
+                            $('#leaveReview').modal('hide');
+                        }
+                    }
+                });
             });
         });
     </script>

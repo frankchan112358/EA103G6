@@ -227,4 +227,50 @@ public class LeaveService {
 		}
 		return gson.toJson(jsonArray);
 	}
+
+	public String getDatatableJson(String banjiNo) {
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		JsonArray jsonArray = new JsonArray();
+		for (LeaveVO leaveVO : new LeaveService().getAllWithBanji(banjiNo)) {
+			JsonObject jsonObject = new JsonObject();
+			jsonObject.addProperty("studentNo", leaveVO.getStudentNo());
+			jsonObject.addProperty("studentName", leaveVO.getStudentVO().getStudentName());
+			jsonObject.addProperty("timetableDate", leaveVO.getTimetableVO().getTimetableDate().toString());
+			jsonObject.addProperty("periodText", leaveVO.getTimetableVO().getPeriodText());
+			jsonObject.addProperty("courseName", leaveVO.getTimetableVO().getCourseVO().getCourseName());
+			jsonObject.addProperty("typeText", leaveVO.getTypeText());
+			jsonObject.addProperty("statusText", leaveVO.getStatusText());
+			jsonObject.add("action", getActionObj(leaveVO));
+			jsonArray.add(jsonObject);
+		}
+		JsonObject data = new JsonObject();
+		data.add("data", jsonArray);
+		return gson.toJson(data);
+	}
+
+	private JsonObject getActionObj(LeaveVO leaveVO) {
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("id", leaveVO.getLeaveNo());
+		jsonObject.addProperty("status", leaveVO.getStatus());
+		return jsonObject;
+	}
+
+	public String getReadLeaveJson(String leaveNo) {
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		LeaveVO leaveVO = new LeaveService().getOneLeave(leaveNo);
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("description", leaveVO.getDescription());
+		jsonObject.addProperty("studentName", leaveVO.getStudentVO().getStudentName());
+		jsonObject.addProperty("banjiName", leaveVO.getStudentVO().getBanjiVO().getBanjiName());
+		jsonObject.addProperty("studentNo", leaveVO.getStudentNo());
+		jsonObject.addProperty("timetableDate", leaveVO.getTimetableVO().getTimetableDate().toString());
+		jsonObject.addProperty("periodText", leaveVO.getTimetableVO().getPeriodText());
+		jsonObject.addProperty("courseName", leaveVO.getTimetableVO().getCourseVO().getCourseName());
+		jsonObject.addProperty("typeText", leaveVO.getTypeText());
+		jsonObject.addProperty("statusText", leaveVO.getStatusText());
+		jsonObject.addProperty("leaveNo", leaveVO.getLeaveNo());
+		jsonObject.addProperty("userNo", leaveVO.getStudentVO().getUserNo());
+		jsonObject.addProperty("hasHeadImg", leaveVO.getStudentVO().getUserVO().getPhoto() == null ? false : true);
+		return gson.toJson(jsonObject);
+	}
 }
