@@ -93,7 +93,7 @@ public class BanjiTypeServlet extends HttpServlet {
 				}
 				req.setAttribute("banjiTypeVO", banjiTypeVO);
 
-				String url = "/back-end/banjiType/update_BanjiType_input.jsp";
+				String url = "/back-end/banjiType/listOneBanjiType.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 

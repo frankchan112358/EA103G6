@@ -63,13 +63,9 @@
                                                 </div>
                                                 
                                                 <div class="form-group">
-												   <label class="form-label" for="example-select">選擇導師:</label>
-												<select class="custom-select form-control" name="empNo">
-													<option value="">請選擇導師</option>
-													<c:forEach var="empVO" items="${empSvc.all}">
-													<option value="${empVO.empNo}"${(banjiVO.empNo==empVO.empNo)? 'selected':'' }>${empVO.empName}
-													</c:forEach>
-												</select>
+												   <label class="form-label" for="example-select">導師:</label>
+												 <input type="text" id="simpleinput" class="form-control" value="${empVO.empName}"  readonly name="empNo">
+												 
 												<font color=red>${errorMsgs.empNo}</font>
 											  </div>
 											  
@@ -192,10 +188,6 @@ $(function(){
 	               })
 	              },
 	              timepicker:false,
-	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-	//startDate:	            '2017/07/10',  // 起始日
-	 //minDate:               '-1970-01-01', // 去除今日(不含)之前
-	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
 	});
 
         $('#f_date2').datetimepicker({
@@ -213,10 +205,6 @@ $(function(){
            timepicker : false
        });
    });
-	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-	//startDate:	            '2017/07/10',  // 起始日
-	//minDate:               '-1970-01-01'  // 去除今日(不含)之前
-	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
 
 </script>
     

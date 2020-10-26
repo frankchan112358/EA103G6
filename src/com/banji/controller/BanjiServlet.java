@@ -301,7 +301,7 @@ public class BanjiServlet extends HttpServlet {
 				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("banjiVO", banjiVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/addbanji.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/addBanji.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -319,7 +319,7 @@ public class BanjiServlet extends HttpServlet {
 			} catch (Exception e) {
 
 				errorMsgs.put("新增失敗",e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/addbanji.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banji/addBanji.jsp");
 				failureView.forward(req, res);
 			}
 		}

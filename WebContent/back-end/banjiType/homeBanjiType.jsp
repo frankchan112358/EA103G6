@@ -65,30 +65,28 @@
                                                 <tr >
                                                     <th>班種名稱</th>
                                                     <th>上課時數</th>
-                                                    <th>班級總類介紹</th>
                                                     <th>狀態</th>
                                                     <th>管理</th>
                                                 </tr>
                                             </thead>
                                             <tbody >
                                                 <c:forEach var="banjiTypeVO" items="${list}">
-                                                    <tr onclick="location.href='<%=request.getContextPath()%>/banjiType/banjiType.do?action=getOne_For_Update&banjiTypeNo=${banjiTypeVO.banjiTypeNo}';">
+                                                    <tr onclick="location.href='<%=request.getContextPath()%>/banjiType/banjiType.do?action=getOne_For_Display&banjiTypeNo=${banjiTypeVO.banjiTypeNo}';">
                                                         <td>${banjiTypeVO.banjiTypeName}</td>
                                                         <td>${banjiTypeVO.classHours}</td>
-                                                        <td>${banjiTypeVO.banjiTypeContent}</td>
                                                         <td>
                                                         	<c:choose>
-																<c:when test="${banjiTypeVO.banjiTypeEnable=='0'}"><button type="button" class="btn btn-sm btn-secondary" disabled="disabled"><span class="fal fa-angle-double-down"></span>下架</button></c:when>
-																<c:when test="${banjiTypeVO.banjiTypeEnable=='1'}"><button type="button" class="btn btn-sm btn-warning" disabled="disabled"><span class="fal fa-angle-double-up"></span>上架</button></c:when>
+																<c:when test="${banjiTypeVO.banjiTypeEnable=='0'}">下架</c:when>
+																<c:when test="${banjiTypeVO.banjiTypeEnable=='1'}">上架</c:when>
 															</c:choose>
 															</td>
                                                         <td>
                                                             <form method="post" action="<%=request.getContextPath()%>/banjiType/banjiType.do" class="m-1">
-                                                                <button type="submit" class="btn btn-sm btn-success">
+                                                                <button type="submit" class="btn btn-sm btn-danger">
                                                                     <span class="fal fa-edit mr-1"></span>
-                                                                    <span>刪除</span>
+                                                                    <span>修改</span>
                                                                 </button>
-                                                                <input type="hidden" name="action" value="delete">
+                                                                <input type="hidden" name="action" value="getOne_For_Update">
                                                                 <input type="hidden" name="banjiTypeNo" value="${banjiTypeVO.banjiTypeNo}">
                                                             </form>
                                                         </td>
