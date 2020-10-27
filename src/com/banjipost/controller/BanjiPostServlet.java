@@ -99,13 +99,11 @@ public class BanjiPostServlet extends HttpServlet {
 
 			try {
 				String banjiPostNo = req.getParameter("banjiPostNo");
-
 				String banjiNo = req.getParameter("banjiNo");
-
 				String title = req.getParameter("title");
 				if (title == null || title.trim().length() == 0) {
 					errorMsgs.add("公告標題請勿空白");
-
+				
 				}
 				String banjiPostContent = req.getParameter("banjiPostContent");
 				if (banjiPostContent == null || banjiPostContent.trim().length() == 0) {
@@ -148,7 +146,7 @@ public class BanjiPostServlet extends HttpServlet {
 						status);
 
 				req.setAttribute("banjiPostVO", banjiPostVO);
-				String url = "/back-end/banjiPost/listOneBanjiPost.jsp";
+				String url = "/back-end/banjiPost/listAllBanjiPost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 

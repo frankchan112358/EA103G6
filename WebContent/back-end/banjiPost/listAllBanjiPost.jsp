@@ -25,6 +25,11 @@
     top:65px;
 	right:70px;
     }
+    #add1{
+    position:absolute;
+    top:65px;
+	right:70px;
+    }
     </style>
 </head>
 
@@ -40,7 +45,7 @@
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
-                        <li class="breadcrumb-item">班級公告管理</li>
+                        <li class="breadcrumb-item">公告管理</li>
                     </ol>
                     
                     <div class="subheader">
@@ -52,10 +57,15 @@
 							<input type="hidden" name="action" > 
 							<button type="submit" id="btn-add" style="width:150px;heigh:50px;" onclick="location.href='<%=request.getContextPath()%>/back-end/banjiPost/addBanjiPost.jsp'" style="margin-bottom: 0px'"
 								class="btn-write btn btn-sm btn-primary" >
-								<strong>新增班級公告</strong>
+								<strong>新增公告</strong>
 							</button>
 						</div>
-						
+						<div class="row">
+						<div class="col col-xl-12">
+							<div id="panel-1" class="panel">
+								<div class="panel-hdr bg-primary-800 bg-success-gradient ">
+									<h2 class="text-white">總覽</h2>
+								</div>
                                 <div class="panel-container show">
                                     <div class="panel-content">
                                         <!-- datatable start -->
@@ -74,16 +84,23 @@
                                         <span>
                                         ${banjiPostVO.banjiPostContent}</span>
                                     	</div>
-                                   
+                           
+                                     <form method="post"action="<%=request.getContextPath()%>/banjiPost/banjiPost.do"class="m-1">
+										<button  id="add1" type="submit" class="btn btn-sm btn-warning">
+											<span class="fal fa-edit mr-1"></span> <span>修改</span>
+										</button>
+										<input type="hidden" name="action"value="getOne_For_Update"> <input type="hidden"name="banjiPostNo" value="${banjiPostVO.banjiPostNo}">
+									</form>
                                     <div class="card-footer">
                                         <div class="d-flex align-items-center">
-                                         <span class="text-sm text-muted font-italic"><i class="fal fa-clock mr-1"></i><span>發文時間:</span><fmt:formatDate value="${banjiPostVO.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
+                                         <span class="text-sm text-muted font-italic"><i class="fal fa-clock mr-1"></i><span>編輯時間:</span><fmt:formatDate value="${banjiPostVO.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
                                         </div>
                                     </div>
+                                  
                                 </div>
                                      </c:forEach>
                                     </div>
-                                </div>
+                                </div> </div> </div> </div>
                 		</main>
                 </div>
                 </div>
