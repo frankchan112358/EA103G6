@@ -122,14 +122,10 @@ img {
 				<td>描述：</td>
 				<td><textarea name="description" rows="10" cols="50">${studentVO.studentDescription}</textarea></td>
 			</tr>
-			<tr><%--  --%>
-				 <td>學員狀態：</td>
-				<td><select name="studentStatus">
-						<option value="0"   >未受訓
-						<option value="1"   >在訓中
-						<option value="2"   >結訓
-						<option value="3"   >退訓
-					</select>
+			<tr>
+				 <td></td>
+				<td>
+				<input type="hidden" class="form-control" id="studentStatus"  name="studentStatus" value="1">
 				</td>
 			</tr>	
 			<tr>

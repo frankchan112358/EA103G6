@@ -110,15 +110,6 @@
                                                         </div>
                                                         
                                                         <div class="col-md-6 mb-3">
-                                                            <label class="form-label" for="studentStatus">學員狀態調整 <span class="text-danger">*</span></label>
-                                                            <select class="custom-select" id="studentStatus" name="studentStatus" required>
-                                                                <option value="0" ${studentVOForUpdate.studentStatus eq 0?"selected":""}>未開訓</option>
-                                                                <option value="1" ${studentVOForUpdate.studentStatus eq 1?"selected":""}>在訓中</option>
-                                                                <option value="2" ${studentVOForUpdate.studentStatus eq 2?"selected":""}>結訓</option>
-                                                            </select>
-                                                        </div>
-                                                        
-                                                        <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="id">身分證字號 <span class="text-danger">*</span> </label>
                                                             <input type="text" class="form-control" id="id" placeholder="Id Number" name="id" value="${userVOForUpdate eq null?'':userVOForUpdate.id }" required>
                                                             <div class="invalid-feedback" id="wrongId">
@@ -158,6 +149,13 @@
                                                         <label class="form-label" for="description">學員詳細描述 </label>
                                                          <textarea class="form-control" id="description"  name="description" placeholder="Description" >${studentVOForUpdate eq null?'':studentVOForUpdate.studentDescription}</textarea>
                                                     </div>
+                                                    
+                                                    
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label" for="studentStatus"> <span class="text-danger"></span></label>
+                                                            <input type="hidden" class="form-control" id="studentStatus"  name="studentStatus" value="1">                                                     
+                                                        </div>
+                                                        
                                                 </div>
                                                 <div class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row align-items-center">
                                                     <div class="custom-control custom-checkbox">
