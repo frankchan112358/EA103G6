@@ -38,30 +38,19 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <button class="dropdown-item" type="button">班級設定</button>
-                                <form method="post" action="<%=request.getContextPath()%>/back-end/banji/homeBanji.jsp">
-                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">養成班管理</button>
-                                    <input type="hidden" name="banjiNo" value="${banjiPostVO.banjiNo}">
+                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.banjipost">
+                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">公告管理</button>
                                 </form>
-                                <button class="dropdown-item" type="button">公告管理</button>
-                                <form method="post" action="<%=request.getContextPath()%>/back-end/banjiPost/listAllBanjiPost.jsp">
-                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">班級公告管理</button>
-                                    <input type="hidden" name="banjiPostNo" value="${banjiPostVO.banjiPostNo}">
-                                </form>
-                                <button class="dropdown-item" type="button">課程管理</button>
                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.timetable">
                                     <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">課表管理</button>
                                 </form>
                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.leave">
                                     <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">請假管理</button>
-                                </form>
-                                <button class="dropdown-item" type="button">出缺勤管理</button>                            
+                                </form>                
                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.forumtopic">
-                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">討論區主題管理</button>
+                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">討論區主題</button>
                                     <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
                                 </form>
-                                
-                                <button class="dropdown-item" type="button">討論區檢舉管理</button>
-                                
                             </div>
                         </div>
                     </div>
@@ -80,14 +69,9 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="">
-                                                    <span class="text-info">公告管理</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="">
-                                                    <span class="text-info">課程管理</span>
-                                                </a>
+                                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.banjipost">
+                                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="text-info">公告管理</span></a></button>
+                                                </form>
                                             </li>
                                             <li>
                                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.timetable">
@@ -100,13 +84,8 @@
                                                 </form>
                                             </li>
                                             <li>
-                                                <a href="">
-                                                    <span class="text-info">出缺勤管理</span>
-                                                </a>
-                                            </li>
-                                            <li>
                                                  <form method="post" action="<%=request.getContextPath()%>/banji/banji.forumtopic">
-                                                 <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="text-info">討論區主題管理</span></a></button>
+                                                 <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="text-info">討論區主題</span></a></button>
                                                  <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
                                                 </form>
                                             </li>
