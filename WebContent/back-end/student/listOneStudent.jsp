@@ -131,12 +131,12 @@ StudentVO studentVOForShow = (StudentVO) request.getAttribute("studentVOForShow"
 													<th>學員狀態</th>
 													<td>
 														<c:choose>
-                                                    			<c:when test="${studentVOForShow.studentStatus==0}">未受訓</c:when>
-                                                    			<c:when test="${studentVOForShow.studentStatus==1}">在訓中</c:when>
-                                                    			<c:when test="${studentVOForShow.studentStatus==2}">結訓</c:when>
-                                                    			<c:when test="${studentVOForShow.studentStatus==3}">退訓</c:when>
+                                                    			<c:when test="${banjiSvc.getOneBanji(studentVOForShow.banjiNo).status==0}">結訓</c:when>
+                                                    			<c:when test="${banjiSvc.getOneBanji(studentVOForShow.banjiNo).status==1}">在訓中</c:when>
+                                                    			<c:when test="${banjiSvc.getOneBanji(studentVOForShow.banjiNo).status==2}">班級延期</c:when>
+                                                    			<c:when test="${banjiSvc.getOneBanji(studentVOForShow.banjiNo).status==3}">未開課</c:when>
                                                     	</c:choose>											
-													</td>									
+													</td>								
 												</tr>
                                                 <tr>
 													<th>地址</th>
