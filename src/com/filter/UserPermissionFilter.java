@@ -45,11 +45,19 @@ public class UserPermissionFilter implements Filter {
 		}
 		
 		
+		
 		String gotoPlace = req.getParameter("goto");
-
+		String getForFile=null;
+		
+		if(gotoPlace==null) {
+			String getForFullFile=req.getRequestURI();
+			getForFile=getForFullFile.substring(getForFullFile.lastIndexOf('/')+1);
+			System.out.println(getForFile);
+			
+		}
 		
 		/*********************導師管理的權限篩選*********************/
-		if ("empList".equals(gotoPlace)||"listOneEmp".equals(gotoPlace)) {
+		if ("empList".equals(gotoPlace)||"listOneEmp".equals(gotoPlace)||"empList.jsp".equals(getForFile)||"listOneEmp.jsp".equals(getForFile)) {
 			if(userVO.getType().equals(0)) {
 				req.setAttribute("permission", "forbid");
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/index/index.jsp");
@@ -80,7 +88,7 @@ public class UserPermissionFilter implements Filter {
 		
 		
 		/*********************講師管理的權限篩選*********************/
-		if ("teacherList".equals(gotoPlace)||"listOneTeacher".equals(gotoPlace)) {
+		if ("teacherList".equals(gotoPlace)||"listOneTeacher".equals(gotoPlace)||"teacherList.jsp".equals(getForFile)||"listOneTeacher.jsp".equals(getForFile)) {
 			if(userVO.getType().equals(0)) {
 				req.setAttribute("permission", "forbid");
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/index/index.jsp");
@@ -99,7 +107,7 @@ public class UserPermissionFilter implements Filter {
 		}
 		
 		/*********************學生管理的權限篩選*********************/
-		if ("studentList".equals(gotoPlace)||"listOneStudent".equals(gotoPlace)) {
+		if ("studentList".equals(gotoPlace)||"listOneStudent".equals(gotoPlace)||"studentList.jsp".equals(getForFile)||"listOneStudent.jsp".equals(getForFile)) {
 			if(userVO.getType().equals(0)) {
 				req.setAttribute("permission", "forbid");
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/index/index.jsp");
