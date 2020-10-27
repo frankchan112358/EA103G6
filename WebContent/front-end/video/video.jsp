@@ -40,7 +40,7 @@
 		.slide-bar {
 			position: absolute;
 			height: 100%;
-			width: 30%;
+			width: 32%;
 			left: 0px;
 			top: 0px;
 			bottom: 0px;
@@ -51,7 +51,7 @@
 		.player {
 			position: absolute;
 			height: 100%;
-			width: 70%;
+			width: 68%;
 			right: 0px;
 			top: 0px;
 			bottom: 0px;
@@ -60,7 +60,7 @@
 		}
 
 		.panel-content {
-			height: 500px;
+			height: 430px;
 		}
 
 		.in-sb {
@@ -68,6 +68,7 @@
 			height: 20%;
 			font-size: large;
 			margin: auto;
+			padding: 10px;
 		}
 
 		.fa-pencil-alt:hover {
@@ -76,13 +77,21 @@
 
 		video {
 			position: absolute;
-			width: 100%;
+			width: 99%;
+			vertical-align: middle;
 			margin: auto;
 			align-self: center;
+			vertical-align: middle;
 		}
 
 		a {
 			color: black;
+		}
+
+		[poster] {
+			width: 100%;
+			vertical-align: middle;
+			align-self: center;
 		}
 	</style>
 </head>
@@ -100,18 +109,18 @@
 				<main id="js-page-content" role="main" class="page-content">
 					<ol class="breadcrumb page-breadcrumb">
 						<li class="breadcrumb-item">
-						<a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a> 
+							<a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-						<a href="<%=request.getContextPath()%>/front-end/course/selectCourse.jsp">我的課程</a>
+							<a href="<%=request.getContextPath()%>/front-end/course/selectCourse.jsp">我的課程</a>
 						</li>
 						<li class="breadcrumb-item">
-						 教學影片
-						 </li>
+							教學影片
+						</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class="fas fa-video" style="color: yellowgreen;"> ${courseVO.courseName}教學影片</i>
+							<i class="fas fa-video" style="color: yellowgreen;"> 教學影片</i>
 						</h1>
 					</div>
 					<div class="row align-items-center justify-content-center">
@@ -128,58 +137,55 @@
 												<c:if test="${courseVO.courseNo eq courseNo }">
 													<c:forEach var="timetableVO" items="${timetableList}">
 														<c:if test="${courseVO.courseNo eq timetableVO.courseNo}">
- 															
-  																<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)!=null}">  
-  																	<a class=vpath href="<%=request.getContextPath()%>/videos/${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}.mp4" target="player">
-																		<div class="in-sb">
-																			<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
-																			<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
-																			上課日期123 : ${timetableVO.timetableDate}<br>
-																			<input class="videoname" type="hidden" name="videoName" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoName}">
-																			<input type="hidden" name="timetablePeriod" value="${timetableVO.timetablePeriod}">
-																			上課時段 :
-																			<c:if test="${timetableVO.timetablePeriod=='0'}">早上</c:if>
-																			<c:if test="${timetableVO.timetablePeriod=='1'}">下午</c:if>
-																			<c:if test="${timetableVO.timetablePeriod=='2'}">晚上</c:if><br>
-																			<div class="in-sb-log">
-																				<div class="log">
-																					<button timeteableNo="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).timetableVO.timetableNo}" type="button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size: small;">
-																						教學日誌
-																					</button>
-																				</div>
+
+															<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)!=null}">
+																<a class=vpath href="<%=request.getContextPath()%>/videos/${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}.mp4" target="player">
+																	<div class="in-sb">
+																		<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
+																		<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
+																		(Y)上課時段 : ${timetableVO.timetableDate}
+																		<input class="videoname" type="hidden" name="videoName" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoName}">
+																		<input type="hidden" name="timetablePeriod" value="${timetableVO.timetablePeriod}">
+																		<c:if test="${timetableVO.timetablePeriod=='0'}">早上</c:if>
+																		<c:if test="${timetableVO.timetablePeriod=='1'}">下午</c:if>
+																		<c:if test="${timetableVO.timetablePeriod=='2'}">晚上</c:if><br>
+																		<div class="in-sb-log">
+																			<div class="log">
+																				<button timeteableNo="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).timetableVO.timetableNo}" type="button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size: small;">
+																					教學日誌
+																				</button>
 																			</div>
 																		</div>
-																	</a>
-  																</c:if>
-  																
-  																<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)==null}">
-  																<a class=vpath href="<%=request.getContextPath()%>/videos/${videoVO.videoNo}.mp4" target="player">
-																		<div class="in-sb">
-																			<input type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
-																			上課日期 456: ${timetableVO.timetableDate}<br>
-																			<input type="hidden" name="timetablePeriod" value="${timetableVO.timetablePeriod}">
-																			上課時段 :
-																			<c:if test="${timetableVO.timetablePeriod=='0'}">早上</c:if>
-																			<c:if test="${timetableVO.timetablePeriod=='1'}">下午</c:if>
-																			<c:if test="${timetableVO.timetablePeriod=='2'}">晚上</c:if><br>
-																			<div class="in-sb-log">
-																				<div class="log">
-																					<button " type="button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size: small;">
-																						教學日誌
-																					</button>
-																				</div>
+																	</div>
+																</a>
+															</c:if>
+
+															<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)==null}">
+																<a class=vpath href="#" target="player">
+																	<div class="in-sb class-img">
+																		<input type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
+																		(N)上課時段: ${timetableVO.timetableDate}
+																		<input type="hidden" name="timetablePeriod" value="${timetableVO.timetablePeriod}">
+																		<c:if test="${timetableVO.timetablePeriod=='0'}">早上</c:if>
+																		<c:if test="${timetableVO.timetablePeriod=='1'}">下午</c:if>
+																		<c:if test="${timetableVO.timetablePeriod=='2'}">晚上</c:if><br>
+																		<div class="in-sb-log">
+																			<div class="log">
+																				<button " type=" button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size: small;">
+																					教學日誌
+																				</button>
 																			</div>
 																		</div>
-																	</a>
-  																</c:if>
- 																
+																	</div>
+																</a>
+															</c:if>
 														</c:if>
 													</c:forEach>
 												</c:if>
 											</c:forEach>
 										</div>
 										<div class="player">
-											<video src="#" type="video/mp4" loop controls></video>
+											<video src="#" type="video/mp4" loop autoplay poster="<%=request.getContextPath()%>/images/penguins.jpg"></video>
 										</div>
 									</div>
 								</div>
@@ -209,7 +215,7 @@
 	<%@ include file="/front-end/template/quick_menu.jsp"%>
 	<%@ include file="/front-end/template/messager.jsp"%>
 	<%@ include file="/front-end/template/basic_js.jsp"%>
-	<script	src="<%=request.getContextPath()%>/SmartAdmin4/js/formplugins/summernote/summernote.js"></script>
+	<script src="<%=request.getContextPath()%>/SmartAdmin4/js/formplugins/summernote/summernote.js"></script>
 	<script>
 		'use strict';
 		$(document).ready(function () {
@@ -222,7 +228,7 @@
 				})
 
 
-			var vIndex = 8;
+			var vIndex = 1000;
 			var path = null;
 			//這裡是click(slide-bar)可以開啟影片
 			$(".in-sb").click(function (e) {
@@ -230,6 +236,11 @@
 				vIndex = $(".in-sb").index(this);
 				path = $('.vpath:eq(' + vIndex + ')').attr('href');
 				$("video").attr('src', path);
+				if (path !== '#') {
+					$("video").prop("controls", true);
+				} else {
+					$("video").prop("controls", false);
+				}
 			})
 
 
