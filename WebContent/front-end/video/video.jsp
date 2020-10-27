@@ -91,6 +91,8 @@ VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
                     </div>
                      <div class="row">
                         <div class="col col-xl-12">
+                        							<%@ include file="/front-end/course/courseDetail.jsp"%>
+                        
                             <div id="panel-1" class="panel">
                                 <div class="panel-hdr bg-primary-800 bg-success-gradient ">
                                     <h2 class="text-white">#課程名稱</h2>

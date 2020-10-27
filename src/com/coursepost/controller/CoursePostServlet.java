@@ -220,6 +220,7 @@ public class CoursePostServlet extends HttpServlet {
 
 			HttpSession session = req.getSession();
 			session.setAttribute("coursePostVO", coursePostVO);
+			session.setAttribute("courseNo", courseNo);
 
 			String url = "/front-end/course/coursePost.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);

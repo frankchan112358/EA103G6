@@ -264,10 +264,9 @@ public class CoursePostDAO implements CoursePostDAO_interface {
 				coursePostVO.setPostContent(rs.getString("postContent"));
 				coursePostVO.setUpdateTime(rs.getTimestamp("updateTime"));
 				coursePostVO.setCourseNo("courseNo");
-				list.add(coursePostVO); // Store the row in the vector
+				list.add(coursePostVO); 
 			}
 	
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());

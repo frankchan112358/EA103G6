@@ -63,28 +63,36 @@
 									<h2 class="text-white">教學計劃總覽</h2>
 								</div>
 								<div class="panel-container show" style="margin: 20px 20px;">
-									<div class="panel-content">
-										<c:forEach var="teachingPlanVO" items="${list}">
-<table>
-											<tr>
-												<td>${teachingPlanVO.teachingPlanNo}</td>
-											</tr>
-											<tr>
-												<td>${teachingPlanVO.week}</td>
-											</tr>
-											<tr>
-												<td>${teachingPlanVO.lesson}</td>
-											</tr>
-											<tr>
-												<td>${teachingPlanVO.planContent}</td>
-											</tr>
-											
-											
-										</table>	
-
-
-										</c:forEach>
+									<div style="text-align: center;">
+										<c:if test="${empty list}">
+											<h2>
+												<i class="fal fa-chalkboard-teacher"></i>
+												目前尚無任何教學計劃
+												<i class="fal fa-chalkboard-teacher"></i>
+											</h2>
+											<h4>講師將會在這發佈與課程相關的教學計劃。</h4>
+										</c:if>
 									</div>
+									<table id="dt-basic-example" class="table table-sm table-bordered table-hover table-striped w-100">
+										<thead class="bg-secondary text-white">
+											<tr>
+												<th>週次</th>
+												<th>堂數</th>
+												<th>教學內容</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach var="teachingPlanVO" items="${list}">
+												<c:if test="${!empty list}">
+													<tr>
+														<td >第${teachingPlanVO.week}週</td>
+														<td>${teachingPlanVO.lesson}</td>
+														<td>${teachingPlanVO.planContent}</td>
+													</tr>
+												</c:if>
+											</c:forEach>
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
@@ -109,16 +117,15 @@
 
 
 	<script>
-		// 		$(document).ready(function() {
-		// 			$('#dt-basic-example').dataTable({
-		// 				responsive : true,
-		// 				pageLength : 15,
-		// 				order : [ [ 2, 'desc' ] ],
-		// 				rowGroup : {
-		// 					dataSrc : 2
-		// 				}
-		// 			});
-		// 		});
+				$(document).ready(function() {
+					$('#dt-basic-example').dataTable({
+						responsive : true,
+						pageLength : 15,
+						rowGroup : {
+							dataSrc : 0
+						}
+					});
+				});
 	</script>
 </body>
 </html>
