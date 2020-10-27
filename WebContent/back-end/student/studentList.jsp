@@ -87,14 +87,12 @@
                                                     		<td>${userVO.mail}</td>
                                                     		<td>${userVO.phone eq null?"暫無資料":userVO.phone}</td>
                                                     		<td>${studentVO.studentDescription eq null?"暫無資料":studentVO.studentDescription}</td>
-                                                    		<td>                                                    	
-                                                    		<c:choose>
-                                                    			<c:when test="${studentVO.studentStatus==0}">未受訓</c:when>
-                                                    			<c:when test="${studentVO.studentStatus==1}">在訓中</c:when>
-                                                    			<c:when test="${studentVO.studentStatus==2}">結訓</c:when>
-                                                    			<c:when test="${studentVO.studentStatus==3}">退訓</c:when>
-                                                    		</c:choose>
-                                                    		</td>
+                                                    		<td><c:choose>                                                    	
+                                                    			<c:when test="${banjiSvc.getOneBanji(studentVO.banjiNo).status==0}">結訓</c:when>
+                                                    			<c:when test="${banjiSvc.getOneBanji(studentVO.banjiNo).status==1}">在訓中</c:when>
+                                                    			<c:when test="${banjiSvc.getOneBanji(studentVO.banjiNo).status==2}">班級延期</c:when>
+                                                    			<c:when test="${banjiSvc.getOneBanji(studentVO.banjiNo).status==3}">未開課</c:when>
+                                                    		</c:choose>	</td>
                                                     		</tr>
                                                     	</c:if>
                                                     </c:forEach>

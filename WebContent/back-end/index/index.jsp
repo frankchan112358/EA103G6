@@ -51,7 +51,7 @@
                                 <div class="panel-container show">
                                     <div class="btn-group m-2" role="group">
                                         <c:forEach var="banjiVO" items="${empVO.banjiList}">
-                                            <button type="button" class="course btn btn-lg btn-outline-primary" banjiNo="${banjiVO.banjiNo}">
+                                            <button type="button" class="banji btn btn-lg btn-outline-primary" banjiNo="${banjiVO.banjiNo}">
                                                 <span class="fal fa-book mr-1"></span>${banjiVO.banjiName}
                                             </button>
                                         </c:forEach>
@@ -156,6 +156,8 @@
             $(document).ready(function () {
                 var imgSrc = '<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=';
                 var noImgSrc = '<%=request.getContextPath() %>/images/noPicture.png';
+
+                // calendar
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     plugins: ['dayGrid', 'list', 'timeGrid', 'interaction', 'bootstrap'],
@@ -187,15 +189,48 @@
                         right: ''
                     },
                     eventLimit: true,
+                    <% EmpVO empVO = (EmpVO)session.getAttribute("empVO"); %>
+                    <% if (empVO.getBanjiList().size()==0){ %>
                     events: [],
+                    <% } else { %>
+                    events: '<%=request.getContextPath()%>/banji/banji.calendar?banjiNo=<%=empVO.getBanjiList().get(0).getBanjiNo()%>',                  
+                    <% } %>
                     viewSkeletonRender: function () {
                         $('.fc-toolbar .btn-default').addClass('btn-sm');
                         $('.fc-header-toolbar h2').addClass('fs-md');
-                        $('#calendar').addClass('fc-reset-order')
                     }
                 });
                 calendar.render();
 
+                if ($('button.banji').length > 0) {
+                    $($(`button.banji`)[0]).addClass('btn-primary').removeClass('btn-outline-primary');
+                }
+
+                $(document).on('click', 'button.banji', function (event) {
+                    let _this = this;
+                    let banjiNo = this.getAttribute('banjiNo');
+                    $.ajax({
+                        type: 'POST',
+                        url: '<%=request.getContextPath()%>/banji/banji.calendar',
+                        data: {
+                            banjiNo: banjiNo
+                        },
+                        success(res) {
+                            if (res != null) {
+                                calendar.removeAllEvents();
+                                calendar.addEventSource(res);
+                                banjiBtnChange($(_this), banjiNo);
+                            }
+                        }
+                    });
+                });
+
+                function banjiBtnChange(btn, banjiNo) {
+                    $('button.banji.btn-primary').addClass('btn-outline-primary').removeClass('btn-primary');
+                    $(`button.banji[banjiNo=${"${banjiNo}"}]`).addClass('btn-primary').removeClass('btn-outline-primary');
+                }
+
+                //leave datatable
                 var columnSet = [
                     {
                         title: "班級",

@@ -271,6 +271,15 @@
 		<servlet-name>BanjiLeave</servlet-name>
 		<url-pattern>/banji/banji.leave</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>BanjiPost</servlet-name>
+		<servlet-class>com.banji.controller.BanjiPost</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BanjiPost</servlet-name>
+		<url-pattern>/banji/banji.banjipost</url-pattern>
+	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>BanjiForumTopic</servlet-name>

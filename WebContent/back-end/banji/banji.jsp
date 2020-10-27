@@ -38,34 +38,19 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <button class="dropdown-item" type="button">班級設定</button>
-                                <form method="post" action="<%=request.getContextPath()%>/back-end/banji/homeBanji.jsp">
-                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">養成班管理</button>
-                                    <input type="hidden" name="banjiNo" value="${banjiPostVO.banjiNo}">
+                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.banjipost">
+                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">公告管理</button>
                                 </form>
-                                <button class="dropdown-item" type="button">公告管理</button>
-                                <form method="post" action="<%=request.getContextPath()%>/back-end/banjiPost/listAllBanjiPost.jsp">
-                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">班級公告管理</button>
-                                    <input type="hidden" name="banjiPostNo" value="${banjiPostVO.banjiPostNo}">
-                                </form>
-                                <button class="dropdown-item" type="button">課程管理</button>
                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.timetable">
                                     <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">課表管理</button>
-                                    <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
                                 </form>
                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.leave">
                                     <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">請假管理</button>
-                                    <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
-                                </form>
-                                <button class="dropdown-item" type="button">出缺勤管理</button>
-                                
-                                
+                                </form>                
                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.forumtopic">
-                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">討論區主題管理</button>
+                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">討論區主題</button>
                                     <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
                                 </form>
-                                
-                                <button class="dropdown-item" type="button">討論區檢舉管理</button>
-                                
                             </div>
                         </div>
                     </div>
@@ -79,40 +64,28 @@
                                     <div class="panel-content p-0">
                                         <ul id="js_nested_list" class="nav-menu nav-menu-reset nav-menu-compact mb-sm-4 mb-md-0 rounded" data-nav-accordion="true">
                                             <li>
-                                                <a href="#">
+                                                <a href="">
                                                     <span class="text-info">班級設定</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <span class="text-info">公告管理</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <span class="text-info">課程管理</span>
-                                                </a>
+                                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.banjipost">
+                                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="text-info">公告管理</span></a></button>
+                                                </form>
                                             </li>
                                             <li>
                                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.timetable">
                                                     <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="text-info">課表管理</span></a></button>
-                                                    <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
                                                 </form>
                                             </li>
                                             <li>
                                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.leave">
                                                     <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="text-info">請假管理</span></a></button>
-                                                    <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
                                                 </form>
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <span class="text-info">出缺勤管理</span>
-                                                </a>
-                                            </li>
-                                            <li>
                                                  <form method="post" action="<%=request.getContextPath()%>/banji/banji.forumtopic">
-                                                 <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="text-info">討論區主題管理</span></a></button>
+                                                 <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="text-info">討論區主題</span></a></button>
                                                  <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
                                                 </form>
                                             </li>
@@ -142,17 +115,17 @@
                                     <div class="panel-content p-0">
                                         <ul class="list-group">
                                             <li class="list-group-item">
-                                                <a href="#" title="班級公告">
+                                                <a href="" title="班級公告">
                                                     <span class="nav-link-text">班級公告</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="#" title="班級公告">
+                                                <a href="" title="班級公告">
                                                     <span class="nav-link-text">班級公告</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="#" title="班級公告">
+                                                <a href="" title="班級公告">
                                                     <span class="nav-link-text">班級公告</span>
                                                 </a>
                                             </li>
@@ -168,17 +141,17 @@
                                     <div class="panel-content p-0">
                                         <ul class="list-group">
                                             <li class="list-group-item">
-                                                <a href="#" title="請假核准">
+                                                <a href="" title="請假核准">
                                                     <span class="nav-link-text">請假核准</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="#" title="請假核准">
+                                                <a href="" title="請假核准">
                                                     <span class="nav-link-text">請假核准</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="#" title="請假核准">
+                                                <a href="" title="請假核准">
                                                     <span class="nav-link-text">請假核准</span>
                                                 </a>
                                             </li>
@@ -194,17 +167,17 @@
                                     <div class="panel-content p-0">
                                         <ul class="list-group">
                                             <li class="list-group-item">
-                                                <a href="#" title="檢舉審核">
+                                                <a href="" title="檢舉審核">
                                                     <span class="nav-link-text">檢舉審核</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="#" title="檢舉審核">
+                                                <a href="" title="檢舉審核">
                                                     <span class="nav-link-text">檢舉審核</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="#" title="檢舉審核">
+                                                <a href="" title="檢舉審核">
                                                     <span class="nav-link-text">檢舉審核</span>
                                                 </a>
                                             </li>
@@ -258,7 +231,7 @@
                     right: ''
                 },
                 eventLimit: true,
-                events: '<%=request.getContextPath()%>/banji/banji.calendar?action=events&banjiNo=${banjiVO.banjiNo}',
+                events: '<%=request.getContextPath()%>/banji/banji.calendar?banjiNo=${banjiVO.banjiNo}',
                 viewSkeletonRender: function () {
                     $('.fc-toolbar .btn-default').addClass('btn-sm');
                     $('.fc-header-toolbar h2').addClass('fs-md');

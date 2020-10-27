@@ -96,9 +96,8 @@
 																<button type="submit" class="btn btn-sm btn-success">
 																	<span class="fal fa-edit mr-1"></span> <span>管理</span>
 																</button>
-																<input type="hidden" name="action" value="read">
-																<input type="hidden" name="banjiNo"
-																	value="${banjiVO.banjiNo}">
+																<input type="hidden" name="action" value="manage">
+																<input type="hidden" name="banjiNo"	value="${banjiVO.banjiNo}">
 															</form>
 														</td>
 														<td>
@@ -108,9 +107,9 @@
 																<button type="submit" class="btn btn-sm btn-danger">
 																	<span class="fal fa-edit mr-1"></span> <span>修改</span>
 																</button>
-																<input type="hidden" name="action"
-																	value="getOne_For_Update"> <input type="hidden"
-																	name="banjiNo" value="${banjiVO.banjiNo}">
+																<input type="hidden" name="action"value="getOne_For_Update"> 
+																<input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
+																<input type="hidden" name="empNo" value="${empVO.empNo}">
 															</form>
 														</td>
 													</tr>
