@@ -43,6 +43,12 @@ img {
 	width: 100%;
 	height: auto;
 }
+
+.form-row {
+   margin:auto;
+   margin-bottom: 20px;
+}
+
 </style>
 
 </head>
@@ -68,23 +74,42 @@ img {
 						<li class="breadcrumb-item">
 							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>
 						</li>
-						<li class="breadcrumb-item">課程資料</li>
+						<li class="breadcrumb-item">課程資料管理</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
 							<i class='subheader-icon far fa-book'></i>
-							課程資料
+							課程資料管理
 						</h1>
 					</div>
 					<div class="row align-items-center justify-content-center">
 						<div class="col-12">
+					<jsp:include page="/back-end/course/courseNav.jsp"></jsp:include>
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
 									<h2>課程資料</h2>
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
-
+									<div class="form-row align-items-center">
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
+												<button type="submit" class="btn btn-primary">
+													<span class="fal fa-edit mr-1"></span>
+													<span>修改課程</span>
+												</button>
+												<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+												<input type="hidden" name="action" value="getOne_For_Update">
+											</FORM>
+											&emsp;
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
+												<button type="submit" class="btn btn-danger">
+													<span class="fal fa-times mr-1"></span>
+													<span>刪除課程</span>
+												</button>
+												<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+												<input type="hidden" name="action" value="delete">
+												</FORM>
+										</div>
 										<!-- datatable start -->
 										<table id="coursetable" class="table table-bordered table-hover table-striped w-100">
 											<tr>
@@ -99,11 +124,6 @@ img {
 													</div>
 												</td>
 											</tr>
-											<tr>
-												<th width="20%">課程編號</th>
-												<td>${courseVO.courseNo}</td>
-											</tr>
-
 											<tr>
 												<th>課程名稱</th>
 												<td>${courseVO.courseName}</td>
@@ -149,51 +169,6 @@ img {
 											</tr>
 
 										</table>
-
-										<div class="form-row align-items-center justify-content-center">
-											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
-												<button type="submit" class="btn btn-primary">
-													<span class="fal fa-edit mr-1"></span>
-													<span>修改</span>
-												</button>
-												<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-												<input type="hidden" name="action" value="getOne_For_Update">
-											</FORM>
-											&emsp;
-											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
-												<button type="submit" class="btn btn-danger">
-													<span class="fal fa-times mr-1"></span>
-													<span>刪除</span>
-												</button>
-
-												<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-												<input type="hidden" name="action" value="delete">
-											</FORM>
-											&emsp;
-											<FORM METHOD="post" ACTION="">
-												<button type="submit" class="btn btn-outline-success">
-													<i class="fal fa-bug"></i>
-													<span>管理</span>
-												</button>
-
-												<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-												<input type="hidden" name="action" value="delete">
-											</FORM>
-											&emsp;
-											<FORM METHOD="post" ACTION="">
-												<button type="submit" class="btn btn-outline-success">
-													<span class="fal fa-bug"></span>
-													<span>管理</span>
-												</button>
-
-												<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-												<input type="hidden" name="action" value="delete">
-											</FORM>
-										</div>
-
-
-
-
 										<!-- datatable end -->
 									</div>
 								</div>

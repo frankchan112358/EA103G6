@@ -80,7 +80,8 @@ public class CourseServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
-				req.setAttribute("courseVO", courseVO);
+				HttpSession session = req.getSession();
+				session.setAttribute("courseVO", courseVO);
 				String url = "/back-end//course/listOneCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -180,6 +181,7 @@ public class CourseServlet extends HttpServlet {
 
 				CourseService courseSvc1 = new CourseService();
 				courseImg = courseSvc1.getCourseImg(courseNo);
+				
 
 				if (form.contains("image") && errorMsgs.isEmpty()) {
 					courseImg = part.getInputStream();
@@ -213,7 +215,8 @@ public class CourseServlet extends HttpServlet {
 				courseVO = courseSvc.updateCourse(courseNo, banjiNo, teacherNo, classroomNo, basicCourseNo, courseName,
 						courseOutline, lesson, startDate, endDate, courseImg, status);
 
-				req.setAttribute("courseVO", courseVO);
+				HttpSession session = req.getSession();
+				session.setAttribute("courseVO", courseVO);
 				String url = "/back-end/course/listOneCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -304,9 +307,10 @@ public class CourseServlet extends HttpServlet {
 				courseVO.setEndDate(endDate);
 				courseVO.setCourseImg(courseImg);
 				courseVO.setStatus(status);
+				
 
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("courseVO", courseVO);
+			        req.setAttribute("courseVO", courseVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/course/addCourse.jsp");
 					failureView.forward(req, res);
 					return;
@@ -315,7 +319,7 @@ public class CourseServlet extends HttpServlet {
 				CourseService courseSvc = new CourseService();
 				courseVO = courseSvc.addCourse(banjiNo, teacherNo, classroomNo, basicCourseNo, courseName,
 						courseOutline, lesson, startDate, endDate, courseImg, status);
-
+				
 				String url = "/back-end/course/listAllCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);

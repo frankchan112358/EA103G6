@@ -85,8 +85,8 @@
                     </c:if>
                 </c:if>
             </li>
-            <li id="courseManage">
-                <a href="" title="課程管理">
+            <li>
+                <a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp"" title="課程管理">
                     <i class="fal fa-book"></i>
                     <span class="nav-link-text">課程管理</span>
                 </a>

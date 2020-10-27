@@ -236,7 +236,7 @@ public class TeachingPlanServlet extends HttpServlet {
 		if ("listTeachingPlan_ByCourseNo".equals(action)) {
 
 			String courseNo = (String)session.getAttribute("courseNo");
-			System.out.println("courseNo = " + courseNo);
+//			System.out.println("courseNo = " + courseNo);
 
 			TeachingPlanService teachingPlanSvc = new TeachingPlanService();
 			List<TeachingPlanVO> teachingPlanVO = teachingPlanSvc.getTeachingPlanByCourseNo(courseNo);

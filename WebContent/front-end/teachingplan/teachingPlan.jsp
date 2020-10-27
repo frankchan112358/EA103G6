@@ -74,7 +74,7 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 					</div>
 					<div class="row align-items-center justify-content-center">
 						<div class="col-11">
-							<%@ include file="/front-end/course/courseDetail.jsp"%>
+							<jsp:include page="/front-end/course/courseDetail.jsp"></jsp:include>
 							<div id="panel-2" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-success-gradient ">
 									<h2 class="text-white">教學計劃總覽</h2>

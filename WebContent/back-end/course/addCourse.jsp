@@ -81,12 +81,7 @@
 
 										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" enctype="multipart/form-data" name="form1">
 
-											<div class="form-group">
-												<label class="form-label">基本課程編號</label>
-												<input id="basicCourseNo" type="text" name="basicCourseNo" class="form-control" value="${courseVO.basicCourseNo}" />
-												<font color=red>${errorMsgs.basicCourseNo}</font>
-											</div>
-
+												<input id="basicCourseNo" type="hidden" name="basicCourseNo" class="form-control" value="BC001" readonly />
 
 												<div class="form-group">
 												<label class="form-label">課程名稱</label>
