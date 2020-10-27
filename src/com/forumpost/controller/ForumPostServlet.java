@@ -89,14 +89,14 @@ public class ForumPostServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("forumPostVO", forumPostVO); // 資料庫取出的empVO物件,存入req
-				String url = "/back-end/forumpost/update_forumPost_input.jsp";
+				String url = "/front-end/forumpost/updateForumPost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/forumpost/listAllForumPost.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/forumpost/studentCenter_forum.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -152,7 +152,7 @@ public class ForumPostServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("forumPostVO", forumPostVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "";
+				String url = "/front-end/forumpost/studentCenter_forum.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 

@@ -75,7 +75,6 @@
                                 
                                 <div class="col d-flex">
                                                 <a class="btn btn-outline-success btn-sm ml-auto mr-2 flex-shrink-0" onclick="location.href='${pageContext.request.contextPath}/front-end/forumpost/addForumPost.jsp'">新增貼文</a>
-                                                <a href="javascript:void(0);" class="btn btn-outline-danger btn-sm flex-shrink-0">修改</a>
                                             </div>
                                 
 					<div class="container">

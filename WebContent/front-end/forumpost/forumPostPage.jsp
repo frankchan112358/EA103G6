@@ -63,12 +63,12 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 							<div class="col-md-2" id="studentInfo">
 								<div><b>樓主</b></div>
 								
-                            <c:if test="${userVO.photo != null}" var="condition" scope="page">
-                     	    	<img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${userVO.userNo}" class="rounded-circle profile-image"style="width: 100px; height: 100px;">
-                        	</c:if>
-							<c:if test="${condition == false}">
-								<img src="<%=request.getContextPath() %>/images/noPicture.png" class="rounded-circle profile-image"style="width: 100px; height: 100px;">
-							</c:if>								
+                            <c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumPostVO.studentNo).userNo).photo eq null}">
+<img src="<%=request.getContextPath() %>/images/noPicture.png" style="width: 150px; height: 150px;">
+</c:if>
+<c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumPostVO.studentNo).userNo).photo ne null}">
+<img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${studentSvc.getOneStudent(forumPostVO.studentNo).userNo}" style="width: 150px; height: 150px;">
+</c:if>							
 							
 							<div class="col-md-12" id="AstudentName"><b>${studentSvc.getOneStudent(forumPostVO.studentNo).studentName}</b></div>
 							</div>
@@ -105,12 +105,12 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 								<div class="row">
 									<div class="col-md-2" id="studentInfo">
 										<div id="reply"><b>${tag.index}樓</b></div>
-                           <c:if test="${userVO.photo != null}" var="condition" scope="page">
-                     	    	<img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${userVO.userNo}" class="rounded-circle profile-image"style="width: 100px; height: 100px;">
-                        	</c:if>
-							<c:if test="${condition == false}">
-								<img src="<%=request.getContextPath() %>/images/noPicture.png" class="rounded-circle profile-image"style="width: 100px; height: 100px;">
-							</c:if>										
+                           <c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumCommentVO.studentNo).userNo).photo eq null}">
+<img src="<%=request.getContextPath() %>/images/noPicture.png" style="width: 150px; height: 150px;">
+</c:if>
+<c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumCommentVO.studentNo).userNo).photo ne null}">
+<img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${studentSvc.getOneStudent(forumCommentVO.studentNo).userNo}" style="width: 150px; height: 150px;">
+</c:if>									
 							
 							<div class="col-md-12" id="studentName${tag.index}"><b>${studentSvc.getOneStudent(forumCommentVO.studentNo).studentName}</b></div>
 									</div>
