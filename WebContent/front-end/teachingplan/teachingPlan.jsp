@@ -28,6 +28,23 @@
 <%@ include file="/front-end/template/head.jsp"%>
 
 <style>
+
+th{
+font-size: 16px;
+}
+
+td{
+font-size: 16px;
+}
+
+table.dataTable tr.dtrg-group.dtrg-level-0 td {
+    font-size: 20px;
+}
+
+.dataTables_empty {
+    color: #666666;
+}
+
 </style>
 </head>
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
@@ -51,7 +68,7 @@
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class='subheader-icon fal fa-calendar-exclamation'></i>
+							<i class='subheader-icon fal fa-chalkboard-teacher'></i>
 							教學計劃
 						</h1>
 					</div>
@@ -63,18 +80,8 @@
 									<h2 class="text-white">教學計劃總覽</h2>
 								</div>
 								<div class="panel-container show" style="margin: 20px 20px;">
-									<div style="text-align: center;">
-										<c:if test="${empty list}">
-											<h2>
-												<i class="fal fa-chalkboard-teacher"></i>
-												目前尚無任何教學計劃
-												<i class="fal fa-chalkboard-teacher"></i>
-											</h2>
-											<h4>講師將會在這發佈與課程相關的教學計劃。</h4>
-										</c:if>
-									</div>
-									<table id="dt-basic-example" class="table table-sm table-bordered table-hover table-striped w-100">
-										<thead class="bg-secondary text-white">
+									<table id="teachingPlan" class="table table-bordered table-hover table-striped w-100">
+										<thead class="thead-light" align="center">
 											<tr>
 												<th>週次</th>
 												<th>堂數</th>
@@ -85,9 +92,9 @@
 											<c:forEach var="teachingPlanVO" items="${list}">
 												<c:if test="${!empty list}">
 													<tr>
-														<td >第${teachingPlanVO.week}週</td>
-														<td>${teachingPlanVO.lesson}</td>
-														<td>${teachingPlanVO.planContent}</td>
+														<td align="center">第${teachingPlanVO.week}週</td>
+														<td align="center">${teachingPlanVO.lesson}</td>
+														<td align="center">${teachingPlanVO.planContent}</td>
 													</tr>
 												</c:if>
 											</c:forEach>
@@ -115,17 +122,44 @@
 	<%@ include file="/front-end/template/basic_js.jsp"%>
 
 
+        <script src="js/datagrid/datatables/datatables.export.js"></script>
 
 	<script>
 				$(document).ready(function() {
-					$('#dt-basic-example').dataTable({
+					$('#teachingPlan').dataTable({
 						responsive : true,
-						pageLength : 15,
+	                    language:{
+	                        "emptyTable": 
+	                        	"<h2>目前尚無任何教學計劃</h2><div><h4>講師將會在這發佈與課程相關的教學計劃。</h4></div>",
+	                        "processing": "處理中...",
+	                        "loadingRecords": "載入中...",
+	                        "lengthMenu": "顯示 _MENU_ 項結果",
+	                        "zeroRecords": "沒有符合的結果",
+	                        "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+	                        "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+	                        "infoFiltered": "(從 _MAX_ 項結果中過濾)",
+	                        "infoPostFix": "",
+	                        "paginate": {
+	                          "first": "第一頁",
+	                          "previous": "上一頁",
+	                          "next": "下一頁",
+	                          "last": "最後一頁"
+	                        },
+	                        "aria": {
+	                          "sortAscending": ": 升冪排列",
+	                          "sortDescending": ": 降冪排列"
+	                        }
+	                    },
+						pageLength : 25,
 						rowGroup : {
 							dataSrc : 0
 						}
 					});
+					
+					
 				});
+				
+				
 	</script>
 </body>
 </html>
