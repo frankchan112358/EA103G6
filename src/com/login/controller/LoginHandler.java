@@ -48,6 +48,7 @@ public class LoginHandler extends HttpServlet {
 				failureView.forward(req, res);
 				return;
 			}
+		
 			
 			if(userVO.getEnable()==2) {
 				errorMsgs.add("您沒有權限登入，請聯繫系統管理員");
@@ -98,7 +99,7 @@ public class LoginHandler extends HttpServlet {
 				successView.forward(req, res);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			errorMsgs.add("無法取得資料:" + e.getMessage());
 			RequestDispatcher failureView = req.getRequestDispatcher("/login/login.jsp");
 			failureView.forward(req, res);
