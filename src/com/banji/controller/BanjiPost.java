@@ -62,7 +62,7 @@ public class BanjiPost extends HttpServlet {
 			if (banjiPostVO == null) {
 				req.setAttribute("list", new BanjiPostService().getAllWhitBanjiNo(banjiNo));
 				req.setAttribute("banjiVO", banjiVO);
-				String url = "/back-end/banji/leave/leave.jsp";
+				String url = "/back-end/banji/banjiPost/listAllBanjiPost.jsp";
 				req.getRequestDispatcher(url).forward(req, res);
 				return;
 			}
@@ -80,7 +80,7 @@ public class BanjiPost extends HttpServlet {
 			if (banjiPostVO == null) {
 				req.setAttribute("list", new BanjiPostService().getAllWhitBanjiNo(banjiNo));
 				req.setAttribute("banjiVO", banjiVO);
-				String url = "/back-end/banji/leave/leave.jsp";
+				String url = "/back-end/banji/banjiPost/listAllBanjiPost.jsp";
 				req.getRequestDispatcher(url).forward(req, res);
 				return;
 			}
@@ -145,7 +145,7 @@ public class BanjiPost extends HttpServlet {
 
 				req.setAttribute("banjiPostVO", banjiPostVO);
 				req.setAttribute("banjiVO", banjiVO);
-				String url = "/back-end/banjiPost/listOneBanjiPost.jsp";
+				String url = "/back-end/banji/banjiPost/listOneBanjiPost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {
