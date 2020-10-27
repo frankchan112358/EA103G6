@@ -44,13 +44,14 @@ text-align:center ;
                 <%@ include file="/back-end/template/header.jsp" %> 
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
-                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/banji/homeBanji.jsp">養成班管理</a></li>
-                          <li class="breadcrumb-item">修改資料</li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage">養成班管理</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage?action=read">${banjiVO.banjiName}</a></li>
+                        <li class="breadcrumb-item">班級設定</li>
                     </ol>
                     <div class="subheader" >
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-users-class' ></i> 修改資料
+                            <i class='subheader-icon fal fa-users-class' ></i> 班級設定
                         </h1>
                     </div>
                     <div class="row">
@@ -65,7 +66,7 @@ text-align:center ;
                                             <form METHOD="post" ACTION="<%=request.getContextPath()%>/banji/banji.do" name="form1"  class="was-validated">
                                                   <div class="form-group">
                                                <label class="form-label" for="simpleinput">班種名稱:</label>
-                                                 <input type="text" id="simpleinput" class="form-control" readonly name="banjiTypeNo" value="${banjiVO.banjiTypeNo}">
+                                                 <input type="text" id="simpleinput" class="form-control" readonly name="banjiTypeNo" value="${banjiVO.banjiTypeVO.banjiTypeName}">
                                             </div> 
                                             
                                                <div class="form-group">
@@ -136,7 +137,6 @@ text-align:center ;
                                                
                                                <div class="form-group" id="add" >
 												<input type="hidden" name="action" value="update">
-												<input type="hidden" name="banjiNo" value="${banjiVO.banjiNo }">
 												<input type="hidden" name="empNo" value="${empVO.empNo }">
 												<button type="submit" class="btn btn-primary justify-content-center" >送出修改</button>
 											</div>

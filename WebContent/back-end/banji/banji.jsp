@@ -64,9 +64,11 @@
                                     <div class="panel-content p-0">
                                         <ul id="js_nested_list" class="nav-menu nav-menu-reset nav-menu-compact mb-sm-4 mb-md-0 rounded" data-nav-accordion="true">
                                             <li>
-                                                <a href="">
-                                                    <span class="text-info">班級設定</span>
-                                                </a>
+                                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.banjipost?action=getOne_For_Update&banjiNo=${banjiVO.banjiNo}">
+                                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a> <span class="text-info">班級設定</span></a></button>
+                                                   
+                                                   </form>  
+                                               
                                             </li>
                                             <li>
                                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.banjipost">

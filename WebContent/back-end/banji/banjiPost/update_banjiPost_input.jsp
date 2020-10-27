@@ -32,9 +32,11 @@ text-align:center ;
                 <%@ include file="/back-end/template/header.jsp" %> 
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
-                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/banji/homeBanji.jsp">公告管理</a></li>
-                          <li class="breadcrumb-item">修改資料</li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage">養成班管理</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage?action=read">${banjiVO.banjiName}</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.banjipost">公告管理</a></li>
+                        <li class="breadcrumb-item">修改班級公告</li>
                     </ol>
                     <div class="subheader" >
                         <h1 class="subheader-title">
@@ -49,7 +51,7 @@ text-align:center ;
 								</div>
 					 <div class="panel-container show" >
                            <div class="panel-content">
-							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/banjiPost/banjiPost.do" name="form1" class="was-validated">
+							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/banji/banji.banjipost" name="form1" class="was-validated">
 		
 										<div class="form-group">
                                                <label class="form-label" for="simpleinput">公告編號:</label>
@@ -57,7 +59,7 @@ text-align:center ;
                                             </div>
 											<div class="form-group">
                                                <label class="form-label" for="simpleinput">班級編號:</label>
-                                                 <input type="text" id="simpleinput" class="form-control" readonly name="banjiNo" value="${banjiPostVO.banjiNo}">
+                                                 <input type="text" id="simpleinput" class="form-control" readonly name="banjiNo" value="${banjiVO.banjiTypeVO.banjiTypeName}">
                                             </div>
                                              <div class="form-group">
                                                <label class="form-label" for="simpleinput">班級公告標題:</label>
@@ -86,12 +88,13 @@ text-align:center ;
                                                 
                                            <div class="form-group" id="add" >
 												<input type="hidden" name="action" value="update"> 
-												<input type="hidden" name="banjiPostNo" value="${banjiPostVO.banjiPostNo}">
-												<input type="hidden" name="banjiNo" value="<%=banjiPostVO.getBanjiNo()%>">
 												<button type="submit" class="btn btn-primary justify-content-center" >送出修改</button>
 											</div>     
 							</FORM>
 									</div>
+									</div>
+									</div>
+/div>
 	  </div>
 </main>
                 <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>

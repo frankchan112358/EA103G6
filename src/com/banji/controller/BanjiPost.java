@@ -145,7 +145,7 @@ public class BanjiPost extends HttpServlet {
 
 				req.setAttribute("banjiPostVO", banjiPostVO);
 				req.setAttribute("banjiVO", banjiVO);
-				String url = "/back-end/banji/banjiPost/listOneBanjiPost.jsp";
+				String url = "/back-end/banji/banji.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {
