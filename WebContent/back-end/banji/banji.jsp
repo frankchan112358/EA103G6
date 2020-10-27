@@ -75,17 +75,17 @@
                                     <div class="panel-content p-0">
                                         <ul id="js_nested_list" class="nav-menu nav-menu-reset nav-menu-compact mb-sm-4 mb-md-0 rounded" data-nav-accordion="true">
                                             <li>
-                                                <a href="#">
+                                                <a href="">
                                                     <span class="text-info">班級設定</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
+                                                <a href="">
                                                     <span class="text-info">公告管理</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
+                                                <a href="">
                                                     <span class="text-info">課程管理</span>
                                                 </a>
                                             </li>
@@ -100,7 +100,7 @@
                                                 </form>
                                             </li>
                                             <li>
-                                                <a href="#">
+                                                <a href="">
                                                     <span class="text-info">出缺勤管理</span>
                                                 </a>
                                             </li>
@@ -136,17 +136,17 @@
                                     <div class="panel-content p-0">
                                         <ul class="list-group">
                                             <li class="list-group-item">
-                                                <a href="#" title="班級公告">
+                                                <a href="" title="班級公告">
                                                     <span class="nav-link-text">班級公告</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="#" title="班級公告">
+                                                <a href="" title="班級公告">
                                                     <span class="nav-link-text">班級公告</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="#" title="班級公告">
+                                                <a href="" title="班級公告">
                                                     <span class="nav-link-text">班級公告</span>
                                                 </a>
                                             </li>
@@ -162,17 +162,17 @@
                                     <div class="panel-content p-0">
                                         <ul class="list-group">
                                             <li class="list-group-item">
-                                                <a href="#" title="請假核准">
+                                                <a href="" title="請假核准">
                                                     <span class="nav-link-text">請假核准</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="#" title="請假核准">
+                                                <a href="" title="請假核准">
                                                     <span class="nav-link-text">請假核准</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="#" title="請假核准">
+                                                <a href="" title="請假核准">
                                                     <span class="nav-link-text">請假核准</span>
                                                 </a>
                                             </li>
@@ -188,17 +188,17 @@
                                     <div class="panel-content p-0">
                                         <ul class="list-group">
                                             <li class="list-group-item">
-                                                <a href="#" title="檢舉審核">
+                                                <a href="" title="檢舉審核">
                                                     <span class="nav-link-text">檢舉審核</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="#" title="檢舉審核">
+                                                <a href="" title="檢舉審核">
                                                     <span class="nav-link-text">檢舉審核</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="#" title="檢舉審核">
+                                                <a href="" title="檢舉審核">
                                                     <span class="nav-link-text">檢舉審核</span>
                                                 </a>
                                             </li>
