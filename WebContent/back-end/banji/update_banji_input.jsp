@@ -63,23 +63,9 @@ text-align:center ;
                           <div class="panel-content">
                                      
                                             <form METHOD="post" ACTION="<%=request.getContextPath()%>/banji/banji.do" name="form1"  class="was-validated">
-                                                <div class="form-group">
-                                               <label class="form-label" for="simpleinput">班級編號:</label>
-                                                 <input type="text" id="simpleinput" class="form-control" readonly name="banjiNo"   value="${banjiVO.banjiNo}">
-                                            </div>
-                                               
-                                               <div class="form-group">
-												   <label class="form-label" for="example-select">導師:</label>
-												<input type="text" id="simpleinput" class="form-control" readonly name="empNo"   value="${banjiVO.empNo}">
-											
-											  </div>
-											  
                                                   <div class="form-group">
                                                <label class="form-label" for="simpleinput">班種名稱:</label>
                                                  <input type="text" id="simpleinput" class="form-control" readonly name="banjiTypeNo" value="${banjiVO.banjiTypeNo}">
-                                            <div class="invalid-feedback">
-                                                        				班級種類請勿空白.
-                                         </div>
                                             </div> 
                                             
                                                <div class="form-group">
@@ -148,11 +134,10 @@ text-align:center ;
                                          </div>
                                                 </div>
                                                
-                                               
-                                          
                                                <div class="form-group" id="add" >
 												<input type="hidden" name="action" value="update">
-												<input type="hidden" name="banjiNo" value="<%=banjiVO.getBanjiNo()%>">
+												<input type="hidden" name="banjiNo" value="${banjiVO.banjiNo }">
+												<input type="hidden" name="empNo" value="${empVO.empNo }">
 												<button type="submit" class="btn btn-primary justify-content-center" >送出修改</button>
 											</div>
                                             </form>
