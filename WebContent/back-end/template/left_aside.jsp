@@ -74,7 +74,7 @@
                                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.manage">
                                                     <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="nav-link-text">${banjiVO.banjiName}</span></a></button>
                                                     <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
-                                                    <input type="hidden" name="action" value="read">
+                                                    <input type="hidden" name="action" value="manage">
                                                 </form>
                                             </li>
                                         </c:forEach>

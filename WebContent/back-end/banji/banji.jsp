@@ -50,15 +50,11 @@
                                 <button class="dropdown-item" type="button">課程管理</button>
                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.timetable">
                                     <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">課表管理</button>
-                                    <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
                                 </form>
                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.leave">
                                     <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">請假管理</button>
-                                    <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
                                 </form>
-                                <button class="dropdown-item" type="button">出缺勤管理</button>
-                                
-                                
+                                <button class="dropdown-item" type="button">出缺勤管理</button>                            
                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.forumtopic">
                                     <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">討論區主題管理</button>
                                     <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
@@ -96,13 +92,11 @@
                                             <li>
                                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.timetable">
                                                     <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="text-info">課表管理</span></a></button>
-                                                    <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
                                                 </form>
                                             </li>
                                             <li>
                                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.leave">
                                                     <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="text-info">請假管理</span></a></button>
-                                                    <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
                                                 </form>
                                             </li>
                                             <li>
@@ -258,7 +252,7 @@
                     right: ''
                 },
                 eventLimit: true,
-                events: '<%=request.getContextPath()%>/banji/banji.calendar?action=events&banjiNo=${banjiVO.banjiNo}',
+                events: '<%=request.getContextPath()%>/banji/banji.calendar?banjiNo=${banjiVO.banjiNo}',
                 viewSkeletonRender: function () {
                     $('.fc-toolbar .btn-default').addClass('btn-sm');
                     $('.fc-header-toolbar h2').addClass('fs-md');

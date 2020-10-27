@@ -193,7 +193,7 @@
                     <% if (empVO.getBanjiList().size()==0){ %>
                     events: [],
                     <% } else { %>
-                    events: '<%=request.getContextPath()%>/banji/banji.calendar?action=events&banjiNo=<%=empVO.getBanjiList().get(0).getBanjiNo()%>',                  
+                    events: '<%=request.getContextPath()%>/banji/banji.calendar?banjiNo=<%=empVO.getBanjiList().get(0).getBanjiNo()%>',                  
                     <% } %>
                     viewSkeletonRender: function () {
                         $('.fc-toolbar .btn-default').addClass('btn-sm');
@@ -213,7 +213,6 @@
                         type: 'POST',
                         url: '<%=request.getContextPath()%>/banji/banji.calendar',
                         data: {
-                            action: 'events',
                             banjiNo: banjiNo
                         },
                         success(res) {

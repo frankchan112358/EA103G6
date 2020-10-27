@@ -35,15 +35,15 @@ public class BanjiLeave extends HttpServlet {
 			res.sendRedirect(req.getContextPath() + "/login/login.jsp");
 			return;
 		}
-		String banjiNo = req.getParameter("banjiNo");
+		EmpVO empVO = (EmpVO) session.getAttribute("empVO");
+		if(empVO==null)
+			empVO=new EmpService().getOneEmpByUserNo(userVO.getUserNo());
+		String banjiNo = (String)session.getAttribute("banjiNo");
 		if (banjiNo == null) {
 			res.sendRedirect(req.getContextPath() + "/banji/banji.manage");
 			return;
 		}
-		BanjiVO banjiVO = new BanjiService().getOneBanji(banjiNo);
-		EmpVO empVO = (EmpVO) session.getAttribute("empVO");
-		if (empVO == null)
-			empVO = new EmpService().getOneEmpByUserNo(userVO.getUserNo());
+		BanjiVO banjiVO = new BanjiService().getOneBanji(banjiNo);		
 		String action = req.getParameter("action");
 		if (action == null) {
 			res.setContentType("text/html;");
@@ -93,16 +93,6 @@ public class BanjiLeave extends HttpServlet {
 					leaveVO.getType(), leaveVO.getDescription(), leaveVO.getStatus());
 			PrintWriter out = res.getWriter();
 			out.print("ok");
-		}
-		if ("review".equals(action)) {
-			String leaveNo = req.getParameter("leaveNo");
-			LeaveVO leaveVO = new LeaveService().getOneLeave(leaveNo);
-			req.setAttribute("leaveVO", leaveVO);
-			req.setAttribute("banjiVO", banjiVO);
-			String url = "/back-end/banji/leave/readLeave.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req, res);
-			return;
 		}
 	}
 
