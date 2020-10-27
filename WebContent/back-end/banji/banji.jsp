@@ -123,7 +123,7 @@
                         </div>
                         <div class="col-xl-7 col-lg-8 col-md-12 col-sm-12 col-xs-12">
                             <div id="panel-1" class="panel">
-                                <div class="panel-hdr bg-info-300 bg-info-gradient ">
+                                <div class="panel-hdr bg-info-300 bg-info-gradient">
                                     <h2></h2>
                                 </div>
                                 <div class="panel-container show">

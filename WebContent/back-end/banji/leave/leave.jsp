@@ -86,23 +86,23 @@
                             </small>
                         </h1>
                     </div>
-                    <h5 class="text-muted">事由</h5>
+                    <h5 class="text-muted mb-0">事由</h5>
                     <span style="font-size:x-large;" data="description"></span>
-                    <h5 class="text-muted">姓名</h5>
+                    <h5 class="text-muted mb-0">姓名</h5>
                     <span style="font-size:x-large;" data="studentName"></span>
-                    <h5 class="text-muted">班級</h5>
+                    <h5 class="text-muted mb-0">班級</h5>
                     <span style="font-size:x-large;" data="banjiName"></span>
-                    <h5 class="text-muted">學號</h5>
+                    <h5 class="text-muted mb-0">學號</h5>
                     <span style="font-size:x-large;" data="studentNo"></span>
-                    <h5 class="text-muted">日期</h5>
+                    <h5 class="text-muted mb-0">日期</h5>
                     <span style="font-size:x-large;" data="timetableDate"></span>
-                    <h5 class="text-muted">時段</h5>
+                    <h5 class="text-muted mb-0">時段</h5>
                     <span style="font-size:x-large;" data="periodText"></span>
-                    <h5 class="text-muted">課程</h5>
+                    <h5 class="text-muted mb-0">課程</h5>
                     <span style="font-size:x-large;" data="courseName"></span>
-                    <h5 class="text-muted">假別</h5>
+                    <h5 class="text-muted mb-0">假別</h5>
                     <span style="font-size:x-large;" data="typeText"></span>
-                    <h5 class="text-muted">狀態</h5>
+                    <h5 class="text-muted mb-0">狀態</h5>
                     <span style="font-size:x-large;" data="statusText"></span>
                 </div>
                 <div class="modal-footer">
@@ -251,10 +251,14 @@
                     $('#userImg').attr('src', noImgSrc);
                 $('#rejectBtn').attr('leaveNo', res.leaveNo);
                 $('#passBtn').attr('leaveNo', res.leaveNo);
-                if (status == 'decide')
+                if (status == 'decide'){
                     $('#leaveReview .modal-footer').show();
-                else
+                    $('#leaveReview modal-title').html('審核請假單');
+                }                    
+                else{
                     $('#leaveReview .modal-footer').hide();
+                    $('#leaveReview modal-title').html('檢視請假單');
+                }              
             }
 
             $('#passBtn').click(function (event) {
