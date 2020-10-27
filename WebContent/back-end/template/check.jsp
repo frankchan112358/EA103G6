@@ -12,9 +12,9 @@ if(userVO == null){
 	response.sendRedirect(request.getContextPath() + "/back-end/index/index.jsp");
 	return;
 } else if(((UserVO)userVO).getType() == 1){
-	TeacherVO teacherVO = (TeacherVO)session.getAttribute("teacherVO");
+	//TeacherVO teacherVO = (TeacherVO)session.getAttribute("teacherVO");
 } else if(((UserVO)userVO).getType() == 2){
-	EmpVO empVO = (EmpVO)session.getAttribute("empVO");
+	//EmpVO empVO = (EmpVO)session.getAttribute("empVO");
 }
 
 %>
