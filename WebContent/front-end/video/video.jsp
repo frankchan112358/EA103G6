@@ -129,9 +129,9 @@
 																			<input class="videoname" type="hidden" name="videoName" value="${videoVO.videoName}">
 <input type="hidden" name="timetablePeriod" value="${videoVO.timetableVO.timetablePeriod}">
 																			上課時段 : 
-																			<c:if test="${videoVO.timetableVO.timetablePeriod == 0 } ">早上</c:if><br>
-																			<c:if test="${videoVO.timetableVO.timetablePeriod == 1 } ">下午</c:if><br>
-																			<c:if test="${videoVO.timetableVO.timetablePeriod == 2 } ">晚上</c:if><br>
+																			<c:if test="${videoVO.timetableVO.timetablePeriod=='0'}">早上</c:if>
+																			<c:if test="${videoVO.timetableVO.timetablePeriod=='1'}">下午</c:if>
+																			<c:if test="${videoVO.timetableVO.timetablePeriod=='2'}">晚上</c:if><br>
 																			<div class="in-sb-log">
 																				<div class="log">
 																					<button timeteableNo="${videoVO.timetableVO.timetableNo}" type="button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size: small;">
