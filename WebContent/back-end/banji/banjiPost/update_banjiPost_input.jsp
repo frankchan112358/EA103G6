@@ -94,7 +94,7 @@ text-align:center ;
 									</div>
 									</div>
 									</div>
-/div>
+</div>
 	  </div>
 </main>
                 <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>

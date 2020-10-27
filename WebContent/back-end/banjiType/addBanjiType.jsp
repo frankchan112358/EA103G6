@@ -56,7 +56,7 @@
 								ACTION="<%=request.getContextPath()%>/banjiType/banjiType.do"
 								name="form1"  class="needs-validation" novalidate>
 								<div class="form-group">
-									<label class="form-label" for="simpleinput">填寫班種:</label> <input
+									<label class="form-label" for="simpleinput">輸入班種:</label> <input
 										type="text" id="simpleinput" class="form-control"  required
 										placeholder="請輸入班級種類" name="banjiTypeName"> <font
 										color=red>${errorMsgs.banjiTypeName}</font>

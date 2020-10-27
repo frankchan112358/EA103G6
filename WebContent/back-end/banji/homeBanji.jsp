@@ -17,6 +17,10 @@
 <head>
 <%@ include file="/back-end/template/head.jsp"%>
 <style type="text/css">
+.table th, .table td {
+    vertical-align: middle;
+    text-align: center;  
+}
 #add {
 	position: absolute;
 	top: 65px;
@@ -43,7 +47,7 @@
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class='subheader-icon fal fa-users-class'></i> 養成班管理
+							<i class='subheader-icon fal fa-users-class'></i> 養成班總覽
 						</h1>
 					</div>
 					<form method="post"action="<%=request.getContextPath()%>/banji/banji.do"class="m-1">
@@ -59,7 +63,7 @@
 						<div class="col col-xl-12">
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-success-gradient ">
-									<h2 class="text-white">總覽</h2>
+									<h2 class="text-white">養成班列表</h2>
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">

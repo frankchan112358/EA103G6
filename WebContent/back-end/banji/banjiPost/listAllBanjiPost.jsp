@@ -26,7 +26,12 @@
     #add1{
     position:absolute;
     top:65px;
-	right:70px;
+	right:120px;
+    }
+    #add2{
+    position:absolute;
+    top:65px;
+	right:20px;
     }
     </style>
 </head>
@@ -93,6 +98,12 @@
 										</button>
 										<input type="hidden" name="action"value="getOne_For_Update"> <input type="hidden"name="banjiPostNo" value="${banjiPostVO.banjiPostNo}">
 									</form>
+									 <form method="post"action="<%=request.getContextPath()%>/banji/banji.banjipost"class="m-1">
+									<button  id="add2" type="submit" class="btn btn-sm btn-danger">
+											<span class="fal fa-edit mr-1"></span> <span>刪除</span>
+										</button>
+										<input type="hidden" name="action"value="delete"> <input type="hidden"name="banjiPostNo" value="${banjiPostVO.banjiPostNo}">
+                                    </form>
                                     <div class="card-footer">
                                         <div class="d-flex align-items-center">
                                          <span class="text-sm text-muted font-italic"><i class="fal fa-clock mr-1"></i><span>編輯時間:</span><fmt:formatDate value="${banjiPostVO.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>

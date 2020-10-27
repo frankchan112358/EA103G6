@@ -15,6 +15,10 @@
 <head>
     <%@ include file="/back-end/template/head.jsp" %>
     <style type="text/css">
+    .table th, .table td {
+    vertical-align: middle;
+    text-align: center;  
+}
     
     #add{
     position:absolute;
@@ -41,7 +45,7 @@
                     
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-chalkboard-teacher' ></i> 班種管理
+                            <i class='subheader-icon fal fa-chalkboard-teacher' ></i> 班種總覽
                         </h1>
                     </div>
                     <div id="add">
@@ -55,7 +59,7 @@
                         <div class="col col-xl-12">
                             <div id="panel-1" class="panel">
                                 <div class="panel-hdr bg-primary-800 bg-success-gradient ">
-                                    <h2 class="text-white">總覽</h2>
+                                    <h2 class="text-white">班種列表</h2>
                                 </div>
                                 <div class="panel-container show">
                                     <div class="panel-content">
@@ -82,7 +86,7 @@
 															</td>
                                                         <td>
                                                             <form method="post" action="<%=request.getContextPath()%>/banjiType/banjiType.do" class="m-1">
-                                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                                <button type="submit" class="btn btn-sm btn-warning">
                                                                     <span class="fal fa-edit mr-1"></span>
                                                                     <span>修改</span>
                                                                 </button>
