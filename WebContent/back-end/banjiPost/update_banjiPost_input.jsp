@@ -6,112 +6,89 @@
 	BanjiPostVO banjiPostVO = (BanjiPostVO) request.getAttribute("banjiPostVO");
 %>
 
+<jsp:useBean id="banjiPostSvc" scope="page"
+				class="com.banjipost.model.BanjiPostService" />
+
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>修改公告</title>
-
+    <%@ include file="/back-end/template/head.jsp" %> 
 <style>
-table#table-1 {
-	background-color: #c8c8c8;
-	border: 2px solid black;
-	text-align: center;
-}
 
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
-
-table {
-	width: 450px;
-	background-color: #c8c8c8;
-	margin-top: 1px;
-	margin-bottom: 1px;
-}
-
-input, select, textarea {
-	padding: 5px 15px;
-	border: 0 none;
-	cursor: pointer;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-}
-
-td {
-	padding: 1px;
-	border: 0px solid #CCCCFF;
+#add{
+text-align:center ;
 }
 </style>
-
 </head>
-<body bgcolor='#c8c8c8'>
+<body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
+    <script>
+        var classHolder = document.getElementsByTagName("BODY")[0];
+    </script>
 
-	<table id="table-1">
-		<tr>
-			<td>
-				<h3>班級公告修改</h3>
-				<h4>
-					<a href="<%=request.getContextPath()%>/back-end/banjiPost/select_page.jsp">回首頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
-
-	<h3>資料修改:</h3>
-
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
-
-	<jsp:useBean id="banjiSvc" scope="page"
-		class="com.banji.model.BanjiService" />
-
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/banjiPost/banjiPost.do" name="form1">
-		<table>
+    <div class="page-wrapper">
+        <div class="page-inner">
+            <%@ include file="/back-end/template/left_aside.jsp" %> 
+            <div class="page-content-wrapper">
+                <%@ include file="/back-end/template/header.jsp" %> 
+                <main id="js-page-content" role="main" class="page-content">
+                    <ol class="breadcrumb page-breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/banji/homeBanji.jsp">公告管理</a></li>
+                          <li class="breadcrumb-item">修改資料</li>
+                    </ol>
+                    <div class="subheader" >
+                        <h1 class="subheader-title">
+                            <i class='subheader-icon fal fa-users-class' ></i> 修改資料
+                        </h1>
+                    </div>
+					 <div class="panel-container show" >
+                           <div class="panel-content">
+							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/banjiPost/banjiPost.do" name="form1" >
 		
-			<tr>
-				<td>班級名稱:<font color=red><b>*</b></font></td>
- 				<td>${banjiSvc.getOneBanji(banjiPostVO.getBanjiNo()).banjiName}</td>
-				
-			</tr>
-			
-			<tr>
-				<td>公告標題:</td>
-				<td><input type="TEXT" name="title" size="40"
-					value="<%=banjiPostVO.getTitle()%>" /></td>
-			</tr>
-
-			<tr>
-				<td>公告內容:</td>
-				<td><textarea name="banjiPostContent"
-						style="resize: none; width: 300px; height: 150px;"><%=(banjiPostVO == null) ? "最近轉涼" : banjiPostVO.getBanjiPostContent()%></textarea></td>
-			</tr>
-			
-			<tr>
-				<td>狀態:</td>
-				<td><input type="TEXT" name="status" size="40"
-					value="<%=banjiPostVO.getStatus()%>" /></td>
-			</tr>
-		</table>
-		<br> <input type="hidden" name="action" value="update"> 
-		     <input type="hidden" name="banjiNo" value="<%=banjiPostVO.getBanjiNo()%>">
-		     <input type="hidden" name="banjiPostNo" value="<%=banjiPostVO.getBanjiPostNo()%>">
-		<input type="submit" value="送出修改">
-	</FORM>
+										<div class="form-group">
+                                               <label class="form-label" for="simpleinput">公告編號:</label>
+                                                 <input type="text" id="simpleinput" class="form-control" readonly name="banjiPostNo" value="${banjiPostVO.banjiPostNo}">
+                                            </div>
+											<div class="form-group">
+                                               <label class="form-label" for="simpleinput">班級編號:</label>
+                                                 <input type="text" id="simpleinput" class="form-control" readonly name="banjiNo" value="${banjiPostVO.banjiNo}">
+                                            </div>
+                                             <div class="form-group">
+                                               <label class="form-label" for="simpleinput">公告標題:</label>
+                                                 <input type="text" id="simpleinput" class="form-control"  name="title" value="${banjiPostVO.title}">
+                                            </div>   
+                                            
+                                      		<div class="form-group">
+									<label class="form-label" for="example-textarea">公告內容:</label>
+									<textarea name="banjiPostContent" class="form-control"
+										id="example-textarea" rows="5" >${banjiPostVO.banjiPostContent }</textarea>
+										</div>
+                                      
+		 								 <div class="form-group" >
+                                                    <label class="form-label" for="example-select">狀態:</label>
+                                               <select class="custom-select form-control" name="status" >
+													<option value="0" ${(banjiPostVO.status==0)?'selected':'' }>一般</option>
+													<option value="1" ${(banjiPostVO.status==1)?'selected':'' }>緊急</option>
+												</select>           
+                                                </div>
+                                                
+                                           <div class="form-group" id="add" >
+												<input type="hidden" name="action" value="update"> 
+												<input type="hidden" name="banjiPostNo" value="${banjiPostVO.banjiPostNo}">
+												<input type="hidden" name="banjiNo" value="<%=banjiPostVO.getBanjiNo()%>">
+												<button type="submit" class="btn btn-primary justify-content-center" >送出修改</button>
+											</div>     
+							</FORM>
+									</div>
+	  </div>
+</main>
+                <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
+                <%@ include file="/back-end/template/footer.jsp" %>
+            </div>
+        </div>
+    </div>
+    <%@ include file="/back-end/template/quick_menu.jsp" %>
+    <%@ include file="/back-end/template/messager.jsp" %>
+    <%@ include file="/back-end/template/basic_js.jsp" %>
 </body>
-
-
 </html>

@@ -122,7 +122,7 @@ text-align:center ;
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="form-label" for="example-textarea">班級內容:</label>
-                                                    <textarea name="banjiContent" class="form-control" id="example-textarea" rows="5"placeholder="請輸入內容"></textarea>
+                                                    <textarea name="banjiContent" class="form-control" id="example-textarea" rows="5"placeholder="請輸入內容">${banjiVO.banjiContent }</textarea>
                                                 </div>
                                                
                                                
