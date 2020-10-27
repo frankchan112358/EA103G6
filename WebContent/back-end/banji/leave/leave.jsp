@@ -26,7 +26,7 @@
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage">養成班管理</a></li>
-                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage?action=read&banjiNo=${banjiVO.banjiNo}">${banjiVO.banjiName}</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage?action=read">${banjiVO.banjiName}</a></li>
                         <li class="breadcrumb-item">學員請假審核</li>
                     </ol>
                     <div class="subheader">
@@ -106,11 +106,11 @@
                     <span style="font-size:x-large;" data="statusText"></span>
                 </div>
                 <div class="modal-footer">
-                    <button id="rejectBtn" banjiNo="${banjiVO.banjiNo}" leaveNo="" type="button" class="btn btn-success" id="reject">
+                    <button id="rejectBtn" leaveNo="" type="button" class="btn btn-success" id="reject">
                         <span class="fal fa-edit mr-1"></span>
                         <span>拒絕</span>
                     </button>
-                    <button id="passBtn" banjiNo="${banjiVO.banjiNo}" leaveNo="" type="button" class="btn btn-danger" id="pass">
+                    <button id="passBtn" leaveNo="" type="button" class="btn btn-danger" id="pass">
                         <span class="fal fa-edit mr-1"></span>
                         <span>同意</span>
                     </button>
@@ -190,8 +190,7 @@
                     async: true,
                     cache: false,
                     data: {
-                        action: 'datatable',
-                        banjiNo: '${banjiVO.banjiNo}'
+                        action: 'datatable'
                     }
                 }
             });
@@ -203,8 +202,7 @@
                     url: '<%=request.getContextPath()%>/banji/banji.leave',
                     data: {
                         action: 'read',
-                        leaveNo: leaveNo,
-                        banjiNo: '${banjiVO.banjiNo}'
+                        leaveNo: leaveNo
                     },
                     success(res) {
                         if (res != null) {
@@ -222,8 +220,7 @@
                     url: '<%=request.getContextPath()%>/banji/banji.leave',
                     data: {
                         action: 'decide',
-                        leaveNo: leaveNo,
-                        banjiNo: '${banjiVO.banjiNo}'
+                        leaveNo: leaveNo
                     },
                     success(res) {
                         if (res != null) {
@@ -268,8 +265,7 @@
                     url: '<%=request.getContextPath()%>/banji/banji.leave',
                     data: {
                         action: 'pass',
-                        leaveNo: leaveNo,
-                        banjiNo: '${banjiVO.banjiNo}'
+                        leaveNo: leaveNo
                     },
                     success(res) {
                         if (res == 'ok') {
@@ -288,8 +284,7 @@
                     url: '<%=request.getContextPath()%>/banji/banji.leave',
                     data: {
                         action: 'reject',
-                        leaveNo: leaveNo,
-                        banjiNo: '${banjiVO.banjiNo}'
+                        leaveNo: leaveNo
                     },
                     success(res) {
                         if (res == 'ok') {

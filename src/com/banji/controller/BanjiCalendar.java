@@ -24,22 +24,8 @@ public class BanjiCalendar extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		res.setCharacterEncoding("UTF-8");
-		HttpSession session = req.getSession();
-		UserVO userVO = (UserVO) session.getAttribute("userVO");
-		if (userVO == null || userVO.getType() != 2) {
-			res.sendRedirect(req.getContextPath() + "/login/login.jsp");
-			return;
-		}
 		String banjiNo = req.getParameter("banjiNo");
-		if (banjiNo == null) {
-			res.sendRedirect(req.getContextPath() + "/banji/banji.manage");
-			return;
-		}
-		EmpVO empVO = (EmpVO) session.getAttribute("empVO");
-		if (empVO == null)
-			empVO = new EmpService().getOneEmpByUserNo(userVO.getUserNo());
-		String action = req.getParameter("action");
-		if ("events".equals(action)) {
+		if (banjiNo != null) {
 			res.setContentType("application/json;");
 			PrintWriter out = res.getWriter();
 			out.print(new TimetableService().getAllJsonWithBanjiNo(banjiNo));

@@ -49,7 +49,7 @@
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage">養成班管理</a></li>
-                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage?action=read&banjiNo=${banjiVO.banjiNo}">${banjiVO.banjiName}</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage?action=read">${banjiVO.banjiName}</a></li>
                         <li class="breadcrumb-item">課表管理</li>
                     </ol>
                     <div class="subheader">
@@ -69,9 +69,9 @@
                                     <div class="panel-content">
                                         <div class="d-flex justify-content-start flex-wrap demo">
                                             <div class="btn-group mr-2" role="group">
-                                                <button type="button" class="banji btn btn-lg btn-primary" courseNo="" banjiNo="${banjiVO.banjiNo}"><span class="fal fa-book mr-1"></span>目前課表</button>
+                                                <button type="button" class="banji btn btn-lg btn-primary" courseNo=""><span class="fal fa-book mr-1"></span>目前課表</button>
                                                 <c:forEach var="courseVO" items="${banjiVO.courseList}">
-                                                    <button type="button" class="course btn btn-lg btn-outline-danger" courseNo="${courseVO.courseNo}" banjiNo="${banjiVO.banjiNo}"><span class="fal fa-book mr-1"></span>${courseVO.courseName}</button>
+                                                    <button type="button" class="course btn btn-lg btn-outline-danger" courseNo="${courseVO.courseNo}"><span class="fal fa-book mr-1"></span>${courseVO.courseName}</button>
                                                 </c:forEach>
                                             </div>
                                             <div class="custom-control custom-checkbox">
@@ -153,7 +153,6 @@
             var calendarEl = document.getElementById('calendar');
             var _banjiVO = JSON.parse('${jsonData}')._banjiVO;
             var _courseVO = null;
-            var _banjiNo = '${banjiVO.banjiNo}';
             var _active = 'no';
             var mode = 'user';
             var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -364,13 +363,11 @@
             $(document).on('click', 'button.course', function (event) {
                 let _this = this;
                 let courseNo = this.getAttribute('courseNo');
-                let banjiNo = _banjiNo;
                 $.ajax({
                     type: 'POST',
                     url: '<%=request.getContextPath()%>/banji/banji.timetable',
                     data: {
                         action: 'banji_and_teacher_timetable',
-                        banjiNo: banjiNo,
                         courseNo: courseNo
                     },
                     success(res) {
@@ -388,13 +385,11 @@
 
             $(document).on('click', 'button.banji', function (event) {
                 let _this = this;
-                let banjiNo = _banjiNo;
                 $.ajax({
                     type: 'POST',
                     url: '<%=request.getContextPath()%>/banji/banji.timetable',
                     data: {
                         action: 'now',
-                        banjiNo: banjiNo
                     },
                     success(res) {
                         if (res != null) {
@@ -491,7 +486,6 @@
             $(document).on('click', 'button.timetableBtn.editor', function (event) {
                 if (_active == 'insert') {
                     let courseNo = _courseVO.courseNo;
-                    let banjiNo = _banjiNo;
                     let timetablePeriod = this.getAttribute('periodNum');
                     let timetableDate = this.getAttribute('dateStr');
                     $.ajax({
@@ -499,7 +493,6 @@
                         url: '<%=request.getContextPath()%>/banji/banji.timetable',
                         data: {
                             action: 'insert',
-                            banjiNo: banjiNo,
                             courseNo: courseNo,
                             timetablePeriod: timetablePeriod,
                             timetableDate: timetableDate,
@@ -518,7 +511,6 @@
                 }
                 else if (_active == 'update_period') {
                     let courseNo = _courseVO.courseNo;
-                    let banjiNo = _banjiNo;
                     let timetablePeriod = this.getAttribute('periodNum');
                     let timetableNo = this.getAttribute('timetableNo');
                     let timetableDate = this.getAttribute('dateStr');
@@ -527,7 +519,6 @@
                         url: '<%=request.getContextPath()%>/banji/banji.timetable',
                         data: {
                             action: 'update_period',
-                            banjiNo: banjiNo,
                             courseNo: courseNo,
                             timetablePeriod: timetablePeriod,
                             timetableNo: timetableNo,
@@ -547,7 +538,6 @@
                 }
                 else if (_active == 'update_date') {
                     let courseNo = _courseVO.courseNo;
-                    let banjiNo = _banjiNo;
                     let timetablePeriod = this.getAttribute('periodNum');
                     let timetableNo = this.getAttribute('timetableNo');
                     let timetableDate = this.getAttribute('dateStr');
@@ -556,7 +546,6 @@
                         url: '<%=request.getContextPath()%>/banji/banji.timetable',
                         data: {
                             action: 'update_date',
-                            banjiNo: banjiNo,
                             courseNo: courseNo,
                             timetablePeriod: timetablePeriod,
                             timetableNo: timetableNo,
@@ -578,14 +567,12 @@
 
             $(document).on('click', 'button.timetableBtn.delete', function (event) {
                 let courseNo = _courseVO.courseNo;
-                let banjiNo = _banjiNo;
                 let timetableNo = this.getAttribute('timetableNo');
                 $.ajax({
                     type: 'POST',
                     url: '<%=request.getContextPath()%>/banji/banji.timetable',
                     data: {
                         action: 'delete',
-                        banjiNo: banjiNo,
                         courseNo: courseNo,
                         timetableNo: timetableNo
                     },
@@ -613,13 +600,11 @@
 
             function uploadTimetable() {
                 let courseNo = _courseVO.courseNo;
-                let banjiNo = _banjiNo;
                 $.ajax({
                     type: 'POST',
                     url: '<%=request.getContextPath()%>/banji/banji.timetable',
                     data: {
                         action: 'banji_and_teacher_timetable',
-                        banjiNo: banjiNo,
                         courseNo: courseNo,
                         mode: mode
                     },

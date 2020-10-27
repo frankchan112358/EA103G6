@@ -39,7 +39,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
         <!-- base css -->
         <link id="vendorsbundle" rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/vendors.bundle.css">
         <link id="appbundle" rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/app.bundle.css">
-        <link id="mytheme" rel="stylesheet" media="screen, print" href="#">
+        <link id="mytheme" rel="stylesheet" media="screen, print" href="">
         <link id="myskin" rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/skins/skin-master.css">
         <!-- Place favicon.ico in the root directory -->
         <link rel="apple-touch-icon" sizes="180x180" href="<%=request.getContextPath() %>/SmartAdmin4/img/favicon/apple-touch-icon.png">
