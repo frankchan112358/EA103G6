@@ -1,6 +1,7 @@
 package com.banjipost.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class BanjiPostService {
@@ -53,8 +54,7 @@ public class BanjiPostService {
 		return dao.getAll();
 	}
 
-	
-	public List<BanjiPostVO> getAllWithBanjiPost(String banjiNo) {
+	public List<BanjiPostVO> getAllWhitBanjiNo(String banjiNo) {
 		List<BanjiPostVO> list = new ArrayList<BanjiPostVO>();
 		for (BanjiPostVO banjiPostVO : getAll()) {
 			if (banjiNo.equals(banjiPostVO.getBanjiNo()))
