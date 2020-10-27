@@ -39,15 +39,28 @@ public class BanjiManage extends HttpServlet {
 			empVO=new EmpService().getOneEmpByUserNo(userVO.getUserNo());
 		String action = req.getParameter("action");
 		if (action == null) {
-			List<BanjiVO> list = empVO.getBanjiList();
-			req.setAttribute("list", list);
+			res.setContentType("text/html;");
+			req.setAttribute("list", empVO.getBanjiList());
+			session.setAttribute("banjiNo", null);
 			String url = "/back-end/banji/homeBanji.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 			return;
 		}
-		if("read".equals(action)) {
+		if("manage".equals(action)) {
+			res.setContentType("text/html;");
 			String banjiNo = req.getParameter("banjiNo");
+			session.setAttribute("banjiNo", banjiNo);
+			BanjiVO banjiVO = new BanjiService().getOneBanji(banjiNo);
+			req.setAttribute("banjiVO", banjiVO);
+			String url = "/back-end/banji/banji.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			return;
+		}
+		if ("read".equals(action)) {
+			res.setContentType("text/html;");
+			String banjiNo = (String) session.getAttribute("banjiNo");
 			BanjiVO banjiVO = new BanjiService().getOneBanji(banjiNo);
 			req.setAttribute("banjiVO", banjiVO);
 			String url = "/back-end/banji/banji.jsp";

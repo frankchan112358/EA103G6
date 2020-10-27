@@ -96,9 +96,8 @@
 																<button type="submit" class="btn btn-sm btn-success">
 																	<span class="fal fa-edit mr-1"></span> <span>管理</span>
 																</button>
-																<input type="hidden" name="action" value="read">
-																<input type="hidden" name="banjiNo"
-																	value="${banjiVO.banjiNo}">
+																<input type="hidden" name="action" value="manage">
+																<input type="hidden" name="banjiNo"	value="${banjiVO.banjiNo}">
 															</form>
 														</td>
 														<td>

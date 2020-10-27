@@ -35,15 +35,15 @@ public class BanjiTimetable extends HttpServlet {
 			res.sendRedirect(req.getContextPath() + "/login/login.jsp");
 			return;
 		}
-		String banjiNo = req.getParameter("banjiNo");
+		EmpVO empVO = (EmpVO) session.getAttribute("empVO");
+		if (empVO == null)
+			empVO = new EmpService().getOneEmpByUserNo(userVO.getUserNo());
+		String banjiNo = (String)session.getAttribute("banjiNo");
 		if (banjiNo == null) {
 			res.sendRedirect(req.getContextPath() + "/banji/banji.manage");
 			return;
 		}
 		BanjiVO banjiVO = new BanjiService().getOneBanji(banjiNo);
-		EmpVO empVO = (EmpVO) session.getAttribute("empVO");
-		if (empVO == null)
-			empVO = new EmpService().getOneEmpByUserNo(userVO.getUserNo());
 		String action = req.getParameter("action");
 		if (action == null) {
 			String jsonData = new TimetableService().getAllByJsonStrWithBanjiNo(banjiNo);
