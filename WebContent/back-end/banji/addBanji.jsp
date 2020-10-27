@@ -17,6 +17,19 @@
 <html>
 <head>
 <%@ include file="/back-end/template/head.jsp"%>
+<style>
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
+}
+
+#add {
+	text-align: center;
+}
+</style>
 </head>
 <body
 	class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
@@ -41,15 +54,20 @@
 							<i class='subheader-icon fal fa-users-class'></i> 新增養成班
 						</h1>
 					</div>
+					<div class="row">
+						<div class="col col-xl-12">
+							<div id="panel-1" class="panel">
+								<div class="panel-hdr bg-primary-800 bg-success-gradient ">
+									<h2 class="text-white">總覽</h2>
+								</div>
 					<div class="panel-container show">
 						<div class="panel-content">
 
-							<form METHOD="post"
-								ACTION="<%=request.getContextPath()%>/banji/banji.do"
-								name="form1">
+							<form METHOD="post" ACTION="<%=request.getContextPath()%>/banji/banji.do"
+								name="form1" class="needs-validation" novalidate>
 								<div class="form-group">
-									<label class="form-label" for="simpleinput">選擇班種:</label> <select
-										class="custom-select form-control" name="banjiTypeNo">
+									<label class="form-label" for="simpleinput">選擇班種:</label> <select required
+										class="custom-select form-control" name="banjiTypeNo"  > 
 										<option value="">請選擇班種</option>
 										<c:forEach var="banjiTypeVO" items="${banjiTypeSvc.all}">
 											<c:if test="${ banjiTypeVO.banjiTypeEnable==1}">
@@ -58,17 +76,23 @@
 											</c:if>
 										</c:forEach>
 									</select> <font color=red>${errorMsgs.banjiTypeNo}</font>
+									<div class="invalid-feedback">
+                                                       		班級種類請勿空白.
+                                         </div>
 								</div>
 
 								<div class="form-group">
 									<label class="form-label" for="simpleinput">輸入班級:</label> <input
-										type="text" id="simpleinput" class="form-control"
+										type="text" id="simpleinput" class="form-control" required
 										placeholder="請輸入班級" name="banjiName"> <font color=red>${errorMsgs.banjiName}</font>
+										<div class="invalid-feedback">
+                                                      		  班級名稱請勿空白且只能是中、英文字母、數字，其他不行。
+                                         </div>
 								</div>
 
 								<div class="form-group">
 									<label class="form-label" for="example-date">開訓日:</label> <input
-										class="form-control" name="startDay" id="f_date1"
+										class="form-control" name="startDay" id="f_date1" 
 										onfocus="this.blur()"> <font color=red>${errorMsgs.startDay}</font>
 								</div>
 
@@ -80,33 +104,44 @@
 
 								<div class="form-group">
 									<label class="form-label" for="simpleinput">上課時數:</label> <input
-										type="text" id="simpleinput" class="form-control"
+										type="text" id="simpleinput" class="form-control" required
 										placeholder="請輸入時數" name="classHours"> <font color=red>${errorMsgs.classHours}</font>
+								<div class="invalid-feedback">
+                                                      		  請填寫上課時數.
+                                         </div>
 								</div>
 
 								<div class="form-group">
 									<label class="form-label" for="simpleinput">學員人數:</label> <input
-										type="text" id="simpleinput" class="form-control"
+										type="text" id="simpleinput" class="form-control" required
 										placeholder="請輸入學員人數" name="numberOfStudent"> <font
 										color=red>${errorMsgs.numberOfStudent}</font>
-
+										<div class="invalid-feedback">
+                                                       		 請填寫上課人數.
+                                         </div>
 								</div>
 								<div class="form-group">
 									<label class="form-label" for="simpleinput">教室:</label> <select
-										class="custom-select form-control" name="classroomNo">
+										class="custom-select form-control" name="classroomNo" required>
 										<option value="">請選擇教室</option>
 										<c:forEach var="classroomVO" items="${classroomSvc.all}">
 											<option value="${classroomVO.classroomNo}"
 												${(banjiVO.classroomNo==classroomVO.classroomNo)? 'selected':'' }>${classroomVO.classroomName}
 										</c:forEach>
 									</select> <font color=red>${errorMsgs.classroomNo}</font>
+									<div class="invalid-feedback">
+                                                        		教室請勿空白.
+                                         </div>
 								</div>
 
 								<div class="form-group">
 									<label class="form-label" for="example-textarea">班級內容:</label>
-									<textarea name="banjiContent" class="form-control"
+									<textarea name="banjiContent" class="form-control" required
 										id="example-textarea" rows="5" placeholder="請輸入內容"></textarea>
 									<font color=red>${errorMsgs.banjiContent}</font>
+											<div class="invalid-feedback">
+                                                        		班級內容請勿空白.
+                                         </div>
 								</div>
 
 								<div class="form-group">
@@ -125,6 +160,9 @@
 									<button type="submit"class="btn btn-primary justify-content-center">送出</button>
 								</div>
 							</form>
+						</div>
+						</div>
+						</div>
 						</div>
 					</div>
 				</main>
@@ -153,26 +191,14 @@
 			endDay = new java.sql.Date(System.currentTimeMillis());
 		}
 	%>
-	<link rel="stylesheet" type="text/css"
-		href="<%=request.getContextPath()%>/back-end/datetimepicker/jquery.datetimepicker.css" />
+	
 	<script
 		src="<%=request.getContextPath()%>/back-end/datetimepicker/jquery.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/back-end/datetimepicker/jquery.datetimepicker.full.js"></script>
 
-	<style>
-.xdsoft_datetimepicker .xdsoft_datepicker {
-	width: 300px; /* width:  300px; */
-}
-
-.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-	height: 151px; /* height:  151px; */
-}
-
-#add {
-	text-align: center;
-}
-</style>
+<link rel="stylesheet" type="text/css"
+		href="<%=request.getContextPath()%>/back-end/datetimepicker/jquery.datetimepicker.css" />	
 
 	<script>
 $(function(){
@@ -208,6 +234,31 @@ $(function(){
 			});
 		});
 	</script>
+											<script>
+                                                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                                                (function()
+                                                {
+                                                    'use strict';
+                                                    window.addEventListener('load', function()
+                                                    {
+                                                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                                        var forms = document.getElementsByClassName('needs-validation');
+                                                        // Loop over them and prevent submission
+                                                        var validation = Array.prototype.filter.call(forms, function(form)
+                                                        {
+                                                            form.addEventListener('submit', function(event)
+                                                            {
+                                                                if (form.checkValidity() === false)
+                                                                {
+                                                                    event.preventDefault();
+                                                                    event.stopPropagation();
+                                                                }
+                                                                form.classList.add('was-validated');
+                                                            }, false);
+                                                        });
+                                                    }, false);
+                                                })();
 
+                                            </script>
 </body>
 </html>

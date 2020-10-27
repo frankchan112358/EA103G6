@@ -53,28 +53,33 @@ text-align:center ;
                             <i class='subheader-icon fal fa-users-class' ></i> 修改資料
                         </h1>
                     </div>
+                    <div class="row">
+						<div class="col col-xl-12">
+							<div id="panel-1" class="panel">
+								<div class="panel-hdr bg-primary-800 bg-success-gradient ">
+									<h2 class="text-white">總覽</h2>
+								</div>
 					 <div class="panel-container show" >
                           <div class="panel-content">
                                      
-                                            <form METHOD="post" ACTION="<%=request.getContextPath()%>/banji/banji.do" name="form1">
+                                            <form METHOD="post" ACTION="<%=request.getContextPath()%>/banji/banji.do" name="form1"  class="was-validated">
                                                 <div class="form-group">
                                                <label class="form-label" for="simpleinput">班級編號:</label>
-                                                 <input type="text" id="simpleinput" class="form-control" readonly name="banjiNo" value="${banjiVO.banjiNo}">
+                                                 <input type="text" id="simpleinput" class="form-control" readonly name="banjiNo"   value="${banjiVO.banjiNo}">
                                             </div>
                                                
                                                <div class="form-group">
-												   <label class="form-label" for="example-select">選擇導師:</label>
-												<select class="custom-select form-control" name="empNo">
-													<option value="">請選擇導師</option>
-													<c:forEach var="empVO" items="${empSvc.all}">
-													<option value="${empVO.empNo}"${(banjiVO.empNo==empVO.empNo)? 'selected':'' }>${empVO.empName}
-													</c:forEach>
-												</select>
+												   <label class="form-label" for="example-select">導師:</label>
+												<input type="text" id="simpleinput" class="form-control" readonly name="empNo"   value="${banjiVO.empNo}">
+											
 											  </div>
 											  
                                                   <div class="form-group">
                                                <label class="form-label" for="simpleinput">班種名稱:</label>
                                                  <input type="text" id="simpleinput" class="form-control" readonly name="banjiTypeNo" value="${banjiVO.banjiTypeNo}">
+                                            <div class="invalid-feedback">
+                                                        				班級種類請勿空白.
+                                         </div>
                                             </div> 
                                             
                                                <div class="form-group">
@@ -89,40 +94,58 @@ text-align:center ;
                                                
                                                 <div class="form-group">
                                                <label class="form-label" for="simpleinput">班級名稱:</label>
-                                                 <input type="text" id="simpleinput" class="form-control"  name="banjiName" value="${banjiVO.banjiName}">
+                                                 <input type="text" id="simpleinput" class="form-control"  name="banjiName" required value="${banjiVO.banjiName}">
+                                            <div class="invalid-feedback">
+                                                        		  班級名稱請勿空白且只能是中、英文字母、數字，其他不行。
+                                         </div>
                                             </div>  
                                                
                                                 <div class="form-group">
                                                <label class="form-label" for="simpleinput">上課時數:</label>
-                                                 <input type="text" id="simpleinput" class="form-control"  name="classHours" value="${banjiVO.classHours}">
+                                                 <input type="text" id="simpleinput" class="form-control"  name="classHours"  required  value="${banjiVO.classHours}">
+                                            <div class="invalid-feedback">
+                                                   					   請填寫上課時數.
+                                         </div>
                                             </div>  
                                                
                                                 <div class="form-group">
                                                <label class="form-label" for="simpleinput">學生人數:</label>
-                                                 <input type="text" id="simpleinput" class="form-control"  name="numberOfStudent" value="${banjiVO.numberOfStudent}">
+                                                 <input type="text" id="simpleinput" class="form-control"  name="numberOfStudent"   required value="${banjiVO.numberOfStudent}">
+                                           <div class="invalid-feedback">
+                                                        		 請填寫上課人數.
+                                         </div>
                                             </div>  
                                                
                                              <div class="form-group">
                                                     <label class="form-label" for="simpleinput">教室:</label>
-                                                    <select class="custom-select form-control"  name="classroomNo">
+                                                    <select class="custom-select form-control"  name="classroomNo" required>
                                                    <option value="" >請選擇教室</option>
                                                     <c:forEach var="classroomVO" items="${classroomSvc.all}">
 													<option value="${classroomVO.classroomNo}"${(banjiVO.classroomNo==classroomVO.classroomNo)? 'selected':'' }>${classroomVO.classroomName}
 													</c:forEach>
 													</select>
+                                                <div class="invalid-feedback">
+                                                     			  教室請勿空白.
+                                         </div>
                                                 </div>
                                                  <div class="form-group">
                                                     <label class="form-label" for="example-select">狀態:</label>
-                                               <select class="custom-select form-control" name="status">
+                                               <select class="custom-select form-control" name="status"  >
 													<option value="1" ${(banjiVO.status==1)?'selected':'' }>開課</option>
 													<option value="0" ${(banjiVO.status==0)?'selected':'' }>結訓</option>
 													<option value="2" ${(banjiVO.status==2)?'selected':'' }>延期</option>
 													<option value="3" ${(banjiVO.status==3)?'selected':'' }>未開課</option>
 												</select>           
+                                               <div class="invalid-feedback">
+                                                       
+                                         </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="form-label" for="example-textarea">班級內容:</label>
-                                                    <textarea name="banjiContent" class="form-control" id="example-textarea" rows="5"placeholder="請輸入內容">${banjiVO.banjiContent }</textarea>
+                                                    <textarea name="banjiContent" class="form-control" id="example-textarea" rows="5"placeholder="請輸入內容"  required>${banjiVO.banjiContent }</textarea>
+                                               <div class="invalid-feedback">
+                                                        		班級內容請勿空白.
+                                         </div>
                                                 </div>
                                                
                                                
@@ -133,9 +156,12 @@ text-align:center ;
 												<button type="submit" class="btn btn-primary justify-content-center" >送出修改</button>
 											</div>
                                             </form>
+                                        </div>  
+                                        </div>  
+                                        </div>  
                                         </div>
-	  </div>
-</main>
+	  							</div>
+							</main>
                 <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
                 <%@ include file="/back-end/template/footer.jsp" %>
             </div>
@@ -203,6 +229,31 @@ $(function(){
    });
 
 </script>
-    
+    									<script>
+                                                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                                                (function()
+                                                {
+                                                    'use strict';
+                                                    window.addEventListener('load', function()
+                                                    {
+                                                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                                        var forms = document.getElementsByClassName('needs-validation');
+                                                        // Loop over them and prevent submission
+                                                        var validation = Array.prototype.filter.call(forms, function(form)
+                                                        {
+                                                            form.addEventListener('submit', function(event)
+                                                            {
+                                                                if (form.checkValidity() === false)
+                                                                {
+                                                                    event.preventDefault();
+                                                                    event.stopPropagation();
+                                                                }
+                                                                form.classList.add('was-validated');
+                                                            }, false);
+                                                        });
+                                                    }, false);
+                                                })();
+
+                                            </script>
 </body>
 </html>

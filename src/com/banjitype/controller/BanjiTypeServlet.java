@@ -204,7 +204,7 @@ public class BanjiTypeServlet extends HttpServlet {
 
 				String banjiTypeContent = req.getParameter("banjiTypeContent");
 				if (banjiTypeContent == null || banjiTypeContent.trim().length() == 0) {
-					errorMsgs.put("banjiTypeContent","班級內容請勿空白");
+					errorMsgs.put("banjiTypeContent","班種內容請勿空白");
 				}
 
 				Integer banjiTypeEnable = null;

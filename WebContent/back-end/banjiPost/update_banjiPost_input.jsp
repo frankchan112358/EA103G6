@@ -41,9 +41,15 @@ text-align:center ;
                             <i class='subheader-icon fal fa-users-class' ></i> 修改資料
                         </h1>
                     </div>
+                    <div class="row">
+						<div class="col col-xl-12">
+							<div id="panel-1" class="panel">
+								<div class="panel-hdr bg-primary-800 bg-success-gradient ">
+									<h2 class="text-white">總覽</h2>
+								</div>
 					 <div class="panel-container show" >
                            <div class="panel-content">
-							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/banjiPost/banjiPost.do" name="form1" >
+							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/banjiPost/banjiPost.do" name="form1" class="was-validated">
 		
 										<div class="form-group">
                                                <label class="form-label" for="simpleinput">公告編號:</label>
@@ -54,14 +60,20 @@ text-align:center ;
                                                  <input type="text" id="simpleinput" class="form-control" readonly name="banjiNo" value="${banjiPostVO.banjiNo}">
                                             </div>
                                              <div class="form-group">
-                                               <label class="form-label" for="simpleinput">公告標題:</label>
-                                                 <input type="text" id="simpleinput" class="form-control"  name="title" value="${banjiPostVO.title}">
+                                               <label class="form-label" for="simpleinput">班級公告標題:</label>
+                                                 <input type="text" id="simpleinput" class="form-control" required name="title" value="${banjiPostVO.title}">
+                                           <div class="invalid-feedback">
+                                                        		班級公告請勿空白.
+                                         </div>
                                             </div>   
                                             
                                       		<div class="form-group">
-									<label class="form-label" for="example-textarea">公告內容:</label>
-									<textarea name="banjiPostContent" class="form-control"
+									<label class="form-label" for="example-textarea">班級公告內容:</label>
+									<textarea name="banjiPostContent" class="form-control" required
 										id="example-textarea" rows="5" >${banjiPostVO.banjiPostContent }</textarea>
+										<div class="invalid-feedback">
+                                                        		班級公告內容請勿空白.
+                                         </div>
 										</div>
                                       
 		 								 <div class="form-group" >
@@ -90,5 +102,32 @@ text-align:center ;
     <%@ include file="/back-end/template/quick_menu.jsp" %>
     <%@ include file="/back-end/template/messager.jsp" %>
     <%@ include file="/back-end/template/basic_js.jsp" %>
+    
+    <script>
+                                                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                                                (function()
+                                                {
+                                                    'use strict';
+                                                    window.addEventListener('load', function()
+                                                    {
+                                                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                                        var forms = document.getElementsByClassName('needs-validation');
+                                                        // Loop over them and prevent submission
+                                                        var validation = Array.prototype.filter.call(forms, function(form)
+                                                        {
+                                                            form.addEventListener('submit', function(event)
+                                                            {
+                                                                if (form.checkValidity() === false)
+                                                                {
+                                                                    event.preventDefault();
+                                                                    event.stopPropagation();
+                                                                }
+                                                                form.classList.add('was-validated');
+                                                            }, false);
+                                                        });
+                                                    }, false);
+                                                })();
+
+                                            </script>
 </body>
 </html>
