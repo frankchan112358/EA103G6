@@ -56,7 +56,10 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>${choose_courseVO.courseName}/教材管理
+							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>
+						</li>
+						<li class="breadcrumb-item">
+							教材管理
 						</li>
 					</ol>
 					<div class="subheader">

@@ -105,14 +105,12 @@ public class VideoDAO implements VideoDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			System.out.println("DAO - 108 + videoNo" + videoNo);
 			con = ds.getConnection();
 			deleteVideoLog(videoNo);
 			pstmt = con.prepareStatement(DELETE);
 			pstmt.setString(1, videoNo);
 
 			pstmt.executeUpdate();
-			System.out.println("DAO line115 OK");
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -312,7 +310,6 @@ public class VideoDAO implements VideoDAO_interface {
 			pstmt.setString(1, videoNo);
 
 			pstmt.executeUpdate();
-			System.out.println("DAO line323 OK");
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());

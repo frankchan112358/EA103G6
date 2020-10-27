@@ -21,6 +21,7 @@ public class CourseVO implements java.io.Serializable {
 	private String basicCourseNo;
 	private String courseName;
 	private String courseOutline;
+	private String timetableNo;
 	private Integer lesson;
 	private Date startDate;
 	private Date endDate;

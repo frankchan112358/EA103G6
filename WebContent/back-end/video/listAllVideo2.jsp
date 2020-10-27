@@ -60,7 +60,10 @@ TimetableVO timetableVO = (TimetableVO) request.getAttribute("timetableVO");
 							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>${choose_courseVO.courseName}/影片管理
+							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>
+						</li>
+						<li class="breadcrumb-item">
+						影片管理
 						</li>
 					</ol>
 					<div class="subheader">
@@ -117,6 +120,7 @@ TimetableVO timetableVO = (TimetableVO) request.getAttribute("timetableVO");
 																<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
 																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
 																<input type="hidden" name="action" value="delete">
+																</button>
 															</FORM>
                                                      		</c:if>
                                                      		
