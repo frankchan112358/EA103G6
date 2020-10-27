@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/front-end/template/check.jsp" %>	
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.forumcomment.model.*"%>
+
+<%@ page import="java.util.*"%>
+
 
 <%
   ForumCommentVO forumCommentVO = (ForumCommentVO) request.getAttribute("forumCommentVO");
@@ -9,6 +14,27 @@
 
 <!DOCTYPE html>
 <html lang="en">
+<head>
+<%@ include file="/front-end/template/head.jsp" %>
+    <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/formplugins/summernote/summernote.css">
+</head>
+
+<body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
+    <script>
+        var classHolder = document.getElementsByTagName("BODY")[0];
+    </script>
+    <div class="page-wrapper">
+        <div class="page-inner">
+            <%@ include file="/front-end/template/left_aside.jsp" %>
+            <div class="page-content-wrapper">
+                <%@ include file="/front-end/template/header.jsp" %>
+                <main id="js-page-content" role="main" class="page-content">
+                    <ol class="breadcrumb page-breadcrumb">
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a></li>
+                        <li class="breadcrumb-item">討論區</li>
+                    </ol>
+
+
 <head>
   <meta charset="UTF-8">
   <title>回覆貼文</title>
@@ -20,7 +46,6 @@
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 </head>
-<body class="subpage">
 	<!-- Header -->
 	<!-- One -->
 	<section id="One" class="wrapper style3">
@@ -46,26 +71,25 @@
 	
 	
 	<fieldset>
-                <legend><b>新增貼文</b></legend>
-                <p>
-                    <label for="forumPostNo">貼文編號:</label>
-                    <select size="1" name="forumPostNo">
-					<option value="1" ${('1'==forumCommentVO.forumPostNo)?'selected':''} >1</option>
-					<option value="2" ${('2'==forumCommentVO.forumPostNo)?'selected':''} >2</option>
-					<option value="3" ${('3'==forumCommentVO.forumPostNo)?'selected':''} >3</option>
+<!--                 <p> -->
+<!--                     <label for="forumPostNo">貼文編號:</label> -->
+<!--                     <select size="1" name="forumPostNo"> -->
+<%-- 					<option value="1" ${('1'==forumCommentVO.forumPostNo)?'selected':''} >1</option> --%>
+<%-- 					<option value="2" ${('2'==forumCommentVO.forumPostNo)?'selected':''} >2</option> --%>
+<%-- 					<option value="3" ${('3'==forumCommentVO.forumPostNo)?'selected':''} >3</option> --%>
 					
-				    </select>
-                </p>
+<!-- 				    </select> -->
+<!--                 </p> -->
 	   
 
 	
        
-       <p>
-                    <label for="studentNo">學員編號 :</label>
-                    <input type="text" name="studentNo"
-					value="<%=(forumCommentVO == null) ? "S000001" : forumCommentVO.getStudentNo()%>">
-                  	<input type="hidden" name="forumCommentNo" value="${forumCommentVO.forumCommentNo}">
-                </p>
+<!--        <p> -->
+<!--                     <label for="studentNo">學員編號 :</label> -->
+<!--                     <input type="text" name="studentNo" -->
+<%-- 					value="<%=(forumCommentVO == null) ? "S000001" : forumCommentVO.getStudentNo()%>"> --%>
+<%--                   	<input type="hidden" name="forumCommentNo" value="${forumCommentVO.forumCommentNo}"> --%>
+<!--                 </p> -->
 	 
            
                 
@@ -78,6 +102,8 @@
 								
 								<p>
 								   <input type="hidden" name="action" value="insert"/>
+								   <input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}">								
+	                                <input type="hidden" name="studentNo" value="${studentVO.studentNo}">
 	                               <input type="submit" value="送出新增"/>
 	                            </p>
 											</fieldset>
@@ -98,6 +124,11 @@
   
         
    
+	
+	</main>
+	</div>
+	</div>
+	</div>
 	
 	
 </body>

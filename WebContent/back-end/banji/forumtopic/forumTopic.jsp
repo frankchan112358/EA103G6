@@ -65,7 +65,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>主題編號</th>
-                                                    <th>班級</th>
+                                                    <th>班級編號</th>
                                                     <th>主題名稱</th>   
                                                     <th></th>                                              
                                                 </tr>

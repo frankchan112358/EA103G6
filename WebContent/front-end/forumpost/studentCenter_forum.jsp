@@ -51,8 +51,8 @@
                     
                    
 					<div class="row">
-						<div class="col-md-8">主題</div>
-						<div class="col-md-2">時間</div>
+						<div class="col-md-8">標題</div>
+						<div class="col-md-2">更新時間</div>
 						<div class="col-md-1"></div>
 						<div class="col-md-1"></div>
 					</div>
@@ -60,17 +60,15 @@
 					<%@ include file="page1_ByCompositeQuery.file" %>
 					<c:forEach var="forumPostVO" items="${list}" begin="<%=pageIndex%>"
 					end="<%=pageIndex+rowsPerPage-1%>">
-					      
-					
-					
+					     	
 						<div class="row" id=forum_record>
-							<div class="col-md-8"><a href="<%=request.getContextPath() %>/forumPost/forumPost.do?action=getOneSTUDENT&forumPostNo=${forumPostVO.forumPostNo}"> ${forumPostVO.title}</a></div>
+							<div class="col-md-8"><a href="<%=request.getContextPath()%>/forumPost/forumPost.do?action=getOne_For_Display&forumPostNo=${forumPostVO.forumPostNo}"> ${forumPostVO.title}</a></div>
 							<div class="col-md-2">
 								<fmt:formatDate value="${forumPostVO.updateTime}"
 									pattern="yyyy-MM-dd HH:mm:ss" />
 							</div>
 							<div class="col-md-1">
-							<form method="post" action="<%=request.getContextPath()%>forumPost/forumPost.do">
+							<form method="post" action="<%=request.getContextPath()%>/forumPost/forumPost.do">
 								<input type="submit" value="修改">
 								<input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}">
 								<input type="hidden" name="action" value="getOne_For_Update">

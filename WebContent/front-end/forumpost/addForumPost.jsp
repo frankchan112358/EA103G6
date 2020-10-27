@@ -39,21 +39,21 @@
                 <p>
                     <label for="forumTopicNo">主題編號:</label>
                     <select size="1" name="forumTopicNo">
-					<option value="1" ${('1'==forumPostVO.forumTopicNo)?'selected':''} >1</option>
-					<option value="2" ${('2'==forumPostVO.forumTopicNo)?'selected':''} >2</option>
-					<option value="3" ${('3'==forumPostVO.forumTopicNo)?'selected':''} >3</option>
+					<option value="1" ${('學術版'==forumPostVO.forumTopicNo)?'selected':''} >學術版</option>
+					<option value="2" ${('運動版'==forumPostVO.forumTopicNo)?'selected':''} >運動版</option>
+					<option value="3" ${('閒聊版'==forumPostVO.forumTopicNo)?'selected':''} >閒聊版</option>
 					
 				    </select>
                 </p>
                 
                 
                 
-                <p>
-                    <label for="studentNo">學員編號 :</label>
-                    <input type="text" name="studentNo"
-					value="<%=(forumPostVO == null) ? "S000001" : forumPostVO.getStudentNo()%>">
-                  	<input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}">
-                </p>
+<!--                 <p> -->
+<!--                     <label for="studentNo">學員編號 :</label> -->
+<!--                     <input type="text" name="studentNo" -->
+<%-- 					value="<%=(forumPostVO == null) ? "S000001" : forumPostVO.getStudentNo()%>"> --%>
+<%--                   	<input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}"> --%>
+<!--                 </p> -->
                 
                 <p>
                     <label for="title">標題 :</label>
@@ -69,7 +69,9 @@
         <textarea id="summernote"  name="content"></textarea>
         
          <p><input type="hidden" name="action" value="insert"> 
-				<input type="submit"></p>
+				<input type="submit">
+					                                <input type="hidden" name="studentNo" value="${studentVO.studentNo}">
+				</p>
             </fieldset>
         </form>
   <script>
