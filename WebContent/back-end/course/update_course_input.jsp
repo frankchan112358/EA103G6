@@ -76,22 +76,15 @@
 						<div class="col-10">
 							<div id="panel-2" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
-									<h2>課程新增</h2>
+									<h2>課程修改</h2>
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
 
 										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" enctype="multipart/form-data" name="form1">                                                	
-											<div class="form-group">
-												<label class="form-label">課程編號</label>
-												<input type="text" name="courseNo" class="form-control" value="${courseVO.courseNo}" disabled />
-											</div>
+											
 
-											<div class="form-group">
-												<label class="form-label">基本課程編號</label>
-												<input type="text" name="basicCourseNo" class="form-control" value="${courseVO.basicCourseNo}" />
-												<font color=red>${errorMsgs.basicCourseNo}</font>
-											</div>
+												<input type="hidden" name="basicCourseNo" class="form-control" value="BC001" />
 
 											<div class="form-group">
 												<label class="form-label">課程名稱</label>
@@ -187,12 +180,15 @@
 														</div>
 							                      </div>
 							                      </div>
-											    <div class="form-row align-items-center justify-content-center">
-											  	<button id="js-sweetalert2-example-8" class="btn btn-primary justify-content-center">送出</button> 
-											  	</div>  
+							                      
+							                     <div class="form-row align-items-center justify-content-center">
+											  	<button type="submit" class="btn btn-primary justify-content-center">
+													<span>送出</span>
+												</button>
 												<input type="hidden" name="action" value="update">
 												<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-                                        </FORM>
+												</div>
+												 </FORM>
 									</div>
 								</div>
 							</div>

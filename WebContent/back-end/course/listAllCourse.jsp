@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- <%@ include file="/back-end/template/check.jsp"%> --%>
+<%@ include file="/back-end/template/check.jsp"%>
 <%@ page import="com.course.model.*"%>
 <%@ page import="java.util.*"%>
 <%
@@ -82,29 +82,21 @@
                                             <table id="coursetable" class="table table-bordered table-hover table-striped w-100">
 											<thead style="background-color:#E5F4FF;">
 												<tr>
-													<th width="6%">課程編號</th>
-													<th width="6%">課程名稱</th>
-													<th width="10%">課程大綱</th>
-													<th width="6%">班級</th>
-													<th width="7%">講師</th>
-													<th width="6%">教室</th>
-													<th width="6%">堂數</th>
-													<th width="5%">開始日期</th>
-													<th width="5%">結束日期</th>
-													<th width="7%">狀態</th>
-													<th width="5%">課程圖</th>
-													<th width="7%">修改</th>
-													<th width="7%">刪除</th>
-													<th width="5%">影片管理</th>
-													<th width="5%">教材管理</th>
+													<th>課程名稱</th>
+													<th>班級</th>
+													<th>講師</th>
+													<th>教室</th>
+													<th>堂數</th>
+													<th>開始日期</th>
+													<th>結束日期</th>
+													<th>狀態</th>
+													<th>課程圖</th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach var="courseVO" items="${list}">
-												<tr onclick="location.href='<%=request.getContextPath()%>/course/course.do?action=getOne_For_Display&courseNo=${courseVO.courseNo}';">
-														<td>${courseVO.courseNo}</td>
+												<tr onclick="location.href='<%=request.getContextPath()%>/course/course.do?action=getOne_For_Display&courseNo=${courseVO.courseNo}';" style="cursor: pointer;" >
 														<td>${courseVO.courseName}</td>
-														<td>${courseVO.courseOutline}</td>
 														<td>${banjiSvc.getOneBanji(courseVO.banjiNo).banjiName}</td>
 														<td>${teacherSvc.getOneTeacher(courseVO.teacherNo).teacherName}</td>
 														<td>${classroomSvc.getOneClassroom(courseVO.classroomNo).classroomName}</td>
@@ -129,51 +121,6 @@
 														<i class="fal fa-file-image fa-2x"></i>
 														</c:if>
                                                   	</td>
-
-														<td>
-															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
-																<button type="submit" class="btn btn-sm btn-outline-primary">
-																<span class="fal fa-edit mr-1"></span>	<br>
-																<span>修改</span>
-                                                                 </button>
-																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																<input type="hidden" name="action" value="getOne_For_Update">
-                                                                    
-															</FORM>
-														</td>
-														<td>
-															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
-																<button type="submit" class="btn btn-sm btn-outline-danger">
-																<i class="fal fa-times mr-1"></i><br>
-																<span>刪除</span>
-																</button>
-																
-																<input type="hidden" name="courseNo" value="<%=request.getContextPath()%>/course/course.do">
-																<input type="hidden" name="action" value="delete">
-															</FORM>
-														</td>
-														<td>
-															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/courseTT.do">
-																<button type="submit"  class="btn btn-outline-success">
-																<i class="fal fa-bug"></i>	<br>
-																<span>管理</span>
-																</button>
-																
-																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																<input type="hidden" name="action" value="getTTDisplayList">
-															</FORM>
-														</td>
-														<td>
-															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/courseTT.do">
-																<button type="submit"  class="btn btn-outline-success">
-																<span class="fal fa-bug"></span>	<br>
-																<span>管理</span>
-																</button>
-																
-																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																<input type="hidden" name="action" value="getTFDisplayList">
-															</FORM>
-														</td>
 													</tr>
 												</c:forEach>
 											</tbody>
