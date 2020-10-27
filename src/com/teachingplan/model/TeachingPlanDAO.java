@@ -255,16 +255,16 @@ public class TeachingPlanDAO implements TeachingPlanDAO_interface {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_TEACHINGPLAN_BY_COURSENO);
-
+			pstmt.setString(1, courseNo);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				teachingPlanVO = new TeachingPlanVO();
 				teachingPlanVO.setTeachingPlanNo(rs.getString("teachingPlanNo"));
-				teachingPlanVO.setCourseNo(rs.getString("courseNo"));
 				teachingPlanVO.setWeek(rs.getInt("week"));
 				teachingPlanVO.setLesson(rs.getInt("lesson"));
 				teachingPlanVO.setPlanContent(rs.getString("planContent"));
+				teachingPlanVO.setCourseNo(rs.getString("courseNo"));
 				list.add(teachingPlanVO);
 
 			}

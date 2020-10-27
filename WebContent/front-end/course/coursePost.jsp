@@ -51,7 +51,7 @@
 					</div>
 					<div class="row align-items-center justify-content-center">
 						<div class="col-11">
-							<%@ include file="/front-end/course/courseDetail.jsp"%>
+							<jsp:include page="/front-end/course/courseDetail.jsp"></jsp:include>
 							<div id="panel-2" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-success-gradient ">
 									<h2 class="text-white">課程公告總覽</h2>
@@ -74,7 +74,7 @@
 													<div class="card-header">
 														<a href="javascript:void(0);" class="card-title collapsed" data-toggle="collapse" data-target="#coursePost${coursePostVO.coursePostNo}" aria-expanded="false">
 															<i class="fal fa-comment-alt-smile mr-3 fa-2x"></i>
-															<span class="444">
+															<span>
 																<b>【${coursePostVO.title}】</b>
 															</span>
 															<span>

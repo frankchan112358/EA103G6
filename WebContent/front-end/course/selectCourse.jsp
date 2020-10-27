@@ -147,6 +147,7 @@ input[type=search]::-webkit-search-cancel-button{
 													<c:forEach var="courseVO" items="${studentVO.courseList}">
 														<div class="card border my-3"
 															onclick="location.href='<%=request.getContextPath()%>/coursePost/coursePost.do?courseNo=${courseVO.courseNo}&action=listCoursePost_ByCourseNo';">
+															<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
 															<c:if test="${courseVO.courseImg eq null}">
 																<div class="img">
 																	<img src="<%=request.getContextPath()%>/images/尚無圖片.jpg" class="card-img-top img-fluid" alt="課程封面圖" style="cursor: pointer;">

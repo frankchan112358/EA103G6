@@ -18,6 +18,7 @@ public class TeachingPlanServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		HttpSession session = req.getSession();
 
 		if ("getOne_For_Display".equals(action)) {
 
@@ -234,12 +235,12 @@ public class TeachingPlanServlet extends HttpServlet {
 
 		if ("listTeachingPlan_ByCourseNo".equals(action)) {
 
-			String courseNo = new String(req.getParameter("courseNo").trim());
+			String courseNo = (String)session.getAttribute("courseNo");
+			System.out.println("courseNo = " + courseNo);
 
 			TeachingPlanService teachingPlanSvc = new TeachingPlanService();
 			List<TeachingPlanVO> teachingPlanVO = teachingPlanSvc.getTeachingPlanByCourseNo(courseNo);
 
-			HttpSession session = req.getSession();
 			session.setAttribute("teachingPlanVO", teachingPlanVO);
 
 			String url = "/front-end/teachingplan/teachingPlan.jsp";
