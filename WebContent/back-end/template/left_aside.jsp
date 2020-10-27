@@ -138,6 +138,12 @@
                     <span class="nav-link-text">訊息中心</span>
                 </a>
             </li>
+            <li >
+                <a href="<%=request.getContextPath()%>/back-end/banjiPost/listAllBanjiPost.jsp" title="公告管理">
+                    <i class="fal fa-book"></i>
+                    <span class="nav-link-text">公告管理</span>
+                </a>
+            </li>
             <li>
                 <a href="#" title="通知中心">
                     <i class="fal fa-bell"></i>
