@@ -79,7 +79,8 @@ public class BanjiService {
 		}
 		return list;
 	}
-
+	
+	
 	public HashMap<String, TreeMap<String,BanjiVO>> getBanjiGroup(String empNo) {
 		EmpVO empVO = new EmpService().getOneEmp(empNo);
 		HashMap<String, TreeMap<String,BanjiVO>> map = new HashMap<String, TreeMap<String,BanjiVO>>();
