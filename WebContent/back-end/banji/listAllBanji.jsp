@@ -95,8 +95,7 @@ font-family: DFKai-sb;
 		<th>修改</th>
 		<th>刪除</th>
 	</tr>
-	<%@ include file="pages/page1.file" %> 
-	<c:forEach var="banjiVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+	<c:forEach var="banjiVO" items="${list}" >
 		
 		<tr>
 			<td>${empSvc.getOneEmp(banjiVO.getEmpNo()).empName}</td>
@@ -123,7 +122,5 @@ font-family: DFKai-sb;
 		</tr>
 	</c:forEach>
 </table>
-<%@ include file="pages/page2.file" %>
-
 </body>
 </html>

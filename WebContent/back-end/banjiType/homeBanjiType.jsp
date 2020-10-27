@@ -41,7 +41,7 @@
                     
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-users-class' ></i> 班種管理
+                            <i class='subheader-icon fal fa-chalkboard-teacher' ></i> 班種管理
                         </h1>
                     </div>
                     <div id="add">

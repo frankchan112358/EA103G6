@@ -40,7 +40,7 @@
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class='subheader-icon fal fa-users-class'></i> 新增班種
+							<i class='subheader-icon fal fa-plus-square'></i> 新增班種
 						</h1>
 					</div>
 					<div class="row">

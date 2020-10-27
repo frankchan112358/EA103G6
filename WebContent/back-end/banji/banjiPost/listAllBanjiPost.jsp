@@ -43,21 +43,25 @@
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage">養成班管理</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage?action=read">${banjiVO.banjiName}</a></li>
                         <li class="breadcrumb-item">公告管理</li>
                     </ol>
                     
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-users-class' ></i> 公告管理
+                            <i class='subheader-icon ni ni-note' ></i> 公告管理
                         </h1>
                     </div>
+                    <form method="post"action="<%=request.getContextPath()%>/banji/banji.banjipost"class="m-1">
                     <div id="add">
-							<input type="hidden" name="action" > 
-							<button type="submit" id="btn-add" style="width:150px;heigh:50px;" onclick="location.href='<%=request.getContextPath()%>/back-end/banjiPost/addBanjiPost.jsp'" style="margin-bottom: 0px'"
+							<input type="hidden" name="action" value="insert"> 
+							<button type="submit" id="btn-add" style="width:150px;heigh:50px;"style="margin-bottom: 0px"
 								class="btn-write btn btn-sm btn-primary" >
 								<strong>新增公告</strong>
 							</button>
 						</div>
+						</form>
 						<div class="row">
 						<div class="col col-xl-12">
 							<div id="panel-1" class="panel">
@@ -83,7 +87,7 @@
                                         ${banjiPostVO.banjiPostContent}</span>
                                     	</div>
                            
-                                     <form method="post"action="<%=request.getContextPath()%>/banjiPost/banjiPost.do"class="m-1">
+                                     <form method="post"action="<%=request.getContextPath()%>/banji/banji.banjipost"class="m-1">
 										<button  id="add1" type="submit" class="btn btn-sm btn-warning">
 											<span class="fal fa-edit mr-1"></span> <span>修改</span>
 										</button>
@@ -94,7 +98,6 @@
                                          <span class="text-sm text-muted font-italic"><i class="fal fa-clock mr-1"></i><span>編輯時間:</span><fmt:formatDate value="${banjiPostVO.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
                                         </div>
                                     </div>
-                                  
                                 </div>
                                      </c:forEach>
                                     </div>

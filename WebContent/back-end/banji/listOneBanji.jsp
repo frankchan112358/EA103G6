@@ -49,7 +49,7 @@ text-align: center ;
                     
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-users-class' ></i> 養成班管理
+                            <i class='subheader-icon fal fa-book-user' ></i> ${banjiVO.banjiTypeVO.banjiTypeName }
                         </h1>
                     </div>
 					<div class="row align-items-center justify-content-center">
@@ -123,7 +123,7 @@ text-align: center ;
 										</table>
 										<div class="form-group" id="add" >
 										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/banji/homeBanji.jsp">
-												<button type="submit" class="btn btn-outline-success">
+												<button type="submit" class="btn btn-primary justify-content-center">
 													<span>確定</span>
 												</button>
 											</FORM>

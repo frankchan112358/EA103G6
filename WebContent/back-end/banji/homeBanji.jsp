@@ -46,13 +46,15 @@
 							<i class='subheader-icon fal fa-users-class'></i> 養成班管理
 						</h1>
 					</div>
+					<form method="post"action="<%=request.getContextPath()%>/banji/banji.do"class="m-1">
 					<div id="add">
-							<input type="hidden" name="action" > 
-							<button type="submit" id="btn-add" style="width:150px;heigh:50px;" onclick="location.href='<%=request.getContextPath()%>/back-end/banji/addBanji.jsp'" style="margin-bottom: 0px'"
+							<input type="hidden" name="action" value="insert"> 
+							<button type="submit" id="btn-add" style="width:150px;heigh:50px;" style="margin-bottom: 0px"
 								class="btn-write btn btn-sm btn-primary" >
 								<strong>新增班級</strong>
 							</button>
 						</div>
+						</form>
 					<div class="row">
 						<div class="col col-xl-12">
 							<div id="panel-1" class="panel">
@@ -72,7 +74,6 @@
 													<th>結訓日</th>
 													<th>狀態</th>
 													<th>管理</th>
-													<th>修改</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -100,18 +101,7 @@
 																<input type="hidden" name="banjiNo"	value="${banjiVO.banjiNo}">
 															</form>
 														</td>
-														<td>
-															<form method="post"
-																action="<%=request.getContextPath()%>/banji/banji.do"
-																class="m-1">
-																<button type="submit" class="btn btn-sm btn-danger">
-																	<span class="fal fa-edit mr-1"></span> <span>修改</span>
-																</button>
-																<input type="hidden" name="action"value="getOne_For_Update"> 
-																<input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
-																<input type="hidden" name="empNo" value="${empVO.empNo}">
-															</form>
-														</td>
+														
 													</tr>
 												</c:forEach>
 											</tbody>

@@ -51,7 +51,7 @@
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class='subheader-icon fal fa-users-class'></i> 新增養成班
+							<i class='subheader-icon fal fa-plus-square'></i> 新增養成班
 						</h1>
 					</div>
 					<div class="row">
@@ -75,7 +75,8 @@
 													${(banjiVO.banjiTypeNo==banjiTypeVO.banjiTypeNo)? 'selected':'' }>${banjiTypeVO.banjiTypeName}
 											</c:if>
 										</c:forEach>
-									</select> <font color=red>${errorMsgs.banjiTypeNo}</font>
+									</select> 
+										<font color=red>${errorMsgs.banjiTypeNo}</font>
 									<div class="invalid-feedback">
                                                        		班級種類請勿空白.
                                          </div>

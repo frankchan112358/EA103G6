@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.banjipost.model.*"%>
-
+<%@ page import="com.banji.model.*"%>
 <%
 	BanjiPostVO banjiPostVO = (BanjiPostVO) request.getAttribute("banjiPostVO");
+	BanjiVO banjiVO = (BanjiVO) request.getAttribute("banjiVO");
+
 %>
 <jsp:useBean id="banjiSvc" scope="page"
 	class="com.banji.model.BanjiService" />
@@ -31,14 +33,15 @@
 				<%@ include file="/back-end/template/header.jsp"%>
 				<main id="js-page-content" role="main" class="page-content">
 					<ol class="breadcrumb page-breadcrumb">
-						<li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
-						<li class="breadcrumb-item"><a
-							href="<%=request.getContextPath()%>/back-end/banji/homeBanji.jsp">公告管理</a></li>
-						<li class="breadcrumb-item">新增公告</li>
-					</ol>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage">養成班管理</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage?action=read">${banjiVO.banjiName}</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.banjipost">公告管理</a></li>
+                        <li class="breadcrumb-item">新增班級公告</li>
+                    </ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class='subheader-icon fal fa-users-class'></i> 新增班級公告
+							<i class='subheader-icon fal fa-plus-square'></i> 新增班級公告
 						</h1>
 					</div>
 					<div class="row">
@@ -49,15 +52,7 @@
 								</div>
 					<div class="panel-container show">
 						<div class="panel-content">
-							<form METHOD="post" ACTION="<%=request.getContextPath()%>/banjiPost/banjiPost.do"name="form1" class="needs-validation" novalidate>
-								
-								<div class="form-group">
-									<label class="form-label" for="example-textarea">班級編號:</label>
-									<input type="text" id="simpleinput" name="banjiNo" class="form-control" required>
-										<div class="invalid-feedback">
-                                                        		班級編號請勿空白.
-                                         </div>
-								</div>
+							<form METHOD="post" ACTION="<%=request.getContextPath()%>/banji/banji.banjipost"name="form1" class="needs-validation" novalidate>
 								<div class="form-group">
 									<label class="form-label" for="example-textarea">公告標題:</label>
 									<input type="text" id="simpleinput" name="title" class="form-control" required placeholder="請輸入標題">
@@ -82,7 +77,6 @@
 								</div>
 								<div class="form-group" id="add">
 									<input type="hidden" name="action" value="insert">
-									<input type="hidden" name="banjiNo" value="${banjiVO.banjiNo }">
 									<button type="submit"class="btn btn-primary justify-content-center">送出</button>
 								</div>
 							</form>
