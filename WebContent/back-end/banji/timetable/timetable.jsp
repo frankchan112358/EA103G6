@@ -350,17 +350,13 @@
                     editorTimetableModal.modal('show');
                 },
                 viewSkeletonRender(info){
-                    console.log('viewSkeletonRender');
                 },
                 viewSkeletonDestroy(info){
-                    console.log('viewSkeletonDestroy');
                 },
                 datesRender(info){
-                    console.log('datesRender');
                     renderFcBeforeCourseEnd();
                 },
                 datesDestroy(info){
-                    console.log('datesDestroy');
                 },
             });
             calendar.render();

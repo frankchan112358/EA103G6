@@ -1,6 +1,7 @@
 package com.leave.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -80,6 +81,40 @@ public class LeaveManage extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 			return;
+		}
+		if ("datatable_review".equals(action)) {
+			res.setContentType("application/json;");
+			PrintWriter out = res.getWriter();
+			out.print(new LeaveService().getReviewDatatableJsonWithEmpVO(empVO.getEmpNo()));
+			return;
+		}
+		if ("decide_index".equals(action)) {
+			res.setContentType("application/json;");
+			String leaveNo = req.getParameter("leaveNo");
+			PrintWriter out = res.getWriter();
+			out.print(new LeaveService().getReadLeaveJson(leaveNo));
+			return;
+		}
+		if ("pass".equals(action)) {
+			res.setContentType("text/html;");
+			String leaveNo = req.getParameter("leaveNo");
+			LeaveVO leaveVO = new LeaveService().getOneLeave(leaveNo);
+			leaveVO.setStatus(LeaveStatus.Pass.getNum());
+			new LeaveService().updateLeaveVO(leaveVO.getLeaveNo(), leaveVO.getStudentNo(), leaveVO.getTimetableNo(),
+					leaveVO.getType(), leaveVO.getDescription(), leaveVO.getStatus());
+			PrintWriter out = res.getWriter();
+			out.print("ok");
+			return;
+		}
+		if ("reject".equals(action)) {
+			res.setContentType("text/html;");
+			String leaveNo = req.getParameter("leaveNo");
+			LeaveVO leaveVO = new LeaveService().getOneLeave(leaveNo);
+			leaveVO.setStatus(LeaveStatus.Reject.getNum());
+			new LeaveService().updateLeaveVO(leaveVO.getLeaveNo(), leaveVO.getStudentNo(), leaveVO.getTimetableNo(),
+					leaveVO.getType(), leaveVO.getDescription(), leaveVO.getStatus());
+			PrintWriter out = res.getWriter();
+			out.print("ok");
 		}
 	}
 }
