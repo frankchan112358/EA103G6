@@ -5,16 +5,29 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.forumpost.model.*"%>
 <%@ page import="com.forumtopic.model.*"%>
-
+<%@ page import="com.banji.model.*"%>
 <%@ page import="com.forumcomment.model.*"%>
 <%@ page import="com.student.model.*"%>
 
 <%@ page import="java.util.*"%>
 
 <%
+// 	ForumPostService forumpostSvc = new ForumPostService();
+//     List<ForumPostVO> list = forumpostSvc.getAll();
+//     pageContext.setAttribute("list", list);
+	
+	BanjiService banjiSvc = new BanjiService();
+	StudentService studentSvc = new StudentService(); 
+	StudentVO student = studentSvc.getOneStudentByUserNo(userVO.getUserNo());
+	BanjiVO banjiVO = banjiSvc.getOneBanji(student.getBanjiNo());
+
+
+	ForumTopicService forumtopicSvcList =new ForumTopicService();
+	List<ForumTopicVO> forumTopicList =forumtopicSvcList.getByBanJiNo(banjiVO.getBanjiNo());
 	ForumPostService forumpostSvc = new ForumPostService();
-    List<ForumPostVO> list = forumpostSvc.getAll();
-    pageContext.setAttribute("list", list);
+	List<ForumPostVO> list = forumpostSvc.getByTopicNo(forumTopicList.get(0).getForumTopicNo());
+	pageContext.setAttribute("list", list);
+ 	pageContext.setAttribute("forumTopicList", forumTopicList);
 %>
 <jsp:useBean id="forumcommentSvc" scope="page" class="com.forumcomment.model.ForumCommentService" />
 <jsp:useBean id="forumtopicSvc" scope="page" class="com.forumtopic.model.ForumTopicService" />

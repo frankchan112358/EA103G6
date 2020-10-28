@@ -13,7 +13,7 @@
 
 <%
 ForumPostService forumpostSvc = new ForumPostService();
-List<ForumPostVO> list = (List<ForumPostVO>)session.getAttribute("list");
+List<ForumPostVO> list = (List<ForumPostVO>) request.getAttribute("list");
 pageContext.setAttribute("list", list);			
 %>
 <jsp:useBean id="forumcommentSvc" scope="page" class="com.forumcomment.model.ForumCommentService"/>
@@ -41,32 +41,32 @@ pageContext.setAttribute("list", list);
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a></li>
                         <li class="breadcrumb-item">討論區</li>
                     </ol>
-                         <div class="input-group input-group-lg mb-g">
-                                    <input type="text" class="form-control shadow-inset-2" placeholder="Search Discussion">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fal fa-search"></i></span>
-                                    </div>
-                                </div>
+<!--                          <div class="input-group input-group-lg mb-g"> -->
+<!--                                     <input type="text" class="form-control shadow-inset-2" placeholder="Search Discussion"> -->
+<!--                                     <div class="input-group-append"> -->
+<!--                                         <span class="input-group-text"><i class="fal fa-search"></i></span> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
 
-                                <div class="subheader">
-                        <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-democrat'></i> 討論區
-                        </h1>
+<!--                                 <div class="subheader"> -->
+<!--                         <h1 class="subheader-title"> -->
+<!--                             <i class='subheader-icon fal fa-democrat'></i> 討論區 -->
+<!--                         </h1> -->
                        
-                                         </div>
-                                                              </main>           
+<!--                                          </div> -->
+<!--                                                               </main>            -->
                                          
-                                         </div>
-                                         </div>
-                    </div>
+<!--                                          </div> -->
+<!--                                          </div> -->
+<!--                     </div> -->
                     
-                    <section id="One" class="wrapper style3">
-		<div class="inner">
-			<header class="align-center">
+<!--                     <section id="One" class="wrapper style3"> -->
+<!-- 		<div class="inner"> -->
+<!-- 			<header class="align-center"> -->
 				
-			</header>
-		</div>
-	</section>
+<!-- 			</header> -->
+<!-- 		</div> -->
+<!-- 	</section> -->
 	<!-- Two -->
 	<section id="two" class="wrapper style2">
 		<div class="inner">
@@ -103,7 +103,6 @@ pageContext.setAttribute("list", list);
 							</div>
 							<div class="col d-flex">
                                                 <a class="btn btn-outline-success btn-sm ml-auto mr-2 flex-shrink-0" onclick="location.href='${pageContext.request.contextPath}/front-end/forumpost/addForumPost.jsp'">新增貼文</a>
-                                                <a href="javascript:void(0);" class="btn btn-outline-danger btn-sm flex-shrink-0">修改</a>
                                             </div>
 						</div>
 						
@@ -125,7 +124,7 @@ pageContext.setAttribute("list", list);
 						<c:forEach var="forumPostVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 															<div class="row">
 								<div class="col-md-8" id="title">
-									
+					
 								
 <!-- 								<div class="col-md-2"> -->
 <%-- 									<fmt:formatDate value="${forumPostVO.updateTime}" --%>
@@ -219,6 +218,7 @@ pageContext.setAttribute("list", list);
 	
 </section>
 </body>
+
 
 </html>
 

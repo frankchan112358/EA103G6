@@ -4,11 +4,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.forumpost.model.*"%>
+<%@ page import="com.forumtopic.model.*"%>
+<%@ page import="com.banji.model.*"%>
+<%@ page import="com.forumcomment.model.*"%>
+<%@ page import="com.student.model.*"%>
 
 <%@ page import="java.util.*"%>
 
 <%
-   ForumPostVO forumPostVO = (ForumPostVO) request.getAttribute("forumPostVO");
+BanjiService banjiSvc = new BanjiService();
+StudentService studentSvc = new StudentService(); 
+StudentVO student = studentSvc.getOneStudentByUserNo(userVO.getUserNo());
+BanjiVO banjiVO = banjiSvc.getOneBanji(student.getBanjiNo());
+
+
+ForumTopicService forumtopicSvcList =new ForumTopicService();
+List<ForumTopicVO> forumTopicList =forumtopicSvcList.getByBanJiNo(banjiVO.getBanjiNo());
+pageContext.setAttribute("forumTopicList", forumTopicList);
+
+  ForumPostVO forumPostVO = (ForumPostVO) request.getAttribute("forumPostVO");
 %>
 
 <!DOCTYPE html>
@@ -62,9 +76,9 @@
                 <p>
                     <label for="forumTopicNo">主題:</label>
                     <select size="1" name="forumTopicNo">
-					<option value="1" ${('學術版'==forumPostVO.forumTopicNo)?'selected':''} >學術版</option>
-					<option value="2" ${('運動版'==forumPostVO.forumTopicNo)?'selected':''} >運動版</option>
-					<option value="3" ${('閒聊版'==forumPostVO.forumTopicNo)?'selected':''} >閒聊版</option>
+                    <c:forEach var="forumTopicVO" items="${forumTopicList}">
+                    	<option value="${forumTopicVO.forumTopicNo}">${forumTopicVO.forumTopicName}</option>
+                    </c:forEach>
 					
 				    </select>
                 </p>
@@ -103,6 +117,10 @@
     });
   </script>
   </body>
+  <%@ include file="/front-end/template/footer.jsp" %>
+		<%@ include file="/front-end/template/quick_menu.jsp" %>
+    <%@ include file="/front-end/template/messager.jsp" %>
+    <%@ include file="/front-end/template/basic_js.jsp" %> 
   </main>
   
 	</div>

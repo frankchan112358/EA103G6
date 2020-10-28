@@ -22,7 +22,7 @@ public  class ForumPostJDBCDAO implements ForumPostDAO_interface {
 	private static final String UPDATE = "UPDATE forumpost set forumtopicno=?, studentno=?, title=?, content=?, updatetime=? where forumpostno = ?";
 	private static final String UPDATE_STMT = "UPDATE forumpost SET title = ? , content = ? WHERE forumpostno=?";
 	private static final String ADD_VIEWS = "UPDATE forumpost SET forumpostviews = ? WHERE forumpostno=?";
-	private static final String RESEARCH_STMT = "SELECT * FROM forumpost WHERE isDelete = 0";
+	private static final String RESEARCH_STMT = "SELECT * FROM forumpost WHERE title like ? and isDelete = 0";
 	private static final String GETBYTOPIC = "SELECT * FROM forumpost WHERE forumtopicno = ?";
 
 
@@ -477,7 +477,7 @@ System.out.println("test");
 			pstmt = con.prepareStatement(RESEARCH_STMT);
 			
 			pstmt.setString(1,"%"+title+"%");
-			
+			System.out.println(title);
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {

@@ -289,31 +289,33 @@ public class ForumPostServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
+//			try {
 				String title = new String(req.getParameter("title"));
+				System.out.println(title);
 				if (title == null || title.trim().length() == 0) {
 					errorMsgs.add("請輸入搜尋內容!");
 				}
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/forumpost/forumPost_index.jsp");
-					failureView.forward(req, res);
-					return;
-				}
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/forumpost/forumPost_index.jsp");
+//					failureView.forward(req, res);
+//					return;
+//				}
 
 				ForumPostService forumpostSvc = new ForumPostService();
-				HttpSession session = req.getSession();
+//				HttpSession session = req.getSession();
 				list = forumpostSvc.search(title);
-				session.setAttribute("list", list);
+				System.out.println(list.get(0).getContent());
+				req.setAttribute("list", list);
 
 				String url = "/front-end/forumpost/forumPostIndex_search.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
-			} catch (Exception e) {
-				errorMsgs.add("無法取得要搜尋的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/forumpost/forumPost_index.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.add("無法取得要搜尋的資料:" + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/forumpost/forumPost_index.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 		
 		if("getByTopicNo".equals(action)) {
