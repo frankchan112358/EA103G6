@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/front-end/template/check.jsp" %>	
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.forumpost.model.*"%>
-<%@ page import="com.student.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="com.forumpost.model.*"%>
+
+<%@ page import="com.student.model.*"%>
+
 <%@ page import="java.util.*"%>
 <% 
 ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
@@ -14,34 +17,34 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 <!DOCTYPE HTML>
 <html>
 
-<head>
-<title>WJL</title>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<head>
+    <%@ include file="/front-end/template/head.jsp" %>
+    <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/formplugins/summernote/summernote.css">
 </head>
 
-<body class="subpage">
+<body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
 	
 			 <h4><a href="<%=request.getContextPath() %>/front-end/forumpost/forumPost_index.jsp">回討論區</a></h4>
 	
 	
-	<section id="One" class="wrapper style3">
-		<div class="inner">
-			<header class="align-center">
-				<h2>WJL 討論區</h2>
-			</header>
-		</div>
-	</section>
-	<!-- Two -->
+	<script>
+        var classHolder = document.getElementsByTagName("BODY")[0];
+    </script>
+    <div class="page-wrapper">
+        <div class="page-inner">
+            <%@ include file="/front-end/template/left_aside.jsp" %>
+            <div class="page-content-wrapper">
+                <%@ include file="/front-end/template/header.jsp" %>
+                <main id="js-page-content" role="main" class="page-content">
+                    <ol class="breadcrumb page-breadcrumb">
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a></li>
+                        <li class="breadcrumb-item">討論區</li>
+                    </ol>
 	
-<%-- 	<c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumPostVO.studentNo).userNo).photo eq null}"> --%>
-<%-- 															<img src="<%=request.getContextPath() %>/images/noPicture.png"> --%>
-<%-- 														</c:if> --%>
-<%-- 														<c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumPostVO.studentNo).userNo).photo ne null}"> --%>
-<%-- 															<img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${studentSvc.getOneStudent(forumPostVO.studentNo).userNo}"> --%>
-<%-- 														</c:if> --%>
+
+
+
 	<section id="two" class="wrapper style2">
 		<div class="inner">
 			<div class="box">
@@ -53,7 +56,8 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 									<input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}">
 									<input type="hidden" name="studentNo" value="${sessionScope.studentVO.studentNo}">
 									<input type="hidden" name="action" value="getOne_For_AddFc">
-									<input type="submit" value="我要回覆">
+									<button type="submit"class="btn btn-primary justify-content-center"style="float:right">我要回覆</button>
+
 								</form>
 							</div>
 						</div>
@@ -61,33 +65,27 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 						
 						<div class="row">
 							<div class="col-md-2" id="studentInfo">
+							
 								<div><b>樓主</b></div>
-								
+							<hr>
                             <c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumPostVO.studentNo).userNo).photo eq null}">
-<img src="<%=request.getContextPath() %>/images/noPicture.png" style="width: 150px; height: 150px;">
-</c:if>
-<c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumPostVO.studentNo).userNo).photo ne null}">
-<img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${studentSvc.getOneStudent(forumPostVO.studentNo).userNo}" style="width: 150px; height: 150px;">
-</c:if>							
+                           <img src="<%=request.getContextPath() %>/images/noPicture.png" style="width: 100px; height: 100px;">
+                          </c:if>
+                          <c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumPostVO.studentNo).userNo).photo ne null}">
+                          <img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${studentSvc.getOneStudent(forumPostVO.studentNo).userNo}" style="width: 100px; height: 100px;">
+                         </c:if>							
 							
 							<div class="col-md-12" id="AstudentName"><b>${studentSvc.getOneStudent(forumPostVO.studentNo).studentName}</b></div>
 							</div>
+							
+							
 							<div class="col-md-10">
 									<div class="row">
-										<div class="col-md-8" style="font-size:26px;"><b>${forumPostVO.title}</b></div>
+										<div class="col-md-8" style="font-size:35px;text-align:center;"><b>${forumPostVO.title}</b></div>
 										<div class="col-md-4">
-<!-- 											<div class="reportBtn"> -->
-<%-- 												<form method="post" action="<%=request.getContextPath() %>/front-end/report/report.do">		 --%>
-<!-- 													<input type="submit" value="檢舉">  -->
-<!-- 													<input type="hidden" name="action" value="getOne_Fp_Report">  -->
-<%-- 													<input type="hidden" name="faId" value="${forumPostVO.forumPostNo}"> --%>
-<!-- 												</form> -->
-<!-- 												<input type="submit" value="追蹤"> -->
-<!-- 												<div id="starImg"> -->
-<%-- 													<img src="<%=request.getContextPath()%>/images/forum/1.png" style="width: 35px;height: 35px;float: right; margin-right: 15px;"> --%>
-<%-- 													<input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}"> --%>
-<%-- 													<input type="hidden" name="studentNo" value="${sessionScope.studentVO.studentNo}">		 --%>
-<!-- 												</div> -->
+
+
+
 											</div>
 										</div>
 									</div>
@@ -95,7 +93,7 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 									
 									<hr>
 									<div class="row">
-										<div class="col-md-12">${forumPostVO.content}</div>
+										<div class="col-md-12" style="text-align:center;">${forumPostVO.content}</div>
 									</div>
 							</div>
 						</div>
@@ -106,10 +104,10 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 									<div class="col-md-2" id="studentInfo">
 										<div id="reply"><b>${tag.index}樓</b></div>
                            <c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumCommentVO.studentNo).userNo).photo eq null}">
-<img src="<%=request.getContextPath() %>/images/noPicture.png" style="width: 150px; height: 150px;">
+                          <img src="<%=request.getContextPath() %>/images/noPicture.png" style="width: 100px; height: 100px;">
 </c:if>
-<c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumCommentVO.studentNo).userNo).photo ne null}">
-<img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${studentSvc.getOneStudent(forumCommentVO.studentNo).userNo}" style="width: 150px; height: 150px;">
+                          <c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumCommentVO.studentNo).userNo).photo ne null}">
+                          <img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${studentSvc.getOneStudent(forumCommentVO.studentNo).userNo}" style="width: 100px; height: 100px;">                 
 </c:if>									
 							
 							<div class="col-md-12" id="studentName${tag.index}"><b>${studentSvc.getOneStudent(forumCommentVO.studentNo).studentName}</b></div>
@@ -123,14 +121,9 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 									</div>
 								</div>
 
-<%-- 								<form method="post" action="<%=request.getContextPath() %>/front-end/report/report.do"> --%>
-<!-- 									<div class="reportBtn"> -->
-<!-- 										<input type="submit" value="檢舉">  -->
-<!-- 										<input type="hidden"name="action" value="getOne_Fc_Report">  -->
-<%-- 										<input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}">  --%>
-<%-- 										<input type="hidden" name="forumCommentNo" value="${forumCommentVO.forumCommentNo}"> --%>
-<!-- 									</div> -->
-<!-- 								</form> -->
+
+
+
 								<div class="clear"></div>
 								<hr>
 						</c:forEach>
@@ -143,6 +136,17 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 	</section>
 	
 	
+	
+		<%@ include file="/front-end/template/footer.jsp" %>
+		<%@ include file="/front-end/template/quick_menu.jsp" %>
+    <%@ include file="/front-end/template/messager.jsp" %>
+    <%@ include file="/front-end/template/basic_js.jsp" %>   
+
+	
+	</main>
+	</div>
+	</div>
+	</div>
 	
 </body>
 

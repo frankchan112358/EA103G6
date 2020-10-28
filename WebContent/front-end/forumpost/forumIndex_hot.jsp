@@ -4,21 +4,35 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.forumpost.model.*"%>
+<%@ page import="com.forumtopic.model.*"%>
+<%@ page import="com.banji.model.*"%>
 <%@ page import="com.forumcomment.model.*"%>
 <%@ page import="com.student.model.*"%>
 
 <%@ page import="java.util.*"%>
 
 <%
+// 	ForumPostService forumpostSvc = new ForumPostService();
+//     List<ForumPostVO> list = forumpostSvc.getAll();
+//     pageContext.setAttribute("list", list);
+   BanjiService banjiSvc = new BanjiService();
+	StudentService studentSvc = new StudentService(); 
+	StudentVO student = studentSvc.getOneStudentByUserNo(userVO.getUserNo());
+	BanjiVO banjiVO = banjiSvc.getOneBanji(student.getBanjiNo());
+
+
+	ForumTopicService forumtopicSvcList =new ForumTopicService();
+	List<ForumTopicVO> forumTopicList =forumtopicSvcList.getByBanJiNo(banjiVO.getBanjiNo());
 	ForumPostService forumpostSvc = new ForumPostService();
-	List<ForumPostVO> list = forumpostSvc.getAllHot();
+	List<ForumPostVO> list = forumpostSvc.getByTopicNo(forumTopicList.get(0).getForumTopicNo());
 	pageContext.setAttribute("list", list);
+ 	pageContext.setAttribute("forumTopicList", forumTopicList);
 %>
 <jsp:useBean id="forumcommentSvc" scope="page" class="com.forumcomment.model.ForumCommentService" />
 <jsp:useBean id="forumtopicSvc" scope="page" class="com.forumtopic.model.ForumTopicService" />
-
 <!DOCTYPE HTML>
 <html>
+
 
 <head>
     <%@ include file="/front-end/template/head.jsp" %>
@@ -34,26 +48,26 @@
             <%@ include file="/front-end/template/left_aside.jsp" %>
             <div class="page-content-wrapper">
                 <%@ include file="/front-end/template/header.jsp" %>
-                <main id="js-page-content" role="main" class="page-content">	</main>				
-                
+                <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a></li>
                         <li class="breadcrumb-item">討論區</li>
                     </ol>
+<!--                          <div class="input-group input-group-lg mb-g"> -->
+<!--                                     <input type="text" class="form-control shadow-inset-2" placeholder="Search Discussion"> -->
+<!--                                     <div class="input-group-append"> -->
+<!--                                         <span class="input-group-text"><i class="fal fa-search"></i></span> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
                     
-                    <div class="input-group input-group-lg mb-g">
-                                    <input type="text" class="form-control shadow-inset-2" placeholder="Search Discussion">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fal fa-search"></i></span>
-                                    </div>
-                                </div>
-                    
+                                
                     <div class="subheader">
                         <h1 class="subheader-title">
                             <i class='subheader-icon fal fa-democrat'></i> 討論區
                         </h1>
+                       
+                                
                     </div>
-                    
                     <c:forEach var="forumTopicVO" items="${forumtopicSvc.getByBanJiNo(studentVO.banjiNo)}">
                     	<form method="post" action="<%=request.getContextPath()%>/forumPost/forumPost.do">
                     		<input type="hidden" name="action" value="getByTopicNo">
@@ -65,8 +79,6 @@
                     	
                     	
                     </c:forEach>
-                    
-                    
                      <div class="row">
                         <div class="col col-xl-12">
                                 <div class="panel-hdr bg-primary-800 bg-success-gradient ">
@@ -76,8 +88,7 @@
                                 <div class="col d-flex">
                                                 <a class="btn btn-outline-success btn-sm ml-auto mr-2 flex-shrink-0" onclick="location.href='${pageContext.request.contextPath}/front-end/forumpost/addForumPost.jsp'">新增貼文</a>
                                             </div>
-
-
+                                
 					<div class="container">
 						<div class="row">
 							<div class="col-md-3">
@@ -90,46 +101,49 @@
 									<b>最多觀看</b>
 								</div>
 							</div>
-							
 							<div class="col-md-5">
 								<form method="post"
 									action="<%=request.getContextPath()%>/forumPost/forumPost.do">
-
+									<input type="text" name="title"> <input type="hidden" 
+										name="action" value="search">  
 								</form>
 							</div>
 							
-							
-							
 						</div>
-						
+
 					</div>
 					<%@ include file="page1_ByCompositeQuery.file"%>
-				<hr>
-				
+					<hr>
+
 					<div class="container">
 						<div class="row">
 							<div class="col-md-8" id="title" style="font-weight: bold;">貼文標題</div>
 							<div class="col-md-2" style="font-weight: 900;">更新時間</div>
 							<div class="col-md-2" style="font-weight: 900;">觀看數</div>
 							<div class="col-md-2" style="font-weight: 900;">發文時間</div>
+							
+							
 						</div>
 						<hr>
-						
+
 						<c:forEach var="forumPostVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-								<div class="row">
-									<div class="col-md-8" id="title">
-<%-- 										<a href="<%=request.getContextPath() %>/forumPost/forumPost.do?action=getOne_For_Display&forumPostNo=${forumPostVO.forumPostNo}">${forumPostVO.title}</a> --%>
-<!-- 									<div class="col-md-2"> -->
-<%-- 										<fmt:formatDate value="${forumPostVO.updateTime}" --%>
-<%-- 											pattern="yyyy-MM-dd HH:mm:ss" /> --%>
-<!-- 									</div> -->
-									</div>
-									<div class="col-md-2">
-										<fmt:formatDate value="${forumPostVO.updateTime}"
-											pattern="yyyy-MM-dd HH:mm:ss" />
-									</div>
-									<div class="col-md-2">${forumPostVO.forumPostViews}</div>
+
+							<div class="row">
+								<div class="col-md-8" id="title">
+									
+								
+<!-- 								<div class="col-md-2"> -->
+<%-- 									<fmt:formatDate value="${forumPostVO.updateTime}" --%>
+<%-- 										pattern="yyyy-MM-dd HH:mm:ss" /> --%>
+<!-- 								</div> -->
+								
+												
 								</div>
+								<div class="col-md-2">
+									<fmt:formatDate value="${forumPostVO.updateTime}"
+										pattern="yyyy-MM-dd HH:mm:ss" />
+								</div>
+								<div class="col-md-2">${forumPostVO.forumPostViews}</div>
 								 <div class="card-body p-0">
                                         <div class="row no-gutters row-grid">
                                             <!-- thread -->
@@ -150,6 +164,7 @@
                                                                     <div class="d-block text-muted fs-sm">
                                                                         <fmt:formatDate value="${forumPostVO.createTime}"
 										                                 pattern="yyyy-MM-dd HH:mm:ss" />
+                                                                        
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -182,7 +197,7 @@
                                             </div>
                    						</div>
                    					</div>
-								</c:forEach>
+
 
 								<div class="col-md-2">${forumcommentSvc.getFcResponsesByFpNo(forumPostVO.forumPostNo)}</div>
 
@@ -190,14 +205,17 @@
 							</div>
 							<hr>
 
+						</c:forEach>
 						<%@ include file="page2_ByCompositeQuery.file"%>
 					</div>
 										</div>
 										</div>
-
+					
+</main>
 				</div>
 
 			</div>
+		</div>
 		<%@ include file="/front-end/template/footer.jsp" %>
 		<%@ include file="/front-end/template/quick_menu.jsp" %>
     <%@ include file="/front-end/template/messager.jsp" %>
@@ -208,3 +226,4 @@
 </body>
 
 </html>
+
