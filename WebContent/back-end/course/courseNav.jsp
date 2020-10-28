@@ -6,7 +6,7 @@
 			<a class="nav-link active"data-toggle="" href="<%=request.getContextPath()%>/back-end/course/listOneCourse.jsp" style="font-size: 15px">課程資料管理</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" data-toggle="" href="" style="font-size: 15px">課程公告管理</a>
+			<a class="nav-link" data-toggle="" href="<%=request.getContextPath()%>/back-end/coursepost/listAllCoursePost.jsp" style="font-size: 15px">課程公告管理</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" data-toggle="" href="" style="font-size: 15px">教學計劃管理</a>

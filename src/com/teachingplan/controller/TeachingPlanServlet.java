@@ -31,7 +31,7 @@ public class TeachingPlanServlet extends HttpServlet {
 					errorMsgs.add("⚠請輸入教學計劃編號⚠");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failuresView = req.getRequestDispatcher("/back-end/select_page.jsp");
+					RequestDispatcher failuresView = req.getRequestDispatcher("/back-end/teachingplan/listAllTeachingPlan.jsp");
 					failuresView.forward(req, res);
 					return;
 				}
@@ -42,7 +42,7 @@ public class TeachingPlanServlet extends HttpServlet {
 					errorMsgs.add("⚠教學計劃編號格式不正確⚠");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingplan/listAllTeachingPlan.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -53,7 +53,7 @@ public class TeachingPlanServlet extends HttpServlet {
 					errorMsgs.add("⚠查無資料⚠");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingplan/listAllTeachingPlan.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -64,7 +64,7 @@ public class TeachingPlanServlet extends HttpServlet {
 
 			} catch (Exception e) {
 				errorMsgs.add("⚠無法取得資料⚠:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingplan/listAllTeachingPlan.jsp");
 				failureView.forward(req, res);
 			}
 		}

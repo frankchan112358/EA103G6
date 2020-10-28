@@ -6,14 +6,14 @@
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
 %>
 
-<jsp:useBean id="banjiSvc" scope="page" class="com.banji.model.BanjiService"/>
-<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService"/>
-<jsp:useBean id="classroomSvc" scope="page" class="com.classroom.model.ClassroomService"/>
+<jsp:useBean id="banjiSvc" scope="page" class="com.banji.model.BanjiService" />
+<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
+<jsp:useBean id="classroomSvc" scope="page" class="com.classroom.model.ClassroomService" />
 
 <!DOCTYPE html>
 <html>
 <head>
- <%@ include file="/back-end/template/head.jsp" %> 
+<%@ include file="/back-end/template/head.jsp"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 
 <style>
@@ -25,22 +25,22 @@
 	height: 151px; /* height:  151px; */
 }
 
- #showphoto2{ 
-  text-align:center;  
-  }  
+#showphoto2 {
+	text-align: center;
+}
 
-  #showphoto2 img {  
-   	width: 300px;  
-    margin: 20px;   
-   	border:2px #C4B1B1 dashed;  
-    text-align:center;  
-  }  
-  img {  
-    vertical-align: sub;  
-    width: 100%;  
-  	height: auto;  
-  }  
+#showphoto2 img {
+	width: 300px;
+	margin: 20px;
+	border: 2px #C4B1B1 dashed;
+	text-align: center;
+}
 
+img {
+	vertical-align: sub;
+	width: 100%;
+	height: auto;
+}
 </style>
 </head>
 
@@ -79,14 +79,15 @@
 								<div class="panel-container show">
 									<div class="panel-content">
 
-										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" enctype="multipart/form-data" name="form1">
+										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" enctype="multipart/form-data" name="form1" class="needs-validation" novalidate>
 
-												<input id="basicCourseNo" type="hidden" name="basicCourseNo" class="form-control" value="BC001" readonly />
+											<input id="basicCourseNo" type="hidden" name="basicCourseNo" class="form-control" value="BC001" readonly />
 
-												<div class="form-group">
+											<div class="form-group">
 												<label class="form-label">課程名稱</label>
-												<input id="courseName" type="text" name="courseName" class="form-control" value="${courseVO.courseName}" />
+												<input id="courseName" type="text" name="courseName" class="form-control" value="${courseVO.courseName}" required />
 												<font color=red>${errorMsgs.courseName}</font>
+												<div class="invalid-feedback">請填寫課程名稱.</div>
 											</div>
 
 
@@ -98,57 +99,63 @@
 
 											<div class="form-group">
 												<label class="form-label">班級</label>
-												<select class="custom-select form-control" name="banjiNo">
+												<select class="custom-select form-control" name="banjiNo" required>
 													<option value="">請選擇班級</option>
 													<c:forEach var="banjiVO" items="${banjiSvc.all}">
 														<option value="${banjiVO.banjiNo}" ${(courseVO.banjiNo==banjiVO.banjiNo)?'selected':'' }>${banjiVO.banjiName}</option>
 													</c:forEach>
 												</select>
 												<font color=red>${errorMsgs.banjiNo}</font>
+												<div class="invalid-feedback">請選擇班級.</div>
 											</div>
 
 
 											<div class="form-group">
 												<label class="form-label">講師</label>
-												<select class="custom-select form-control" name="teacherNo">
+												<select class="custom-select form-control" name="teacherNo" required>
 													<option value="">請選擇講師</option>
 													<c:forEach var="teacherVO" items="${teacherSvc.all}">
 														<option value="${teacherVO.teacherNo}" ${(courseVO.teacherNo==teacherVO.teacherNo)?'selected':'' }>${teacherVO.teacherName}</option>
 													</c:forEach>
 												</select>
 												<font color=red>${errorMsgs.teacherNo}</font>
+												<div class="invalid-feedback">請選擇講師.</div>
 											</div>
 
 
 											<div class="form-group">
 												<label class="form-label">教室</label>
-												<select class="custom-select form-control" name="classroomNo">
+												<select class="custom-select form-control" name="classroomNo" required>
 													<option value="">請選擇教室</option>
 													<c:forEach var="classroomVO" items="${classroomSvc.all}">
 														<option value="${classroomVO.classroomNo}" ${(courseVO.classroomNo==classroomVO.classroomNo)?'selected':'' }>${classroomVO.classroomName}</option>
 													</c:forEach>
 												</select>
 												<font color=red>${errorMsgs.classroomNo}</font>
+												<div class="invalid-feedback">請選擇教室.</div>
 											</div>
 
 
 											<div class="form-group">
 												<label class="form-label">堂數</label>
-												<input class="form-control" type="number" name="lesson" min="0" value="${courseVO.lesson}">
+												<input class="form-control" type="number" name="lesson" min="0" value="${courseVO.lesson}" required>
 												<font color=red>${errorMsgs.lesson}</font>
+												<div class="invalid-feedback">請填寫堂數.</div>
 											</div>
 
 
 											<div class="form-group">
 												<label class="form-label">開始日期</label>
-												<input class="form-control" id="f_date1" type="text" name="startDate" onfocus="this.blur()">
+												<input class="form-control" id="f_date1" type="text" name="startDate" onfocus="this.blur()" required>
 												<font color=red>${errorMsgs.startDate}</font>
+												<div class="invalid-feedback">請選擇開始日期.</div>
 											</div>
 
 											<div class="form-group">
 												<label class="form-label">結束日期</label>
-												<input class="form-control" id="f_date2" type="text" name="endDate" onfocus="this.blur()">
+												<input class="form-control" id="f_date2" type="text" name="endDate" onfocus="this.blur()" required>
 												<font color=red>${errorMsgs.endDate}</font>
+												<div class="invalid-feedback">請選擇結束日期.</div>
 											</div>
 
 
@@ -158,71 +165,71 @@
 													<option value="0" ${(courseVO.status==0)?'selected':'' }>課程未開始</option>
 													<option value="1" ${(courseVO.status==1)?'selected':'' }>課程進行中</option>
 													<option value="2" ${(courseVO.status==2)?'selected':'' }>課程結束</option>
-												</select>                                                   
-												 </div>
-												                                                   
- 												<div class="form-group mb-3">
+												</select>
+											</div>
+
+											<div class="form-group mb-3">
 												<label class="form-label">上傳課程圖片</label>
-												 <div class="custom-file">
-												 <input type="file" class="custom-file-input"  name="courseImg" accept="image/*" onchange="show(courseImg)">
-												 <label class="custom-file-label" for="customFile">Choose Image</label>
-												    <div id="showphoto2">
-                                                        <c:if test="${courseVO.courseImg eq null}">
-															<img src="<%=request.getContextPath() %>/images/尚無圖片.jpg">
+												<div class="custom-file">
+													<input type="file" class="custom-file-input" name="courseImg" accept="image/*" onchange="show(courseImg)">
+													<label class="custom-file-label" for="customFile">Choose Image</label>
+													<div id="showphoto2">
+														<c:if test="${courseVO.courseImg eq null}">
+															<img src="<%=request.getContextPath()%>/images/尚無圖片.jpg">
 														</c:if>
 														<c:if test="${courseVO.courseImg ne null}">
 															<img src="<%=request.getContextPath() %>/course/course.do?action=getCourseImg&courseNo=${courseVO.courseNo}">
 														</c:if>
-                                                  	</div>	
-							                      </div>
-							                      </div>
-							
+													</div>
+												</div>
+											</div>
+
 											<div class="form-row align-items-center justify-content-center">
 												<input type="hidden" name="action" value="insert">
-												<button type="submit" class="btn btn-primary justify-content-center" id="addCourse" >送出</button>
+												<button type="submit" class="btn btn-primary justify-content-center" id="addCourse">送出</button>
 											</div>
 										</FORM>
 									</div>
 								</div>
 							</div>
-							</div>
-							</div>
-							</main>
 						</div>
-					</div>	
+					</div>
+				</main>
 			</div>
+		</div>
+	</div>
 
-     <%@ include file="/back-end/template/footer.jsp" %>
-     
-    <%@ include file="/back-end/template/quick_menu.jsp" %>
-    <%@ include file="/back-end/template/messager.jsp" %>
-    <%@ include file="/back-end/template/basic_js.jsp" %> 
+	<%@ include file="/back-end/template/footer.jsp"%>
 
-
-<% 
- 	java.sql.Date startDate = null;
-  try {
-	  startDate = courseVO.getStartDate();
-   } catch (Exception e) {
-	   startDate = new java.sql.Date(System.currentTimeMillis());
-   }
-%>
-
-<% 
- 	java.sql.Date endDate = null;
-  try {
-	  endDate = courseVO.getEndDate();
-   } catch (Exception e) {
-	   endDate = new java.sql.Date(System.currentTimeMillis());
-   }
-%>
+	<%@ include file="/back-end/template/quick_menu.jsp"%>
+	<%@ include file="/back-end/template/messager.jsp"%>
+	<%@ include file="/back-end/template/basic_js.jsp"%>
 
 
- <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
-     
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+	<%
+		java.sql.Date startDate = null;
+		try {
+			startDate = courseVO.getStartDate();
+		} catch (Exception e) {
+			startDate = new java.sql.Date(System.currentTimeMillis());
+		}
+	%>
 
-<script>
+	<%
+		java.sql.Date endDate = null;
+		try {
+			endDate = courseVO.getEndDate();
+		} catch (Exception e) {
+			endDate = new java.sql.Date(System.currentTimeMillis());
+		}
+	%>
+
+
+	<div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
+
+	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+
+	<script>
     
         $(function(){
         	$.datetimepicker.setLocale('zh');
@@ -246,24 +253,47 @@
         	  step: 1,
         	  scrollInput : false,
         	  value:'<%=endDate%>',
-			onShow : function() {
-				this.setOptions({
-					minDate : $('#f_date1').val()
-				})
-			},
-			timepicker : false
+				onShow : function() {
+					this.setOptions({
+						minDate : $('#f_date1').val()
+					})
+				},
+				timepicker : false
+			});
 		});
-	});
-        
+
 		var courseImg = $("#courseImg");
 		function show(courseImg) {
 			let img = URL.createObjectURL(courseImg.files[0]);
-			document.getElementById("showphoto2").innerHTML = "<img src =" + img
-					+ " width='100%' height='100%'>";
+			document.getElementById("showphoto2").innerHTML = "<img src ="
+					+ img + " width='100%' height='100%'>";
 		}
-        
-	
-</script>
+	</script>
+
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict';
+			window.addEventListener('load',
+					function() {
+						// Fetch all the forms we want to apply custom Bootstrap validation styles to
+						var forms = document
+								.getElementsByClassName('needs-validation');
+						// Loop over them and prevent submission
+						var validation = Array.prototype.filter.call(forms,
+								function(form) {
+									form.addEventListener('submit', function(
+											event) {
+										if (form.checkValidity() === false) {
+											event.preventDefault();
+											event.stopPropagation();
+										}
+										form.classList.add('was-validated');
+									}, false);
+								});
+					}, false);
+		})();
+	</script>
 
 </body>
 </html>

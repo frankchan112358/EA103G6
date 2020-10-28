@@ -30,7 +30,7 @@ public class CoursePostServlet extends HttpServlet {
 					errorMsgs.add("⚠請輸入課程編號⚠");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failuresView = req.getRequestDispatcher("/back-end/coursepost/select_page.jsp");
+					RequestDispatcher failuresView = req.getRequestDispatcher("/back-end/coursepost/listAllCoursePost.jsp");
 					failuresView.forward(req, res);
 					return;
 				}
@@ -41,7 +41,7 @@ public class CoursePostServlet extends HttpServlet {
 					errorMsgs.add("⚠公告編號格式不正確⚠");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/listAllCoursePost.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -52,18 +52,18 @@ public class CoursePostServlet extends HttpServlet {
 					errorMsgs.add("⚠查無資料⚠");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/listAllCoursePost.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				req.setAttribute("coursePostVO", coursePostVO);
-				String url = "/back-end//coursepost/listOneCoursePost.jsp";
+				String url = "/back-end/coursepost/listOneCoursePost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
 				errorMsgs.add("⚠無法取得資料⚠:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/listAllCoursePost.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -80,7 +80,7 @@ public class CoursePostServlet extends HttpServlet {
 				CoursePostVO coursePostVO = coursePostSvc.getOneCoursePost(coursePostNo);
 
 				req.setAttribute("coursePostVO", coursePostVO);
-				String url = "/back-end/coursepost/update_course_input.jsp";
+				String url = "/back-end/coursepost/update_coursePost_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -132,11 +132,12 @@ public class CoursePostServlet extends HttpServlet {
 				coursePostVO = coursePostSvc.updateCoursePost(coursePostNo, courseNo, title, postContent, updateTime);
 
 				req.setAttribute("coursePostVO", coursePostVO);
-				String url = "/back-end/coursepost/listOneCoursePost.jsp";
+				String url = "/back-end/coursepost/listAllCoursePost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.put("⚠修改資料失敗⚠", e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/back-end/coursepost/update_coursePost_input.jsp");
