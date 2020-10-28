@@ -253,7 +253,7 @@ public class ForumPostServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/forumpost/user_forumPost.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/forumpost/studentCenter_forum.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -272,14 +272,14 @@ public class ForumPostServlet extends HttpServlet {
 				forumpostSvc.deleteForumPost(forumPostNo);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				String url = "/front-end/forumpost/user_forumPost.jsp";
+				String url = "/front-end/forumpost/studentCenter_forum.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/forumpost/user_forumPost.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/forumpost/studentCenter_forum.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -295,8 +295,7 @@ public class ForumPostServlet extends HttpServlet {
 					errorMsgs.add("請輸入搜尋內容!");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/forumpost/forumPost_index.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/forumpost/forumPost_index.jsp");
 					failureView.forward(req, res);
 					return;
 				}

@@ -30,6 +30,7 @@
 </head>
 
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
+
     <script>
         var classHolder = document.getElementsByTagName("BODY")[0];
     </script>
@@ -45,14 +46,15 @@
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-democrat'></i> 討論區
+                            <i class='subheader-icon fal fa-democrat'></i> 發文紀錄
                         </h1>
                     </div>
+                    			 <h4><a href="<%=request.getContextPath() %>/front-end/forumpost/forumPost_index.jsp">回討論區</a></h4>
                     
                    
 					<div class="row">
-						<div class="col-md-8">標題</div>
-						<div class="col-md-2">更新時間</div>
+							<div class="col-md-8" id="title" style="font-weight: bold;">貼文標題</div>
+							<div class="col-md-2" style="font-weight: 900;">更新時間</div>
 						<div class="col-md-1"></div>
 						<div class="col-md-1"></div>
 					</div>
@@ -60,6 +62,8 @@
 					<%@ include file="page1_ByCompositeQuery.file" %>
 					<c:forEach var="forumPostVO" items="${list}" begin="<%=pageIndex%>"
 					end="<%=pageIndex+rowsPerPage-1%>">
+					
+					
 					     	
 						<div class="row" id=forum_record>
 							<div class="col-md-8"><a href="<%=request.getContextPath()%>/forumPost/forumPost.do?action=getOne_For_Display&forumPostNo=${forumPostVO.forumPostNo}"> ${forumPostVO.title}</a></div>
@@ -80,6 +84,23 @@
 								<input type="hidden" name="action" value="delete">
 								<input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}">
 							</form>
+							<div class="col-8 col-md-3 hidden-md-down">
+                                                        <div class="p-3 p-md-3">
+                                                            <div class="d-flex align-items-center">
+<!--                                                                 <div class="d-inline-block align-middle status status-success status-sm mr-2"> -->
+<!--                                                                     <span class="profile-image-md rounded-circle d-block" style="background-image:url('img/demo/avatars/avatar-a.png'); background-size: cover;"></span> -->
+<!--                                                                 </div> -->
+                                                                <div class="flex-1 min-width-0">
+<!--                                                                     <a href="javascript:void(0)" class="d-block text-truncate"> -->
+<!--                                                                         Duis vitae sapien urna. Proin pellentesque laoreet ligula pharetra semper. -->
+<!--                                                                     </a> -->
+<!--                                                                     <div class="text-muted small text-truncate"> -->
+<!--                                                                         Today, 12:12 <a href="javascript:void(0)" class="text-info">katty60</a> -->
+<!--                                                                     </div> -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 							</div>
 						</div>
 						<hr>

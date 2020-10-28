@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/front-end/template/check.jsp" %>	
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.forumpost.model.*"%>
+
+<%@ page import="java.util.*"%>
 
 <%
    ForumPostVO forumPostVO = (ForumPostVO) request.getAttribute("forumPostVO");
@@ -9,6 +13,25 @@
 
 <!DOCTYPE html>
 <html lang="en">
+<head>
+<%@ include file="/front-end/template/head.jsp" %>
+    <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/formplugins/summernote/summernote.css">
+</head>
+
+<body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
+    <script>
+        var classHolder = document.getElementsByTagName("BODY")[0];
+    </script>
+    <div class="page-wrapper">
+        <div class="page-inner">
+            <%@ include file="/front-end/template/left_aside.jsp" %>
+            <div class="page-content-wrapper">
+                <%@ include file="/front-end/template/header.jsp" %>
+                <main id="js-page-content" role="main" class="page-content">
+                    <ol class="breadcrumb page-breadcrumb">
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a></li>
+                        <li class="breadcrumb-item">討論區</li>
+                    </ol>
 <head>
   <meta charset="UTF-8">
   <title>新增貼文</title>
@@ -37,7 +60,7 @@
             <fieldset>
                 <legend><b>新增貼文</b></legend>
                 <p>
-                    <label for="forumTopicNo">主題編號:</label>
+                    <label for="forumTopicNo">主題:</label>
                     <select size="1" name="forumTopicNo">
 					<option value="1" ${('學術版'==forumPostVO.forumTopicNo)?'selected':''} >學術版</option>
 					<option value="2" ${('運動版'==forumPostVO.forumTopicNo)?'selected':''} >運動版</option>
@@ -79,7 +102,12 @@
         $('#summernote').summernote();
     });
   </script>
+  </body>
+  </main>
   
+	</div>
+	</div>
+	</div>
         
    
 	
