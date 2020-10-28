@@ -6,12 +6,12 @@
 <%@ page import="java.util.*"%>
 
 <%
-
+CoursePostVO coursePostVO = (CoursePostVO) request.getAttribute("coursePostVO");
 %>
 
 <jsp:useBean id="banjiSvc" scope="page" class="com.banji.model.BanjiService" />
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
-
+<jsp:useBean id="coursePostSvc" scope="page" class="com.coursepost.model.CoursePostService" />
 
 
 <!DOCTYPE html>
@@ -71,13 +71,12 @@
 												<span>新增</span>
 											</button>
 											<input type="hidden" name="coursePostNo" value="${coursePostVO.coursePostNo}">
-											<input type="hidden" name="action" value="insert">
+											<input type="hidden" name="action" value="new">
 										</FORM>
 										<!-- datatable start -->
 										<table id="coursePostTable" class="table table-bordered table-hover table-striped w-100">
 											<thead style="background-color: #E5F4FF;">
 												<tr>
-													<th>課程名稱</th>
 													<th>公告標題</th>
 													<th>公告內容</th>
 													<th>公告時間</th>
@@ -85,16 +84,14 @@
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach var="coursePostVO" items="${coursePostList}">
+												<c:forEach var="coursePostVO" items="${coursePostSvc.getCoursePostByCourseNo(courseNo)}">
 													<tr>
-
-														<td>${courseSvc.getOneCourse(coursePostVO.courseNo).courseName}</td>
 														<td>${coursePostVO.title}</td>
 														<td>${coursePostVO.postContent}</td>
 														<td>
 															<fmt:formatDate value="${coursePostVO.updateTime}" pattern="yyyy年MM月dd日 HH'點'mm'分'" />
 														</td>
-														<td class="d-flex p-1" >
+														<td class="d-flex p-1 justify-content-center" >
 															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/coursePost/coursePost.do" style="margin-bottom: 0px;" class="m-1">
 																<button type="submit" class="btn btn-primary">
 																<span class="fal fa-edit mr-1"></span>

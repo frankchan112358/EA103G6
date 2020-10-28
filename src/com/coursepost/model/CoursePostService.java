@@ -16,21 +16,20 @@ public class CoursePostService {
 		dao = new CoursePostDAO();
 	}
 
-	public CoursePostVO addCoursePost(String courseNo, String title, String postContent, Timestamp updateTime) {
+	public CoursePostVO addCoursePost(String courseNo, String title, String postContent) {
 
 		CoursePostVO coursePostVO = new CoursePostVO();
 
 		coursePostVO.setCourseNo(courseNo);
 		coursePostVO.setTitle(title);
 		coursePostVO.setPostContent(postContent);
-		coursePostVO.setUpdateTime(updateTime);
+		coursePostVO.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		dao.insert(coursePostVO);
 
 		return coursePostVO;
 	}
 
-	public CoursePostVO updateCoursePost(String coursePostNo, String courseNo, String title, String postContent,
-			Timestamp updateTime) {
+	public CoursePostVO updateCoursePost(String coursePostNo, String courseNo, String title, String postContent) {
 
 		CoursePostVO coursePostVO = new CoursePostVO();
 
@@ -38,7 +37,7 @@ public class CoursePostService {
 		coursePostVO.setCourseNo(courseNo);
 		coursePostVO.setTitle(title);
 		coursePostVO.setPostContent(postContent);
-		coursePostVO.setUpdateTime(updateTime);
+		coursePostVO.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		dao.update(coursePostVO);
 
 		return coursePostVO;
