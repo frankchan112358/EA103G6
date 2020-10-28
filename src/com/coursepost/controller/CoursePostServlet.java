@@ -180,7 +180,6 @@ public class CoursePostServlet extends HttpServlet {
 				successView.forward(req, res);
 
 			} catch (Exception e) {
-				e.printStackTrace();
 				errorMsgs.put("⚠修改資料失敗⚠", e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/back-end/coursepost/update_coursePost_input.jsp");
@@ -210,7 +209,6 @@ public class CoursePostServlet extends HttpServlet {
 				coursePostVO.setPostContent(postContent);
 
 				if (!errorMsgs.isEmpty()) {
-					System.out.println("111");
 					req.setAttribute("coursePostVO", coursePostVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/addCoursePost.jsp");
 					failureView.forward(req, res);

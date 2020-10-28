@@ -30,11 +30,11 @@
 <style>
 
 th{
-font-size: 16px;
+font-size: 14px;
 }
 
 td{
-font-size: 16px;
+font-size: 14px;
 }
 
 table.dataTable tr.dtrg-group.dtrg-level-0 td {
@@ -81,7 +81,7 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 								</div>
 								<div class="panel-container show" style="margin: 20px 20px;">
 									<table id="teachingPlan" class="table table-bordered table-hover table-striped w-100">
-										<thead class="thead-light" align="center">
+										<thead style="background-color: #D6D68D" align="center">
 											<tr>
 												<th>週次</th>
 												<th>堂數</th>
@@ -121,8 +121,6 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 	<%@ include file="/front-end/template/messager.jsp"%>
 	<%@ include file="/front-end/template/basic_js.jsp"%>
 
-
-        <script src="js/datagrid/datatables/datatables.export.js"></script>
 
 	<script>
 				$(document).ready(function() {

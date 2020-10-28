@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="/back-end/template/check.jsp"%>
 <%@ page import="com.course.model.*"%>
 
 <%
@@ -69,7 +70,7 @@ img {
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class='subheader-icon far fa-plus-circle mr-1'></i>
+							<i class='subheader-icon fal fa-comment-alt-edit mr-1'></i>
 							課程資料修改
 						</h1>
 					</div>

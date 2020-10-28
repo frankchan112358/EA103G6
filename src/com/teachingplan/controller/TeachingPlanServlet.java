@@ -6,6 +6,8 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import com.course.model.CourseService;
+import com.course.model.CourseVO;
 import com.teachingplan.model.*;
 
 public class TeachingPlanServlet extends HttpServlet {
@@ -17,9 +19,45 @@ public class TeachingPlanServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
-		String action = req.getParameter("action");
-		HttpSession session = req.getSession();
+		res.setCharacterEncoding("UTF-8");
 
+		String action = req.getParameter("action");
+		
+		if ("listTeachingPlan_ByCourseNo".equals(action)) {
+			
+			HttpSession session = req.getSession();
+			String courseNo = (String)session.getAttribute("courseNo");
+
+			TeachingPlanService teachingPlanSvc = new TeachingPlanService();
+			List<TeachingPlanVO> teachingPlanVO = teachingPlanSvc.getTeachingPlanByCourseNo(courseNo);
+
+			session.setAttribute("teachingPlanVO", teachingPlanVO);
+
+			String url = "/front-end/teachingplan/teachingPlan.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			return;
+		}
+		
+		HttpSession session = req.getSession();
+		String courseNo = (String)session.getAttribute("courseNo");
+		CourseVO courseVO = new CourseService().getOneCourse(courseNo);
+		if (courseVO == null) {
+			req.getRequestDispatcher("/back-end/course/listAllCourse.jsp").forward(req, res);
+			return;
+		}
+		
+		if (action == null) {			
+			res.setContentType("text/html;");			
+			session.setAttribute("courseWork", "teachingPlan");
+			req.setAttribute("banjiNo", courseVO.getBanjiNo());
+			String url = "/back-end/teachingplan/listAllTeachingPlan.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			return;
+		}
+		
+		
 		if ("getOne_For_Display".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -101,11 +139,6 @@ public class TeachingPlanServlet extends HttpServlet {
 			try {
 				String teachingPlanNo = new String(req.getParameter("teachingPlanNo").trim());
 
-				String courseNo = new String(req.getParameter("courseNo").trim());
-				if (courseNo == null || courseNo.trim().length() == 0) {
-					errorMsgs.put("courseNo", "⚠課程編號請勿空白⚠");
-				}
-
 				Integer week = null;
 				try {
 					week = new Integer(req.getParameter("week").trim());
@@ -162,10 +195,6 @@ public class TeachingPlanServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				String courseNo = new String(req.getParameter("courseNo").trim());
-				if (courseNo == null || courseNo.trim().length() == 0) {
-					errorMsgs.put("courseNo", "⚠課程編號請勿空白⚠");
-				}
 
 				Integer week = null;
 				try {
@@ -231,21 +260,6 @@ public class TeachingPlanServlet extends HttpServlet {
 						.getRequestDispatcher("/back-end/teachingplan/listAllTeachingPlan.jsp");
 				failureView.forward(req, res);
 			}
-		}
-
-		if ("listTeachingPlan_ByCourseNo".equals(action)) {
-
-			String courseNo = (String)session.getAttribute("courseNo");
-//			System.out.println("courseNo = " + courseNo);
-
-			TeachingPlanService teachingPlanSvc = new TeachingPlanService();
-			List<TeachingPlanVO> teachingPlanVO = teachingPlanSvc.getTeachingPlanByCourseNo(courseNo);
-
-			session.setAttribute("teachingPlanVO", teachingPlanVO);
-
-			String url = "/front-end/teachingplan/teachingPlan.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req, res);
 		}
 	}
 }

@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="/back-end/template/check.jsp"%>
-<%@ page import="com.coursepost.model.*"%>
+<%@ page import="com.teachingplan.model.*"%>
 <%@ page import="java.util.*"%>
 
 <%
-CoursePostVO coursePostVO = (CoursePostVO) request.getAttribute("coursePostVO");
+TeachingPlanVO teachingPlanVO = (TeachingPlanVO) request.getAttribute("teachingPlanVO");
 %>
 
-<jsp:useBean id="coursePostSvc" scope="page" class="com.coursepost.model.CoursePostService" />
+<jsp:useBean id="teachingPlanSvc" scope="page" class="com.teachingplan.model.TeachingPlanService" />
+
 
 
 <!DOCTYPE html>
@@ -20,6 +20,8 @@ CoursePostVO coursePostVO = (CoursePostVO) request.getAttribute("coursePostVO");
 
 
 <style>
+
+
 th{
 font-size: 15px;
 }
@@ -28,9 +30,8 @@ td{
 font-size: 15px;
 }
 
-.table th, .table td {
-	vertical-align: middle;
-	text-align: center;
+table.dataTable tr.dtrg-group.dtrg-level-0 td {
+    font-size: 20px;
 }
 </style>
 
@@ -54,12 +55,12 @@ font-size: 15px;
 						<li class="breadcrumb-item">
 							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>
 						</li>
-						<li class="breadcrumb-item">課程公告管理</li>
+						<li class="breadcrumb-item">教學計劃管理</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class='subheader-icon fal fa-calendar-edit'></i>
-							課程公告管理
+							<i class='subheader-icon fal fa-chalkboard-teacher'></i>
+							教學計劃管理
 						</h1>
 					</div>
 					<div class="row">
@@ -67,7 +68,7 @@ font-size: 15px;
 							<jsp:include page="/back-end/course/courseNav.jsp"></jsp:include>
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
-									<h2>課程公告列表</h2>
+									<h2>教學計劃列表</h2>
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
@@ -76,40 +77,39 @@ font-size: 15px;
 												<span class="far fa-plus-circle mr-1"></span>
 												<span>新增</span>
 											</button>
-											<input type="hidden" name="coursePostNo" value="${coursePostVO.coursePostNo}">
-											<input type="hidden" name="action" value="new">
+											<input type="hidden" name=teachingPlanNo value="${teachingPlanVO.teachingPlanNo}">
+											<input type="hidden" name="action" value="insert">
 										</FORM>
 										<!-- datatable start -->
-										<table id="coursePostTable" class="table table-bordered table-hover table-striped w-100">
-											<thead style="background-color: #E5F4FF;">
+										<table id="teachingPlanTable" class="table table-bordered table-hover table-striped w-100">
+											<thead style="background-color: #E5F4FF;" align="center">
 												<tr>
-													<th>公告標題</th>
-													<th>公告內容</th>
-													<th>公告時間</th>
+													<th>週次</th>
+													<th>堂數</th>
+													<th>教學內容</th>
 													<th width="20%">操作</th>
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach var="coursePostVO" items="${coursePostSvc.getCoursePostByCourseNo(courseNo)}">
-												<tr onclick="location.href='<%=request.getContextPath()%>/coursePost/coursePost.do?action=getOne_For_Display&coursePostNo=${coursePostVO.coursePostNo}';" style="cursor: pointer;" >
-														<td>${coursePostVO.title}</td>
-														<td>${coursePostVO.postContent}</td>
-														<td>
-															<fmt:formatDate value="${coursePostVO.updateTime}" pattern="yyyy年MM月dd日 HH'點'mm'分'" />
-														</td>
+												<c:forEach var="teachingPlanVO" items="${teachingPlanSvc.getTeachingPlanByCourseNo(courseNo)}">
+												<tr onclick="location.href='<%=request.getContextPath()%>/teachingPlan/teachingPlan.do?action=getOne_For_Display&teachingPlanNo=${teachingPlanVO.teachingPlanNo}';" style="cursor: pointer;" >
+														<td align="center">第${teachingPlanVO.week}週</td>
+														<td align="center">${teachingPlanVO.lesson}</td>
+														<td align="center">${teachingPlanVO.planContent}</td>
+														
 														<td class="d-flex p-1 justify-content-center" >
-															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/coursePost/coursePost.do" style="margin-bottom: 0px;" class="m-1">
+															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/teachingPlan/teachingPlan.do" style="margin-bottom: 0px;" class="m-1">
 																<button type="submit" class="btn btn-outline-primary btn-icon rounded-circle">
 																<i class="fal fa-edit"></i>
 																</button>
-																<input type="hidden" name="coursePostNo" value="${coursePostVO.coursePostNo}">
+																<input type="hidden" name="teachingPlanNo" value="${teachingPlanVO.teachingPlanNo}">
 																<input type="hidden" name="action" value="getOne_For_Update">
 															</FORM>
-																<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/coursePost/coursePost.do" style="margin-bottom: 0px;" class="m-1">
+																<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/teachingPlan/teachingPlan.do" style="margin-bottom: 0px;" class="m-1">
 																<button type="submit" class="btn btn-outline-danger btn-icon rounded-circle">
                                                         		<i class="fal fa-times"></i>
 																</button>
-																<input type="hidden" name="coursePostNo" value="${coursePostVO.coursePostNo}">
+																<input type="hidden" name="teachingPlanNo" value="${teachingPlanVO.teachingPlanNo}">
 																<input type="hidden" name="action" value="delete">
 															</FORM>
 														</td>
@@ -145,11 +145,14 @@ font-size: 15px;
      
     $(document).ready(function()
             {
-                $('#coursePostTable').dataTable(
+                $('#teachingPlanTable').dataTable(
                 {
                     responsive: true,
-                    language:{url:'<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json'
-					},
+                    language:{url:'<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json'},
+					pageLength : 25,
+					rowGroup : {
+						dataSrc : 0
+					}
 					});
 			});
 	</script>

@@ -20,6 +20,15 @@
 
 <style>
 
+th{
+font-size: 15px;
+}
+
+td{
+font-size: 15px;
+}
+
+
 .table th, .table td {
     vertical-align: middle;
     text-align: center;  
@@ -72,7 +81,7 @@
 											</c:forEach>
 									</div>									
 									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
-                                        <button id="addCourse" type="submit" class="btn btn-primary waves-effect waves-themed float-left">
+                                        <button id="addCourse" type="submit" class="btn btn-success waves-effect waves-themed float-left">
                                        <span class="far fa-plus-circle mr-1"></span>
                                         <span>新增</span>                 
                                         </button>
