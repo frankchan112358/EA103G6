@@ -82,7 +82,7 @@ public class CourseServlet extends HttpServlet {
 				}
 				HttpSession session = req.getSession();
 				session.setAttribute("courseVO", courseVO);
-				String url = "/back-end//course/listOneCourse.jsp";
+				String url = "/back-end/course/listOneCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 

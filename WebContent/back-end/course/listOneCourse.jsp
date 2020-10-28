@@ -78,7 +78,7 @@ img {
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class='subheader-icon far fa-book'></i>
+							<i class='subheader-icon fal fa-books-medical'></i>
 							課程資料管理
 						</h1>
 					</div>
@@ -130,7 +130,7 @@ img {
 											</tr>
 											<tr>
 												<th>課程大綱</th>
-												<td>${courseVO.courseOutline}</td>
+												<td  width="85%">${courseVO.courseOutline}</td>
 											</tr>
 											<tr>
 												<th>班級</th>
