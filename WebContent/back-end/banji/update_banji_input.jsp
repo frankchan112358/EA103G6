@@ -66,7 +66,7 @@ text-align:center ;
                                             <form METHOD="post" ACTION="<%=request.getContextPath()%>/banji/banji.do" name="form1"  class="was-validated">
                                                   <div class="form-group">
                                                <label class="form-label" for="simpleinput">班種名稱:</label>
-                                                 <input type="text" id="simpleinput" class="form-control" readonly name="banjiTypeNo" value="${banjiVO.banjiTypeVO.banjiTypeName}">
+                                                 <input type="text" id="simpleinput" class="form-control" readonly name="banjiTypeNo" value="${banjiVO.banjiTypeNo}">
                                             </div> 
                                             
                                                <div class="form-group">
@@ -138,6 +138,7 @@ text-align:center ;
                                                <div class="form-group" id="add" >
 												<input type="hidden" name="action" value="update">
 												<input type="hidden" name="empNo" value="${empVO.empNo }">
+												<input type="hidden" name="banjiNo" value="${banjiVO.banjiNo }">
 												<button type="submit" class="btn btn-primary justify-content-center" >送出修改</button>
 											</div>
                                             </form>

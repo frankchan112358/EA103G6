@@ -44,7 +44,7 @@ text-align: center ;
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/banji/homeBanji.jsp">養成班管理</a></li>
-                         <li class="breadcrumb-item">總覽</li>
+                         <li class="breadcrumb-item">${banjiVO.banjiTypeVO.banjiTypeName }</li>
                     </ol>
                     
                     <div class="subheader">
