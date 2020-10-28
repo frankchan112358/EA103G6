@@ -6,9 +6,7 @@
 <%@ page import="java.util.*"%>
 
 <%
-	CoursePostService coursePostSvc = new CoursePostService();
-	List<CoursePostVO> list = coursePostSvc.getAll();
-	pageContext.setAttribute("list", list);
+
 %>
 
 <jsp:useBean id="banjiSvc" scope="page" class="com.banji.model.BanjiService" />
@@ -87,7 +85,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach var="coursePostVO" items="${list}">
+												<c:forEach var="coursePostVO" items="${coursePostList}">
 													<tr>
 
 														<td>${courseSvc.getOneCourse(coursePostVO.courseNo).courseName}</td>

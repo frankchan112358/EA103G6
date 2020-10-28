@@ -6,6 +6,8 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import com.course.model.CourseService;
+import com.course.model.CourseVO;
 import com.coursepost.model.*;
 
 public class CoursePostServlet extends HttpServlet {
@@ -17,8 +19,55 @@ public class CoursePostServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
+
 		String action = req.getParameter("action");
 
+		if ("listCoursePost_ByCourseNo".equals(action)) {
+
+			String courseNo = new String(req.getParameter("courseNo").trim());
+
+			CoursePostService coursePostSvc = new CoursePostService();
+			List<CoursePostVO> coursePostVO = coursePostSvc.getCoursePostByCourseNo(courseNo);
+
+			HttpSession _session = req.getSession();
+			_session.setAttribute("coursePostVO", coursePostVO);
+			_session.setAttribute("courseNo", courseNo);
+
+			String url = "/front-end/course/coursePost.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			return;
+		}
+				
+		HttpSession session = req.getSession();
+		String courseNo = (String)session.getAttribute("courseNo");
+		CourseVO courseVO = new CourseService().getOneCourse(courseNo);
+		if (courseVO == null) {
+			req.getRequestDispatcher("/back-end/course/listAllCourse.jsp").forward(req, res);
+			return;
+		}
+				
+		if (action == null) {			
+			res.setContentType("text/html;");			
+			session.setAttribute("courseWork", "coursePost");
+			req.setAttribute("banjiNo", courseVO.getBanjiNo());
+			req.setAttribute("coursePostList", new CoursePostService().getCoursePostByCourseNo(courseNo));
+			String url = "/back-end/coursepost/listAllCoursePost.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			return;
+		}
+		
+		if("new".equals(action)) {
+			res.setContentType("text/html;");
+			req.setAttribute("courseNo", courseNo);
+			String url = "/back-end/coursepost/addCoursePost.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			return;
+		}		
+		
 		if ("getOne_For_Display".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -66,6 +115,7 @@ public class CoursePostServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/listAllCoursePost.jsp");
 				failureView.forward(req, res);
 			}
+			return;
 		}
 
 		if ("getOne_For_Update".equals(action)) {
@@ -89,6 +139,7 @@ public class CoursePostServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/listAllCoursePost.jsp");
 				failureView.forward(req, res);
 			}
+			return;
 		}
 
 		if ("update".equals(action)) {
@@ -98,11 +149,6 @@ public class CoursePostServlet extends HttpServlet {
 
 			try {
 				String coursePostNo = new String(req.getParameter("coursePostNo").trim());
-
-				String courseNo = new String(req.getParameter("courseNo").trim());
-				if (courseNo == null || courseNo.trim().length() == 0) {
-					errorMsgs.put("courseNo", "⚠課程編號請勿空白⚠");
-				}
 
 				String title = new String(req.getParameter("title").trim());
 				if (title == null || title.trim().length() == 0) {
@@ -143,6 +189,7 @@ public class CoursePostServlet extends HttpServlet {
 						.getRequestDispatcher("/back-end/coursepost/update_coursePost_input.jsp");
 				failureView.forward(req, res);
 			}
+			return;
 		}
 
 		if ("insert".equals(action)) {
@@ -151,10 +198,6 @@ public class CoursePostServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				String courseNo = new String(req.getParameter("courseNo").trim());
-				if (courseNo == null || courseNo.trim().length() == 0) {
-					errorMsgs.put("courseNo", "⚠課程編號請勿空白⚠");
-				}
 
 				String title = new String(req.getParameter("title").trim());
 				if (title == null || title.trim().length() == 0) {
@@ -190,6 +233,7 @@ public class CoursePostServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/addCoursePost.jsp");
 				failureView.forward(req, res);
 			}
+			return;
 		}
 
 		if ("delete".equals(action)) {
@@ -211,21 +255,8 @@ public class CoursePostServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/listAllCoursePost.jsp");
 				failureView.forward(req, res);
 			}
+			return;
 		}
-		if ("listCoursePost_ByCourseNo".equals(action)) {
 
-			String courseNo = new String(req.getParameter("courseNo").trim());
-
-			CoursePostService coursePostSvc = new CoursePostService();
-			List<CoursePostVO> coursePostVO = coursePostSvc.getCoursePostByCourseNo(courseNo);
-
-			HttpSession session = req.getSession();
-			session.setAttribute("coursePostVO", coursePostVO);
-			session.setAttribute("courseNo", courseNo);
-
-			String url = "/front-end/course/coursePost.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req, res);
-		}
 	}
 }

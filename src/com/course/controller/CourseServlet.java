@@ -8,6 +8,9 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
 import com.course.model.*;
+import com.banji.model.BanjiService;
+import com.banji.model.BanjiVO;
+import com.emp.model.EmpVO;
 
 @MultipartConfig
 
@@ -21,8 +24,42 @@ public class CourseServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
+		if (action == null) {			
+			res.setContentType("text/html;");			
+			HttpSession session = req.getSession();
+			session.setAttribute("courseNo", null);
+			session.setAttribute("courseWork", null);
+			EmpVO empVO = (EmpVO) session.getAttribute("empVO");	
+			String banjiNo = req.getParameter("banjiNo");				
+			List<BanjiVO> banjiList = empVO.getBanjiList();
+			List<CourseVO> courseList = new ArrayList<CourseVO>();
+			if (!(banjiNo == null || "".equals(banjiNo)))
+				courseList = new BanjiService().getOneBanji(banjiNo).getCourseList();
+			else if (banjiList.size() > 1) {
+				courseList = banjiList.get(0).getCourseList();
+				banjiNo = banjiList.get(0).getBanjiNo();
+			}
+			req.setAttribute("banjiNo", banjiNo);
+			req.setAttribute("courseList", courseList);
+			String url = "/back-end/course/listAllCourse.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			return;
+		}
+		
+		if("new".equals(action)) {
+			res.setContentType("text/html;");
+			String banjiNo = req.getParameter("banjiNo");
+			req.setAttribute("banjiNo", banjiNo);
+			String url = "/back-end/course/addCourse.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			return;
+		}
+				
 		if ("getCourseImg".equals(action)) {
 
 			String courseNo = req.getParameter("courseNo");
@@ -81,7 +118,9 @@ public class CourseServlet extends HttpServlet {
 					return;
 				}
 				HttpSession session = req.getSession();
-				session.setAttribute("courseVO", courseVO);
+				session.setAttribute("courseNo", courseVO.getCourseNo());
+				session.setAttribute("courseWork", "courseInfo");
+				req.setAttribute("courseVO", courseVO);
 				String url = "/back-end/course/listOneCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -216,7 +255,8 @@ public class CourseServlet extends HttpServlet {
 						courseOutline, lesson, startDate, endDate, courseImg, status);
 
 				HttpSession session = req.getSession();
-				session.setAttribute("courseVO", courseVO);
+				session.setAttribute("courseNo", courseVO.getCourseNo());
+				req.setAttribute("courseVO", courseVO);
 				String url = "/back-end/course/listOneCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -320,6 +360,8 @@ public class CourseServlet extends HttpServlet {
 				courseVO = courseSvc.addCourse(banjiNo, teacherNo, classroomNo, basicCourseNo, courseName,
 						courseOutline, lesson, startDate, endDate, courseImg, status);
 				
+				req.setAttribute("banjiNo", banjiNo);
+				req.setAttribute("courseList",  new BanjiService().getOneBanji(banjiNo).getCourseList());
 				String url = "/back-end/course/listAllCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -338,10 +380,13 @@ public class CourseServlet extends HttpServlet {
 
 			try {
 				String courseNo = new String(req.getParameter("courseNo"));
+				String banjiNo = new CourseService().getOneCourse(courseNo).getBanjiVO().getBanjiNo();
 
 				CourseService courseSvc = new CourseService();
 				courseSvc.deleteCourse(courseNo);
 
+				req.setAttribute("banjiNo", banjiNo);
+				req.setAttribute("courseList",  new BanjiService().getOneBanji(banjiNo).getCourseList());
 				String url = "/back-end/course/listAllCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);

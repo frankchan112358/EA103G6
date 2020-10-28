@@ -60,10 +60,10 @@ img {
 							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>
+							<a id="aListAllCourse" banjiNo="${courseVO.banjiNo}" href="javascript:void(0)">課程總覽</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/course/listOneCourse.jsp">課程資料管理</a>
+							<a id="aListOneCourse" courseNo="${courseNo}" href="javascript:void(0)">課程資料管理</a>
 						</li>
 						<li class="breadcrumb-item">課程資料修改</li>
 					</ol>
@@ -100,19 +100,7 @@ img {
 												<textarea class="form-control" name="courseOutline" rows="5">${courseVO.courseOutline}</textarea>
 											</div>
 
-
-											<div class="form-group">
-												<label class="form-label">班級</label>
-												<select class="custom-select form-control" name="banjiNo" required>
-													<option value="">請選擇班級</option>
-													<c:forEach var="banjiVO" items="${banjiSvc.all}">
-														<option value="${banjiVO.banjiNo}" ${(courseVO.banjiNo==banjiVO.banjiNo)?'selected':'' }>${banjiVO.banjiName}</option>
-													</c:forEach>
-												</select>
-												<font color=red>${errorMsgs.banjiNo}</font>
-												<div class="invalid-feedback">請選擇班級.</div>
-											</div>
-
+											<input type="hidden" name="banjiNo" value="${courseVO.banjiNo}">
 
 											<div class="form-group">
 												<label class="form-label">講師</label>
@@ -270,6 +258,64 @@ img {
 				},
 				timepicker : false
 			});
+        	
+    		document.getElementById('aListAllCourse').addEventListener('click',function(e){
+				e.preventDefault();
+				let _this = this;
+                let banjiNo = this.getAttribute('banjiNo');
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/course/course.do';
+				myForm.method = 'POST';
+				let banjiNoInput = document.createElement('input');
+				banjiNoInput.type = 'hidden';
+				banjiNoInput.name = 'banjiNo';
+				banjiNoInput.value= banjiNo;
+				myForm.append(banjiNoInput);
+				myForm.submit();
+			}); 
+
+    		document.getElementById('aListOneCourse').addEventListener('click',function(e){
+				e.preventDefault();
+				let _this = this;
+                let courseNo = this.getAttribute('courseNo');
+                
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/course/course.do';
+				myForm.method = 'POST';
+				
+				let actionInput = document.createElement('input');
+				actionInput.type = 'hidden';
+				actionInput.name = 'action';
+				actionInput.value= 'getOne_For_Display';
+				myForm.append(actionInput);
+				
+				let courseNoInput = document.createElement('input');
+				courseNoInput.type = 'hidden';
+				courseNoInput.name = 'courseNo';
+				courseNoInput.value= courseNo;
+				myForm.append(courseNoInput);
+				
+				myForm.submit();
+			}); 
+    		
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document
+					.getElementsByClassName('needs-validation');
+			// Loop over them and prevent submission
+			var validation = Array.prototype.filter.call(forms,
+					function(form) {
+						form.addEventListener('submit', function(
+								event) {
+							if (form.checkValidity() === false) {
+								event.preventDefault();
+								event.stopPropagation();
+							}
+							form.classList.add('was-validated');
+						}, false);
+					});
+    		
 		});
 
 		var courseImg = $("#courseImg");
@@ -280,29 +326,5 @@ img {
 		}
 	</script>
 
-	<script>
-		// Example starter JavaScript for disabling form submissions if there are invalid fields
-		(function() {
-			'use strict';
-			window.addEventListener('load',
-					function() {
-						// Fetch all the forms we want to apply custom Bootstrap validation styles to
-						var forms = document
-								.getElementsByClassName('needs-validation');
-						// Loop over them and prevent submission
-						var validation = Array.prototype.filter.call(forms,
-								function(form) {
-									form.addEventListener('submit', function(
-											event) {
-										if (form.checkValidity() === false) {
-											event.preventDefault();
-											event.stopPropagation();
-										}
-										form.classList.add('was-validated');
-									}, false);
-								});
-					}, false);
-		})();
-	</script>
 </body>
 </html>

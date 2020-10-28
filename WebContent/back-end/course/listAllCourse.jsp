@@ -4,9 +4,7 @@
 <%@ page import="com.course.model.*"%>
 <%@ page import="java.util.*"%>
 <%
-	CourseService courseSvc = new CourseService();
-	List<CourseVO> list = courseSvc.getAll();
-	pageContext.setAttribute("list", list);
+
 %>
 
 <jsp:useBean id="banjiSvc" scope="page" class="com.banji.model.BanjiService" />
@@ -49,12 +47,8 @@
 				<%@ include file="/back-end/template/header.jsp"%>
 				<main id="js-page-content" role="main" class="page-content">
 					<ol class="breadcrumb page-breadcrumb">
-						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a>
-						</li>
-						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>
-						</li>
+						<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
+						<li class="breadcrumb-item">課程總覽</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
@@ -70,13 +64,20 @@
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
+										<div class="btn-group mb-3" role="group">
+											<c:forEach var="banjiVO" items="${empVO.banjiList}">
+													<button type="button" class="banji btn btn-lg ${banjiVO.banjiNo == banjiNo ? 'btn-primary' : 'btn-outline-primary'} " banjiNo="${banjiVO.banjiNo}">
+															<span class="fal fa-book mr-1"></span>${banjiVO.banjiName}
+													</button>
+											</c:forEach>
+									</div>									
 									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
                                         <button id="addCourse" type="submit" class="btn btn-primary waves-effect waves-themed float-left">
                                        <span class="far fa-plus-circle mr-1"></span>
                                         <span>新增</span>                 
                                         </button>
-                                        <input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-										<input type="hidden" name="action" value="insert">
+                                        <input type="hidden" name="banjiNo" value="${banjiNo}">
+										<input type="hidden" name="action" value="new">
 										</FORM>
 										<!-- datatable start -->
                                             <table id="coursetable" class="table table-bordered table-hover table-striped w-100">
@@ -94,7 +95,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach var="courseVO" items="${list}">
+												<c:forEach var="courseVO" items="${courseList}">
 												<tr onclick="location.href='<%=request.getContextPath()%>/course/course.do?action=getOne_For_Display&courseNo=${courseVO.courseNo}';" style="cursor: pointer;" >
 														<td>${courseVO.courseName}</td>
 														<td>${banjiSvc.getOneBanji(courseVO.banjiNo).banjiName}</td>
@@ -159,6 +160,20 @@
                     language:{url:'<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json'},
                 });
            
+                $(document).on('click', 'button.banji', function (event) {
+                    let _this = this;
+                    let banjiNo = this.getAttribute('banjiNo');
+					let myForm = document.createElement('form');
+					document.body.appendChild(myForm);
+					myForm.action = '<%=request.getContextPath()%>/course/course.do';
+					myForm.method = 'POST';
+					let banjiNoInput = document.createElement('input');
+					banjiNoInput.type = 'hidden';
+					banjiNoInput.name = 'banjiNo';
+					banjiNoInput.value = banjiNo;
+					myForm.append(banjiNoInput);
+					myForm.submit();
+                });
             });
      </script>
 </body>
