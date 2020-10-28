@@ -143,9 +143,9 @@ public class BanjiPost extends HttpServlet {
 				banjiPostVO = banjiPostSvc.updateBanjiPost(banjiPostNo, banjiNo, title, banjiPostContent, updateTime,
 						status);
 
-				req.setAttribute("banjiPostVO", banjiPostVO);
+				req.setAttribute("list", new BanjiPostService().getAllWhitBanjiNo(banjiNo));
 				req.setAttribute("banjiVO", banjiVO);
-				String url = "/back-end/banji/banji.jsp";
+				String url = "/back-end/banji/banjiPost/listAllBanjiPost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {
