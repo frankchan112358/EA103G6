@@ -91,7 +91,7 @@ pageContext.setAttribute("list", list);
 							</div>
 							<div class="col-md-3">
 								<div id="heading2">
-									<a href="forumIndex_hot.jsp"><b>最多觀看</b></a>
+									<a href="<%=request.getContextPath()%>/front-end/forumpost/forumIndex_hot.jsp"><b>最多觀看</b></a>
 								</div>
 							</div>
 							<div class="col-md-5" id="search">

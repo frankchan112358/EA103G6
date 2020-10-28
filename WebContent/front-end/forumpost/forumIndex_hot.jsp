@@ -15,6 +15,7 @@
 	pageContext.setAttribute("list", list);
 %>
 <jsp:useBean id="forumcommentSvc" scope="page" class="com.forumcomment.model.ForumCommentService" />
+<jsp:useBean id="forumtopicSvc" scope="page" class="com.forumtopic.model.ForumTopicService" />
 
 <!DOCTYPE HTML>
 <html>
@@ -53,6 +54,19 @@
                         </h1>
                     </div>
                     
+                    <c:forEach var="forumTopicVO" items="${forumtopicSvc.getByBanJiNo(studentVO.banjiNo)}">
+                    	<form method="post" action="<%=request.getContextPath()%>/forumPost/forumPost.do">
+                    		<input type="hidden" name="action" value="getByTopicNo">
+                    		
+                    		<input type="hidden" name="forumTopicNo" value="${forumTopicVO.forumTopicNo}">
+                    		
+                    		<input type="submit" value="${forumTopicVO.forumTopicName}">
+                    	</form>
+                    	
+                    	
+                    </c:forEach>
+                    
+                    
                      <div class="row">
                         <div class="col col-xl-12">
                                 <div class="panel-hdr bg-primary-800 bg-success-gradient ">
@@ -61,7 +75,6 @@
                                 
                                 <div class="col d-flex">
                                                 <a class="btn btn-outline-success btn-sm ml-auto mr-2 flex-shrink-0" onclick="location.href='${pageContext.request.contextPath}/front-end/forumpost/addForumPost.jsp'">新增貼文</a>
-                                                <a href="javascript:void(0);" class="btn btn-outline-danger btn-sm flex-shrink-0">修改</a>
                                             </div>
 
 
@@ -79,11 +92,13 @@
 							</div>
 							
 							<div class="col-md-5">
-								<form method="post" action="<%=request.getContextPath() %>/forumPost/forumPost.do">
-									<input type="text" name="title">
-									<input type="hidden" name="action" value="search">
+								<form method="post"
+									action="<%=request.getContextPath()%>/forumPost/forumPost.do">
+
 								</form>
 							</div>
+							
+							
 							
 						</div>
 						
