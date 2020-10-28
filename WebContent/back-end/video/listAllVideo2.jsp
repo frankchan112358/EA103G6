@@ -3,26 +3,25 @@
 <%@ include file="/back-end/template/check.jsp"%>
 <%@ page import="com.course.model.*,com.video.model.*,com.timetable.model.*"%>
 <%@ page import="java.util.*"%>
+<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+<jsp:useBean id="videoSvc" scope="page" class="com.video.model.VideoService" />
 
 <%
-CourseService courseSvc = new CourseService();
+CourseVO choose_courseVO = (CourseVO) request.getAttribute("courseVO");
 List<CourseVO> courseList = courseSvc.getAll();
 
 TimetableService timetableSvc =new TimetableService();
 List<TimetableVO> timetableList = timetableSvc.getAll();
 
-VideoService videoSvc =new VideoService();
+VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
 List<VideoVO> videoList = videoSvc.getAll();
+TimetableVO timetableVO = (TimetableVO) request.getAttribute("timetableVO");
 
-pageContext.setAttribute("videoSvc", videoSvc);
 pageContext.setAttribute("courseList", courseList);
 pageContext.setAttribute("timetableList", timetableList);
 pageContext.setAttribute("videoList", videoList);
-
-CourseVO choose_courseVO = (CourseVO) request.getAttribute("courseVO");
 pageContext.setAttribute("choose_courseVO", choose_courseVO);
-VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
-TimetableVO timetableVO = (TimetableVO) request.getAttribute("timetableVO");
+
 %>
 
 <!DOCTYPE html>
@@ -74,6 +73,7 @@ TimetableVO timetableVO = (TimetableVO) request.getAttribute("timetableVO");
 					</div>
 					<div class="row">
 						<div class="col-xl-12">
+						<jsp:include page="/back-end/course/courseNav.jsp"></jsp:include>
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
 									<h2>影片列表</h2>

@@ -70,6 +70,7 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 					</div>
 					<div class="row">
 						<div class="col-xl-12">
+						<jsp:include page="/back-end/course/courseNav.jsp"></jsp:include>
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
 									<h2>教材列表</h2>
