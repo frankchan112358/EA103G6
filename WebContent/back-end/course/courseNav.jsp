@@ -12,7 +12,7 @@
 			<a class="courseWork nav-link" courseWork="teachingPlan" href="javascript:void(0)" style="font-size: 15px">教學計劃管理</a>
 		</li>
 		<li class="nav-item">
-			<a class="courseWork nav-link" courseWork="courseVide" href="javascript:void(0)" style="font-size: 15px">課程影片管理</a>
+			<a class="courseWork nav-link" courseWork="courseVideo" href="javascript:void(0)" style="font-size: 15px">課程影片管理</a>
 		</li>
 		<li class="nav-item">
 			<a class="courseWork nav-link" courseWork="teachingFile" href="javascript:void(0)" style="font-size: 15px">課程教材管理</a>
@@ -23,8 +23,8 @@
 
 <script>
 	function courseNav(){
-		let _courseWork = '${courseWork}';
-		$(`[courseWork=${'${_courseWork}'}]`).addClass('active');
+		let _courseWork = '${param.courseWork}';
+		$(`[courseWork='${'${_courseWork}'}']`).addClass('active');
 		if (_courseWork == '') {
 			$(`[courseWork=courseInfo]`).addClass('active');
 		}
@@ -66,25 +66,73 @@
 				myForm.action = '<%=request.getContextPath()%>/coursePost/coursePost.do';
 				myForm.method = 'POST';
 
-				let inputAction = document.createElement('input');
-				inputAction.type = 'hidden';
-				inputAction.name = 'courseWork';
-				inputAction.value = 'coursePost';
-				myForm.append(inputAction);
+				let inputCourseWork = document.createElement('input');
+				inputCourseWork.type = 'hidden';
+				inputCourseWork.name = 'courseWork';
+				inputCourseWork.value = 'coursePost';
+				myForm.append(inputCourseWork);
 
 				myForm.submit();				
 			}
 			if (courseWork == 'teachingPlan') {
-				
+				e.preventDefault();
+
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/teachingPlan/teachingPlan.do';
+				myForm.method = 'POST';
+
+				let inputCourseWork = document.createElement('input');
+				inputCourseWork.type = 'hidden';
+				inputCourseWork.name = 'courseWork';
+				inputCourseWork.value = 'teachingPlan';
+				myForm.append(inputCourseWork);
+
+				myForm.submit();					
 			}
-			if (courseWork == 'courseVide') {
-				
-			}
-			if (courseWork == 'courseVide') {
-				
+			if (courseWork == 'courseVideo') {
+				e.preventDefault();
+
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/course/courseTT.do';
+				myForm.method = 'POST';
+
+				let inputAction = document.createElement('input');
+				inputAction.type = 'hidden';
+				inputAction.name = 'action';
+				inputAction.value = 'getTTDisplayList';
+				myForm.append(inputAction);
+
+				let inputCourseWork = document.createElement('input');
+				inputCourseWork.type = 'hidden';
+				inputCourseWork.name = 'courseWork';
+				inputCourseWork.value = 'courseVideo';
+				myForm.append(inputCourseWork);
+
+				myForm.submit();				
 			}
 			if (courseWork == 'teachingFile') {
-				
+				e.preventDefault();
+
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/course/courseTT.do';
+				myForm.method = 'POST';
+
+				let inputAction = document.createElement('input');
+				inputAction.type = 'hidden';
+				inputAction.name = 'action';
+				inputAction.value = 'getTFDisplayList';
+				myForm.append(inputAction);
+
+				let inputCourseWork = document.createElement('input');
+				inputCourseWork.type = 'hidden';
+				inputCourseWork.name = 'courseWork';
+				inputCourseWork.value = 'teachingFile';
+				myForm.append(inputCourseWork);
+
+				myForm.submit();							
 			}
 		});
 	}

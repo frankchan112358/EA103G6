@@ -31,7 +31,6 @@ public class CourseServlet extends HttpServlet {
 			res.setContentType("text/html;");			
 			HttpSession session = req.getSession();
 			session.setAttribute("courseNo", null);
-			session.setAttribute("courseWork", null);
 			EmpVO empVO = (EmpVO) session.getAttribute("empVO");	
 			String banjiNo = req.getParameter("banjiNo");				
 			List<BanjiVO> banjiList = empVO.getBanjiList();
@@ -42,6 +41,7 @@ public class CourseServlet extends HttpServlet {
 				courseList = banjiList.get(0).getCourseList();
 				banjiNo = banjiList.get(0).getBanjiNo();
 			}
+			req.setAttribute("courseWork", null);
 			req.setAttribute("banjiNo", banjiNo);
 			req.setAttribute("courseList", courseList);
 			String url = "/back-end/course/listAllCourse.jsp";
@@ -119,7 +119,7 @@ public class CourseServlet extends HttpServlet {
 				}
 				HttpSession session = req.getSession();
 				session.setAttribute("courseNo", courseVO.getCourseNo());
-				session.setAttribute("courseWork", "courseInfo");
+				req.setAttribute("courseWork", "courseInfo");
 				req.setAttribute("courseVO", courseVO);
 				String url = "/back-end/course/listOneCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
