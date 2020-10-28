@@ -10,11 +10,11 @@ public class CoursePostJDBCDAO implements CoursePostDAO_interface {
 	String passwd = "123456";
 
 	private static final String INSERT_STMT = "INSERT INTO COURSEPOST (COURSEPOSTNO, COURSENO, TITLE, POSTCONTENT, UPDATETIME) VALUES(COURSEPOST_SEQ.NEXTVAL, ?, ?, ?, CURRENT_TIMESTAMP)";
-	private static final String GET_ALL_STMT = "SELECT COURSEPOSTNO, COURSENO, TITLE, POSTCONTENT, TO_CHAR(UPDATETIME, 'YYYY-MM-DD HH24:MI:SS')UPDATETIME FROM COURSEPOST ORDER BY COURSEPOSTNO DESC";
-	private static final String GET_ONE_STMT = "SELECT COURSEPOSTNO, COURSENO, TITLE, POSTCONTENT, TO_CHAR(UPDATETIME, 'YYYY-MM-DD HH24:MI:SS')UPDATETIME FROM COURSEPOST WHERE COURSEPOSTNO=?";
+	private static final String GET_ALL_STMT = "SELECT COURSEPOSTNO, COURSENO, TITLE, POSTCONTENT, UPDATETIME FROM COURSEPOST ORDER BY COURSEPOSTNO DESC";
+	private static final String GET_ONE_STMT = "SELECT COURSEPOSTNO, COURSENO, TITLE, POSTCONTENT, UPDATETIME FROM COURSEPOST WHERE COURSEPOSTNO=?";
 	private static final String DELETE = "DELETE FROM COURSEPOST WHERE COURSEPOSTNO=?";
-	private static final String UPDATE = "UPDATE COURSEPOST SET COURSENO=?, TITLE=?, POSTCONTENT=? WHERE COURSEPOSTNO=?";
-	private static final String GET_COURSEPOST_BY_COURSENO = "SELECT COURSEPOSTNO, COURSENO, TITLE, POSTCONTENT, TO_CHAR(UPDATETIME,'YYYY-MM-DD HH24:MI:SS') UPDATETIME FROM COURSEPOST WHERE COURSENO =?";
+	private static final String UPDATE = "UPDATE COURSEPOST SET COURSENO=?, TITLE=?, POSTCONTENT=? UPDATETIME=? WHERE COURSEPOSTNO=?";
+	private static final String GET_COURSEPOST_BY_COURSENO = "SELECT COURSEPOSTNO, COURSENO, TITLE, POSTCONTENT, UPDATETIME FROM COURSEPOST WHERE COURSENO =?";
 
 	
 	@Override
@@ -31,6 +31,7 @@ public class CoursePostJDBCDAO implements CoursePostDAO_interface {
 			pstmt.setString(1, coursePostVO.getCourseNo());
 			pstmt.setString(2, coursePostVO.getTitle());
 			pstmt.setString(3, coursePostVO.getPostContent());
+			pstmt.setTimestamp(4, coursePostVO.getUpdateTime());
 
 			pstmt.executeUpdate();
 
@@ -70,7 +71,9 @@ public class CoursePostJDBCDAO implements CoursePostDAO_interface {
 			pstmt.setString(1, coursePostVO.getCourseNo());
 			pstmt.setString(2, coursePostVO.getTitle());
 			pstmt.setString(3, coursePostVO.getPostContent());
-			pstmt.setString(4, coursePostVO.getCoursePostNo());
+			pstmt.setTimestamp(4, coursePostVO.getUpdateTime());
+			pstmt.setString(5, coursePostVO.getCoursePostNo());
+			
 
 			pstmt.executeUpdate();
 

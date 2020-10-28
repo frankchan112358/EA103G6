@@ -52,7 +52,6 @@ public class CoursePostServlet extends HttpServlet {
 			res.setContentType("text/html;");			
 			session.setAttribute("courseWork", "coursePost");
 			req.setAttribute("banjiNo", courseVO.getBanjiNo());
-			req.setAttribute("coursePostList", new CoursePostService().getCoursePostByCourseNo(courseNo));
 			String url = "/back-end/coursepost/listAllCoursePost.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
@@ -157,14 +156,12 @@ public class CoursePostServlet extends HttpServlet {
 
 				String postContent = new String(req.getParameter("postContent").trim());
 
-				java.sql.Timestamp updateTime = java.sql.Timestamp.valueOf(req.getParameter("updateTime"));
 
 				CoursePostVO coursePostVO = new CoursePostVO();
 				coursePostVO.setCoursePostNo(coursePostNo);
 				coursePostVO.setCourseNo(courseNo);
 				coursePostVO.setTitle(title);
 				coursePostVO.setPostContent(postContent);
-				coursePostVO.setUpdateTime(updateTime);
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("coursePostVO", coursePostVO);
@@ -175,9 +172,9 @@ public class CoursePostServlet extends HttpServlet {
 				}
 
 				CoursePostService coursePostSvc = new CoursePostService();
-				coursePostVO = coursePostSvc.updateCoursePost(coursePostNo, courseNo, title, postContent, updateTime);
+				coursePostVO = coursePostSvc.updateCoursePost(coursePostNo, courseNo, title, postContent);
 
-				req.setAttribute("coursePostVO", coursePostVO);
+				req.setAttribute("banjiNo", courseVO.getBanjiNo());
 				String url = "/back-end/coursepost/listAllCoursePost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -206,15 +203,14 @@ public class CoursePostServlet extends HttpServlet {
 
 				String postContent = new String(req.getParameter("postContent").trim());
 
-				java.sql.Timestamp updateTime = java.sql.Timestamp.valueOf(req.getParameter("updateTime"));
 
 				CoursePostVO coursePostVO = new CoursePostVO();
 				coursePostVO.setCourseNo(courseNo);
 				coursePostVO.setTitle(title);
 				coursePostVO.setPostContent(postContent);
-				coursePostVO.setUpdateTime(updateTime);
 
 				if (!errorMsgs.isEmpty()) {
+					System.out.println("111");
 					req.setAttribute("coursePostVO", coursePostVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/addCoursePost.jsp");
 					failureView.forward(req, res);
@@ -222,13 +218,16 @@ public class CoursePostServlet extends HttpServlet {
 				}
 
 				CoursePostService coursePostSvc = new CoursePostService();
-				coursePostVO = coursePostSvc.addCoursePost(courseNo, title, postContent, updateTime);
+				coursePostVO = coursePostSvc.addCoursePost(courseNo, title, postContent);
+
+				req.setAttribute("banjiNo", courseVO.getBanjiNo());
 
 				String url = "/back-end/coursepost/listAllCoursePost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.put("⚠新增資料失敗⚠", e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/addCoursePost.jsp");
 				failureView.forward(req, res);
