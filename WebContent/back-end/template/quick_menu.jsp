@@ -5,13 +5,13 @@
     <label for="menu_open" class="menu-open-button ">
         <span class="app-shortcut-icon d-block"></span>
     </label>
-    <a href="" class="menu-item btn" data-toggle="tooltip" data-placement="left" title="返回頂部">
+    <a href="javascript:void(0)" class="menu-item btn" data-toggle="tooltip" data-placement="left" title="返回頂部">
         <i class="fal fa-arrow-up"></i>
     </a>
     <a href="<%=request.getContextPath() %>/test/testlogout.do" class="menu-item btn" data-toggle="tooltip" data-placement="left" title="登出">
         <i class="fal fa-sign-out"></i>
     </a>
-    <a href="" class="menu-item btn" data-action="app-fullscreen" data-toggle="tooltip" data-placement="left" title="全螢幕">
+    <a href="javascript:void(0)" class="menu-item btn" data-action="app-fullscreen" data-toggle="tooltip" data-placement="left" title="全螢幕">
         <i class="fal fa-expand"></i>
     </a>
 </nav>

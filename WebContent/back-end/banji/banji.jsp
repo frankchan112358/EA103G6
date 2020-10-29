@@ -117,17 +117,17 @@
                                     <div class="panel-content p-0">
                                         <ul class="list-group">
                                             <li class="list-group-item">
-                                                <a href="" title="班級公告">
+                                                <a href="javascript:void(0)" title="班級公告">
                                                     <span class="nav-link-text">班級公告</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="" title="班級公告">
+                                                <a href="javascript:void(0)" title="班級公告">
                                                     <span class="nav-link-text">班級公告</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="" title="班級公告">
+                                                <a href="javascript:void(0)" title="班級公告">
                                                     <span class="nav-link-text">班級公告</span>
                                                 </a>
                                             </li>
@@ -143,17 +143,17 @@
                                     <div class="panel-content p-0">
                                         <ul class="list-group">
                                             <li class="list-group-item">
-                                                <a href="" title="請假核准">
+                                                <a href="javascript:void(0)" title="請假核准">
                                                     <span class="nav-link-text">請假核准</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="" title="請假核准">
+                                                <a href="javascript:void(0)" title="請假核准">
                                                     <span class="nav-link-text">請假核准</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="" title="請假核准">
+                                                <a href="javascript:void(0)" title="請假核准">
                                                     <span class="nav-link-text">請假核准</span>
                                                 </a>
                                             </li>
@@ -169,17 +169,17 @@
                                     <div class="panel-content p-0">
                                         <ul class="list-group">
                                             <li class="list-group-item">
-                                                <a href="" title="檢舉審核">
+                                                <a href="javascript:void(0)" title="檢舉審核">
                                                     <span class="nav-link-text">檢舉審核</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="" title="檢舉審核">
+                                                <a href="javascript:void(0)" title="檢舉審核">
                                                     <span class="nav-link-text">檢舉審核</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="" title="檢舉審核">
+                                                <a href="javascript:void(0)" title="檢舉審核">
                                                     <span class="nav-link-text">檢舉審核</span>
                                                 </a>
                                             </li>

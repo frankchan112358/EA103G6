@@ -7,39 +7,23 @@
 <jsp:useBean id="videoSvc" scope="page" class="com.video.model.VideoService" />
 
 <%
-CourseVO choose_courseVO = (CourseVO) request.getAttribute("courseVO");
-List<CourseVO> courseList = courseSvc.getAll();
-
-TimetableService timetableSvc =new TimetableService();
-List<TimetableVO> timetableList = timetableSvc.getAll();
-
-VideoVO videoVO = (VideoVO) request.getAttribute("videoVO");
-List<VideoVO> videoList = videoSvc.getAll();
-TimetableVO timetableVO = (TimetableVO) request.getAttribute("timetableVO");
-
-pageContext.setAttribute("courseList", courseList);
-pageContext.setAttribute("timetableList", timetableList);
-pageContext.setAttribute("videoList", videoList);
-pageContext.setAttribute("choose_courseVO", choose_courseVO);
-
 %>
 
 <!DOCTYPE html>
 <html>
+
 <head>
-    <%@ include file="/back-end/template/head.jsp" %> 
-    <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath()%>/SmartAdmin4/css/datagrid/datatables/datatables.bundle.css">
+	<%@ include file="/back-end/template/head.jsp" %>
+	<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath()%>/SmartAdmin4/css/datagrid/datatables/datatables.bundle.css">
 
 
-<style>
-
-.table th, .table td {
-    vertical-align: middle;
-    text-align: center;  
-}
-
-
-</style>
+	<style>
+		.table th,
+		.table td {
+			vertical-align: middle;
+			text-align: center;
+		}
+	</style>
 
 </head>
 
@@ -62,7 +46,7 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 							<a id="aListAllCourse" banjiNo="${courseSvc.getOneCourse(courseNo).banjiNo}" href="javascript:void(0)">課程總覽</a>
 						</li>
 						<li class="breadcrumb-item">
-						影片管理
+							影片管理
 						</li>
 					</ol>
 					<div class="subheader">
@@ -73,7 +57,7 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 					</div>
 					<div class="row">
 						<div class="col-xl-12">
-						<jsp:include page="/back-end/course/courseNav.jsp"></jsp:include>
+							<jsp:include page="/back-end/course/courseNav.jsp"></jsp:include>
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
 									<h2>影片列表</h2>
@@ -81,67 +65,55 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 								<div class="panel-container show">
 									<div class="panel-content">
 										<!-- datatable start -->
-                      <table id="coursetable" class="table table-bordered table-hover table-striped w-100">
+										<table id="coursetable" class="table table-bordered table-hover table-striped w-100">
 											<thead style="background-color:#E5F4FF;">
 												<tr>
-													<th width="15%">課表編號</th>
-													<th width="15%">上課日期</th>
-													<th width="10%">時段</th>
-													<th width="60%">影片</th>
-
+													<th width="30%">上課日期</th>
+													<th width="30%">時段</th>
+													<th width="40%">影片</th>
 												</tr>
 											</thead>
 											<tbody>
-												 <c:forEach var="courseVO" items="${courseList}">
-												 	<c:if test="${courseVO.courseNo eq choose_courseVO.courseNo }">
-                                                    <c:forEach var="timetableVO" items="${timetableList}">                                                                                                                                                     
-                                                    	<c:if test="${courseVO.courseNo eq timetableVO.courseNo}">
-                                                    	<tr>
-                                                    		<td>${timetableVO.timetableNo}</td>
-                                                    		<td>${timetableVO.timetableDate}</td>
-                                                    		<td>${timetableVO.periodText}</td>
-                                                    		<td class="d-flex p-1 justify-content-center" >
-                                                     		<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)!=null}">
-                                                     			<FORM class="m-1 mb-0" METHOD="post" ACTION="<%=request.getContextPath()%>/video/video.do">
-																<button type="submit"  class="btn btn-success ">
-																<span class="fal fa-edit mr-1"></span>
-																<span>重新上傳</span>
-																</button>
-																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
-																<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
-																<input type="hidden" name="action" value="getOne_For_Update">
-															</FORM>
-															<FORM class="m-1 mb-0" METHOD="post" ACTION="<%=request.getContextPath()%>/video/video.do" style="margin-bottom:0px;">
-																<button type="submit" class="btn btn-danger">
-																<span class="fal fa-times mr-1"></span>
-																<span>下架影片</span>
-															  </button>
-																<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
-																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																<input type="hidden" name="action" value="delete">
-															</FORM>
-                                                     		</c:if>
-                                                     		
-                                                    		<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)==null}">
-                                                    			<FORM class="m-1 mb-0" METHOD="Post" ACTION="<%=request.getContextPath()%>/back-end/video/addVideo.jsp">
-																<button type="submit"  class="btn btn-info ">
-																<span class="fal fa-upload"></span>
-																<span>上傳影片</span>
-																</button>
-																
-																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
-															</FORM>
-                                                    		</c:if>
-                                                    		</td>
-                                                    		</tr>
-                                                    	</c:if>
-                                                    </c:forEach>
-                                                    </c:if>
-                                                 </c:forEach>
+												<c:forEach var="timetableVO" items="${courseVO.timetableList}">
+													<tr>
+														<td>${timetableVO.timetableDate}</td>
+														<td>${timetableVO.periodText}</td>
+														<td class="d-flex p-1 justify-content-center">
+															<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)!=null}">
+																<FORM class="m-1 mb-0" METHOD="post" ACTION="<%=request.getContextPath()%>/video/video.do">
+																	<button type="submit" class="btn btn-success ">
+																		<span class="fal fa-edit mr-1"></span>
+																		<span>重新上傳</span>
+																	</button>
+																	<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+																	<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
+																	<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
+																	<input type="hidden" name="action" value="getOne_For_Update">
+																</FORM>
+																<FORM class="m-1 mb-0" METHOD="post" ACTION="<%=request.getContextPath()%>/video/video.do" style="margin-bottom:0px;">
+																	<button type="submit" class="btn btn-danger">
+																		<span class="fal fa-times mr-1"></span>
+																		<span>下架影片</span>
+																	</button>
+																	<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
+																	<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+																	<input type="hidden" name="action" value="delete">
+																</FORM>
+															</c:if>
+															<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)==null}">
+																<FORM class="m-1 mb-0" METHOD="Post" ACTION="<%=request.getContextPath()%>/back-end/video/addVideo.jsp">
+																	<button type="submit" class="btn btn-info ">
+																		<span class="fal fa-upload"></span>
+																		<span>上傳影片</span>
+																	</button>
+																	<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+																	<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
+																</FORM>
+															</c:if>
+														</td>
+													</tr>
+												</c:forEach>
 											</tbody>
-
 										</table>
 										<!-- datatable end -->
 									</div>
@@ -150,41 +122,37 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 						</div>
 					</div>
 				</main>
+				<div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
+				<%@ include file="/back-end/template/footer.jsp" %>
+			</div>
+		</div>
+	</div>
 
-		
-              <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
-                <%@ include file="/back-end/template/footer.jsp" %>
-            </div>
-        </div>
-    </div>
-    
-    
-    <%@ include file="/back-end/template/quick_menu.jsp" %>
-    <%@ include file="/back-end/template/messager.jsp" %>
-    <%@ include file="/back-end/template/basic_js.jsp" %>
-    
-    
-        <script src="<%=request.getContextPath() %>/SmartAdmin4/js/datagrid/datatables/datatables.bundle.js"></script>
-     <script>
-    
-     
-            $(document).ready(function()
-            {
-                $('#coursetable').dataTable(
-                {
-                    responsive: true,
-                    language:{url:'<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json'},
-					"columnDefs":[{
-						"targets":[ -1, -2 ],
-						"orderable":false,
-					
-				}]
-                });
 
-								document.getElementById('aListAllCourse').addEventListener('click',function(e){
+	<%@ include file="/back-end/template/quick_menu.jsp" %>
+	<%@ include file="/back-end/template/messager.jsp" %>
+	<%@ include file="/back-end/template/basic_js.jsp" %>
+
+
+	<script src="<%=request.getContextPath() %>/SmartAdmin4/js/datagrid/datatables/datatables.bundle.js"></script>
+	<script>
+
+
+		$(document).ready(function () {
+
+			$('#coursetable').dataTable({
+					responsive: true,
+					language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' },
+					"columnDefs": [{
+						"targets": [-1, -2],
+						"orderable": false
+					}]
+				});
+
+			document.getElementById('aListAllCourse').addEventListener('click', function (e) {
 				e.preventDefault();
 				let _this = this;
-                let banjiNo = this.getAttribute('banjiNo');
+				let banjiNo = this.getAttribute('banjiNo');
 				let myForm = document.createElement('form');
 				document.body.appendChild(myForm);
 				myForm.action = '<%=request.getContextPath()%>/course/course.do';
@@ -192,12 +160,13 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 				let banjiNoInput = document.createElement('input');
 				banjiNoInput.type = 'hidden';
 				banjiNoInput.name = 'banjiNo';
-				banjiNoInput.value= banjiNo;
+				banjiNoInput.value = banjiNo;
 				myForm.append(banjiNoInput);
 				myForm.submit();
 			}, false);
 
-            });
-     </script>
+		});
+	</script>
 </body>
+
 </html>

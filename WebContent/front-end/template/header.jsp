@@ -3,7 +3,7 @@
 <header class="page-header" role="banner">
     <!-- we need this logo when user switches to nav-function-top -->
     <div class="page-logo">
-        <a href="" class="page-logo-link press-scale-down d-flex align-items-center position-relative" data-toggle="modal" data-target="#modal-shortcut">
+        <a href="javascript:void(0)" class="page-logo-link press-scale-down d-flex align-items-center position-relative" data-toggle="modal" data-target="#modal-shortcut">
             <i class="fal fa-thumbs-up" style="color: aliceblue;font-size: x-large;"></i>
             <span class="page-logo-text mr-1">Work Join Learn</span>
             <span class="position-absolute text-white opacity-50 small pos-top pos-right mr-2 mt-n2"></span>
@@ -11,17 +11,17 @@
     </div>
     <!-- DOC: nav menu layout change shortcut -->
     <div class="hidden-md-down dropdown-icon-menu position-relative">
-        <a href="" class="header-btn btn js-waves-off" data-action="toggle" data-class="nav-function-hidden" title="Hide Navigation">
+        <a href="javascript:void(0)" class="header-btn btn js-waves-off" data-action="toggle" data-class="nav-function-hidden" title="Hide Navigation">
             <i class="ni ni-menu"></i>
         </a>
         <ul>
             <li>
-                <a href="" class="btn js-waves-off" data-action="toggle" data-class="nav-function-minify" title="Minify Navigation">
+                <a href="javascript:void(0)" class="btn js-waves-off" data-action="toggle" data-class="nav-function-minify" title="Minify Navigation">
                     <i class="ni ni-minify-nav"></i>
                 </a>
             </li>
             <li>
-                <a href="" class="btn js-waves-off" data-action="toggle" data-class="nav-function-fixed" title="Lock Navigation">
+                <a href="javascript:void(0)" class="btn js-waves-off" data-action="toggle" data-class="nav-function-fixed" title="Lock Navigation">
                     <i class="ni ni-lock-nav"></i>
                 </a>
             </li>
@@ -29,19 +29,19 @@
     </div>
     <!-- DOC: mobile button appears during mobile width -->
     <div class="hidden-lg-up">
-        <a href="" class="header-btn btn press-scale-down" data-action="toggle" data-class="mobile-nav-on">
+        <a href="javascript:void(0)" class="header-btn btn press-scale-down" data-action="toggle" data-class="mobile-nav-on">
             <i class="ni ni-menu"></i>
         </a>
     </div>
     <div class="ml-auto d-flex">
         <!-- app message -->
-        <a href="" class="header-icon" data-toggle="modal" data-target=".js-modal-messenger">
+        <a href="javascript:void(0)" class="header-icon" data-toggle="modal" data-target=".js-modal-messenger">
             <i class="fal fa-comments"></i>
             <span class="badge badge-icon">!</span>
         </a>
         <!-- app notification -->
         <div>
-            <a href="" class="header-icon" data-toggle="dropdown" title="You got 2 notifications">
+            <a href="javascript:void(0)" class="header-icon" data-toggle="dropdown" title="You got 2 notifications">
                 <i class="fal fa-bell"></i>
                 <span class="badge badge-icon">2</span>
             </a>
@@ -77,7 +77,7 @@
                                             <span class="fs-nano text-muted mt-1">5 mins ago</span>
                                         </span>
                                         <div class="show-on-hover-parent position-absolute pos-right pos-bottom p-3">
-                                            <a href="" class="text-muted" title="delete"><i class="fal fa-trash-alt"></i></a>
+                                            <a href="javascript:void(0)" class="text-muted" title="delete"><i class="fal fa-trash-alt"></i></a>
                                         </div>
                                     </div>
                                 </li>
@@ -97,7 +97,7 @@
                                             <span class="fs-nano text-muted mt-1">5 mins ago</span>
                                         </span>
                                         <div class="show-on-hover-parent position-absolute pos-right pos-bottom p-3">
-                                            <a href="" class="text-muted" title="delete"><i class="fal fa-trash-alt"></i></a>
+                                            <a href="javascript:void(0)" class="text-muted" title="delete"><i class="fal fa-trash-alt"></i></a>
                                         </div>
                                     </div>
                                 </li>
@@ -117,7 +117,7 @@
                                             <span class="fs-nano text-muted mt-1">5 mins ago</span>
                                         </span>
                                         <div class="show-on-hover-parent position-absolute pos-right pos-bottom p-3">
-                                            <a href="" class="text-muted" title="delete"><i class="fal fa-trash-alt"></i></a>
+                                            <a href="javascript:void(0)" class="text-muted" title="delete"><i class="fal fa-trash-alt"></i></a>
                                         </div>
                                     </div>
                                 </li>
@@ -126,13 +126,13 @@
                     </div>
                 </div>
                 <div class="py-2 px-3 bg-faded d-block rounded-bottom text-right border-faded border-bottom-0 border-right-0 border-left-0">
-                    <a href="" class="fs-xs fw-500 ml-auto">觀看所有通知</a>
+                    <a href="javascript:void(0)" class="fs-xs fw-500 ml-auto">觀看所有通知</a>
                 </div>
             </div>
         </div>
         <!-- app user menu -->
         <div>
-            <a href="" data-toggle="dropdown" class="header-icon d-flex align-items-center justify-content-center ml-2">
+            <a href="javascript:void(0)" data-toggle="dropdown" class="header-icon d-flex align-items-center justify-content-center ml-2">
                 <c:if test="${userVO.photo != null}" var="condition" scope="page">
                     <img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${userVO.userNo}" class="rounded-circle profile-image">
                 </c:if>
