@@ -22,6 +22,15 @@
 <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath()%>/SmartAdmin4/css/datagrid/datatables/datatables.bundle.css">
 
 <style>
+
+th{
+font-size: 15px;
+}
+
+td{
+font-size: 15px;
+}
+
 .table th, .table td {
 	vertical-align: middle;
 	text-align: center;

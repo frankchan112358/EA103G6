@@ -2,10 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="/back-end/template/check.jsp"%>
-<%@ page import="com.coursepost.model.*"%>
+<%@ page import="com.teachingplan.model.*"%>
 
 <%
-	CoursePostVO coursePostVO = (CoursePostVO) request.getAttribute("coursePostVO");
+	TeachingPlanVO teachingPlanVO = (TeachingPlanVO) request.getAttribute("teachingPlanVO");
 %>
 
 
@@ -17,13 +17,7 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 
 <style>
-.form-group{
-font-size: 15px;
-}
 
-.form-control{
-font-size: 15px;
-}
 
 </style>
 </head>
@@ -47,38 +41,45 @@ font-size: 15px;
 							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/coursepost/listAllCoursePost.jsp">課程公告管理</a>
+							<a href="<%=request.getContextPath()%>/back-end/teachingplan/listAllTeachingPlan.jsp">教學計劃管理</a>
 						</li>
-						<li class="breadcrumb-item">課程公告修改</li>
+						<li class="breadcrumb-item">教學計劃修改</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
 							<i class='subheader-icon fal fa-comment-alt-edit mr-1'></i>
-							課程公告修改
+							教學計劃修改
 						</h1>
 					</div>
 					<div class="row align-items-center justify-content-center">
 						<div class="col-10">
 							<div id="panel-2" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
-									<h2>課程公告修改</h2>
+									<h2>教學計劃修改</h2>
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
 
-										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/coursePost/coursePost.do" name="form1" class="was-validated">
+										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/teachingPlan/teachingPlan.do" name="form1" class="was-validated">
 
 										
 											<div class="form-group">
-												<label class="form-label">公告標題<span class="text-danger">*</span></label>
-												<input type="text" name="title" class="form-control" value="${coursePostVO.title}" required placeholder="公告標題"/>
-												<font color=red>${errorMsgs.title}</font>
-												<div class="invalid-feedback">請填寫公告標題.</div>
+												<label class="form-label">週次<span class="text-danger">*</span></label>
+												<input class="form-control" type="number" name="week" min="0" value="${teachingPlanVO.week}" required placeholder="週次">
+												<font color=red>${errorMsgs.week}</font>
+												<div class="invalid-feedback">請填寫週次.</div>
 											</div>
 
 											<div class="form-group">
-												<label class="form-label">公告內容</label>
-												<textarea class="form-control" name="postContent" rows="5" placeholder="公告內容">${coursePostVO.postContent}</textarea>
+												<label class="form-label">堂數<span class="text-danger">*</span></label>
+												<input class="form-control" type="number" name="lesson" min="0" value="${teachingPlanVO.lesson}" required placeholder="堂數">
+												<font color=red>${errorMsgs.lesson}</font>
+												<div class="invalid-feedback">請填寫堂數.</div>
+											</div>
+											
+											<div class="form-group">
+												<label class="form-label">教學內容</label>
+												<textarea class="form-control" name="planContent" maxlength="200" rows="5" placeholder="教學內容，字數最多200字">${teachingPlanVO.planContent}</textarea>
 											</div>
 											
 
@@ -87,7 +88,7 @@ font-size: 15px;
 													<span>送出</span>
 												</button>
 												<input type="hidden" name="action" value="update">
-												<input type="hidden" name="coursePostNo" value="${coursePostVO.coursePostNo}">
+												<input type="hidden" name="teachingPlanNo" value="${teachingPlanVO.teachingPlanNo}">
 											</div>
 										</FORM>
 									</div>

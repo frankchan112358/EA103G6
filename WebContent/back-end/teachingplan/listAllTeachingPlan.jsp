@@ -33,6 +33,12 @@ font-size: 15px;
 table.dataTable tr.dtrg-group.dtrg-level-0 td {
     font-size: 20px;
 }
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+
 </style>
 
 </head>
@@ -72,8 +78,8 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
-										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/coursePost/coursePost.do">
-											<button id="addCoursePost" type="submit" class="btn btn-success waves-effect waves-themed float-left">
+										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/teachingPlan/teachingPlan.do">
+											<button type="submit" class="btn btn-success waves-effect waves-themed float-left">
 												<span class="far fa-plus-circle mr-1"></span>
 												<span>新增</span>
 											</button>
@@ -86,7 +92,7 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 												<tr>
 													<th>週次</th>
 													<th>堂數</th>
-													<th>教學內容</th>
+													<th width="60%">教學內容</th>
 													<th width="20%">操作</th>
 												</tr>
 											</thead>
@@ -97,7 +103,7 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 														<td align="center">${teachingPlanVO.lesson}</td>
 														<td align="center">${teachingPlanVO.planContent}</td>
 														
-														<td class="d-flex p-1 justify-content-center" >
+														<td class="d-flex p-1 justify-content-center ">
 															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/teachingPlan/teachingPlan.do" style="margin-bottom: 0px;" class="m-1">
 																<button type="submit" class="btn btn-outline-primary btn-icon rounded-circle">
 																<i class="fal fa-edit"></i>

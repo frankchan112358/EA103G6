@@ -92,6 +92,7 @@ font-size: 15px;
                                             <table id="coursetable" class="table table-bordered table-hover table-striped w-100">
 											<thead style="background-color:#E5F4FF;">
 												<tr>
+													<th>課程編號</th>
 													<th>課程名稱</th>
 													<th>班級</th>
 													<th>講師</th>
@@ -106,6 +107,7 @@ font-size: 15px;
 											<tbody>
 												<c:forEach var="courseVO" items="${courseList}">
 												<tr onclick="location.href='<%=request.getContextPath()%>/course/course.do?action=getOne_For_Display&courseNo=${courseVO.courseNo}';" style="cursor: pointer;" >
+														<td>${courseVO.courseNo}</td>
 														<td>${courseVO.courseName}</td>
 														<td>${banjiSvc.getOneBanji(courseVO.banjiNo).banjiName}</td>
 														<td>${teacherSvc.getOneTeacher(courseVO.teacherNo).teacherName}</td>

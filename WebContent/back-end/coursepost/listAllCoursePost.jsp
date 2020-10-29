@@ -7,7 +7,9 @@
 
 <%
 CoursePostVO coursePostVO = (CoursePostVO) request.getAttribute("coursePostVO");
+
 %>
+
 
 <jsp:useBean id="coursePostSvc" scope="page" class="com.coursepost.model.CoursePostService" />
 
@@ -20,18 +22,23 @@ CoursePostVO coursePostVO = (CoursePostVO) request.getAttribute("coursePostVO");
 
 
 <style>
+
+
 th{
 font-size: 15px;
 }
 
 td{
 font-size: 15px;
+
 }
 
 .table th, .table td {
 	vertical-align: middle;
 	text-align: center;
 }
+
+
 </style>
 
 </head>
@@ -83,17 +90,19 @@ font-size: 15px;
 										<table id="coursePostTable" class="table table-bordered table-hover table-striped w-100">
 											<thead style="background-color: #E5F4FF;">
 												<tr>
-													<th>公告標題</th>
-													<th>公告內容</th>
-													<th>公告時間</th>
+													<th>公告編號</th>
+													<th width="50%">公告標題</th>
+													<th width="20%">公告時間</th>
 													<th width="20%">操作</th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach var="coursePostVO" items="${coursePostSvc.getCoursePostByCourseNo(courseNo)}">
+<%-- 												<tr data-toggle="modal" data-id="${coursePostVO.coursePostNo}" data-target="#coursePostModal"> --%>
 												<tr onclick="location.href='<%=request.getContextPath()%>/coursePost/coursePost.do?action=getOne_For_Display&coursePostNo=${coursePostVO.coursePostNo}';" style="cursor: pointer;" >
+														
+														<td>${coursePostVO.coursePostNo}</td>
 														<td>${coursePostVO.title}</td>
-														<td>${coursePostVO.postContent}</td>
 														<td>
 															<fmt:formatDate value="${coursePostVO.updateTime}" pattern="yyyy年MM月dd日 HH'點'mm'分'" />
 														</td>
@@ -113,11 +122,42 @@ font-size: 15px;
 																<input type="hidden" name="action" value="delete">
 															</FORM>
 														</td>
-													</tr>
+<!-- 													</tr> -->
 												</c:forEach>
 											</tbody>
 
 										</table>
+<!-- 										     <div class="modal fade" id="coursePostModal" tabindex="-1" role="dialog" aria-hidden="true"> -->
+<!--                                                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document"> -->
+<!--                                                     <div class="modal-content"> -->
+<!--                                                         <div class="modal-header"> -->
+<!--                                                             <h5 class="modal-title">Modal title</h5> -->
+<!--                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!--                                                                 <span aria-hidden="true"><i class="fal fa-times"></i></span> -->
+<!--                                                             </button> -->
+<!--                                                         </div> -->
+<!--                                                         <div class="modal-body" id="coursePostDetails"> -->
+<!--  															<table id="teachingPlanTable" class="table table-bordered table-hover table-striped w-100"> -->
+<!-- 																<tr> -->
+<!-- 																<th>公告標題</th> -->
+<%-- 																<td>${coursePostVO.title}</td> --%>
+<!-- 																</tr>				 -->
+<!-- 																<tr> -->
+<!-- 																<th>公告內容</th> -->
+<%-- 																<td  width="85%">${coursePostVO.postContent}</td> --%>
+<!-- 																</tr> -->
+<!-- 																<tr> -->
+<!-- 																<th>公告時間</th> -->
+<%-- 																<td class="updateTime"><fmt:formatDate value="${coursePostVO.updateTime}" pattern="yyyy年MM月dd日 HH'點'mm'分'" /></td> --%>
+<!-- 																</tr> -->
+<!-- 																</table>                                                            -->
+<!--                                                         </div> -->
+<!--                                                         <div class="modal-footer"> -->
+<!--                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+<!--                                                         </div> -->
+<!--                                                     </div> -->
+<!--                                                 </div> -->
+<!--                                             </div> -->
 										<!-- datatable end -->
 									</div>
 								</div>

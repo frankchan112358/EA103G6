@@ -113,7 +113,7 @@ public class TeachingPlanServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				String teachingPlanNo = new String(req.getParameter("teachingPlanNO").trim());
+				String teachingPlanNo = new String(req.getParameter("teachingPlanNo").trim());
 
 				TeachingPlanService teachingPlanSvc = new TeachingPlanService();
 				TeachingPlanVO teachingPlanVO = teachingPlanSvc.getOneTeachingPlan(teachingPlanNo);
@@ -177,7 +177,7 @@ public class TeachingPlanServlet extends HttpServlet {
 						planContent);
 
 				req.setAttribute("teachingPlanVO", teachingPlanVO);
-				String url = "/back-end/teachingplan/listOneTeachingPlan.jsp";
+				String url = "/back-end/teachingplan/listAllTeachingPlan.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 

@@ -2,13 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="/back-end/template/check.jsp"%>
-<%@ page import="com.coursepost.model.*"%>
+<%@ page import="com.teachingplan.model.*"%>
 <%@ page import="java.util.*"%>
 
 
 <%
-	CoursePostService coursePostSvc = new CoursePostService();
-	List<CoursePostVO> list = coursePostSvc.getAll();
+	TeachingPlanService teachingPlanSvc = new TeachingPlanService();
+	List<TeachingPlanVO> list = teachingPlanSvc.getAll();
 	pageContext.setAttribute("list", list);
 %>
 
@@ -35,7 +35,10 @@ font-size: 15px;
 	text-align: center;
 }
 
-
+.form-row {
+   margin:auto;
+   margin-bottom: 20px;
+}
 
 </style>
 
@@ -63,14 +66,14 @@ font-size: 15px;
 							<a id="aListAllCourse" banjiNo="${courseVO.banjiNo}" href="javascript:void(0)">課程總覽</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/coursepost/listAllCoursePost.jsp">課程公告管理</a>
+							<a href="<%=request.getContextPath()%>/back-end/teachingplan/listAllTeachingPlan.jsp">教學計劃管理</a>
 						</li>
-						<li class="breadcrumb-item">課程公告資料</li>
+						<li class="breadcrumb-item">教學計劃資料</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class='subheader-icon fal fa-calendar-edit'></i>
-							課程公告管理
+							<i class='subheader-icon fal fa-chalkboard-teacher'></i>
+							教學計劃資料
 						</h1>
 					</div>
 					<div class="row align-items-center justify-content-center">
@@ -78,25 +81,24 @@ font-size: 15px;
 					<jsp:include page="/back-end/course/courseNav.jsp"></jsp:include>
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
-									<h2>課程公告資料</h2>
+									<h2>教學計劃資料</h2>
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
 										<!-- datatable start -->
-										<table class="table table-bordered table-hover table-striped w-100" style="width:100%;table-layout:fixed">
+										<table class="table table-bordered table-hover table-striped w-100">
 											<tr>
-												<th width="20%">公告標題</th>
-												<td>${coursePostVO.title}</td>
+												<th>週次</th>
+												<td>第${teachingPlanVO.week}週</td>
 											</tr>
 											<tr>
-												<th>公告內容</th>
-												<td>${coursePostVO.postContent}</td>
+												<th>堂數</th>
+												<td>${teachingPlanVO.lesson}</td>
 											</tr>
 											<tr>
-												<th>公告時間</th>
-												<td><fmt:formatDate value="${coursePostVO.updateTime}" pattern="yyyy年MM月dd日 HH'點'mm'分'" /></td>
+												<th>教學內容</th>
+												<td  width="85%">${teachingPlanVO.planContent}</td>
 											</tr>
-											
 										</table>
 										<!-- datatable end -->
 									</div>
@@ -139,7 +141,7 @@ font-size: 15px;
 				myForm.append(banjiNoInput);
 				myForm.submit();
 			}, false);
-		
+
 	});		
 	</script>
 </body>
