@@ -22,123 +22,71 @@
 </div>
 
 <script>
-	function courseNav(){
-		let _courseWork = '${param.courseWork}';
+	function courseNav() {
+		let _courseWork = '${courseWork}';
 		$(`[courseWork='${'${_courseWork}'}']`).addClass('active');
 		if (_courseWork == '') {
 			$(`[courseWork=courseInfo]`).addClass('active');
 		}
-		$(document).on('click','a.courseWork',function(e){
+		$(document).on('click', 'a.courseWork', function (e) {
 			let courseWork = this.getAttribute('courseWork');
 			if (courseWork == '' || courseWork == 'courseInfo') {
 				e.preventDefault();
-
 				let myForm = document.createElement('form');
 				document.body.appendChild(myForm);
 				myForm.action = '<%=request.getContextPath()%>/course/course.do';
 				myForm.method = 'POST';
-
-				let inputAction = document.createElement('input');
-				inputAction.type = 'hidden';
-				inputAction.name = 'action';
-				inputAction.value = 'getOne_For_Display';
-				myForm.append(inputAction);
-
-				let inputCourseNo = document.createElement('input');
-				inputCourseNo.type = 'hidden';
-				inputCourseNo.name = 'courseNo';
-				inputCourseNo.value = '${courseNo}';
-				myForm.append(inputCourseNo);
-				
-				let inputCourseWork = document.createElement('input');
-				inputCourseWork.type = 'hidden';
-				inputCourseWork.name = 'courseWork';
-				inputCourseWork.value = 'courseInfo';
-				myForm.append(inputCourseWork);
-
+				myForm.append(courseNavInput('hidden','action','getOne_For_Display'));
+				myForm.append(courseNavInput('hidden','courseNo','${courseNo}'));
 				myForm.submit();
 			}
 			if (courseWork == 'coursePost') {
 				e.preventDefault();
-
 				let myForm = document.createElement('form');
 				document.body.appendChild(myForm);
 				myForm.action = '<%=request.getContextPath()%>/coursePost/coursePost.do';
 				myForm.method = 'POST';
-
-				let inputCourseWork = document.createElement('input');
-				inputCourseWork.type = 'hidden';
-				inputCourseWork.name = 'courseWork';
-				inputCourseWork.value = 'coursePost';
-				myForm.append(inputCourseWork);
-
-				myForm.submit();				
+				myForm.submit();
 			}
 			if (courseWork == 'teachingPlan') {
 				e.preventDefault();
-
 				let myForm = document.createElement('form');
 				document.body.appendChild(myForm);
 				myForm.action = '<%=request.getContextPath()%>/teachingPlan/teachingPlan.do';
 				myForm.method = 'POST';
-
-				let inputCourseWork = document.createElement('input');
-				inputCourseWork.type = 'hidden';
-				inputCourseWork.name = 'courseWork';
-				inputCourseWork.value = 'teachingPlan';
-				myForm.append(inputCourseWork);
-
-				myForm.submit();					
+				myForm.submit();
 			}
 			if (courseWork == 'courseVideo') {
 				e.preventDefault();
-
 				let myForm = document.createElement('form');
 				document.body.appendChild(myForm);
 				myForm.action = '<%=request.getContextPath()%>/course/courseTT.do';
 				myForm.method = 'POST';
-
-				let inputAction = document.createElement('input');
-				inputAction.type = 'hidden';
-				inputAction.name = 'action';
-				inputAction.value = 'getTTDisplayList';
-				myForm.append(inputAction);
-
-				let inputCourseWork = document.createElement('input');
-				inputCourseWork.type = 'hidden';
-				inputCourseWork.name = 'courseWork';
-				inputCourseWork.value = 'courseVideo';
-				myForm.append(inputCourseWork);
-
-				myForm.submit();				
+				myForm.append(courseNavInput('hidden','action','getTTDisplayList'));
+				myForm.submit();
 			}
 			if (courseWork == 'teachingFile') {
 				e.preventDefault();
-
 				let myForm = document.createElement('form');
 				document.body.appendChild(myForm);
 				myForm.action = '<%=request.getContextPath()%>/course/courseTT.do';
 				myForm.method = 'POST';
-
-				let inputAction = document.createElement('input');
-				inputAction.type = 'hidden';
-				inputAction.name = 'action';
-				inputAction.value = 'getTFDisplayList';
-				myForm.append(inputAction);
-
-				let inputCourseWork = document.createElement('input');
-				inputCourseWork.type = 'hidden';
-				inputCourseWork.name = 'courseWork';
-				inputCourseWork.value = 'teachingFile';
-				myForm.append(inputCourseWork);
-
-				myForm.submit();							
+				myForm.append(courseNavInput('hidden','action','getTFDisplayList'));
+				myForm.submit();
 			}
 		});
 	}
 
+	function courseNavInput(type, name, value) {
+		let courseInput = document.createElement('input');
+		courseInput.type = type;
+		courseInput.name = name;
+		courseInput.value = value;
+		return courseInput;
+	}
+
 	//這個寫法不安全，應該要把courseNav();，放到有用這個courseNav.jsp的jsp的document.ready裡面
-	window.onload = function() {
+	window.onload = function () {
 		courseNav();
 	};
 

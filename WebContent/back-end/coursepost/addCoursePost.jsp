@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.coursepost.model.*"%>
-
+<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 <%
 	CoursePostVO coursePostVO = (CoursePostVO) request.getAttribute("coursePostVO");
 %>
@@ -34,7 +34,10 @@
 							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a id="aListAllCourse" banjiNo="${banjiNo}" href="javascript:void(0)">課程總覽</a>
+							<a id="aListAllCourse" banjiNo="${courseSvc.getOneCourse(courseNo).banjiNo}" href="javascript:void(0)">課程總覽</a>
+						</li>
+						<li class="breadcrumb-item">
+							<a id="aListAllCoursePost" href="javascript:void(0)">課程公告管理</a>
 						</li>
 						<li class="breadcrumb-item">課程公告新增</li>
 					</ol>
@@ -113,7 +116,17 @@
 				myForm.append(banjiNoInput);
 				myForm.submit();
 			});
-			
+
+			document.getElementById('aListAllCoursePost').addEventListener('click',function(e){
+				e.preventDefault();
+				let _this = this;
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/coursePost/coursePost.do';
+				myForm.method = 'POST';
+				myForm.submit();
+			});
+
 			// Fetch all the forms we want to apply custom Bootstrap validation styles to
 			var forms = document
 					.getElementsByClassName('needs-validation');

@@ -56,7 +56,7 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>
+							<a id="aListAllCourse" banjiNo="${courseSvc.getOneCourse(courseNo).banjiNo}" href="javascript:void(0)">課程總覽</a>
 						</li>
 						<li class="breadcrumb-item">
 							教材管理
@@ -64,7 +64,7 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class="fas fa-video" style="color: #374EFA;"></i>
+							<i class="subheader-icon fal fa-file-code"></i>
 							教材管理
 						</h1>
 					</div>
@@ -106,11 +106,11 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 																			<td>${courseVO.courseNo}</td>
 																			<td>${teachingFileVO.teachingFileNo}</td>
 																			<td>${teachingFileVO.teachingFileName}</td>
-																			<td>
+																			<td class="d-flex p-1 justify-content-center">
 																			
-																				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/teachingFile/download.do">
+																				<FORM  class="m-1 mb-0" METHOD="post" ACTION="<%=request.getContextPath()%>/teachingFile/download.do">
 																				<button id="addCourse" type="submit" class="btn btn-success">
-																					<span class="far fa-plus-circle mr-1"></span>
+																					<span class=" fal fa-file-code mr-1"></span>
 																					<span>預覽</span>
 																				</button>
 																				<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
@@ -118,19 +118,20 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 																				<input type="hidden" name="teachingFileNo" value="${teachingFileVO.teachingFileNo}">
 																				<input type="hidden" name="action" value="preRead">
 																			</FORM>
-																			<br>
-																				<button id="addCourse" type="submit" class="btn btn-primary">
+
+																				<button id="addCourse" type="submit" class="m-1 mb-0 btn btn-primary">
+																					<span class="fal fa-file-download mr-1"></span>
+																					<span>下載</span>
 																					<a href="<%=request.getContextPath()%>/teachingFile/download.do?${teachingFileVO.teachingFileNo}" download>
-																					<span class="far fa-plus-circle mr-1" style="color:white">下載</span>
+																					
 																			    	<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
 																			    	<input type="hidden" name="teachingFileNo" value="${teachingFileVO.teachingFileNo}">
 																			    	</a>
 																				</button>
-																			<br>
-																			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/teachingFile/teachingFile.do">
-																				<br>
+
+																			<FORM class="m-1 mb-0" METHOD="post" ACTION="<%=request.getContextPath()%>/teachingFile/teachingFile.do">
 																				<button id="addCourse" type="submit" class="btn btn-danger">
-																					<span class="far fa-plus-circle mr-1"></span>
+																					<span class="fal fa-times mr-1"></span>
 																					<span>刪除</span>
 																				</button>
 																				<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
@@ -185,6 +186,23 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 
 					}]
 				});
+
+				document.getElementById('aListAllCourse').addEventListener('click',function(e){
+				e.preventDefault();
+				let _this = this;
+                let banjiNo = this.getAttribute('banjiNo');
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/course/course.do';
+				myForm.method = 'POST';
+				let banjiNoInput = document.createElement('input');
+				banjiNoInput.type = 'hidden';
+				banjiNoInput.name = 'banjiNo';
+				banjiNoInput.value= banjiNo;
+				myForm.append(banjiNoInput);
+				myForm.submit();
+			}, false);
+
 		});
 	</script>
 </body>
