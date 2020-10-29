@@ -1,13 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ include file="/back-end/template/check.jsp"%>
-<%@ page import="com.coursepost.model.*"%>
-<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
-<%
-	CoursePostVO coursePostVO = (CoursePostVO) request.getAttribute("coursePostVO");
-%>
+<%@ page import="com.teachingplan.model.*"%>
 
+<%
+	TeachingPlanVO teachingPlanVO = (TeachingPlanVO) request.getAttribute("teachingPlanVO");
+%>
 
 
 <!DOCTYPE html>
@@ -24,7 +21,6 @@ font-size: 15px;
 .form-control{
 font-size: 15px;
 }
-
 </style>
 </head>
 
@@ -44,52 +40,54 @@ font-size: 15px;
 							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a id="aListAllCourse" banjiNo="${courseSvc.getOneCourse(courseNo).banjiNo}" href="javascript:void(0)">課程總覽</a>
+							<a id="aListAllCourse" banjiNo="${banjiNo}" href="javascript:void(0)">課程總覽</a>
 						</li>
 						<li class="breadcrumb-item">
-
-							<a href="<%=request.getContextPath()%>/back-end/coursepost/listAllCoursePost.jsp">課程公告管理</a>
-
+							<a href="<%=request.getContextPath()%>/back-end/teachingplan/listAllTeachingPlan.jsp">教學計劃管理</a>
 						</li>
-						<li class="breadcrumb-item">課程公告修改</li>
+						<li class="breadcrumb-item">教學計劃新增</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class='subheader-icon fal fa-comment-alt-edit mr-1'></i>
-							課程公告修改
+							<i class='subheader-icon far fa-plus-circle mr-1'></i>
+							教學計劃新增
 						</h1>
 					</div>
 					<div class="row align-items-center justify-content-center">
 						<div class="col-10">
 							<div id="panel-2" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
-									<h2>課程公告修改</h2>
+									<h2>教學計劃新增</h2>
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
 
-										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/coursePost/coursePost.do" name="form1" class="was-validated">
-
-										
-											<div class="form-group">
-												<label class="form-label">公告標題<span class="text-danger">*</span></label>
-												<input type="text" name="title" class="form-control" value="${coursePostVO.title}" required placeholder="公告標題"/>
-												<font color=red>${errorMsgs.title}</font>
-												<div class="invalid-feedback">請填寫公告標題.</div>
-											</div>
+										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/teachingPlan/teachingPlan.do" name="form1" class="needs-validation" novalidate>
 
 											<div class="form-group">
-												<label class="form-label">公告內容</label>
-												<textarea class="form-control" name="postContent" rows="5" placeholder="公告內容">${coursePostVO.postContent}</textarea>
+												<label class="form-label">週次<span class="text-danger">*</span></label>
+												<input class="form-control" type="number" name="week" min="0" value="${teachingPlanVO.week}" required placeholder="週次">
+												<font color=red>${errorMsgs.week}</font>
+												<div class="invalid-feedback">請填寫週次.</div>
 											</div>
 											
+											<div class="form-group">
+												<label class="form-label">堂數<span class="text-danger">*</span></label>
+												<input class="form-control" type="number" name="lesson" min="0" value="${teachingPlanVO.lesson}" required placeholder="堂數">
+												<font color=red>${errorMsgs.lesson}</font>
+												<div class="invalid-feedback">請填寫堂數.</div>
+											</div>
+
+
+											<div class="form-group">
+												<label class="form-label">教學內容</label>
+												<textarea class="form-control" name="planContent" maxlength="200" rows="5" placeholder="教學內容，字數最多200字">${teachingPlanVO.planContent}</textarea>
+											</div>
+
 
 											<div class="form-row align-items-center justify-content-center">
-												<button type="submit" class="btn btn-primary justify-content-center">
-													<span>送出</span>
-												</button>
-												<input type="hidden" name="action" value="update">
-												<input type="hidden" name="coursePostNo" value="${coursePostVO.coursePostNo}">
+												<input type="hidden" name="action" value="insert">
+												<button type="submit" class="btn btn-primary justify-content-center">送出</button>
 											</div>
 										</FORM>
 									</div>
@@ -110,14 +108,11 @@ font-size: 15px;
 
 
 
-
 	<div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
 
-	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
-    
- 
 	<script>
+    
         $(function(){
 			document.getElementById('aListAllCourse').addEventListener('click',function(e){
 				e.preventDefault();
@@ -134,17 +129,7 @@ font-size: 15px;
 				myForm.append(banjiNoInput);
 				myForm.submit();
 			});
-
-			document.getElementById('aListAllCoursePost').addEventListener('click',function(e){
-				e.preventDefault();
-				let _this = this;
-				let myForm = document.createElement('form');
-				document.body.appendChild(myForm);
-				myForm.action = '<%=request.getContextPath()%>/coursePost/coursePost.do';
-				myForm.method = 'POST';
-				myForm.submit();
-			});
-
+			
 			// Fetch all the forms we want to apply custom Bootstrap validation styles to
 			var forms = document
 					.getElementsByClassName('needs-validation');
@@ -161,6 +146,9 @@ font-size: 15px;
 						}, false);
 					});
 		});
+
+
 	</script>
+
 </body>
 </html>

@@ -14,7 +14,13 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 
 <style>
+.form-group{
+font-size: 15px;
+}
 
+.form-control{
+font-size: 15px;
+}
 </style>
 </head>
 
@@ -39,6 +45,9 @@
 						<li class="breadcrumb-item">
 							<a id="aListAllCoursePost" href="javascript:void(0)">課程公告管理</a>
 						</li>
+						<li class="breadcrumb-item">
+							<a href="<%=request.getContextPath()%>/back-end/coursepost/listAllCoursePost.jsp">課程公告管理</a>
+						</li>
 						<li class="breadcrumb-item">課程公告新增</li>
 					</ol>
 					<div class="subheader">
@@ -59,8 +68,8 @@
 										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/coursePost/coursePost.do" name="form1" class="needs-validation" novalidate>
 
 											<div class="form-group">
-												<label class="form-label">公告標題</label>
-												<input id="title" type="text" name="title" class="form-control" value="${coursePostVO.title}" required />
+												<label class="form-label">公告標題 <span class="text-danger">*</span></label>
+												<input type="text" name="title" class="form-control" value="${coursePostVO.title}" required placeholder="公告標題"/>
 												<font color=red>${errorMsgs.title}</font>
 												<div class="invalid-feedback">請填寫公告標題.</div>
 											</div>
@@ -68,13 +77,13 @@
 
 											<div class="form-group">
 												<label class="form-label">公告內容</label>
-												<textarea id="postContent" class="form-control" name="postContent" rows="5">${coursePostVO.postContent}</textarea>
+												<textarea class="form-control" name="postContent" rows="5" placeholder="公告內容">${coursePostVO.postContent}</textarea>
 											</div>
 
 
 											<div class="form-row align-items-center justify-content-center">
 												<input type="hidden" name="action" value="insert">
-												<button type="submit" class="btn btn-primary justify-content-center" id="addCoursePost">送出</button>
+												<button type="submit" class="btn btn-primary justify-content-center">送出</button>
 											</div>
 										</FORM>
 									</div>

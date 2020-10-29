@@ -18,6 +18,15 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 
 <style>
+
+.form-group{
+font-size: 15px;
+}
+
+.form-control{
+font-size: 15px;
+}
+
 .xdsoft_datetimepicker .xdsoft_datepicker {
 	width: 300px; /* width:  300px; */
 }
@@ -85,8 +94,8 @@ img {
 											<input id="basicCourseNo" type="hidden" name="basicCourseNo" class="form-control" value="BC001" readonly />
 
 											<div class="form-group">
-												<label class="form-label">課程名稱</label>
-												<input id="courseName" type="text" name="courseName" class="form-control" value="${courseVO.courseName}" required />
+												<label class="form-label">課程名稱<span class="text-danger">*</span></label>
+												<input id="courseName" type="text" name="courseName" class="form-control" value="${courseVO.courseName}" required placeholder="課程名稱"/>
 												<font color=red>${errorMsgs.courseName}</font>
 												<div class="invalid-feedback">請填寫課程名稱.</div>
 											</div>
@@ -94,7 +103,7 @@ img {
 
 											<div class="form-group">
 												<label class="form-label">課程大綱</label>
-												<textarea id="courseOutline" class="form-control" name="courseOutline" rows="5">${courseVO.courseOutline}</textarea>
+												<textarea id="courseOutline" class="form-control" name="courseOutline" rows="5" placeholder="課程大綱">${courseVO.courseOutline}</textarea>
 											</div>
 
 
@@ -103,7 +112,7 @@ img {
 											</c:if>
 											<c:if test="${checkBanjiNo==false}">
 												<div class="form-group">
-													<label class="form-label">班級</label>
+													<label class="form-label">班級<span class="text-danger">*</span></label>
 													<select class="custom-select form-control" name="banjiNo">
 														<option value="">請選擇班級</option>
 														<c:forEach var="banjiVO" items="${banjiSvc.all}">
@@ -116,7 +125,7 @@ img {
 
 
 											<div class="form-group">
-												<label class="form-label">講師</label>
+												<label class="form-label">講師<span class="text-danger">*</span></label>
 												<select class="custom-select form-control" name="teacherNo" required>
 													<option value="">請選擇講師</option>
 													<c:forEach var="teacherVO" items="${teacherSvc.all}">
@@ -129,7 +138,7 @@ img {
 
 
 											<div class="form-group">
-												<label class="form-label">教室</label>
+												<label class="form-label">教室<span class="text-danger">*</span></label>
 												<select class="custom-select form-control" name="classroomNo" required>
 													<option value="">請選擇教室</option>
 													<c:forEach var="classroomVO" items="${classroomSvc.all}">
@@ -142,22 +151,22 @@ img {
 
 
 											<div class="form-group">
-												<label class="form-label">堂數</label>
-												<input class="form-control" type="number" name="lesson" min="0" value="${courseVO.lesson}" required>
+												<label class="form-label">堂數<span class="text-danger">*</span></label>
+												<input class="form-control" type="number" name="lesson" min="0" value="${courseVO.lesson}" required placeholder="堂數">
 												<font color=red>${errorMsgs.lesson}</font>
 												<div class="invalid-feedback">請填寫堂數.</div>
 											</div>
 
 
 											<div class="form-group">
-												<label class="form-label">開始日期</label>
+												<label class="form-label">開始日期<span class="text-danger">*</span></label>
 												<input class="form-control" id="f_date1" type="text" name="startDate" onfocus="this.blur()" required>
 												<font color=red>${errorMsgs.startDate}</font>
 												<div class="invalid-feedback">請選擇開始日期.</div>
 											</div>
 
 											<div class="form-group">
-												<label class="form-label">結束日期</label>
+												<label class="form-label">結束日期<span class="text-danger">*</span></label>
 												<input class="form-control" id="f_date2" type="text" name="endDate" onfocus="this.blur()" required>
 												<font color=red>${errorMsgs.endDate}</font>
 												<div class="invalid-feedback">請選擇結束日期.</div>
@@ -165,7 +174,7 @@ img {
 
 
 											<div class="form-group">
-												<label class="form-label">狀態</label>
+												<label class="form-label">狀態<span class="text-danger">*</span></label>
 												<select class="custom-select form-control" name="status">
 													<option value="0" ${(courseVO.status==0)?'selected':'' }>課程未開始</option>
 													<option value="1" ${(courseVO.status==1)?'selected':'' }>課程進行中</option>
