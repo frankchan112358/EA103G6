@@ -32,7 +32,7 @@ public class TeachingPlanServlet extends HttpServlet {
 			List<TeachingPlanVO> teachingPlanVO = teachingPlanSvc.getTeachingPlanByCourseNo(courseNo);
 
 			session.setAttribute("teachingPlanVO", teachingPlanVO);
-
+			session.setAttribute("courseWork", "teachingPlan");
 			String url = "/front-end/teachingplan/teachingPlan.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
