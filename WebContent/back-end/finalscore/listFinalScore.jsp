@@ -64,7 +64,7 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class="fas fa-video" style="color: #374EFA;"></i>
+							<i class="fas fa-star-half-alt" style="color: #374EFA;"></i>
 							成績管理
 						</h1>
 					</div>

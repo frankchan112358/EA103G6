@@ -46,4 +46,15 @@ public class FinalScoreService {
 	public List<FinalScoreVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public Integer getScore(String courseNo, String studentNo) {
+		Integer score = null;
+		for (FinalScoreVO finalScoreVO : getAll()) {
+			if(courseNo.equals(finalScoreVO.getCourseNo()) && studentNo.equals(finalScoreVO.getStudentNo())) {
+				score = finalScoreVO.getScore();
+				break;
+			}
+		}
+		return score;
+	}
 }
