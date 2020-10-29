@@ -17,6 +17,9 @@
 		<li class="nav-item">
 			<a class="courseWork nav-link" courseWork="teachingFile" href="javascript:void(0)" style="font-size: 15px">課程教材管理</a>
 		</li>
+		<li class="nav-item">
+			<a class="courseWork nav-link" courseWork="finalScore" href="javascript:void(0)" style="font-size: 15px">成績管理</a>
+		</li>
 	</ul>
 	<div class="tab-content"></div>
 </div>
@@ -72,6 +75,15 @@
 				myForm.action = '<%=request.getContextPath()%>/course/courseTT.do';
 				myForm.method = 'POST';
 				myForm.append(courseNavInput('hidden','action','getTFDisplayList'));
+				myForm.submit();
+			}
+			if (courseWork == 'finalScore') {
+				e.preventDefault();
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/course/courseTT.do';
+				myForm.method = 'POST';
+				myForm.append(courseNavInput('hidden','action','getFSDisplayList'));
 				myForm.submit();
 			}
 		});

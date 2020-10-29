@@ -1,26 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/back-end/template/check.jsp"%>
-<%@ page import="com.course.model.*,com.timetable.model.*, com.teachingfile.model.*"%>
+<%@ page import="com.course.model.*, com.finalscore.model.*, com.student.model.*"%>
 <%@ page import="java.util.*"%>
-
-<%
-CourseService courseSvc = new CourseService();
-List<CourseVO> courseList = courseSvc.getAll();
-
-TimetableService timetableSvc =new TimetableService();
-List<TimetableVO> timetableList = timetableSvc.getAll();
-
-TeachingFileService teachingFileSvc =new TeachingFileService();
-List<TeachingFileVO> teachingFileList = teachingFileSvc.getAll();
-
-pageContext.setAttribute("courseList", courseList);
-pageContext.setAttribute("timetableList", timetableList);
-pageContext.setAttribute("teachingFileList", teachingFileList);
-
-CourseVO choose_courseVO = (CourseVO) request.getAttribute("courseVO");
-pageContext.setAttribute("choose_courseVO", choose_courseVO);
-%>
+<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+<jsp:useBean id="finalScoreSvc" scope="page" class="com.finalscore.model.FinalScoreService" />
 
 <!DOCTYPE html>
 <html>
@@ -35,6 +19,10 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 		.table td {
 			vertical-align: middle;
 			text-align: center;
+		}
+
+		img {
+			width: 40%;
 		}
 	</style>
 
@@ -70,79 +58,54 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 					</div>
 					<div class="row">
 						<div class="col-xl-12">
-						<jsp:include page="/back-end/course/courseNav.jsp"></jsp:include>
+							<jsp:include page="/back-end/course/courseNav.jsp"></jsp:include>
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
-									<h2>教材列表75</h2>
+									<h2>成績列表</h2>
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
-									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/teachingFile/addTeachingFile.jsp">
-                                        <input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-										</FORM>
+										<button type="submit" class="btn btn-success waves-effect waves-themed float-left">
+											<span class="fal fa-edit mr-1"></span>
+											<span>修改成績</span>
+										</button>
 										<!-- datatable start -->
 										<table id="coursetable" class="table table-bordered table-hover table-striped w-100">
 											<thead style="background-color:#E5F4FF;">
 
 												<tr>
-													<th width="15%">課程編號</th>
-													<th width="15%">教材編號</th>
-													<th width="15%">教材名稱</th>
-													<th width="10%">操作</th>
+													<th width="10%">頭像</th>
+													<th>學號</th>
+													<th>姓名</th>
+													<th>成績</th>
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach var="courseVO" items="${courseList}">
-													<c:if test="${courseVO.courseNo eq choose_courseVO.courseNo }">
-														<c:forEach var="timetableVO" items="${timetableList}">
-															<c:if test="${courseVO.courseNo eq timetableVO.courseNo}">
-																<c:forEach var="teachingFileVO" items="${teachingFileList}">
-																	<c:if test="${timetableVO.timetableNo eq teachingFileVO.timetableNo}">
-																		<tr>
-																			<td>${courseVO.courseNo}</td>
-																			<td>${teachingFileVO.teachingFileNo}</td>
-																			<td>${teachingFileVO.teachingFileName}</td>
-																			<td>
-																			
-																				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/teachingFile/download.do">
-																				<button id="addCourse" type="submit" class="btn btn-success">
-																					<span class="far fa-plus-circle mr-1"></span>
-																					<span>預覽</span>
-																				</button>
-																				<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																				<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
-																				<input type="hidden" name="teachingFileNo" value="${teachingFileVO.teachingFileNo}">
-																				<input type="hidden" name="action" value="preRead">
-																			</FORM>
-																			<br>
-																				<button id="addCourse" type="submit" class="btn btn-primary">
-																					<a href="<%=request.getContextPath()%>/teachingFile/download.do?${teachingFileVO.teachingFileNo}" download>
-																					<span class="far fa-plus-circle mr-1" style="color:white">下載</span>
-																			    	<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																			    	<input type="hidden" name="teachingFileNo" value="${teachingFileVO.teachingFileNo}">
-																			    	</a>
-																				</button>
-																			<br>
-																			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/teachingFile/teachingFile.do">
-																				<br>
-																				<button id="addCourse" type="submit" class="btn btn-danger">
-																					<span class="far fa-plus-circle mr-1"></span>
-																					<span>刪除</span>
-																				</button>
-																				<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																				<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
-																				<input type="hidden" name="teachingFileNo" value="${teachingFileVO.teachingFileNo}">
-																				<input type="hidden" name="action" value="delete">
-																			</FORM>
-																			</td>
-																		</tr>
-																	</c:if>
-																</c:forEach>
+												<c:forEach var="studentVO" items="${courseSvc.getOneCourse(courseNo).banjiVO.studentList}">
+													<tr>
+														<td class="pic">
+															<c:if test="${studentVO.face==null}">
+																<img src="<%=request.getContextPath()%>/images/noPicture.png">
+
 															</c:if>
-														</c:forEach>
-													</c:if>
+
+															<c:if test="${studentVO.face!=null}">
+																<img src="<%=request.getContextPath()%>/user.do?action=getPhoto&userNo=${studentVO.userNo}">
+															</c:if>
+
+														</td>
+														<td>${studentVO.studentNo}</td>
+														<td>${studentVO.studentName}</td>
+														<td>
+															<c:if test="${finalScoreSvc.getScore(courseNo, studentVO.studentNo)!=null}">
+																${finalScoreSvc.getScore(courseNo, studentVO.studentNo)}
+															</c:if>
+															<c:if test="${finalScoreSvc.getScore(courseNo, studentVO.studentNo)==null}">
+																尚未評分</c:if>
+														</td>
+													</tr>
 												</c:forEach>
-												
+
 											</tbody>
 										</table>
 										<!-- datatable end -->
@@ -176,11 +139,13 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 					responsive: true,
 					language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' },
 					"columnDefs": [{
-						"targets": [-1, -2],
+						"targets": [-4, -2],
 						"orderable": false,
 
 					}]
 				});
+
+			
 		});
 	</script>
 </body>

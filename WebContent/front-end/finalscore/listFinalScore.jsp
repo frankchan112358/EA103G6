@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/front-end/template/check.jsp"%>
-<%@ page import="com.course.model.*,com.timetable.model.*, com.teachingfile.model.*"%>
+<%@ page import="com.course.model.*, com.teachingfile.model.*"%>
 <%@ page import="java.util.*"%>
 <jsp:useBean id="finalScoreSvc" scope="page" class="com.finalscore.model.FinalScoreService" />
 <%
@@ -65,9 +65,6 @@ pageContext.setAttribute("courseList", courseList);
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
-										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/teachingFile/addTeachingFile.jsp">
-											<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-										</FORM>
 										<!-- datatable start -->
 										<table id="coursetable" class="table table-bordered table-hover table-striped w-100">
 											<thead style="frontground-color:deeppink;">
@@ -101,14 +98,8 @@ pageContext.setAttribute("courseList", courseList);
   													尚未評分
  													</c:if>
 													</td>
-													
 												</tr>
 											</c:forEach>
-											
-											
-											
-												
-
 											</tbody>
 										</table>
 										<!-- datatable end -->
