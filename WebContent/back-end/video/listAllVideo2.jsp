@@ -59,7 +59,7 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>
+							<a id="aListAllCourse" banjiNo="${courseSvc.getOneCourse(courseNo).banjiNo}" href="javascript:void(0)">課程總覽</a>
 						</li>
 						<li class="breadcrumb-item">
 						影片管理
@@ -67,7 +67,7 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class="fas fa-video" style="color: #374EFA;"></i>
+							<i class="subheader-icon far fa-video"></i>
 							影片管理
 						</h1>
 					</div>
@@ -100,35 +100,34 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
                                                     		<td>${timetableVO.timetableNo}</td>
                                                     		<td>${timetableVO.timetableDate}</td>
                                                     		<td>${timetableVO.periodText}</td>
-                                                    		<td>
+                                                    		<td class="d-flex p-1 justify-content-center" >
                                                      		<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)!=null}">
-                                                     			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/video/video.do">
-																<button type="submit"  class="btn btn-outline-success ">
-																<span class="fal fa-bug"></span>
-																<span>修改</span>
+                                                     			<FORM class="m-1 mb-0" METHOD="post" ACTION="<%=request.getContextPath()%>/video/video.do">
+																<button type="submit"  class="btn btn-success ">
+																<span class="fal fa-edit mr-1"></span>
+																<span>重新上傳</span>
 																</button>
-																
 																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
 																<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
 																<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
 																<input type="hidden" name="action" value="getOne_For_Update">
 															</FORM>
-															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/video/video.do" style="margin-bottom:0px;">
-																<button type="submit"  class="btn btn-outline-danger ">
-																<span class="fal fa-bug"></span>
-																<span>刪除</span>
+															<FORM class="m-1 mb-0" METHOD="post" ACTION="<%=request.getContextPath()%>/video/video.do" style="margin-bottom:0px;">
+																<button type="submit" class="btn btn-danger">
+																<span class="fal fa-times mr-1"></span>
+																<span>下架影片</span>
+															  </button>
 																<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
 																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
 																<input type="hidden" name="action" value="delete">
-																</button>
 															</FORM>
                                                      		</c:if>
                                                      		
                                                     		<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)==null}">
-                                                    			<FORM METHOD="Post" ACTION="<%=request.getContextPath()%>/back-end/video/addVideo.jsp">
-																<button type="submit"  class="btn btn-outline-info ">
-																<span class="fal fa-bug"></span>
-																<span>新增</span>
+                                                    			<FORM class="m-1 mb-0" METHOD="Post" ACTION="<%=request.getContextPath()%>/back-end/video/addVideo.jsp">
+																<button type="submit"  class="btn btn-info ">
+																<span class="fal fa-upload"></span>
+																<span>上傳影片</span>
 																</button>
 																
 																<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
@@ -181,7 +180,23 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 					
 				}]
                 });
-           
+
+								document.getElementById('aListAllCourse').addEventListener('click',function(e){
+				e.preventDefault();
+				let _this = this;
+                let banjiNo = this.getAttribute('banjiNo');
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/course/course.do';
+				myForm.method = 'POST';
+				let banjiNoInput = document.createElement('input');
+				banjiNoInput.type = 'hidden';
+				banjiNoInput.name = 'banjiNo';
+				banjiNoInput.value= banjiNo;
+				myForm.append(banjiNoInput);
+				myForm.submit();
+			}, false);
+
             });
      </script>
 </body>

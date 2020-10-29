@@ -30,9 +30,9 @@ public class CoursePostServlet extends HttpServlet {
 			CoursePostService coursePostSvc = new CoursePostService();
 			List<CoursePostVO> coursePostVO = coursePostSvc.getCoursePostByCourseNo(courseNo);
 
-			HttpSession _session = req.getSession();
-			_session.setAttribute("coursePostVO", coursePostVO);
-			_session.setAttribute("courseNo", courseNo);
+			HttpSession session = req.getSession();
+			session.setAttribute("coursePostVO", coursePostVO);
+			session.setAttribute("courseNo", courseNo);
 
 			String url = "/front-end/course/coursePost.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -51,7 +51,6 @@ public class CoursePostServlet extends HttpServlet {
 		if (action == null) {			
 			res.setContentType("text/html;");			
 			session.setAttribute("courseWork", "coursePost");
-			req.setAttribute("banjiNo", courseVO.getBanjiNo());
 			String url = "/back-end/coursepost/listAllCoursePost.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
@@ -173,8 +172,6 @@ public class CoursePostServlet extends HttpServlet {
 
 				CoursePostService coursePostSvc = new CoursePostService();
 				coursePostVO = coursePostSvc.updateCoursePost(coursePostNo, courseNo, title, postContent);
-
-				req.setAttribute("banjiNo", courseVO.getBanjiNo());
 				String url = "/back-end/coursepost/listAllCoursePost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -217,9 +214,6 @@ public class CoursePostServlet extends HttpServlet {
 
 				CoursePostService coursePostSvc = new CoursePostService();
 				coursePostVO = coursePostSvc.addCoursePost(courseNo, title, postContent);
-
-				req.setAttribute("banjiNo", courseVO.getBanjiNo());
-
 				String url = "/back-end/coursepost/listAllCoursePost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);

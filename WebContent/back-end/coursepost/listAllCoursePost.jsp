@@ -4,12 +4,11 @@
 <%@ include file="/back-end/template/check.jsp"%>
 <%@ page import="com.coursepost.model.*"%>
 <%@ page import="java.util.*"%>
-
+<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+<jsp:useBean id="coursePostSvc" scope="page" class="com.coursepost.model.CoursePostService" />
 <%
 CoursePostVO coursePostVO = (CoursePostVO) request.getAttribute("coursePostVO");
 %>
-
-<jsp:useBean id="coursePostSvc" scope="page" class="com.coursepost.model.CoursePostService" />
 
 
 <!DOCTYPE html>
@@ -52,13 +51,13 @@ font-size: 15px;
 							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>
+							<a id="aListAllCourse" banjiNo="${courseSvc.getOneCourse(courseNo).banjiNo}" href="javascript:void(0)">課程總覽</a>
 						</li>
 						<li class="breadcrumb-item">課程公告管理</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class='subheader-icon fal fa-calendar-edit'></i>
+							<i class="subheader-icon fal fa-calendar-edit"></i>
 							課程公告管理
 						</h1>
 					</div>
@@ -151,6 +150,23 @@ font-size: 15px;
                     language:{url:'<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json'
 					},
 					});
+
+					document.getElementById('aListAllCourse').addEventListener('click',function(e){
+				e.preventDefault();
+				let _this = this;
+                let banjiNo = this.getAttribute('banjiNo');
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/course/course.do';
+				myForm.method = 'POST';
+				let banjiNoInput = document.createElement('input');
+				banjiNoInput.type = 'hidden';
+				banjiNoInput.name = 'banjiNo';
+				banjiNoInput.value= banjiNo;
+				myForm.append(banjiNoInput);
+				myForm.submit();
+			}, false);
+
 			});
 	</script>
 </body>
