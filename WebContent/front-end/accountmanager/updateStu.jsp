@@ -2,23 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.user.model.*,com.student.model.*"%>
 <%@ page import="java.util.*"%>
-<%  
-	UserVO userVOForUpdate = (UserVO) request.getAttribute("userVOForUpdate");
-	StudentVO studentVOForUpdate = (StudentVO) request.getAttribute("studentVOForUpdate");
+<%
+	UserVO userVO = (UserVO) request.getAttribute("userVO"); 
+    StudentVO studentVO = (StudentVO) request.getAttribute("studentVO"); 
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <%@ include file="/back-end/template/head.jsp" %> 
+    <%@ include file="/front-end/template/head.jsp" %> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
-    
-	<!-- notifications 的css連結 -->
-   <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/notifications/sweetalert2/sweetalert2.bundle.css">
-	
-		
-<style>
+   
+    <style>
     
     img {
 	max-width: 100%;
@@ -30,11 +26,8 @@
 #picDiv{
 	width: 150px;
 	height: 150px;
-
 }
-
 </style>
-
 </head>
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
     <script>
@@ -43,100 +36,78 @@
 
     <div class="page-wrapper">
         <div class="page-inner">
-            <%@ include file="/back-end/template/left_aside.jsp" %> 
+            <%@ include file="/front-end/template/left_aside.jsp" %> 
             <div class="page-content-wrapper">
-                <%@ include file="/back-end/template/header.jsp" %> 
+                <%@ include file="/front-end/template/header.jsp" %> 
                 <main id="js-page-content" role="main" class="page-content">
-                    <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
-                        <li class="breadcrumb-item">Democrat</li>
-                    </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-democrat'></i> Democrat
+                            <i class='subheader-icon fal fa-democrat'></i>${userVO.name}
                         </h1>
                     </div>
-           					<div id="panel-2" class="panel">
+                    <div id="panel-2" class="panel">
                                     <div class="panel-hdr">
                                         <h2>
-                                            Update <span class="fw-300"><i>Student</i></span>
+                                             <span class="fw-300"><i>個人資料</i></span>
                                         </h2>
                                     </div>
                                     <div class="panel-container show">
                                         <div class="panel-content p-0">
-                                            <form class="needs-validation"  method="post" action="<%=request.getContextPath()%>/user.do" enctype="multipart/form-data" novalidate>
+									<form class="needs-validation"  method="post" action="<%=request.getContextPath()%>/user.do" enctype="multipart/form-data" novalidate>
                                                 <div class="panel-content">
                                                 	<div  id="picDiv">
-                                                	<jsp:useBean id="banjiSvc" scope="page" class="com.banji.model.BanjiService" />
-                                                        <c:if test="${userVOForUpdate.photo eq null}">
+                                                        <c:if test="${userVO.photo eq null}">
 															<img src="<%=request.getContextPath() %>/images/noPicture.png">
 														</c:if>
-														<c:if test="${userVOForUpdate.photo ne null}">
-															<img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${userVOForUpdate.userNo}">
+														<c:if test="${userVO.photo ne null}">
+															<img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${userVO.userNo}">
 														</c:if>
                                                   	</div>
                                                     <div class="form-row">
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="name">姓名 <span class="text-danger">*</span> </label>
-                                                            <input type="text" class="form-control" id="name" placeholder="Name" name="name" value="${userVOForUpdate eq null?'':userVOForUpdate.name }" required>
+                                                            <input type="text" class="form-control" id="name" placeholder="Name" name="name" value="${userVO eq null?'':userVO.name }" required>
                                                             <div class="invalid-feedback" id="wrongName">
 																請輸入姓名
                                                             </div>
                                                         </div>
-                                                                                                          
-														<div class="col-md-6 mb-3">
-														<label class="form-label " for="banji">班級<span class="text-danger">*</span></label> 
-														<select class="custom-select" id="banjiNo" name="banjiNo"  required>
-														<c:forEach var="banjiVO" items="${banjiSvc.all}">
-														<option value="${banjiVO.banjiNo}" ${(studentVOForUpdate.banjiNo==banjiVO.banjiNo)? 'selected':'' } > 
-														${banjiVO.banjiName}
-														</c:forEach>
-														</select>
-														</div>
                                                         
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="phone">手機號碼 </label>
-                                                            <input type="text" class="form-control" id="phone" placeholder="Phone Number" name="phone" value="${userVOForUpdate eq null?'':userVOForUpdate.phone }"  >
+                                                            <input type="text" class="form-control" id="phone" placeholder="Phone Number" name="phone" value="${userVO eq null?'':userVO.phone }"  >
                                                             <div class="invalid-feedback" id="wrongPhone">
 																僅接受台灣連絡電話且僅能輸入10碼
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6 mb-3">
-                                                            <label class="form-label" for="enable">帳號啟用狀態 <span class="text-danger">*</span></label>
-                                                            <select class="custom-select" id="enable" name="enable" required >
-                                                                <option value="1" ${userVOForUpdate.enable eq 1?"selected":""}>啟用中</option>
-                                                                <option value="2" ${userVOForUpdate.enable eq 2?"selected":""}>停用中</option>
-                                                            </select>
-                                                        </div>
-                                                        
-                                                         <div class="col-md-6 mb-3">
-                                                            <label class="form-label" for="mail">電子郵件<span class="text-danger">*</span></label>
-                                                            <input type="text" class="form-control" id="mail" placeholder="E-mail" name="mail" value="${userVOForUpdate eq null?'':userVOForUpdate.mail }" required>
-                                                            <div class="invalid-feedback" id="wrongMail">
-																請輸入電子郵件
-                                                            </div>
-                                                        </div>
-                                                        
+ 
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="id">身分證字號 <span class="text-danger">*</span> </label>
-                                                            <input type="text" class="form-control" id="id" placeholder="Id Number" name="id" value="${userVOForUpdate eq null?'':userVOForUpdate.id }" required>
+                                                            <input type="text" class="form-control" id="id" placeholder="Id Number" name="id" value="${userVO eq null?'':userVO.id }" required>
                                                             <div class="invalid-feedback" id="wrongId">
 																請輸入身分證字號
                                                             </div>
                                                             
                                                         </div>
+                                                        
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label" for="mail">電子郵件<span class="text-danger">*</span></label>
+                                                            <input type="text" class="form-control" id="mail" placeholder="E-mail" name="mail" value="${userVO eq null?'':userVO.mail }" required>
+                                                            <div class="invalid-feedback" id="wrongMail">
+																請輸入電子郵件
+                                                            </div>
                                                         </div>
-                                                       
-                                                    
+                                                    </div>
                                                     <div >地址</div>
                                                     <div id="twzipcode"></div>
                                                     <div class="form-group">
-                                                    	<input type="text" id="address" name="address" class="form-control" placeholder="Address" value="${userVOForUpdate eq null?'':userVOForUpdate.address }">
+                                                    	<input type="text" id="address" name="address" class="form-control" placeholder="Address" value="${userVO eq null?'':userVO.address }">
                                                 	</div>
-                                                	
-                                                	
+                                                
                                                     
-                                                    
+                                                    <div class="form-group mb-3">
+                                                         <label class="form-label" for="description">自我介紹 </label>
+                                                         <textarea class="form-control" id="description"  name="description" placeholder="Description" >${studentVO eq null?'':studentVO.studentDescription}</textarea>
+                                                    </div>
                                                     
                                                     <div class="form-group mb-3">
                                                     	<label class="form-label">上傳大頭照</label>
@@ -145,19 +116,9 @@
                                                        	 <label class="custom-file-label" for="customFile">Choose Picture</label>
                                                     	</div>
                                                		</div>
-                                               		
-                                            
-                                                    <div class="form-group mb-3">
-                                                        <label class="form-label" for="description">學員詳細描述 </label>
-                                                         <textarea class="form-control" id="description"  name="description" placeholder="Description" >${studentVOForUpdate eq null?'':studentVOForUpdate.studentDescription}</textarea>
-                                                    </div>
-                                                    
-                                                    
-                                                        <div class="col-md-6 mb-3">
-                                                            <label class="form-label" for="studentStatus"> <span class="text-danger"></span></label>
-                                                            <input type="hidden" class="form-control" id="studentStatus"  name="studentStatus" value="1">                                                     
-                                                        </div>
+                                                    <div class="form-row form-group">
                                                         
+                                                    </div>
                                                 </div>
                                                 <div class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row align-items-center">
                                                     <div class="custom-control custom-checkbox">
@@ -169,12 +130,23 @@
                                                     </div>
                                                     <button id="updateStudent" class="btn btn-primary ml-auto">提交修改</button>
                                                 </div>
-                                                 <input type="hidden" name="action" value="update">
-												<input type="hidden" name="userNo" value="${userVOForUpdate.userNo}"> 
-												<input type="hidden" name="type" value="${userVOForUpdate.type}"> 
-												<input type="hidden" name="studentNo" value="${studentVOForUpdate.studentNo}">
+                                                 <input type="hidden" name="action" value="update_stuself">
+                                                 
+                                                 <input type="hidden" name="userNo" value="${userVO.userNo}">										
+												<input type="hidden" name="type" value="0">
+												<input type="hidden" name="enable" value="${userVO.enable}">
+												<input type="hidden" name="studentNo" value="${studentVO.studentNo}">
+												<input type="hidden" name="banjiNo" value="${studentVO.banjiNo}">
+												<input type="hidden" name="studentStatus" value="${studentVO.studentStatus}">
+                                                 
+                                                 
+
+												<input type="hidden" name="type" value="${userVO.type}"> 
+
                                             </form>
-                                            
+											
+											
+
                                             <script>
                                                 // Example starter JavaScript for disabling form submissions if there are invalid fields
                                                 (function()
@@ -282,18 +254,16 @@
                 
                 
                 <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
-                <%@ include file="/back-end/template/footer.jsp" %>
+                <%@ include file="/front-end/template/footer.jsp" %>
             </div>
         </div>
     </div>
     
     
-    <%@ include file="/back-end/template/quick_menu.jsp" %>
-    <%@ include file="/back-end/template/messager.jsp" %>
-    <%@ include file="/back-end/template/basic_js.jsp" %> 
+    <%@ include file="/front-end/template/quick_menu.jsp" %>
+    <%@ include file="/front-end/template/messager.jsp" %>
+    <%@ include file="/front-end/template/basic_js.jsp" %> 
     
-    <script src="<%=request.getContextPath() %>/SmartAdmin4/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
-        
         
     <script>
   //後端抓到錯誤前端改樣式
@@ -320,3 +290,6 @@
     </script>
 </body>
 </html>
+
+
+

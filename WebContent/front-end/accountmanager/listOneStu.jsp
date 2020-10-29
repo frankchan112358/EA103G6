@@ -4,18 +4,12 @@
 <%@ page import="java.util.*"%>
 
 
-<%
-UserVO userVOForShow = (UserVO) request.getAttribute("userVOForShow"); 
-StudentVO studentVOForShow = (StudentVO) request.getAttribute("studentVOForShow");
-%>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <%@ include file="/back-end/template/head.jsp" %> 
-	<!-- notifications 的css連結 -->
-   	<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath() %>/SmartAdmin4/css/notifications/sweetalert2/sweetalert2.bundle.css">        
-<style>
+    <%@ include file="/front-end/template/head.jsp" %> 
+    <style>
     
     img {
 	max-width: 100%;
@@ -29,7 +23,6 @@ StudentVO studentVOForShow = (StudentVO) request.getAttribute("studentVOForShow"
 	height: 150px;
 }
 </style>
-    
 </head>
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
     <script>
@@ -38,17 +31,15 @@ StudentVO studentVOForShow = (StudentVO) request.getAttribute("studentVOForShow"
 
     <div class="page-wrapper">
         <div class="page-inner">
-            <%@ include file="/back-end/template/left_aside.jsp" %> 
+            <%@ include file="/front-end/template/left_aside.jsp" %> 
             <div class="page-content-wrapper">
-                <%@ include file="/back-end/template/header.jsp" %> 
+                <%@ include file="/front-end/template/header.jsp" %> 
                 <main id="js-page-content" role="main" class="page-content">
-                    <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
-                        <li class="breadcrumb-item">成員管理</li>
-                    </ol>
+                    
+                    
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-democrat'></i> 學員管理
+                            <i class='subheader-icon fal fa-democrat'></i>${userVO.name}
                         </h1>
                     </div>
                     <div class="row">
@@ -56,107 +47,79 @@ StudentVO studentVOForShow = (StudentVO) request.getAttribute("studentVOForShow"
                                 <div id="panel-1" class="panel">
                                     <div class="panel-hdr">
                                         <h2>
-                                            ${userVOForShow.name} <span class="fw-300"><i>個人資料</i></span>
+                                             <span class="fw-300"><i>個人資料</i></span>
                                         </h2>
                                     </div>
-                                    <div class="panel-container show">
-                                        <div class="panel-content">
+                                   
                                             
-                                            <!-- datatable start -->
+                                            
                                             <table id="dt-basic-example" class="table table-responsive dtr-details" >
-											<jsp:useBean id="banjiSvc" scope="page" class="com.banji.model.BanjiService" />
+									
+											
 											<tr>
 												<td>
-													<div id="pic" >
-														<%if (userVOForShow.getPhoto() == null) {%>
+													<div id="pic" >													
+														<c:if test="${userVO.photo eq null }">
 														<img src="<%=request.getContextPath()%>/images/noPicture.png">
-														
-														<%} else {%>
-														<img src="<%=request.getContextPath()%>/user.do?action=getPhoto&userNo=<%=userVOForShow.getUserNo()%>">
-														<%} %>
+														</c:if>
+														<c:if test="${userVO.photo ne null }">
+														<img src="<%=request.getContextPath()%>/user.do?action=getPhoto&userNo=${userVO.userNo}">
+														</c:if>
 													</div>
-												<td>
-											
+												<td>											
 											</tr>
 											
 											<tr data-dt-row="14">
 													<th>姓名</th>
-													<td>${userVOForShow.name}</td>									
+													<td>${userVO.name}</td>									
 												</tr>
                                                 <tr>
 													<th>學員編號</th>
-													<td>${studentVOForShow.studentNo}</td>									
+													<td>${studentVO.studentNo}</td>									
 												</tr>
-												<tr>
-												
-													<th>班級</th>
-													<td>
-													<c:forEach var="banjiVO" items="${banjiSvc.all}">
-													<c:if test="${studentVOForShow.banjiNo eq banjiVO.banjiNo}">${banjiVO.banjiName}		
-													</c:if>
-													</c:forEach>
-													</td>									
-												</tr>                                                
-                                                <tr>
-													<th>帳號</th>
-													<td>${userVOForShow.account}</td>									
-												</tr>
+												                                              
                                                 <tr>
 													<th>電話</th>
-													<td>${userVOForShow.phone eq null?"暫無輸入":userVOForShow.phone}</td>									
+													<td>${userVO.phone eq null?"暫無輸入":userVO.phone}</td>									
 												</tr>
                                                 <tr>
 													<th>電子信箱</th>
-													<td>${userVOForShow.mail}</td>									
+													<td>${userVO.mail}</td>									
 												</tr>
                                                 <tr>
 													<th>身分證字號</th>
-													<td>${userVOForShow.id}</td>									
+													<td>${userVO.id}</td>									
 												</tr>
                                                 <tr>
-													<th>自述</th>
-													<td>${studentVOForShow.studentDescription eq null?"暫無輸入":studentVOForShow.studentDescription}</td>									
+													<th>自我介紹</th>
+													<td>${studentVO.studentDescription eq null?"暫無輸入":studentVO.studentDescription}</td>									
 												</tr>
                                                
-                                                 <tr>
-													<th>帳號狀態</th>
-													<td>${userVOForShow.enable==0?"停用中":"啟用中"}</td>									
-												</tr>
-                                                <tr>
-													<th>學員狀態</th>
-													<td>
-														<c:choose>
-                                                    			<c:when test="${banjiSvc.getOneBanji(studentVOForShow.banjiNo).status==0}">結訓</c:when>
-                                                    			<c:when test="${banjiSvc.getOneBanji(studentVOForShow.banjiNo).status==1}">在訓中</c:when>
-                                                    			<c:when test="${banjiSvc.getOneBanji(studentVOForShow.banjiNo).status==2}">班級延期</c:when>
-                                                    			<c:when test="${banjiSvc.getOneBanji(studentVOForShow.banjiNo).status==3}">未開課</c:when>
-                                                    	</c:choose>											
-													</td>								
-												</tr>
+                                              
                                                 <tr>
 													<th>地址</th>
-													<td>${userVOForShow.address eq null?"暫無輸入":userVOForShow.address}</td>									
+													<td>${userVO.address eq null?"暫無輸入":userVO.address}</td>									
 												</tr>
 																					
                                             </table>
+                                             <div class="demo row">
                                             
-                                            
-                                            <div class="demo row">
-                                            <form id="deleteStudent">
-                                            	<button id="submitDeleteStudent" class="btn btn-danger ml-auto">刪除</button>
-                                            	<input type="hidden" name="action" value="delete">
-                                            	<input type="hidden" name="userNo" value="<%=userVOForShow.getUserNo()%>"> 
-                                            </form>
+
                                               <form method="post" action="<%=request.getContextPath()%>/user.do">
-                                            	<input type="hidden" name="userNo" value="<%=userVOForShow.getUserNo()%>"> 
-												<input type="hidden" name="action" value="getOne_For_Update">
-                                            	<button id="submitUpdateStudent" class="btn btn-primary ml-auto" >修改</button>
+                                            	 <%-- 註解 <input type="hidden" name="userNo" value="<%=userVO.getUserNo()%>"> --%>
+												<input type="hidden" name="action" value="getOne_For_Update_stuselves">
+											
+                                            	<button id="submitUpdateStudent" class="btn btn-primary ml-auto" >修改基本資料</button>
                                             </form>
+                                             <form method="post" action="<%=request.getContextPath()%>/user.do">
+												 <input type="hidden" name="id" value="${userVO.id}"> 
+												  <input type="hidden" name="mail" value="${userVO.mail}"> 
+												<input type="hidden" name="action" value="update_passwordstu">
+                                            	<button id="submitUpdateStudent" class="btn btn-primary ml-auto" >修改密碼</button>
+                                            </form>
+                                             </div>
                                             </div>
                                             
-                                            
-                                            
-                                            <!-- datatable end <% if(studentVOForShow.getStudentStatus()==0) out.print("disabled='disabled'");%>-->
                                         </div>
                                     </div>
                                 </div>
@@ -172,15 +135,12 @@ StudentVO studentVOForShow = (StudentVO) request.getAttribute("studentVOForShow"
                 
                 
                 <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
-                <%@ include file="/back-end/template/footer.jsp" %>
-            </div>
-        </div>
-    </div>
+                <%@ include file="/front-end/template/footer.jsp" %>
+     
     
-    
-    <%@ include file="/back-end/template/quick_menu.jsp" %>
-    <%@ include file="/back-end/template/messager.jsp" %>
-    <%@ include file="/back-end/template/basic_js.jsp" %>
+    <%@ include file="/front-end/template/quick_menu.jsp" %>
+    <%@ include file="/front-end/template/messager.jsp" %>
+    <%@ include file="/front-end/template/basic_js.jsp" %>
     
     <script src="<%=request.getContextPath() %>/SmartAdmin4/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
     
