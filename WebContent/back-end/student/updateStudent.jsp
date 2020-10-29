@@ -109,6 +109,14 @@
                                                             </select>
                                                         </div>
                                                         
+                                                         <div class="col-md-6 mb-3">
+                                                            <label class="form-label" for="mail">電子郵件<span class="text-danger">*</span></label>
+                                                            <input type="text" class="form-control" id="mail" placeholder="E-mail" name="mail" value="${userVOForUpdate eq null?'':userVOForUpdate.mail }" required>
+                                                            <div class="invalid-feedback" id="wrongMail">
+																請輸入電子郵件
+                                                            </div>
+                                                        </div>
+                                                        
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="id">身分證字號 <span class="text-danger">*</span> </label>
                                                             <input type="text" class="form-control" id="id" placeholder="Id Number" name="id" value="${userVOForUpdate eq null?'':userVOForUpdate.id }" required>
@@ -118,13 +126,7 @@
                                                             
                                                         </div>
                                                         </div>
-                                                        <div class="col-md-6 mb-3">
-                                                            <label class="form-label" for="mail">電子郵件<span class="text-danger">*</span></label>
-                                                            <input type="text" class="form-control" id="mail" placeholder="E-mail" name="mail" value="${userVOForUpdate eq null?'':userVOForUpdate.mail }" required>
-                                                            <div class="invalid-feedback" id="wrongMail">
-																請輸入電子郵件
-                                                            </div>
-                                                        </div>
+                                                       
                                                     
                                                     <div >地址</div>
                                                     <div id="twzipcode"></div>

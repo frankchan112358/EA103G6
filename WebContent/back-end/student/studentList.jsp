@@ -35,11 +35,11 @@
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
-                        <li class="breadcrumb-item">Democrat</li>
+                        <li class="breadcrumb-item">成員管理</li>
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-democrat'></i> Democrat
+                            <i class='subheader-icon fal fa-democrat'></i> 學員管理
                         </h1>
                     </div>
                     <div class="row">
@@ -47,7 +47,7 @@
                                 <div id="panel-1" class="panel">
                                     <div class="panel-hdr">
                                         <h2>
-                                            Example <span class="fw-300"><i>Table</i></span>
+                                            學員列表 <span class="fw-300"><i></i></span>
                                         </h2>
                                         <div class="panel-toolbar">
                                             <button id="addStudentBtn" data-toggle="modal" data-target="#addStudent" type="button" class="btn btn-outline-info btn-pills waves-effect waves-themed">新增學員</button>
@@ -136,10 +136,13 @@
 									<div class="invalid-feedback" id="wrongName">請輸入姓名</div>
 								</div>
 							</div>
-							
-							
-							
-							
+							<div class="row text-left">
+								<div class="col mb-2">
+									<label class="form-label " for="id">身分證字號</label> 
+									<input type="text" class="form-control" id="id" placeholder="ID Number" name="id" value="${userVOForInsert eq null?'':userVOForInsert.id}" required>
+									<div class="invalid-feedback" id="wrongId">請輸入身分證字號</div>
+								</div>
+							</div>
 							<div class="row text-left">
 								<div class="col mb-2">
 									<label class="form-label " for="banji">班級<span class="text-danger">*</span></label> 
@@ -158,13 +161,7 @@
 									<div class="invalid-feedback" id="wrongMail">請輸入信箱</div>
 								</div>
 							</div>
-                            <div class="row text-left">
-								<div class="col mb-2">
-									<label class="form-label " for="id">身分證字號</label> 
-									<input type="text" class="form-control" id="id" placeholder="ID Number" name="id" value="${userVOForInsert eq null?'':userVOForInsert.id}" required>
-									<div class="invalid-feedback" id="wrongId">請輸入身分證字號</div>
-								</div>
-							</div>
+                            
                         </div>
                         </div>
                 	</div>

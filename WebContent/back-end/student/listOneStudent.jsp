@@ -44,11 +44,11 @@ StudentVO studentVOForShow = (StudentVO) request.getAttribute("studentVOForShow"
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
-                        <li class="breadcrumb-item">Democrat</li>
+                        <li class="breadcrumb-item">成員管理</li>
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-democrat'></i> Democrat
+                            <i class='subheader-icon fal fa-democrat'></i> 學員管理
                         </h1>
                     </div>
                     <div class="row">
@@ -118,14 +118,9 @@ StudentVO studentVOForShow = (StudentVO) request.getAttribute("studentVOForShow"
 													<td>${studentVOForShow.studentDescription eq null?"暫無輸入":studentVOForShow.studentDescription}</td>									
 												</tr>
                                                
-                                                <tr>
+                                                 <tr>
 													<th>帳號狀態</th>
-													<td><c:choose>
-                                                    			<c:when test="${userVOForShow.enable==1}">啟用中</c:when>
-                                                    			<c:when test="${userVOForShow.enable==2}">停用中</c:when>
-                                                    			
-                                                    	</c:choose>		
-													</td>									
+													<td>${userVOForShow.enable==0?"停用中":"啟用中"}</td>									
 												</tr>
                                                 <tr>
 													<th>學員狀態</th>
@@ -144,6 +139,8 @@ StudentVO studentVOForShow = (StudentVO) request.getAttribute("studentVOForShow"
 												</tr>
 																					
                                             </table>
+                                            
+                                            
                                             <div class="demo row">
                                             <form id="deleteStudent">
                                             	<button id="submitDeleteStudent" class="btn btn-danger ml-auto">刪除</button>
@@ -156,6 +153,9 @@ StudentVO studentVOForShow = (StudentVO) request.getAttribute("studentVOForShow"
                                             	<button id="submitUpdateStudent" class="btn btn-primary ml-auto" >修改</button>
                                             </form>
                                             </div>
+                                            
+                                            
+                                            
                                             <!-- datatable end <% if(studentVOForShow.getStudentStatus()==0) out.print("disabled='disabled'");%>-->
                                         </div>
                                     </div>
