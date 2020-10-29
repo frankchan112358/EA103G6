@@ -11,6 +11,7 @@
 	@SuppressWarnings("unchecked")
 	List<CoursePostVO> list = (List<CoursePostVO>) session.getAttribute("coursePostVO");
 	session.setAttribute("list", list);
+	session.setAttribute("courseWork", "coursePost");
 %>
 
 
