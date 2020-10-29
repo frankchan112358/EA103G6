@@ -99,7 +99,6 @@ public class LoginHandler extends HttpServlet {
 				successView.forward(req, res);
 			}
 		} catch (Exception e) {
-			//e.printStackTrace();
 			errorMsgs.add("無法取得資料:" + e.getMessage());
 			RequestDispatcher failureView = req.getRequestDispatcher("/login/login.jsp");
 			failureView.forward(req, res);

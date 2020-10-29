@@ -47,7 +47,7 @@ if(userVO!=null){
                                     </h1>
                                     <div class="card p-4 rounded-plus bg-faded">
                                     
-                                        <form id="js-login" novalidate="" method="post" action="<%=request.getContextPath() %>/login.do">
+                                        <form id="js-login"  method="post" action="<%=request.getContextPath() %>/login.do">
                                             <div class="form-group">
                                                 <label class="form-label" for="typeselect">身分選單</label>
                                                 <select class="form-control" id="typeselect" name="type">
