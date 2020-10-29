@@ -1,6 +1,6 @@
 <%@page import="com.courseask.model.*"%>
-<%@page import="com.course.model.*"%>
 <%@page import="com.student.model.*"%>
+<%@page import="com.course.model.*"%>
 <%@page import="com.teacher.model.*"%>
 <%@page import="com.reply.model.*"%>
 <%@page import="java.util.*"%>
@@ -23,7 +23,6 @@
 	List<CourseAskVO> list = courseAskSvc.getAll();
 	pageContext.setAttribute("list", list);
 %>
-
 
 <%
 	CourseAskVO courseAskVO = (CourseAskVO) request.getAttribute("courseAskVO");
@@ -54,6 +53,20 @@
 
 #time {
 	font-size: 11px;
+}
+#add{
+border-color:gray;
+border-radius: 5px;
+}
+
+
+
+#add:hover{
+    display:inline-block;
+    margin-right:20px;
+    box-shadow:0px 0px 9px #00FFFF;
+
+
 }
 </style>
 </head>
@@ -103,7 +116,23 @@
 										<div id="js_demo_accordion-2a" class="collapse show"
 											data-parent="#js_demo_accordion-2">
 											<div class="card-body">${courseAskVO.question}</div>
-										
+											<div style="position: absolute;right:0;width:600px;height: 100px;">
+											<form>
+											<c:forEach var="replyVO" items="${replySvc.getAllWithCouseAskNo(courseAskVO.courseAskNo)}">
+											<div style="float:right;width:150px; height: 100px; ">
+											<ul>	<c:choose>
+													<c:when test="${replyVO.teacherNo eq null }">
+													<li>學員：${studentSvc.getOneStudent(replyVO.getStudentNo()).studentName}<br><fmt:formatDate value="${replyVO.updateTime}"
+													pattern="MM-dd HH:mm" /><br><span>回答 : </span>${replyVO.replyContent }</li>
+													</c:when>
+													<c:otherwise>
+													<li>講師：${teacherSvc.getOneTeacher(replyVO.getTeacherNo()).teacherName}<br><fmt:formatDate value="${replyVO.updateTime}"
+													pattern="MM-dd HH:mm" /><br><span>回答: </span>${replyVO.replyContent }</li>
+													</c:otherwise>
+												</c:choose></ul>
+											</div>
+											</c:forEach></form>
+											</div>
 											<div id="time" class="card-body">
 												<span style="display:inline-block;">發文時間:</span>
 												<fmt:formatDate value="${courseAskVO.updateTime}"
@@ -111,8 +140,8 @@
 													 
 													 <div style="display:inline-block;margin-left:10px;">
                                                                   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/courseAsk/courseAsk.do" style="margin-bottom: 0px;">
-                                                                   <input type="hidden" name="replyNo"  value="${replyVO.replyNo}">
-			     														<input type="hidden" name="studentNo" value="${studentVO.studentNo}"/>
+                                                                   		<input type="hidden" name="replyNo"  value="${replyVO.replyNo}">
+                                                                  		 <input type="hidden" name="studentNo" value="${studentVO.studentNo}"/>
 			     														<input type="hidden" name="courseAskNo" value="${courseAskVO.courseAskNo}"/>
 			     														<input type="hidden" name="teacherNo" value="${teacherVO.teacherNo}"/>
 			     														<input type="hidden" name="action" value="insert1"> 
@@ -121,6 +150,7 @@
 							 										 </FORM>	
 							 										 </div>
 											</div>
+										
 										</div>
 										
 									</div>
@@ -141,11 +171,9 @@
                 <div class="modal-header">
                     <h4 class="modal-title" >新增問題</h4> 
                 </div>
-                 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/courseAsk/courseAsk.do" name="form1">
+                 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/courseAsk/courseAsk.do" name="form1" class="needs-validation" novalidate>
             
-                    <h4 class="modal-title" >選擇課程</h4> 
-
-       <select size="1" name="courseNo" style="color: black; width: 566px; height: 50px; margin: 20px ;">
+       <select size="1" name="courseNo" style="color: black; width: 95%; height: 50px; margin: 20px ;">
          <c:forEach var="courseVO" items="${courseSvc.all}" > 
           <option value="${courseVO.courseNo}">${courseVO.courseName}
          </c:forEach>   
@@ -153,19 +181,25 @@
 
              
      
-                 <input placeholder="輸入您的問題" name="title" style="color: black; width: 566px; height: 50px; margin: 20px ;" 
-		value="<%=(courseAskVO == null) ? "" : courseAskVO.getTitle()%>">
-		
+                 <input id="add"placeholder="輸入您的問題" name="title" style="color: black; width: 95%; height: 50px; margin: 20px ;" 
+		value="${courseAskVO.title }" required>
+											<div class="invalid-feedback">
+                                                        		請勿空白.
+                                         </div>
 		
                    <div class="modal-footer">
 
                             <div id="panel-2" class="panel">
                                 <div class="panel-container show">
                                     <div class="panel-content" >
-                                        <textarea class="js-summernote" id="democratNote" name="question"></textarea>
+                                        <textarea class="js-summernote" id="democratNote" name="question" required></textarea>
+                                        <div class="invalid-feedback">
+                                                        		請勿空白.
+                                         </div>
                                         <button id="sendNote" type="submit" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">送出</button>
 										<input type="hidden" name="studentNo" value="${studentVO.studentNo}"/>
 										<input type="hidden" name="action" value="insert">
+										
                                     </div>
                             
                             </div>
@@ -219,6 +253,8 @@
             responsive: true,
             language:{url:'<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json'}
         });   
+       
+        $('#democratNote').summernote();
         
         $('#democratNote').summernote({
             height: 250,
@@ -269,6 +305,31 @@
     });
     
         </script>
-	
+		<script>
+                                                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                                                (function()
+                                                {
+                                                    'use strict';
+                                                    window.addEventListener('load', function()
+                                                    {
+                                                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                                        var forms = document.getElementsByClassName('needs-validation');
+                                                        // Loop over them and prevent submission
+                                                        var validation = Array.prototype.filter.call(forms, function(form)
+                                                        {
+                                                            form.addEventListener('submit', function(event)
+                                                            {
+                                                                if (form.checkValidity() === false)
+                                                                {
+                                                                    event.preventDefault();
+                                                                    event.stopPropagation();
+                                                                }
+                                                                form.classList.add('was-validated');
+                                                            }, false);
+                                                        });
+                                                    }, false);
+                                                })();
+
+                                            </script>
 </body>
 </html>

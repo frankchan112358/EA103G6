@@ -13,4 +13,5 @@ public interface ReplyDAO_interface {
 	public ReplyVO findByPrimaryKey(String replyNo);
 
 	public List<ReplyVO> getAll();
+	public List<ReplyVO> getAllWithCouseAskNo(String courseAskNo);
 }

@@ -1,6 +1,9 @@
 package com.reply.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.banji.model.BanjiVO;
 
 public class ReplyService {
 	private ReplyDAO_interface dao;
@@ -48,5 +51,9 @@ public class ReplyService {
 
 	public List<ReplyVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public List<ReplyVO> getAllWithCouseAskNo(String courseAskNo) {
+		return dao.getAllWithCouseAskNo(courseAskNo);
 	}
 }

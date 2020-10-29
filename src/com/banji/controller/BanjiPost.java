@@ -18,6 +18,7 @@ import com.banjipost.model.BanjiPostVO;
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
 import com.user.model.UserVO;
+import com.websocketnotify.controller.NotifyServlet;
 
 public class BanjiPost extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -196,6 +197,7 @@ public class BanjiPost extends HttpServlet {
 
 				BanjiPostService banjiPostSvc = new BanjiPostService();
 				banjiPostVO = banjiPostSvc.addBanjiPost(banjiNo, title, banjiPostContent, updateTime, status);
+				
 				
 				req.setAttribute("list", new BanjiPostService().getAllWhitBanjiNo(banjiNo));
 				req.setAttribute("banjiVO", banjiVO);
