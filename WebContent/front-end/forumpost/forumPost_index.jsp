@@ -62,13 +62,7 @@
 <!--                                     </div> -->
 <!--                                 </div> -->
                     
-                    <div class="col-md-5">
-								<form method="post"action="<%=request.getContextPath()%>/forumPost/forumPost.do">
-									<input type="text" name="title">
-									 <input type="hidden"name="action" value="search">
-									 <input type="submit"value="搜尋">
-								</form>
-							</div>
+                    
                                 
                     <div class="subheader">
                         <h1 class="subheader-title">
@@ -111,9 +105,10 @@
 								</div>
 							</div>
 							<div class="col-md-5">
-								<form method="post"
-									action="<%=request.getContextPath()%>/forumPost/forumPost.do">
-
+								<form method="post"action="<%=request.getContextPath()%>/forumPost/forumPost.do">
+									<input type="text" name="title">
+									 <input type="hidden"name="action" value="search">
+									 <input type="submit"value="搜尋">
 								</form>
 							</div>
 							

@@ -117,10 +117,10 @@ pageContext.setAttribute("forumTopicList", forumTopicList);
     });
   </script>
   </body>
-  <%@ include file="/front-end/template/footer.jsp" %>
-		<%@ include file="/front-end/template/quick_menu.jsp" %>
-    <%@ include file="/front-end/template/messager.jsp" %>
-    <%@ include file="/front-end/template/basic_js.jsp" %> 
+<%--   <%@ include file="/front-end/template/footer.jsp" %> --%>
+<%-- 		<%@ include file="/front-end/template/quick_menu.jsp" %> --%>
+<%--     <%@ include file="/front-end/template/messager.jsp" %> --%>
+<%--     <%@ include file="/front-end/template/basic_js.jsp" %>  --%>
   </main>
   
 	</div>

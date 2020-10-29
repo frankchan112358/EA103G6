@@ -44,12 +44,12 @@ pageContext.setAttribute("list", list);
                         <li class="breadcrumb-item">討論區</li>
                     </ol>
                     
-                     <div class="input-group input-group-lg mb-g">
-                                    <input type="text" class="form-control shadow-inset-2" placeholder="Search Discussion">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fal fa-search"></i></span>
-                                    </div>
-                                </div>
+<!--                      <div class="input-group input-group-lg mb-g"> -->
+<!--                                     <input type="text" class="form-control shadow-inset-2" placeholder="Search Discussion"> -->
+<!--                                     <div class="input-group-append"> -->
+<!--                                         <span class="input-group-text"><i class="fal fa-search"></i></span> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
                     
                     
                     <div class="subheader">
@@ -75,7 +75,6 @@ pageContext.setAttribute("list", list);
                                 
                                 <div class="col d-flex">
                                                 <a class="btn btn-outline-success btn-sm ml-auto mr-2 flex-shrink-0" onclick="location.href='${pageContext.request.contextPath}/front-end/forumpost/addForumPost.jsp'">新增貼文</a>
-                                                <a href="javascript:void(0);" class="btn btn-outline-danger btn-sm flex-shrink-0">修改</a>
                                             </div>
                                 
 					<div class="container">
@@ -91,10 +90,10 @@ pageContext.setAttribute("list", list);
 								</div>
 							</div>
 							<div class="col-md-5">
-								<form method="post"
-									action="<%=request.getContextPath()%>/forumPost/forumPost.do">
-<!-- 									<input type="text" name="title"> <input type="hidden" -->
-<!-- 										name="action" value="search">  -->
+								<form method="post"action="<%=request.getContextPath()%>/forumPost/forumPost.do">
+									<input type="text" name="title">
+									 <input type="hidden"name="action" value="search">
+									 <input type="submit"value="搜尋">
 								</form>
 							</div>
 							
