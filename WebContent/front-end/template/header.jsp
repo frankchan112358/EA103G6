@@ -157,7 +157,7 @@
                     </div>
                 </div>
                 <div class="dropdown-divider m-0"></div>                                    
-                <a href="#" class="dropdown-item fw-500 pt-3 pb-3">
+                 <a href="<%=request.getContextPath() %>/front-end/accountmanager/listOneStu.jsp" class="dropdown-item fw-500 pt-3 pb-3">
                     <span data-i18n="drpdwn.settings">帳號設定</span>
                 </a>
                 
