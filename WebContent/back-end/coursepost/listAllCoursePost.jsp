@@ -12,9 +12,6 @@ CoursePostVO coursePostVO = (CoursePostVO) request.getAttribute("coursePostVO");
 %>
 
 
-<jsp:useBean id="coursePostSvc" scope="page" class="com.coursepost.model.CoursePostService" />
-
-
 
 <!DOCTYPE html>
 <html>
