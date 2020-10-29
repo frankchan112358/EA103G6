@@ -23,6 +23,8 @@ public class ReplyJNDIDAO implements ReplyDAO_interface {
 	// 查全部
 	private static final String GET_ALL_STMT = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME FROM REPLY ORDER BY REPLYNO";
 	// 查單個
+	private static final String GET_ALL_COURSEASK = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME FROM REPLY WHERE COURSEASKNO=? ORDER BY UPDATETIME";
+	// 查課程編號
 	private static final String GET_ONE_STMT = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME FROM REPLY  WHERE REPLYNO =?";
 	// 刪除
 	private static final String DELETE = "DELETE FROM REPLY WHERE REPLYNO=?";
@@ -241,4 +243,60 @@ public class ReplyJNDIDAO implements ReplyDAO_interface {
 		}
 		return list;
 	}
+
+	@Override
+	public List<ReplyVO> getAllWithCouseAskNo(String courseAskNo) {
+		List<ReplyVO> list = new ArrayList<ReplyVO>();
+		ReplyVO replyVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_COURSEASK);
+			pstmt.setString(1, courseAskNo);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				replyVO = new ReplyVO();
+				replyVO.setReplyNo(rs.getString("replyNo"));
+				replyVO.setCourseAskNo(rs.getString("courseAskNo"));
+				replyVO.setTeacherNo(rs.getString("teacherNo"));
+				replyVO.setStudentNo(rs.getString("studentNo"));
+				replyVO.setReplyContent(rs.getString("replyContent"));
+				replyVO.setUpdateTime(rs.getTimestamp("updateTime"));
+
+				list.add(replyVO);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured." + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
 }

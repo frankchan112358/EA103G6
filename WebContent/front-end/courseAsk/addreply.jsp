@@ -16,7 +16,7 @@
 <%
 ReplyVO replyVO = (ReplyVO) request.getAttribute("replyVO");
 CourseAskVO courseAskVO = (CourseAskVO) request.getAttribute("courseAskVO");
-
+session.setAttribute("reply", "reply");
 %>
 
 <!DOCTYPE html>
@@ -54,8 +54,8 @@ CourseAskVO courseAskVO = (CourseAskVO) request.getAttribute("courseAskVO");
                             <div id="panel-2" class="panel">
                                 <div class="panel-container show">
                                     <div class="panel-content">
-                                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/reply/reply.do" name="form1">
-		<table id="tableEvaluation" class="table table-bordered table-hover table-striped w-100">
+                                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/reply/reply.do" name="form1"class="needs-validation" novalidate>
+									<table id="tableEvaluation" class="table table-bordered table-hover table-striped w-100">
                                                     <thead>
                                                         <tr>
                                                             <th>課程</th>
@@ -76,15 +76,14 @@ CourseAskVO courseAskVO = (CourseAskVO) request.getAttribute("courseAskVO");
                                                         </tr>
                                                     </tbody>
                                                 </table>
-	
-
-
-                                        <textarea class="js-summernote" id="democratNote" name="replyContent"></textarea>
+                                        <textarea class="js-summernote" id="democratNote" name="replyContent" required></textarea>
+                                        <div class="invalid-feedback">
+                                                        		回覆請勿空白.
+                                         </div>
                                         <button id="sendNote" type="submit" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">送出</button>
-                                        <input type="hidden" name="studentNo" value="${studentVO.studentNo}"/>
-                                        <input type="hidden" name="courseNo" value="${courseVO.courseNo}"/>
                                          <input type="hidden" name="courseAskNo" value="${replyVO.courseAskNo}"/>
-                                        <input type="hidden" name="teacherNo" value="${teacherVO.teacherNo}"/>
+                                         <input type="hidden" name="studentNo" value="${studentVO.studentNo}"/>
+                                         <input type="hidden" name="teacherNo" value="${teacherVO.teacherNo}"/>
                                         <input type="hidden" name="action" value="insert">
                                        	</FORM> 
                                     </div>
@@ -110,7 +109,7 @@ CourseAskVO courseAskVO = (CourseAskVO) request.getAttribute("courseAskVO");
                 responsive: true,
                 language: { url: `<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json` }
             });
-
+            $('#democratNote').summernote();
             $('#democratNote').summernote({
             	height: 300,
                 tabsize: 2,
@@ -159,6 +158,32 @@ CourseAskVO courseAskVO = (CourseAskVO) request.getAttribute("courseAskVO");
             });
         });
     </script>
+    	<script>
+                                                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                                                (function()
+                                                {
+                                                    'use strict';
+                                                    window.addEventListener('load', function()
+                                                    {
+                                                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                                        var forms = document.getElementsByClassName('needs-validation');
+                                                        // Loop over them and prevent submission
+                                                        var validation = Array.prototype.filter.call(forms, function(form)
+                                                        {
+                                                            form.addEventListener('submit', function(event)
+                                                            {
+                                                                if (form.checkValidity() === false)
+                                                                {
+                                                                    event.preventDefault();
+                                                                    event.stopPropagation();
+                                                                }
+                                                                form.classList.add('was-validated');
+                                                            }, false);
+                                                        });
+                                                    }, false);
+                                                })();
+
+                                            </script>
 </body>
 
 </html>

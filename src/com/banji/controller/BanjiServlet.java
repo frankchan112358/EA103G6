@@ -127,7 +127,7 @@ public class BanjiServlet extends HttpServlet {
 //				}
 
 				String banjiName = req.getParameter("banjiName");
-				String banjiNameReg = "^[(\u4e00-\u9fd5)(a-zA-Z0-9_)]{2,10}$";
+				String banjiNameReg = "^[(\u4e00-\u9fd5)(a-zA-Z0-9_)]{1,10}$";
 				if (banjiName == null || banjiName.trim().length() == 0) {
 					errorMsgs.add("班級名稱請勿空白");
 				} else if (!banjiName.trim().matches(banjiNameReg)) {
