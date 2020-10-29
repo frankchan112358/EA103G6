@@ -51,7 +51,7 @@
                     </div>
                     			 <h4><a href="<%=request.getContextPath() %>/front-end/forumpost/forumPost_index.jsp">回討論區</a></h4>
                     
-                   
+                   <hr>
 					<div class="row">
 							<div class="col-md-8" id="title" style="font-weight: bold;">貼文標題</div>
 							<div class="col-md-2" style="font-weight: 900;">更新時間</div>
@@ -63,7 +63,7 @@
 					<c:forEach var="forumPostVO" items="${list}" begin="<%=pageIndex%>"
 					end="<%=pageIndex+rowsPerPage-1%>">
 					
-					
+					<hr>
 					     	
 						<div class="row" id=forum_record>
 							<div class="col-md-8"><a href="<%=request.getContextPath()%>/forumPost/forumPost.do?action=getOne_For_Display&forumPostNo=${forumPostVO.forumPostNo}"> ${forumPostVO.title}</a></div>
@@ -71,6 +71,14 @@
 								<fmt:formatDate value="${forumPostVO.updateTime}"
 									pattern="yyyy-MM-dd HH:mm:ss" />
 							</div>
+							
+							
+							
+							
+							
+							
+							
+							
 							<div class="col-md-1">
 							<form method="post" action="<%=request.getContextPath()%>/forumPost/forumPost.do">
 								<input type="submit" value="修改">

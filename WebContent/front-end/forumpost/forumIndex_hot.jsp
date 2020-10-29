@@ -102,10 +102,10 @@
 								</div>
 							</div>
 							<div class="col-md-5">
-								<form method="post"
-									action="<%=request.getContextPath()%>/forumPost/forumPost.do">
-									<input type="text" name="title"> <input type="hidden" 
-										name="action" value="search">  
+								<form method="post"action="<%=request.getContextPath()%>/forumPost/forumPost.do">
+									<input type="text" name="title">
+									 <input type="hidden"name="action" value="search">
+									 <input type="submit"value="搜尋">
 								</form>
 							</div>
 							

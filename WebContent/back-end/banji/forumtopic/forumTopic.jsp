@@ -53,7 +53,7 @@
                                 </div>
                                 <div id="add">
 							<input type="hidden" name="action" > 
-							 <button type="submit" class="btn btn-sm btn-success" style="width:100px;heigh:10px;" onclick="location.href='<%=request.getContextPath()%>/back-end/banji/forumtopic/addforumTopic.jsp?banjiNo=${banjiVO.banjiNo}'" style="margin-bottom: 0px'"
+							 <button type="submit" class="btn btn-sm btn-success" style="width:100px;heigh:10px;float:right;" onclick="location.href='<%=request.getContextPath()%>/back-end/banji/forumtopic/addforumTopic.jsp?banjiNo=${banjiVO.banjiNo}'" style="margin-bottom: 0px'"
 								class="btn-write btn btn-sm btn-primary" >
 								<strong>新增</strong>
 							</button>
