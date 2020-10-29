@@ -44,7 +44,7 @@ public class CoursePostServlet extends HttpServlet {
 		String courseNo = (String)session.getAttribute("courseNo");
 		CourseVO courseVO = new CourseService().getOneCourse(courseNo);
 		if (courseVO == null) {
-			req.getRequestDispatcher("/back-end/course/listAllCourse.jsp").forward(req, res);
+			res.sendRedirect(req.getContextPath() + "/course/course.do");
 			return;
 		}
 				

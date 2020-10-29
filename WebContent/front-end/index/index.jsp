@@ -71,17 +71,17 @@
                                     <div class="panel-content p-0">
                                         <ul class="list-group">
                                             <li class="list-group-item">
-                                                <a href="" title="夜輔未簽到同學請補簽">
+                                                <a href="javascript:void(0)" title="夜輔未簽到同學請補簽">
                                                     <span class="text-danger">夜輔未簽到同學請補簽...etc</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="" title="上課同學請繳交作業">
+                                                <a href="javascript:void(0)" title="上課同學請繳交作業">
                                                     <span class="text-danger">未繳交作業的同學請趕緊上傳...etc</span>
                                                 </a>
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="" title="上課時請到櫃檯拿書">
+                                                <a href="javascript:void(0)" title="上課時請到櫃檯拿書">
                                                     <span class="text-danger">請有空同學至櫃檯拿書...etc</span>
                                                 </a>
                                             </li>
@@ -111,17 +111,17 @@
                                             <div class="panel-content p-0">
                                                 <ul class="list-group">
                                                     <li class="list-group-item">
-                                                        <a href="" title="Hello Java">
+                                                        <a href="javascript:void(0)" title="Hello Java">
                                                             <span class="text-secondary">Hello Java</span>
                                                         </a>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        <a href="" title="今日約跑步">
+                                                        <a href="javascript:void(0)" title="今日約跑步">
                                                             <span class="text-secondary">今日約跑步</span>
                                                         </a>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        <a href="" title="下課吃竹香">
+                                                        <a href="javascript:void(0)" title="下課吃竹香">
                                                             <span class="text-secondary">下課吃竹香</span>
                                                         </a>
                                                     </li>

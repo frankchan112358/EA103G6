@@ -28,22 +28,27 @@ public class CourseTTServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
+
 		HttpSession session = req.getSession();
-		String courseNo = (String)session.getAttribute("courseNo");
+		String courseNo = (String) session.getAttribute("courseNo");
 		CourseVO courseVO = new CourseService().getOneCourse(courseNo);
 		if (courseVO == null) {
-			req.getRequestDispatcher("/back-end/course/listAllCourse.jsp").forward(req, res);
+			res.sendRedirect(req.getContextPath() + "/course/course.do");
 			return;
 		}
-		
+
+		if (action == null) {
+			res.sendRedirect(req.getContextPath() + "/course/course.do");
+			return;
+		}
+
 		if ("getTTDisplayList".equals(action)) {
 			session.setAttribute("courseWork", "courseVideo");
 			req.setAttribute("courseVO", courseVO);
 			RequestDispatcher successView = req.getRequestDispatcher("/back-end/video/listAllVideo2.jsp");
 			successView.forward(req, res);
 		}
-		
+
 		if ("getTFDisplayList".equals(action)) {
 			session.setAttribute("courseWork", "teachingFile");
 			req.setAttribute("courseVO", courseVO);

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <aside class="page-sidebar">
     <div class="page-logo">
-        <a href="" class="page-logo-link press-scale-down d-flex align-items-center position-relative" data-toggle="modal" data-target="#modal-shortcut">
+        <a href="javascript:void(0)" class="page-logo-link press-scale-down d-flex align-items-center position-relative" data-toggle="modal" data-target="#modal-shortcut">
             <i class="fal fa-thumbs-up" style="color: aliceblue;font-size: x-large;"></i>
             <span class="page-logo-text mr-1">Work Join Learn</span>
             <span class="position-absolute text-white opacity-50 small pos-top pos-right mr-2 mt-n2"></span>
@@ -13,7 +13,7 @@
         <div class="nav-filter">
             <div class="position-relative">
                 <input type="text" id="nav_filter_input" placeholder="Filter menu" class="form-control" tabindex="0">
-                <a href="" onclick="return false;" class="btn-primary btn-search-close js-waves-off" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar">
+                <a href="javascript:void(0)" onclick="return false;" class="btn-primary btn-search-close js-waves-off" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar">
                     <i class="fal fa-chevron-up"></i>
                 </a>
             </div>
@@ -26,7 +26,7 @@
                 </a>
             </li>
             <li id="menberManage">
-                <a href="" title="成員管理">
+                <a href="javascript:void(0)" title="成員管理">
                     <i class="fal fa-users"></i>
                     <span class="nav-link-text">成員管理</span>
                 </a>
@@ -47,7 +47,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" title="權限管理">
+                        <a href="javascript:void(0)" title="權限管理">
                             <span class="nav-link-text">權限管理</span>
                         </a>
                     </li>
@@ -65,7 +65,7 @@
                         <ul>
                             <c:forEach var="key" items="${as_banjiSvc.getBanjiGroup(empVO.empNo).keySet()}">
                                 <li>
-                                    <a href="" title="${as_banjiTypeSvc.getOneBanjiType(key).banjiTypeName}">
+                                    <a href="javascript:void(0)" title="${as_banjiTypeSvc.getOneBanjiType(key).banjiTypeName}">
                                         <span class="nav-link-text">${as_banjiTypeSvc.getOneBanjiType(key).banjiTypeName}</span>
                                     </a>
                                     <ul>
@@ -98,24 +98,24 @@
                 </a>
                 <ul>
                     <li>
-                        <a href="" title="Java雲端">
+                        <a href="javascript:void(0)" title="Java雲端">
                             <span class="nav-link-text">Java雲端</span>
                         </a>
                     </li>
                     <li>
-                        <a href="" title="前端設計">
+                        <a href="javascript:void(0)" title="前端設計">
                             <span class="nav-link-text">前端設計</span>
                         </a>
                     </li>
                     <li>
-                        <a href="" title="大數據分析">
+                        <a href="javascript:void(0)" title="大數據分析">
                             <span class="nav-link-text">大數據分析</span>
                         </a>
                     </li>
                 </ul>
             </li>
             <li>
-                <a href="" title="基本課程管理">
+                <a href="javascript:void(0)" title="基本課程管理">
                     <i class="fal fa-book-open"></i>
                     <span class="nav-link-text">基本課程管理</span>
                 </a>
@@ -127,19 +127,19 @@
                 </a>
             </li>
             <li>
-                <a href="" title="帳號管理">
+                <a href="javascript:void(0)" title="帳號管理">
                     <i class="fal fa-user-cog"></i>
                     <span class="nav-link-text">帳號管理</span>
                 </a>
             </li>
             <li>
-                <a href="" title="訊息中心">
+                <a href="javascript:void(0)" title="訊息中心">
                     <i class="fal fa-comments"></i>
                     <span class="nav-link-text">訊息中心</span>
                 </a>
             </li>
             <li>
-                <a href="" title="通知中心">
+                <a href="javascript:void(0)" title="通知中心">
                     <i class="fal fa-bell"></i>
                     <span class="nav-link-text">通知中心</span>
                 </a>
@@ -150,7 +150,7 @@
     <!-- END PRIMARY NAVIGATION -->
     <!-- NAV FOOTER -->
     <div class="nav-footer shadow-top">
-        <a href="" onclick="return false;" data-action="toggle" data-class="nav-function-minify" class="hidden-md-down">
+        <a href="javascript:void(0)" onclick="return false;" data-action="toggle" data-class="nav-function-minify" class="hidden-md-down">
             <i class="ni ni-chevron-right"></i>
             <i class="ni ni-chevron-right"></i>
         </a>

@@ -383,8 +383,8 @@ public class CourseServlet extends HttpServlet {
 				String banjiNo = new CourseService().getOneCourse(courseNo).getBanjiVO().getBanjiNo();
 
 				CourseService courseSvc = new CourseService();
-				courseSvc.deleteCourse(courseNo);
-
+				courseSvc.deleteCourse(courseNo);	
+				
 				req.setAttribute("banjiNo", banjiNo);
 				req.setAttribute("courseList",  new BanjiService().getOneBanji(banjiNo).getCourseList());
 				String url = "/back-end/course/listAllCourse.jsp";
