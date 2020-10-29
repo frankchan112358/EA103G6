@@ -146,13 +146,9 @@ public class ReplyServlet extends HttpServlet {
 			try {
 
 				String courseAskNo = req.getParameter("courseAskNo");
-				System.out.println(courseAskNo);
 				String teacherNo = req.getParameter("teacherNo");
-				System.out.println(teacherNo);
 				String studentNo = req.getParameter("studentNo");
-				System.out.println(studentNo);
 				String replyContent = req.getParameter("replyContent");
-				System.out.println(replyContent);
 				java.sql.Timestamp updateTime = new java.sql.Timestamp((new java.util.Date()).getTime());
 
 				ReplyVO replyVO = new ReplyVO();

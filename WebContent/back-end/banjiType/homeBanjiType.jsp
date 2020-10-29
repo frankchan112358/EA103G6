@@ -120,9 +120,6 @@
                 responsive: true,
                 language: { url: `<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json` }
             });
-            $("th").addClass("align-middle");
-            $("td").addClass("align-middle");
-            
         });
     </script>
 </body>

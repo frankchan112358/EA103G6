@@ -49,7 +49,6 @@
                                 </form>                
                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.forumtopic">
                                     <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">討論區主題</button>
-                                    <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
                                 </form>
                             </div>
                         </div>
