@@ -1,0 +1,53 @@
+package com.video.controller;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
+import com.video.model.VideoService;
+
+public class VideoAjax extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		doPost(req, res);
+	}
+
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
+		String action = req.getParameter("action");
+		if ("insert".equals(action)) {
+			res.setContentType("text/html");
+			try {
+				String timetableNo = req.getParameter("timetableNo");
+				Part video = req.getPart("video");
+				if (!"video/mp4".equals(video.getContentType().toLowerCase())) {
+					res.getWriter().append("請上傳mp4格式影片");
+					return;
+				}				
+				String Destination = "/videos";
+				String filePath = getServletContext().getRealPath(Destination);
+				new VideoService().addVideo(timetableNo, " ", filePath, video);		
+				res.getWriter().append("ok");
+				return;
+			} catch (Exception e) {
+				e.printStackTrace();
+				res.getWriter().append(e.getMessage());
+			}
+		}
+		if ("update".equals(action)) {
+
+		}
+		if ("delete".equals(action)) {
+
+		}
+		if ("datatable".equals(action)) {
+
+		}
+	}
+
+}
