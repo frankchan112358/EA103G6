@@ -65,11 +65,18 @@
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
-										<button type="submit" class="btn btn-success waves-effect waves-themed float-left edit">
+										<button type="button" class="mr-1 btn btn-success waves-effect waves-themed float-left edit">
 											<span class="fal fa-edit mr-1"></span>
 											<span>修改成績</span>
 										</button>
-
+										<button type="button" class="mr-1 btn btn-info waves-effect waves-themed float-left submit">
+											<span class="fal fa-plus mr-1"></span>
+											<span>送出</span>
+										</button>
+										<button type="button" class="mr-1 btn btn-danger waves-effect waves-themed float-left cancel">
+											<span class="fal fa-cancel mr-1"></span>
+											<span>取消</span>
+										</button>										
 										<!-- datatable start -->
 										<table id="coursetable" class="table table-bordered table-hover table-striped w-100">
 											<thead style="background-color:#E5F4FF;">
@@ -103,13 +110,13 @@
 															${studentVO.studentName}</td>
 														<td class="scoreTd">
 															<c:if test="${finalScoreSvc.getScore(courseNo, studentVO.studentNo)!=null}">
-<%--  																<input class="score" type="hidden" value="${finalScoreSvc.getScore(courseNo, studentVO.studentNo)}" style="width:4em;text-align:center">  --%>
-																${finalScoreSvc.getScore(courseNo, studentVO.studentNo)}
+  																<input studentNo="studentVO.studentNo" class="score" type="number" value="${finalScoreSvc.getScore(courseNo, studentVO.studentNo)}" style="width:4em;text-align:center">  
+																<span class="score">${finalScoreSvc.getScore(courseNo, studentVO.studentNo)}</span>
 																
 															</c:if>
 															<c:if test="${finalScoreSvc.getScore(courseNo, studentVO.studentNo)==null}">
-<!-- 																<input class="score" type="text" value="尚未評分" disabled style="width:4em;text-align:center" > -->
-																尚未評分
+ 																<input studentNo="studentVO.studentNo" class="score" type="number" value="" disabled style="width:4em;text-align:center" >
+																<span class="score">尚未評分</span>
 															</c:if>
 														</td>
 													</tr>
@@ -143,8 +150,12 @@
 
 
 		$(document).ready(function () {
-			$('#coursetable').dataTable(
-				{
+			$('input.score').hide();
+			$('span.score').show();
+			$('button.submit').hide();
+			$('button.cancel').hide();
+			$('button.edit').show();
+			$('#coursetable').dataTable({
 					responsive: true,
 					language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' },
 					"columnDefs": [{
@@ -154,54 +165,40 @@
 				});
 
 
-			$(".edit").click(function () {
+			$("button.edit").click(function () {		
+				$('button.submit').show();
+				$('button.cancel').show();
+				$('button.edit').hide();
+				$('input.score').show();
+				$('span.score').hide();
 				
-				$(".edit").hide();
+				//前端資料驗證
 				
-				//先把成績改成空字串
-// 				$('.score').text('');
-				var scoreInput = document.createElement("INPUT");
-				$(scoreInput).attr({
-					"class" : "score",
-					"type" : "text",
-					"value" : "${finalScoreSvc.getScore(courseNo, studentVO.studentNo)}",
-					"style" : "width:4em;text-align:center"
+				let scoreList = [];
+				$('input.score').each(function(index,score){
+					   let finalScoreVO ={}; 
+					   finalScoreVO.courseNo = '${courseNo}';
+					   finalScoreVO.studentNo = $(score).attr('studentNo');
+					   finalScoreVO.score = $(score).val();
+					   scoreList.add(finalScoreVO);
 				});
-				$(".scoreTd").prepend(scoreInput);
 				
-				//取消按鈕 (加上disable屬性)
-				var cencelForm = document.createElement("FORM");
-				$(cencelForm).attr({
-					"method": "post",
-					"action": "<%=request.getContextPath()%>/back-end/finalscore/listFinalScore.jsp",
-					"style": "margin-bottom:0px",
-					"class" : "cancelForm"
-				});
-				$(".panel-content").prepend(cencelForm);
-				
-				var cencelBtn = document.createElement("BUTTON");
-				cencelBtn.innerHTML = "取消";
-				$(cencelBtn).attr({
-					"class": "btn btn-danger waves-effect waves-themed float-left send",
-					"style" : "margin-left:10px"
-				});
-				$(".cancelForm").prepend(cencelBtn);
-				
-				//送出按鈕(建立FORM > 建立按鈕 > 加上input(hidden, action))
-				var sendForm = document.createElement("FORM");
-				$(sendForm).attr({
-					"method": "post",
-					"action": "<%=request.getContextPath()%>/finalscore/finalscore.do?action=insert",
-					"style": "margin-bottom:0px",
-					"class" : "sendForm"
-				});
-				$(".panel-content").prepend(sendForm);
-				var sendBtn = document.createElement("BUTTON");
-				sendBtn.innerHTML = "送出";
-				$(sendBtn).attr("class", "btn btn-info waves-effect waves-themed float-left send");
-				$(".sendForm").prepend(sendBtn);
-				
-
+                $.ajax({
+                    type: 'POST',
+                    url: '<%=request.getContextPath()%>/finalScore/finalScore.ajax',
+                    data: {
+                    	action:'update',
+                    	scoreList:JSON.stringify(scoreList)
+                    },
+                    success(res){
+                        if(res=='ok'){
+                            
+                        }                       
+                    },
+                    error(err){
+                        console.log(err);
+                    }
+                });     
 				
 			}
 			)
