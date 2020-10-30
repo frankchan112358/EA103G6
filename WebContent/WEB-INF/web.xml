@@ -379,6 +379,15 @@
 		<servlet-name>FinalScoreServlet</servlet-name>
 		<url-pattern>/finalScore/finalScore.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>FinalScoreAjax</servlet-name>
+		<servlet-class>com.finalsocre.controller.FinalScoreAjax</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FinalScoreAjax</servlet-name>
+		<url-pattern>/finalScore/finalScore.ajax</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>StudentServlet</servlet-name>
