@@ -52,7 +52,6 @@ public class UserPermissionFilter implements Filter {
 		if(gotoPlace==null) {
 			String getForFullFile=req.getRequestURI();
 			getForFile=getForFullFile.substring(getForFullFile.lastIndexOf('/')+1);
-			System.out.println(getForFile);
 			
 		}
 		
