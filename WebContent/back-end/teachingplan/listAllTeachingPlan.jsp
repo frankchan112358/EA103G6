@@ -98,10 +98,10 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 											</thead>
 											<tbody>
 												<c:forEach var="teachingPlanVO" items="${teachingPlanSvc.getTeachingPlanByCourseNo(courseNo)}">
-												<tr onclick="location.href='<%=request.getContextPath()%>/teachingPlan/teachingPlan.do?action=getOne_For_Display&teachingPlanNo=${teachingPlanVO.teachingPlanNo}';" style="cursor: pointer;" >
-														<td align="center">第${teachingPlanVO.week}週</td>
-														<td align="center">${teachingPlanVO.lesson}</td>
-														<td align="center">${teachingPlanVO.planContent}</td>
+												<tr>
+														<td align="center" onclick="location.href='<%=request.getContextPath()%>/teachingPlan/teachingPlan.do?action=getOne_For_Display&teachingPlanNo=${teachingPlanVO.teachingPlanNo}';" style="cursor: pointer;">第${teachingPlanVO.week}週</td>
+														<td align="center" onclick="location.href='<%=request.getContextPath()%>/teachingPlan/teachingPlan.do?action=getOne_For_Display&teachingPlanNo=${teachingPlanVO.teachingPlanNo}';" style="cursor: pointer;">${teachingPlanVO.lesson}</td>
+														<td align="center" onclick="location.href='<%=request.getContextPath()%>/teachingPlan/teachingPlan.do?action=getOne_For_Display&teachingPlanNo=${teachingPlanVO.teachingPlanNo}';" style="cursor: pointer;">${teachingPlanVO.planContent}</td>
 														
 														<td class="d-flex p-1 justify-content-center ">
 															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/teachingPlan/teachingPlan.do" style="margin-bottom: 0px;" class="m-1">
@@ -111,8 +111,8 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 																<input type="hidden" name="teachingPlanNo" value="${teachingPlanVO.teachingPlanNo}">
 																<input type="hidden" name="action" value="getOne_For_Update">
 															</FORM>
-																<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/teachingPlan/teachingPlan.do" style="margin-bottom: 0px;" class="m-1">
-																<button type="submit" class="btn btn-outline-danger btn-icon rounded-circle">
+																<FORM id="deleteTeachingPlan" METHOD="post" ACTION="<%=request.getContextPath()%>/teachingPlan/teachingPlan.do" style="margin-bottom: 0px;" class="m-1">
+																<button id="submitDeleteTeachingPlan" type="submit" class="btn btn-outline-danger btn-icon rounded-circle">
                                                         		<i class="fal fa-times"></i>
 																</button>
 																<input type="hidden" name="teachingPlanNo" value="${teachingPlanVO.teachingPlanNo}">
@@ -160,6 +160,40 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 						dataSrc : 0
 					}
 					});
+                
+        		$("#submitDeleteTeachingPlan").on("click", function(event) {
+					event.preventDefault();
+					var swalWithBootstrapButtons = Swal.mixin({
+						customClass : {
+							confirmButton : "btn btn-primary",
+							cancelButton : "btn btn-danger mr-2"
+						},
+						buttonsStyling : false
+					});
+					swalWithBootstrapButtons.fire({
+						icon : "warning",
+						title : "請再次確認是否刪除",
+						text : "教學計劃一旦刪除並無復原可能",
+						showCancelButton : true,
+						confirmButtonText : "確定刪除",
+						cancelButtonText : "暫不刪除",
+						reverseButtons : true
+					}).then(function(result) {
+						if (result.value) {
+							swalWithBootstrapButtons.fire("刪除請求送出", "請稍等跳轉頁面", "success");
+							setTimeout(function() {
+								$('#deleteTeachingPlan').submit();
+							}, 1000);
+						} else if (
+						// Read more about handling dismissals
+						result.dismiss === Swal.DismissReason.cancel) {
+							swalWithBootstrapButtons.fire("刪除請求取消", "刪除教學計劃請再三確認", "error");
+						}
+					});
+					event.stopPropagation();
+				}); // A message with a custom image and CSS animation disabled		
+
+                
 			});
 	</script>
 </body>

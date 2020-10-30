@@ -110,8 +110,8 @@ img {
 												<input type="hidden" name="action" value="getOne_For_Update">
 											</FORM>
 											&emsp;
-											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
-												<button type="submit" class="btn btn-danger">
+											<FORM id="deleteCourse" METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
+												<button id="submitDeleteCourse" type="submit" class="btn btn-danger">
 													<span class="fal fa-times mr-1"></span>
 													<span>刪除課程</span>
 												</button>
@@ -219,6 +219,38 @@ img {
 				myForm.append(banjiNoInput);
 				myForm.submit();
 			}, false);
+		
+		$("#submitDeleteCourse").on("click", function(event) {
+			event.preventDefault();
+			var swalWithBootstrapButtons = Swal.mixin({
+				customClass : {
+					confirmButton : "btn btn-primary",
+					cancelButton : "btn btn-danger mr-2"
+				},
+				buttonsStyling : false
+			});
+			swalWithBootstrapButtons.fire({
+				icon : "warning",
+				title : "請再次確認是否刪除",
+				text : "課程一旦刪除並無復原可能",
+				showCancelButton : true,
+				confirmButtonText : "確定刪除",
+				cancelButtonText : "暫不刪除",
+				reverseButtons : true
+			}).then(function(result) {
+				if (result.value) {
+					swalWithBootstrapButtons.fire("刪除請求送出", "請稍等跳轉頁面", "success");
+					setTimeout(function() {
+						$('#deleteCourse').submit();
+					}, 1000);
+				} else if (
+				// Read more about handling dismissals
+				result.dismiss === Swal.DismissReason.cancel) {
+					swalWithBootstrapButtons.fire("刪除請求取消", "刪除課程請再三確認", "error");
+				}
+			});
+		}); // A message with a custom image and CSS animation disabled
+		
 
 	});		
 	</script>

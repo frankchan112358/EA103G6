@@ -172,7 +172,8 @@ public class CoursePostServlet extends HttpServlet {
 
 				CoursePostService coursePostSvc = new CoursePostService();
 				coursePostVO = coursePostSvc.updateCoursePost(coursePostNo, courseNo, title, postContent);
-				String url = "/back-end/coursepost/listAllCoursePost.jsp";
+				req.setAttribute("coursePostVO", coursePostVO);
+				String url = "/back-end/coursepost/listOneCoursePost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -228,19 +229,20 @@ public class CoursePostServlet extends HttpServlet {
 		}
 
 		if ("delete".equals(action)) {
-
+			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				String coursePostNo = new String(req.getParameter("coursePostNo"));
-
 				CoursePostService coursePostSvc = new CoursePostService();
 				coursePostSvc.deleteCoursePost(coursePostNo);
 
 				String url = "/back-end/coursepost/listAllCoursePost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
+				
+				
 			} catch (Exception e) {
 				errorMsgs.add("⚠刪除資料失敗⚠:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coursepost/listAllCoursePost.jsp");

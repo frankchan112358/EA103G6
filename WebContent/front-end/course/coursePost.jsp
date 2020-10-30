@@ -10,7 +10,7 @@
 <%
 	@SuppressWarnings("unchecked")
 	List<CoursePostVO> list = (List<CoursePostVO>) session.getAttribute("coursePostVO");
-	session.setAttribute("list", list);
+	pageContext.setAttribute("list", list);
 %>
 
 

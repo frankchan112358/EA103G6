@@ -87,6 +87,7 @@ font-size: 15px;
 										</FORM>
 										<!-- datatable start -->
 										<table id="coursePostTable" class="table table-bordered table-hover table-striped w-100">
+										
 											<thead style="background-color: #E5F4FF;">
 												<tr>
 													<th>公告編號</th>
@@ -96,68 +97,76 @@ font-size: 15px;
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach var="coursePostVO" items="${coursePostSvc.getCoursePostByCourseNo(courseNo)}">
-<%-- 												<tr data-toggle="modal" data-id="${coursePostVO.coursePostNo}" data-target="#coursePostModal"> --%>
-												<tr onclick="location.href='<%=request.getContextPath()%>/coursePost/coursePost.do?action=getOne_For_Display&coursePostNo=${coursePostVO.coursePostNo}';" style="cursor: pointer;" >
+											<c:forEach var="coursePostVO" items="${coursePostSvc.getCoursePostByCourseNo(courseNo)}">
+												<tr data-toggle="modal" data-target="#coursePostModal${coursePostVO.coursePostNo}">
+<!-- 												<tr > -->
 														
 														<td>${coursePostVO.coursePostNo}</td>
 														<td>${coursePostVO.title}</td>
-														<td>
+														<td >
 															<fmt:formatDate value="${coursePostVO.updateTime}" pattern="yyyy年MM月dd日 HH'點'mm'分'" />
 														</td>
-														<td class="d-flex p-1 justify-content-center" >
+														<td class="d-flex p-1 justify-content-center">
 															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/coursePost/coursePost.do" style="margin-bottom: 0px;" class="m-1">
-																<button type="submit" class="btn btn-outline-primary btn-icon rounded-circle">
+																<button class="btn btn-outline-primary btn-icon rounded-circle rowbtn">
 																<i class="fal fa-edit"></i>
 																</button>
 																<input type="hidden" name="coursePostNo" value="${coursePostVO.coursePostNo}">
 																<input type="hidden" name="action" value="getOne_For_Update">
 															</FORM>
-																<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/coursePost/coursePost.do" style="margin-bottom: 0px;" class="m-1">
-																<button type="submit" class="btn btn-outline-danger btn-icon rounded-circle">
+																<FORM id="deleteCoursePost" METHOD="post" ACTION="<%=request.getContextPath()%>/coursePost/coursePost.do" style="margin-bottom: 0px;" class="m-1">
+																<button class="submitDeleteCoursePost btn btn-outline-danger btn-icon rounded-circle rowbtn">
                                                         		<i class="fal fa-times"></i>
 																</button>
 																<input type="hidden" name="coursePostNo" value="${coursePostVO.coursePostNo}">
 																<input type="hidden" name="action" value="delete">
 															</FORM>
 														</td>
-<!-- 													</tr> -->
-												</c:forEach>
+													</tr>
+													
+										</c:forEach>
 											</tbody>
-
 										</table>
-<!-- 										     <div class="modal fade" id="coursePostModal" tabindex="-1" role="dialog" aria-hidden="true"> -->
-<!--                                                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document"> -->
-<!--                                                     <div class="modal-content"> -->
-<!--                                                         <div class="modal-header"> -->
-<!--                                                             <h5 class="modal-title">Modal title</h5> -->
-<!--                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!--                                                                 <span aria-hidden="true"><i class="fal fa-times"></i></span> -->
-<!--                                                             </button> -->
-<!--                                                         </div> -->
-<!--                                                         <div class="modal-body" id="coursePostDetails"> -->
-<!--  															<table id="teachingPlanTable" class="table table-bordered table-hover table-striped w-100"> -->
-<!-- 																<tr> -->
-<!-- 																<th>公告標題</th> -->
-<%-- 																<td>${coursePostVO.title}</td> --%>
-<!-- 																</tr>				 -->
-<!-- 																<tr> -->
-<!-- 																<th>公告內容</th> -->
-<%-- 																<td  width="85%">${coursePostVO.postContent}</td> --%>
-<!-- 																</tr> -->
-<!-- 																<tr> -->
-<!-- 																<th>公告時間</th> -->
-<%-- 																<td class="updateTime"><fmt:formatDate value="${coursePostVO.updateTime}" pattern="yyyy年MM月dd日 HH'點'mm'分'" /></td> --%>
-<!-- 																</tr> -->
-<!-- 																</table>                                                            -->
-<!--                                                         </div> -->
-<!--                                                         <div class="modal-footer"> -->
-<!--                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-<!--                                                         </div> -->
-<!--                                                     </div> -->
-<!--                                                 </div> -->
-<!--                                             </div> -->
 										<!-- datatable end -->
+										<c:forEach var="coursePostVO" items="${coursePostSvc.getCoursePostByCourseNo(courseNo)}">
+										 <div class="modal fade" id="coursePostModal${coursePostVO.coursePostNo}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+														<div class="modal-content">
+                                                        <div class="modal-header">
+														<h4 class="modal-title" style="font-size:2em">課程公告資料</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+ 															
+<!--  															<table id="teachingPlanTable" class="table table-bordered table-hover table-striped w-100"> -->
+														<div class="form-group">
+															<label class="form-label" style="font-size:1.5em">公告標題</label>
+															<input type="text" name="title" class="form-control" style="font-size:15px" value="${coursePostVO.title}" readonly/>
+															</div>														
+																
+																<tr>
+																<th>公告標題</th>
+																<td>${coursePostVO.title}</td>
+																</tr>				
+																<tr>
+																<th>公告內容</th>
+																<td  width="85%">${coursePostVO.postContent}</td>
+																</tr>
+																<tr>
+																<th>公告時間</th>
+																<td class="updateTime"><fmt:formatDate value="${coursePostVO.updateTime}" pattern="yyyy年MM月dd日 HH'點'mm'分'" /></td>
+																</tr>
+<!-- 																</table>                                                            -->
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </c:forEach>
 									</div>
 								</div>
 							</div>
@@ -207,6 +216,38 @@ font-size: 15px;
 				myForm.submit();
 			}, false);
 
+					
+					$(".submitDeleteCoursePost").on("click", function(event) {
+						event.preventDefault();
+						var swalWithBootstrapButtons = Swal.mixin({
+							customClass : {
+								confirmButton : "btn btn-primary",
+								cancelButton : "btn btn-danger mr-2"
+							},
+							buttonsStyling : false
+						});
+						swalWithBootstrapButtons.fire({
+							icon : "warning",
+							title : "請再次確認是否刪除",
+							text : "公告一旦刪除並無復原可能",
+							showCancelButton : true,
+							confirmButtonText : "確定刪除",
+							cancelButtonText : "暫不刪除",
+							reverseButtons : true
+						}).then(function(result) {
+							if (result.value) {
+								swalWithBootstrapButtons.fire("刪除請求送出", "請稍等跳轉頁面", "success");
+								setTimeout(function() {
+									$('#deleteCoursePost').submit();
+								}, 1000);
+							} else {
+								swalWithBootstrapButtons.fire("刪除請求取消", "刪除公告請再三確認", "error");
+							}
+						}) ;
+					}); // A message with a custom image and CSS animation disabled		
+					$('.rowbtn').on('click', function(e){
+						e.stopPropagation();
+					});
 			});
 	</script>
 </body>

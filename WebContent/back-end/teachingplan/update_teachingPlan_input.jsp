@@ -38,10 +38,10 @@
 							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>
+							<a id="aListAllCourse" banjiNo="${courseSvc.getOneCourse(courseNo).banjiNo}" href="javascript:void(0)">課程總覽</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/teachingplan/listAllTeachingPlan.jsp">教學計劃管理</a>
+							<a href="<%=request.getContextPath()%>/teachingPlan/teachingPlan.do">教學計劃管理</a>
 						</li>
 						<li class="breadcrumb-item">教學計劃修改</li>
 					</ol>
@@ -117,28 +117,44 @@
     
  
 	<script>
-		// Example starter JavaScript for disabling form submissions if there are invalid fields
-		(function() {
-			'use strict';
-			window.addEventListener('load',
-					function() {
-						// Fetch all the forms we want to apply custom Bootstrap validation styles to
-						var forms = document
-								.getElementsByClassName('needs-validation');
-						// Loop over them and prevent submission
-						var validation = Array.prototype.filter.call(forms,
-								function(form) {
-									form.addEventListener('submit', function(
-											event) {
-										if (form.checkValidity() === false) {
-											event.preventDefault();
-											event.stopPropagation();
-										}
-										form.classList.add('was-validated');
-									}, false);
-								});
-					}, false);
-		})();
+		
+	    $(document).ready(function()
+	            {
+	    	
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document
+					.getElementsByClassName('needs-validation');
+			// Loop over them and prevent submission
+			var validation = Array.prototype.filter.call(forms,
+					function(form) {
+						form.addEventListener('submit', function(
+								event) {
+							if (form.checkValidity() === false) {
+								event.preventDefault();
+								event.stopPropagation();
+							}
+							form.classList.add('was-validated');
+						}, false);
+					});
+	    	
+						document.getElementById('aListAllCourse').addEventListener('click',function(e){
+					e.preventDefault();
+					let _this = this;
+	                let banjiNo = this.getAttribute('banjiNo');
+					let myForm = document.createElement('form');
+					document.body.appendChild(myForm);
+					myForm.action = '<%=request.getContextPath()%>/course/course.do';
+					myForm.method = 'POST';
+					let banjiNoInput = document.createElement('input');
+					banjiNoInput.type = 'hidden';
+					banjiNoInput.name = 'banjiNo';
+					banjiNoInput.value= banjiNo;
+					myForm.append(banjiNoInput);
+					myForm.submit();
+				}, false);
+
+				});
+		
 	</script>
 </body>
 </html>

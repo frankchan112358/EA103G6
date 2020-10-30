@@ -85,7 +85,7 @@ font-size: 15px;
 											
 
 											<div class="form-row align-items-center justify-content-center">
-												<button type="submit" class="btn btn-primary justify-content-center">
+												<button id="updateCoursePost" type="submit" class="btn btn-primary justify-content-center">
 													<span>送出</span>
 												</button>
 												<input type="hidden" name="action" value="update">
@@ -160,7 +160,11 @@ font-size: 15px;
 							form.classList.add('was-validated');
 						}, false);
 					});
+			
 		});
+        
+        
+        
 	</script>
 </body>
 </html>
