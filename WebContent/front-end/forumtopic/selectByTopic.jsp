@@ -57,16 +57,16 @@ pageContext.setAttribute("list", list);
                             <i class='subheader-icon fal fa-democrat'></i> 討論區
                         </h1>
                     </div>
+       <div class="btn-group mb-3" role="group">
                     
                     <c:forEach var="forumTopicVO" items="${forumtopicSvc.getByBanJiNo(studentVO.banjiNo)}">
-                    	<form method="post" action="<%=request.getContextPath()%>/forumPost/forumPost.do">
                     	
+                    	<button type="button" class="forumTopic btn btn-lg ${forumTopicVO.forumTopicNo == forumTopicNo ? 'btn-primary' : 'btn-outline-primary'} " forumTopicNo="${forumTopicVO.forumTopicNo}">
+															<span class="fal fa-book mr-1"></span>${forumTopicVO.forumTopicName}
+													</button>
                     	
-                    		<input type="hidden" name="action" value="getByTopicNo">
-                    		<input type="hidden" name="forumTopicNo" value="${forumTopicVO.forumTopicNo}">
-                    		<input type="submit" value="${forumTopicVO.forumTopicName}">
-                    	</form>
                     </c:forEach>
+                    </div>
                      <div class="row">
                         <div class="col col-xl-12">
                                 <div class="panel-hdr bg-primary-800 bg-success-gradient ">
@@ -208,6 +208,47 @@ pageContext.setAttribute("list", list);
 		<%@ include file="/front-end/template/quick_menu.jsp" %>
     <%@ include file="/front-end/template/messager.jsp" %>
     <%@ include file="/front-end/template/basic_js.jsp" %>   
+    
+    
+    <script>
+    
+    $(document).ready(function()
+            {
+                $('#coursetable').dataTable(
+                {
+                    responsive: true,
+                    language:{url:'<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json'},
+                });
+           
+                $(document).on('click', 'button.forumTopic', function (event) {
+                    let _this = this;
+                    let forumTopicNo = this.getAttribute('forumTopicNo');
+					let myForm = document.createElement('form');
+					document.body.appendChild(myForm);
+					myForm.action = '<%=request.getContextPath()%>/forumPost/forumPost.do';
+					myForm.method = 'POST';
+					let forumTopicNameInput = document.createElement('input');
+					let forumTopicActionInput = document.createElement('input');
+					forumTopicNameInput.type = 'hidden';
+					forumTopicNameInput.name = 'forumTopicNo';
+					forumTopicNameInput.value = forumTopicNo;
+					forumTopicActionInput.type = 'hidden';
+					forumTopicActionInput.name = 'action';
+					forumTopicActionInput.value = 'getByTopicNo';
+					myForm.append(forumTopicNameInput);
+					myForm.append(forumTopicActionInput);
+					
+					myForm.submit();
+                });
+                
+                
+            });
+    
+    
+    
+    
+    
+    </script>
 
 	
 	

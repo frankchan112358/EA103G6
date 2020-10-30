@@ -75,14 +75,20 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
                           <img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${studentSvc.getOneStudent(forumPostVO.studentNo).userNo}" style="width: 100px; height: 100px;">
                          </c:if>							
 							
+							
+							
 							<div class="col-md-12" id="AstudentName"><b>${studentSvc.getOneStudent(forumPostVO.studentNo).studentName}</b></div>
 							</div>
 							
+
 							
 							<div class="col-md-10">
 									<div class="row">
 										<div class="col-md-8" style="font-size:35px;text-align:center;"><b>${forumPostVO.title}</b></div>
 										<div class="col-md-4">
+										
+										
+										
 
 
 
@@ -120,6 +126,16 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 										</div>
 									</div>
 								</div>
+								
+								
+								<form method="post" action="<%=request.getContextPath() %>/front-end/report/report.do">
+									<div class="reportBtn">
+										<input type="submit" value="檢舉"style="float:right;width:120px;height:40px;border:3px green double;"> 
+										<input type="hidden"name="action" value="getOne_Fc_Report"> 
+										<input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}"> 
+										<input type="hidden" name="forumCommentNo" value="${forumCommentVO.forumCommentNo}">
+									</div>
+								</form>
 
 
 

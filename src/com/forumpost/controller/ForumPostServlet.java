@@ -25,6 +25,8 @@ public class ForumPostServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		String forumTopicNo1 = req.getParameter("forumTopicNo");
+
 
 		if ("getOne_For_Display".equals(action)) {
 
@@ -320,7 +322,6 @@ public class ForumPostServlet extends HttpServlet {
 		
 		if("getByTopicNo".equals(action)) {
 			String topicNo = req.getParameter("forumTopicNo");
-			
 			
 			HttpSession session = req.getSession();
 			
