@@ -29,12 +29,14 @@ public class CourseAskServlet extends HttpServlet {
 		String action = req.getParameter("action");
 
 		if ("getOne_For_Display".equals(action)) {
+
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				String str = req.getParameter("courseAskNo");
-				if (str == null || (str.trim()).length() == 0) {
+				String courseAskNo = req.getParameter("courseAskNo");
+				System.out.println(courseAskNo);
+				if (courseAskNo == null || (courseAskNo.trim()).length() == 0) {
 					errorMsgs.add("請輸入提問編號");
 				}
 				if (!errorMsgs.isEmpty()) {
@@ -43,18 +45,6 @@ public class CourseAskServlet extends HttpServlet {
 					return;
 				}
 
-				String courseAskNo = null;
-				try {
-					courseAskNo = str;
-				} catch (Exception e) {
-					errorMsgs.add("回覆編號格式不正確");
-				}
-
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/courseAsk/select_page.jsp");
-					failureView.forward(req, res);
-					return;
-				}
 
 				CourseAskService courseAskSvc = new CourseAskService();
 				CourseAskVO courseAskVO = courseAskSvc.getOneCourseAsk(courseAskNo);
