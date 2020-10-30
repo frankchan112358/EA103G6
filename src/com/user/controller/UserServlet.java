@@ -76,21 +76,13 @@ public class UserServlet extends HttpServlet {
 
 				// 限制任何人更改最高管理者
 				if (str.equals("U000001")) {
-					RequestDispatcher successView = req.getRequestDispatcher("/back-end/emp/empList.jsp");
+					req.setAttribute("permission", "forbid"); //丟到首頁顯示無權限
+					RequestDispatcher successView = req.getRequestDispatcher("/back-end/index/index.jsp");
 					successView.forward(req, res);
 					return;
 				}
 
-				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.put("userNoCheck", "請輸入使用者編號");
-				}
-
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/select_page.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-
+				//設計沒有可以讓其手動查詢的位置，此用來擋網址的不正當輸入
 				String userNo = null;
 				try {
 					userNo = str;
@@ -99,7 +91,7 @@ public class UserServlet extends HttpServlet {
 				}
 
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -108,12 +100,14 @@ public class UserServlet extends HttpServlet {
 				UserService userSvc = new UserService();
 				UserVO userVO = userSvc.getOneUser(userNo);
 
+				
+				//設計沒有可以讓其手動查詢的位置，此用來擋網址的不正當輸入
 				if (userVO == null) {
 					errorMsgs.put("userNoCheck", "查無資料");
 				}
 
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -149,7 +143,7 @@ public class UserServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.put("mistake", "無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -167,7 +161,7 @@ public class UserServlet extends HttpServlet {
 				if (name != null)
 					name.trim();
 				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{2,10}$";
-				if (name == null || name.trim().length() == 0) {
+				if (name == null || name.length() == 0) {
 					errorMsgs.put("name", "姓名請勿空白");
 				} else if (!name.trim().matches(nameReg)) {
 					errorMsgs.put("name", "只能是中、英文字母 , 且長度必需在2到10之間");
@@ -177,12 +171,12 @@ public class UserServlet extends HttpServlet {
 				if (mail != null)
 					mail.trim();
 				String mailReg = "[\\w\\.\\-]+@([\\w\\-]+\\.)+[\\w\\-]+";
-				if (mail == null || mail.trim().length() == 0) {
+				if (mail == null || mail.length() == 0) {
 					errorMsgs.put("mail", "信箱請勿空白");
-				} else if (!mail.trim().matches(mailReg)) {
+				} else if (!mail.matches(mailReg)) {
 					errorMsgs.put("mail", "格式錯誤，請再次檢查");
 				} else {
-					// 進資料庫對比信箱是否重複註冊
+					// 進資料庫對比信箱(帳號)是否重複註冊
 					UserService userSVAccount = new UserService();
 					List<String> accountVS = userSVAccount.checkAccount(type);
 
@@ -273,23 +267,16 @@ public class UserServlet extends HttpServlet {
 					// 錯誤導前端
 					if (type.equals(0)) {
 
-						// 錯誤導講師頁面
+						return;
+					// 錯誤導講師頁面
 					} else if (type.equals(1)) {
 
 						req.setAttribute("userVOForInsert", userVO);
 						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teacher/teacherList.jsp");
 						failureView.forward(req, res);
 						return;
-						// 錯誤導導師頁面
+					// 錯誤導導師頁面
 					} else {
-
-						/**************** start測試提醒用 *****************/
-
-						NotifyServlet notify = new NotifyServlet();
-						notify.broadcast("U000002", "測試", "猜猜我是誰3");
-
-						/**************** end測試提醒用 *****************/
-
 						req.setAttribute("userVOForInsert", userVO);
 						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/empList.jsp");
 						failureView.forward(req, res);
@@ -433,12 +420,6 @@ public class UserServlet extends HttpServlet {
 
 					TeacherService teacherSvc = new TeacherService();
 					TeacherVO teacherVO = teacherSvc.getOneTeacherByUserNo(userNo);
-					if (teacherVO == null) {// 若離職頁面轉至此跳刪除建議，但目前新版面離職的人會抓不到
-						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back-end/user/update_user_input.jsp");
-						failureView.forward(req, res);
-						return;
-					}
 
 					req.setAttribute("teacherVOForUpdate", teacherVO);
 					RequestDispatcher successView = req.getRequestDispatcher("/back-end/teacher/updateTeacher.jsp");
@@ -448,22 +429,14 @@ public class UserServlet extends HttpServlet {
 					EmpService empSvc = new EmpService();
 					EmpVO empVO = empSvc.getOneEmpByUserNo(userNo);
 
-					if (empVO == null) { // 若離職頁面轉至此跳刪除建議，但目前新版面離職的人會抓不到
-						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back-end/user/update_user_input.jsp");
-						failureView.forward(req, res);
-						return;
-					}
-
 					req.setAttribute("empVOForUpdate", empVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/updateEmp.jsp");
 					failureView.forward(req, res);
-
 				}
 
 			} catch (Exception e) {
 				errorMsgs.put("mistake", "無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/listAllUser.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
 				failureView.forward(req, res);
 			}
 
@@ -477,9 +450,8 @@ public class UserServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 ***************************************/
 				String userNo = req.getParameter("userNo");
 
-				/***************************
-				 * 2.開始刪除資料，並轉交
-				 ***************************************/
+				
+				/******************* 2.開始刪除資料，並轉交*********************/
 				UserService UserSvc = new UserService();
 				UserVO userVO = UserSvc.getOneUser(userNo);
 				UserSvc.deleteUser(userNo);
@@ -513,7 +485,7 @@ public class UserServlet extends HttpServlet {
 
 			} catch (Exception e) {
 				errorMsgs.put("mistake", "刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/listAllUser.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -540,9 +512,9 @@ public class UserServlet extends HttpServlet {
 				if (name != null)
 					name.trim();
 				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{2,10}$";
-				if (name == null || name.trim().length() == 0) {
+				if (name == null || name.length() == 0) {
 					errorMsgs.put("name", "姓名請勿空白");
-				} else if (!name.trim().matches(nameReg)) {
+				} else if (!name.matches(nameReg)) {
 					errorMsgs.put("name", "姓名只能是中、英文字母 , 且長度必需在2到10之間");
 				}
 
@@ -550,9 +522,9 @@ public class UserServlet extends HttpServlet {
 				if (mail != null)
 					mail.trim();
 				String mailReg = "[\\w\\.\\-]+@([\\w\\-]+\\.)+[\\w\\-]+";
-				if (mail == null || mail.trim().length() == 0) {
+				if (mail == null || mail.length() == 0) {
 					errorMsgs.put("mail", "信箱請勿空白");
-				} else if (!mail.trim().matches(mailReg)) {
+				} else if (!mail.matches(mailReg)) {
 					errorMsgs.put("mail", "信箱格式錯誤，請再次檢查");
 				}
 
@@ -560,8 +532,8 @@ public class UserServlet extends HttpServlet {
 				if (phone != null)
 					phone.trim();
 				String phoneReg = "[0-9]{10}";
-				if (phone == null || phone.trim().length() == 0) {
-				} else if (!phone.trim().matches(phoneReg)) {
+				if (phone == null || phone.length() == 0) {
+				} else if (!phone.matches(phoneReg)) {
 					errorMsgs.put("phone", "手機號碼僅接受台灣連絡電話且僅能輸入10碼");
 				}
 
@@ -883,9 +855,9 @@ public class UserServlet extends HttpServlet {
 					password.trim();
 				String passwordReg = "\\w{6,12}";
 
-				if (password == null || password.trim().length() == 0) {
+				if (password == null || password.length() == 0) {
 					errorMsgs.put("password", "密碼請勿空白");
-				} else if (!password.trim().matches(passwordReg)) {
+				} else if (!password.matches(passwordReg)) {
 					errorMsgs.put("password", "密碼僅能輸入英文字母及數字，且長度為6-12");
 				}
 
@@ -910,7 +882,7 @@ public class UserServlet extends HttpServlet {
 				if (type.equals(0)) {
 
 					if (!errorMsgs.isEmpty()) {
-						req.setAttribute("userVO", userVO);
+						req.setAttribute("userVOForEnable", userVO);
 						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/userEnable.jsp");
 						failureView.forward(req, res);
 						return;
@@ -919,7 +891,7 @@ public class UserServlet extends HttpServlet {
 				} else {
 
 					if (!errorMsgs.isEmpty()) {
-						req.setAttribute("userVO", userVO);
+						req.setAttribute("userVOForEnable", userVO);
 						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/userEnable.jsp");
 						failureView.forward(req, res);
 						return;
@@ -943,7 +915,8 @@ public class UserServlet extends HttpServlet {
 					successView.forward(req, res);
 
 				} else {
-					RequestDispatcher successView = req.getRequestDispatcher("/back-end/index/index.jsp");
+					req.setAttribute("enableUpdate", "firstTime");
+					RequestDispatcher successView = req.getRequestDispatcher("/back-end/accountmanager/updateThemselves.jsp");
 					successView.forward(req, res);
 				}
 
@@ -963,7 +936,7 @@ public class UserServlet extends HttpServlet {
 
 			UserService userSvc = new UserService();
 			UserVO userVO = userSvc.getOneUser(userNo);
-			req.setAttribute("userVO", userVO);
+			req.setAttribute("userVOForEnable", userVO);
 
 			if (userVO.getEnable().equals(0)) {
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/userEnable.jsp");
@@ -995,9 +968,9 @@ public class UserServlet extends HttpServlet {
 				if (name != null)
 					name.trim();
 				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{2,10}$";
-				if (name == null || name.trim().length() == 0) {
+				if (name == null || name.length() == 0) {
 					errorMsgs.put("name", "姓名請勿空白");
-				} else if (!name.trim().matches(nameReg)) {
+				} else if (!name.matches(nameReg)) {
 					errorMsgs.put("name", "姓名只能是中、英文字母 , 且長度必需在2到10之間");
 				}
 
@@ -1005,9 +978,9 @@ public class UserServlet extends HttpServlet {
 				if (mail != null)
 					mail.trim();
 				String mailReg = "[\\w\\.\\-]+@([\\w\\-]+\\.)+[\\w\\-]+";
-				if (mail == null || mail.trim().length() == 0) {
+				if (mail == null || mail.length() == 0) {
 					errorMsgs.put("mail", "信箱請勿空白");
-				} else if (!mail.trim().matches(mailReg)) {
+				} else if (!mail.matches(mailReg)) {
 					errorMsgs.put("mail", "信箱格式錯誤，請再次檢查");
 				}
 
@@ -1015,8 +988,8 @@ public class UserServlet extends HttpServlet {
 				if (phone != null)
 					phone.trim();
 				String phoneReg = "[0-9]{10}";
-				if (phone == null || phone.trim().length() == 0) {
-				} else if (!phone.trim().matches(phoneReg)) {
+				if (phone == null || phone.length() == 0) {
+				} else if (!phone.matches(phoneReg)) {
 					errorMsgs.put("phone", "手機號碼僅接受台灣連絡電話且僅能輸入10碼");
 				}
 
