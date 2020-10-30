@@ -57,4 +57,9 @@ public class FinalScoreService {
 		}
 		return score;
 	}
+	
+	public Integer updateScore(String courseNo, String studentNo) {
+		Integer score = null;
+		return score;
+	}
 }

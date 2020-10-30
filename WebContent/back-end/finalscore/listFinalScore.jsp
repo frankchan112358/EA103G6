@@ -65,10 +65,11 @@
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
-										<button type="submit" class="btn btn-success waves-effect waves-themed float-left">
+										<button type="submit" class="btn btn-success waves-effect waves-themed float-left edit">
 											<span class="fal fa-edit mr-1"></span>
 											<span>修改成績</span>
 										</button>
+
 										<!-- datatable start -->
 										<table id="coursetable" class="table table-bordered table-hover table-striped w-100">
 											<thead style="background-color:#E5F4FF;">
@@ -94,14 +95,22 @@
 															</c:if>
 
 														</td>
-														<td>${studentVO.studentNo}</td>
-														<td>${studentVO.studentName}</td>
 														<td>
+															<input type="hidden" name="studentNo" value="${studentVO.studentNo}">
+															${studentVO.studentNo}</td>
+														<td>
+															<input type="hidden" name="studentName" value="${studentVO.studentName}">
+															${studentVO.studentName}</td>
+														<td class="scoreTd">
 															<c:if test="${finalScoreSvc.getScore(courseNo, studentVO.studentNo)!=null}">
+<%--  																<input class="score" type="hidden" value="${finalScoreSvc.getScore(courseNo, studentVO.studentNo)}" style="width:4em;text-align:center">  --%>
 																${finalScoreSvc.getScore(courseNo, studentVO.studentNo)}
+																
 															</c:if>
 															<c:if test="${finalScoreSvc.getScore(courseNo, studentVO.studentNo)==null}">
-																尚未評分</c:if>
+<!-- 																<input class="score" type="text" value="尚未評分" disabled style="width:4em;text-align:center" > -->
+																尚未評分
+															</c:if>
 														</td>
 													</tr>
 												</c:forEach>
@@ -139,13 +148,63 @@
 					responsive: true,
 					language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' },
 					"columnDefs": [{
-						"targets": [-4, -2],
+						"targets": [-2, -4],
 						"orderable": false,
-
 					}]
 				});
 
-			
+
+			$(".edit").click(function () {
+				
+				$(".edit").hide();
+				
+				//先把成績改成空字串
+// 				$('.score').text('');
+				var scoreInput = document.createElement("INPUT");
+				$(scoreInput).attr({
+					"class" : "score",
+					"type" : "text",
+					"value" : "${finalScoreSvc.getScore(courseNo, studentVO.studentNo)}",
+					"style" : "width:4em;text-align:center"
+				});
+				$(".scoreTd").prepend(scoreInput);
+				
+				//取消按鈕 (加上disable屬性)
+				var cencelForm = document.createElement("FORM");
+				$(cencelForm).attr({
+					"method": "post",
+					"action": "<%=request.getContextPath()%>/back-end/finalscore/listFinalScore.jsp",
+					"style": "margin-bottom:0px",
+					"class" : "cancelForm"
+				});
+				$(".panel-content").prepend(cencelForm);
+				
+				var cencelBtn = document.createElement("BUTTON");
+				cencelBtn.innerHTML = "取消";
+				$(cencelBtn).attr({
+					"class": "btn btn-danger waves-effect waves-themed float-left send",
+					"style" : "margin-left:10px"
+				});
+				$(".cancelForm").prepend(cencelBtn);
+				
+				//送出按鈕(建立FORM > 建立按鈕 > 加上input(hidden, action))
+				var sendForm = document.createElement("FORM");
+				$(sendForm).attr({
+					"method": "post",
+					"action": "<%=request.getContextPath()%>/finalscore/finalscore.do?action=insert",
+					"style": "margin-bottom:0px",
+					"class" : "sendForm"
+				});
+				$(".panel-content").prepend(sendForm);
+				var sendBtn = document.createElement("BUTTON");
+				sendBtn.innerHTML = "送出";
+				$(sendBtn).attr("class", "btn btn-info waves-effect waves-themed float-left send");
+				$(".sendForm").prepend(sendBtn);
+				
+
+				
+			}
+			)
 		});
 	</script>
 </body>
