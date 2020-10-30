@@ -157,7 +157,7 @@
                     </div>
                 </div>
                 <div class="dropdown-divider m-0"></div>                                    
-                <a href="javascript:void(0)" class="dropdown-item fw-500 pt-3 pb-3">
+                <a href="<%=request.getContextPath() %>/back-end/accountmanager/listThemselves.jsp" class="dropdown-item fw-500 pt-3 pb-3">
                     <span data-i18n="drpdwn.settings">帳號設定</span>
                 </a>
                 <div class="dropdown-divider m-0"></div>

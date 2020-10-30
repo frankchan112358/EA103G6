@@ -16,3 +16,10 @@
 <script>var NotifyMyPoint = "/NotifyServlet/${sessionScope.userVO.userNo}"</script>
 <script src="<%=request.getContextPath() %>/notify/websocketNotify.js"></script>
 <script src="<%=request.getContextPath() %>/SmartAdmin4/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
+
+<!-- 此為聊天室呼叫之方法 -->
+<script>
+$(document).ready(function (){	
+	messagerInit();//此方法寫在messager.jsp
+}); 
+</script>

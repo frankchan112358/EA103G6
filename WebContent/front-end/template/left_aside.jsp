@@ -25,19 +25,19 @@
                 </a>
             </li>
             <li>
-                <a href="javascript:void(0)" title="我的養成班">
-                    <i class="fal fa-users-class"></i>
-                    <span class="nav-link-text">我的養成班</span>
-                </a>
-            </li>
-            <li>
                 <a href="<%=request.getContextPath() %>/front-end/course/selectCourse.jsp" title="我的課程">
                     <i class="fal fa-book"></i>
                     <span class="nav-link-text">我的課程</span>
                 </a>
             </li>
             <li>
-                <a href="<%=request.getContextPath() %>/leave/leave.handle" title="請假">
+                <a href="<%=request.getContextPath() %>/front-end/forumpost/forumPost_index.jsp" title="班級討論區">
+                    <i class="fal fa-book"></i>
+                    <span class="nav-link-text">班級討論區</span>
+                </a>
+            </li>
+            <li>
+                <a href="<%=request.getContextPath() %>/leave/leave.handle" title="請假申請">
                     <i class="fal fa-file-edit"></i>
                     <span class="nav-link-text">請假申請</span>
                 </a>
@@ -49,33 +49,9 @@
                 </a>
             </li>
             <li>
-                <a href="javascript:void(0)" title="出缺勤">
-                    <i class="fal fa-briefcase"></i>
-                    <span class="nav-link-text">出缺勤</span>
-                </a>
-            </li>
-            <li>
                 <a href="<%=request.getContextPath() %>/front-end/evaluation/selectEvaluation.jsp" title="教學評鑑">
                     <i class="fal fa-clipboard-check"></i>
                     <span class="nav-link-text">教學評鑑</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" title="帳號管理">
-                    <i class="fal fa-user-cog"></i>
-                    <span class="nav-link-text">帳號管理</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" title="訊息中心">
-                    <i class="fal fa-comments"></i>
-                    <span class="nav-link-text">訊息中心</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" title="通知中心">
-                    <i class="fal fa-bell"></i>
-                    <span class="nav-link-text">通知中心</span>
                 </a>
             </li>
             <li>

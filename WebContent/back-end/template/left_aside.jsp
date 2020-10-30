@@ -46,11 +46,6 @@
                             <span class="nav-link-text">導師管理</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="javascript:void(0)" title="權限管理">
-                            <span class="nav-link-text">權限管理</span>
-                        </a>
-                    </li>
                 </ul>
             </li>
             <li id="banjiManage">
@@ -95,53 +90,6 @@
                 <a href="<%=request.getContextPath()%>/back-end/banjiType/homeBanjiType.jsp" title="班種管理">
                     <i class="fal fa-chalkboard-teacher"></i>
                     <span class="nav-link-text">班種管理</span>
-                </a>
-                <ul>
-                    <li>
-                        <a href="javascript:void(0)" title="Java雲端">
-                            <span class="nav-link-text">Java雲端</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" title="前端設計">
-                            <span class="nav-link-text">前端設計</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" title="大數據分析">
-                            <span class="nav-link-text">大數據分析</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:void(0)" title="基本課程管理">
-                    <i class="fal fa-book-open"></i>
-                    <span class="nav-link-text">基本課程管理</span>
-                </a>
-            </li>
-            <li>
-                <a href="<%=request.getContextPath()%>/leave/leave.manage" title="學員請假審核">
-                    <i class="fal fa-file-edit"></i>
-                    <span class="nav-link-text">學員請假審核</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" title="帳號管理">
-                    <i class="fal fa-user-cog"></i>
-                    <span class="nav-link-text">帳號管理</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" title="訊息中心">
-                    <i class="fal fa-comments"></i>
-                    <span class="nav-link-text">訊息中心</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" title="通知中心">
-                    <i class="fal fa-bell"></i>
-                    <span class="nav-link-text">通知中心</span>
                 </a>
             </li>
         </ul>

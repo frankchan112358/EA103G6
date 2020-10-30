@@ -467,37 +467,7 @@ public class UserServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 
-		}
-
-		if ("getOne_For_Update_themselves".equals(action)) {
-			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			try {
-
-				/*************************** 1.接收請求參數 ****************************************/
-				String userNo = req.getParameter("userNo");
-
-				/*************************** 2.開始查詢資料 ****************************************/
-
-				UserService userSvc = new UserService();
-				UserVO userVO = userSvc.getOneUser(userNo);
-
-				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-
-				req.setAttribute("userVO", userVO);
-				RequestDispatcher successView = req
-						.getRequestDispatcher("/back-end/user/update_user_input_by_themselves.jsp");
-				successView.forward(req, res);
-
-			} catch (Exception e) {
-				errorMsgs.put("mistake","無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/user/select_page.jsp");
-				failureView.forward(req, res);
-			}
-
-		}
-			
+		}	
 
 		if ("delete".equals(action)) {
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
@@ -1008,6 +978,197 @@ public class UserServlet extends HttpServlet {
 		if ("updatePassword".equals(action)) {
 
 		}
+		
+		if ("update_themselves".equals(action)) {
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+
+				HttpSession session = req.getSession();
+				UserVO userVO = (UserVO) session.getAttribute("userVO");
+				String userNo = userVO.getUserNo(); //先取userNo給檢查id使用
+
+
+				String name = req.getParameter("name");
+				if (name != null)
+					name.trim();
+				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{2,10}$";
+				if (name == null || name.trim().length() == 0) {
+					errorMsgs.put("name", "姓名請勿空白");
+				} else if (!name.trim().matches(nameReg)) {
+					errorMsgs.put("name", "姓名只能是中、英文字母 , 且長度必需在2到10之間");
+				}
+
+				String mail = req.getParameter("mail");
+				if (mail != null)
+					mail.trim();
+				String mailReg = "[\\w\\.\\-]+@([\\w\\-]+\\.)+[\\w\\-]+";
+				if (mail == null || mail.trim().length() == 0) {
+					errorMsgs.put("mail", "信箱請勿空白");
+				} else if (!mail.trim().matches(mailReg)) {
+					errorMsgs.put("mail", "信箱格式錯誤，請再次檢查");
+				}
+
+				String phone = req.getParameter("phone");
+				if (phone != null)
+					phone.trim();
+				String phoneReg = "[0-9]{10}";
+				if (phone == null || phone.trim().length() == 0) {
+				} else if (!phone.trim().matches(phoneReg)) {
+					errorMsgs.put("phone", "手機號碼僅接受台灣連絡電話且僅能輸入10碼");
+				}
+
+				String address = req.getParameter("address");
+				if (address != null)
+					address.trim();
+
+				String id = "";
+				try {
+					id = req.getParameter("id");
+					if (id != null)
+						id.trim();
+					char firstChar = 0;
+					int lastNum;
+					int firstNum = 0;
+					int total = 0;
+
+					char[] firstEng = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+							'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+					int[] multiply = { 0, 8, 7, 6, 5, 4, 3, 2, 1 }; // 扣除英文數字對應的數字權數補上0後的權數
+					int[] checkNum = { 10, 11, 12, 13, 14, 15, 16, 17, 34, 18, 19, 20, 21, 22, 35, 23, 24, 25, 26, 27,
+							28, 29, 32, 30, 31, 33 };
+
+					String reg = "^[A-Z][12]\\d{8}$";
+
+					if (!id.matches(reg)) {
+						errorMsgs.put("id", "請仔細填寫身分證號碼，第一碼請大寫");
+					} else {
+						firstChar = Character.toUpperCase(id.charAt(0));
+						lastNum = Integer.valueOf(Character.toString(id.charAt(9)));
+
+						// 找出字母對應的數字，並計算其值
+						for (int i = 0; i < firstEng.length; i++) {
+							if (firstChar == firstEng[i]) {
+								firstNum = checkNum[i];
+								firstNum = (int) (Math.floor(firstNum / 10)) + (firstNum % 10 * 9);
+							}
+						}
+
+						// 計算1-8的數值
+						for (int j = 1; j <= 8; j++) {
+							total = total + Integer.valueOf(Character.toString(id.charAt(j))) * multiply[j];
+						}
+
+						// 求出檢查碼
+						total = total + firstNum;
+						total %= 10;
+
+						if (total == 0) {
+							if (total != Integer.valueOf(Character.toString(id.charAt(9)))) {
+								errorMsgs.put("id", "身分證號碼輸入錯誤");
+							}
+						} else {
+							if ((10 - total) != Integer.valueOf(Character.toString(id.charAt(9)))) {
+								errorMsgs.put("id", "身分證號碼輸入錯誤");
+
+							}
+						}
+					}
+				} catch (StringIndexOutOfBoundsException se) {
+					errorMsgs.put("id", "請仔細填寫身分證號碼");
+				}
+
+				UserService userSvcId = new UserService();
+				List<String> idVS = userSvcId.checkId(userNo);
+
+				for (String checkId : idVS) {
+					if (id.equals(checkId)) {
+						errorMsgs.put("id", "身分證字號：已重複註冊請更換");
+						break;
+					}
+				}
+
+				Part part = req.getPart("photo");
+				InputStream photo = null;
+				String form = part.getContentType().toLowerCase();
+
+				UserService userSercice1 = new UserService();
+				photo = userSercice1.getPic(userNo);
+
+				if (form.contains("image") && errorMsgs.isEmpty()) {
+					photo = part.getInputStream();
+				}
+
+				/********************* 2.錯誤裝箱導回修改畫面 *********************/
+				//直接從session取不改變的資料再覆蓋進資料庫，就無需再創建新的方法(DAO)
+				Integer type =userVO.getType();
+				Integer enable =userVO.getEnable();
+				
+				UserVO userVOForUpdateAccount = new UserVO();
+				userVOForUpdateAccount.setUserNo(userNo);
+				userVOForUpdateAccount.setType(type);
+				userVOForUpdateAccount.setName(name);
+				userVOForUpdateAccount.setMail(mail);
+				userVOForUpdateAccount.setPhone(phone);
+				userVOForUpdateAccount.setAddress(address);
+				userVOForUpdateAccount.setId(id);
+				userVOForUpdateAccount.setPhoto(photo);
+				userVOForUpdateAccount.setEnable(enable);
+				
+				
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("userVOForUpdateAccount", userVOForUpdateAccount);
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/accountmanager/updateThemselves.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+				/********************* 3.資料無誤開始修改*********************/
+				UserService userSvc = new UserService();
+				UserVO  tempUserVO= userSvc.updateUser(userNo, type, name, mail, phone, address, id, photo, enable);
+				userVO =userSvc.getOneUser(tempUserVO.getUserNo());
+				
+				/****************** 4.開始修改其他Table共有資料******************/
+				
+				if(type.equals(0)) {
+					
+				}else if(type.equals(1)) {
+					TeacherService teacherSvc=new TeacherService();
+					TeacherVO teacherVO=teacherSvc.getOneTeacherByUserNo(userNo);
+					
+					teacherVO=teacherSvc.updateTeacher(teacherVO.getTeacherNo(), userNo, name, teacherVO.getSkill(), teacherVO.getDescription(), teacherVO.getTeacherStatus());
+					
+					session.setAttribute("userVO", userVO);
+					session.setAttribute("teacherVO", teacherVO);
+					
+					RequestDispatcher successView = req.getRequestDispatcher("/back-end/accountmanager/listThemselves.jsp");
+					successView.forward(req, res);
+					return;
+				}else {
+					EmpService empSvc=new EmpService();
+					EmpVO empVO=empSvc.getOneEmpByUserNo(userNo);
+					
+					empVO=empSvc.updateEmp(empVO.getEmpNo(), userNo, empVO.getEmpStatus(), name); //其實只改名字
+					
+					session.setAttribute("userVO", userVO);
+					session.setAttribute("empVO", empVO);
+					
+					RequestDispatcher successView = req.getRequestDispatcher("/back-end/accountmanager/listThemselves.jsp");
+					successView.forward(req, res);
+					return;
+				}
+				
+				
+			} catch (Exception e) {
+				errorMsgs.put("mistake", "修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		
 		if ("getOne_For_Update_stuselves".equals(action)) {
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);

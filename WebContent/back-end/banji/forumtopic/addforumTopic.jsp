@@ -36,15 +36,8 @@
 
 
 <style>
-img {
-	max-width: 100%;
-	max-height: 100%;
-	border: 2px #C4B1B1 dashed;
-}
-
-#pic {
-	width: 150px;
-	height: 150px;
+#add {
+	text-align: center;
 }
 </style>
 
@@ -62,46 +55,33 @@ img {
 			<div class="page-content-wrapper">
 				<%@ include file="/back-end/template/header.jsp"%>
 				<main id="js-page-content" role="main" class="page-content">
-					<ol class="breadcrumb page-breadcrumb">
-						<li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
-						<li class="breadcrumb-item">Democrat</li>
-					</ol>
+					 <ol class="breadcrumb page-breadcrumb">
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage">養成班管理</a></li>
+                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage?action=read">${banjiVO.banjiName}</a></li>
+                    	<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.forumtopic">主題管理</a></li>
+                    	<li class="breadcrumb-item">新增主題</li>
+                    </ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class='subheader-icon fal fa-democrat'></i> Democrat
+							<i class='subheader-icon fal fa-democrat'></i> 新增主題
 						</h1>
 					</div>
-					<div id="panel-2" class="panel">
-					<form METHOD="post"
-								ACTION="<%=request.getContextPath()%>/banji/banji.forumtopic" name="form1">
-						<div class="panel-hdr">
-							
-
-								<h2>
-									新增 <span class="fw-300"><i>主題名稱</i></span>
-								</h2>
-
-
-								<div class="panel-toolbar">
-									<button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10"
-										data-original-title="Collapse"></button>
-									<button class="btn btn-panel" data-action="panel-fullscreen"
-										data-toggle="tooltip" data-offset="0,10"
-										data-original-title="Fullscreen"></button>
-									<button class="btn btn-panel" data-action="panel-close"
-										data-toggle="tooltip" data-offset="0,10"
-										data-original-title="Close"></button>
+					<div class="row">
+						<div class="col col-xl-12">
+							<div id="panel-1" class="panel">
+								<div class="panel-hdr bg-primary-800 bg-success-gradient ">
+									<h2 class="text-white">主題</h2>
 								</div>
-						</div>
-
-						<div class="panel-container show">
-							<div class="panel-content">
-
+					<div class="panel-container show">
+						<div class="panel-content">
+							<form METHOD="post" ACTION="<%=request.getContextPath()%>/banji/banji.forumtopic" name="form1" class="needs-validation" novalidate>
 								<div class="form-group">
-									<label class="form-label" for="description">主題名稱<span
-										class="text-danger">*</span></label> 
-										<input type="text" class="form-control" id="description" name="forumTopicName" required>
-									<div class="invalid-feedback">請勿空白</div>
+									<label class="form-label" for="example-textarea">主題名稱:</label>
+									<input type="text" id="simpleinput" name="forumTopicName" class="form-control" required placeholder="請輸入主題">
+										<div class="invalid-feedback">
+                                                        		主題名稱請勿空白.
+                                         </div>
 								</div>
 								<div class="form-group" id="add">
 									<input type="hidden" name="action" value="insert">
@@ -109,40 +89,45 @@ img {
 									<button type="submit"
 										class="btn btn-primary justify-content-center">送出</button>
 								</div>
-
-								
-							</div>
-						</div>
-						</form>
+							</form>
+						</div></div></div></div>
 					</div>
 				</main>
+				<div class="page-content-overlay" data-action="toggle"
+					data-class="mobile-nav-on"></div>
+				<%@ include file="/back-end/template/footer.jsp"%>
 			</div>
-
 		</div>
-
-		<div class="page-content-overlay" data-action="toggle"
-			data-class="mobile-nav-on"></div>
-		<%@ include file="/back-end/template/footer.jsp"%>
 	</div>
-
 	<%@ include file="/back-end/template/quick_menu.jsp"%>
 	<%@ include file="/back-end/template/messager.jsp"%>
 	<%@ include file="/back-end/template/basic_js.jsp"%>
-	<script>
-		'use strict';
-		$(document).ready(function() {
-			var forms = document.getElementsByClassName('needs-validation');
-			var validation = Array.prototype.filter.call(forms, function(form) {
-				form.addEventListener('submit', function(event) {
-					if (form.checkValidity() === false) {
-						event.preventDefault();
-						event.stopPropagation();
-					}
-					form.classList.add('was-validated');
-				}, false);
-			});
-		});
-	</script>
-</body>
 
+<script>
+                                                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                                                (function()
+                                                {
+                                                    'use strict';
+                                                    window.addEventListener('load', function()
+                                                    {
+                                                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                                        var forms = document.getElementsByClassName('needs-validation');
+                                                        // Loop over them and prevent submission
+                                                        var validation = Array.prototype.filter.call(forms, function(form)
+                                                        {
+                                                            form.addEventListener('submit', function(event)
+                                                            {
+                                                                if (form.checkValidity() === false)
+                                                                {
+                                                                    event.preventDefault();
+                                                                    event.stopPropagation();
+                                                                }
+                                                                form.classList.add('was-validated');
+                                                            }, false);
+                                                        });
+                                                    }, false);
+                                                })();
+
+                                            </script>
+</body>
 </html>

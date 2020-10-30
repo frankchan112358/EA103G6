@@ -27,7 +27,7 @@
 	
 	pageContext.setAttribute("courseNo", courseNo);
 	pageContext.setAttribute("courseVO", courseVO);
-	
+	session.setAttribute("courseWork", "courseVideo");
 %>
 <!DOCTYPE html>
 <html>
