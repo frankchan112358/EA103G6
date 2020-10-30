@@ -30,7 +30,7 @@ public class NotifyServlet {
 	public void onOpen(@PathParam("userNo") String userNo, Session session) throws IOException {
 		sessionsMap.put(userNo, session);
 		List<String> historyData = WebsocketNotifyDAO.getHistoryNotify(userNo);
-		System.out.println(historyData);
+//		System.out.println(historyData);
 		String historyStr = gson.toJson(historyData);
 		if (historyStr != null) {
 			if (session.isOpen()) {
@@ -39,9 +39,9 @@ public class NotifyServlet {
 			}
 		}
 		//測試用的code
-		String text = String.format("Session ID = %s, connected; userNo = %s", session.getId(),
-				userNo);
-		System.out.println(text);
+//		String text = String.format("Session ID = %s, connected; userNo = %s", session.getId(),
+//				userNo);
+//		System.out.println(text);
 	}
 	
 	@OnMessage
@@ -62,9 +62,9 @@ public class NotifyServlet {
 		}
 		
 		//測試用的code
-		String text = String.format("session ID = %s, disconnected; close code = %d%n userNos: %s", session.getId(),
-				reason.getCloseCode().getCode(), userNos);
-		System.out.println(text);
+//		String text = String.format("session ID = %s, disconnected; close code = %d%n userNos: %s", session.getId(),
+//				reason.getCloseCode().getCode(), userNos);
+//		System.out.println(text);
 	}
 	
 	
@@ -82,14 +82,14 @@ public class NotifyServlet {
 		WebsocketNotifyVO notify =new WebsocketNotifyVO(title, content, new Date().getTime());
 		String notifyJson = gson.toJson(notify);
 		WebsocketNotifyDAO.saveNotify(userNo, notifyJson);
-		System.out.println("存進資料庫的訊息："+notifyJson);
+//		System.out.println("存進資料庫的訊息："+notifyJson);
 		
 		//判斷目前是否有連線，有連線才需要推播
 		if(sessionsMap.get(userNo)!=null) {
 			//直接送出給前端時間設定0表示即時訊息，由前端進行判斷顯示時間
 			String notifyJsonNow = gson.toJson(notify);
 			sessionsMap.get(userNo).getAsyncRemote().sendText(notifyJsonNow);
-			System.out.println("直接傳送至前台的訊息"+notifyJsonNow);
+//			System.out.println("直接傳送至前台的訊息"+notifyJsonNow);
 
 		}
 	}
