@@ -4,6 +4,13 @@ import java.util.List;
 
 import javax.servlet.http.Part;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.timetable.model.TimetableService;
+import com.timetable.model.TimetableVO;
+
 public class VideoService {
 	private VideoDAO_interface dao;
 
@@ -55,5 +62,20 @@ public class VideoService {
 				videoVO = item;
 		}
 		return videoVO;
+	}
+
+	public String getDatatableJson(String courseNo) {
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		JsonArray jsonArray = new JsonArray();
+		for (TimetableVO timetableVO : new TimetableService().getAllWithCourseNo(courseNo)) {
+			JsonObject jsonObject = gson.fromJson(gson.toJson(timetableVO), JsonObject.class);
+			jsonObject.addProperty("periodText", timetableVO.getPeriodText());
+			VideoVO videoVO = getOneVideoWithTimetableNo(timetableVO.getTimetableNo());
+			jsonObject.addProperty("videoNo", videoVO == null ? "" : videoVO.getVideoNo());
+			jsonArray.add(jsonObject);
+		}
+		JsonObject data = new JsonObject();
+		data.add("data", jsonArray);
+		return gson.toJson(data);
 	}
 }

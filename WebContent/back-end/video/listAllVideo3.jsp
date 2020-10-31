@@ -14,9 +14,6 @@
 
 <head>
 	<%@ include file="/back-end/template/head.jsp" %>
-<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath()%>/SmartAdmin4/css/datagrid/datatables/datatables.bundle.css">
-
-
 <style>
 	.table th,
 	.table td {
@@ -25,7 +22,6 @@
 	}
 
 	#film {
-		padding-top: 15%;
 		box-sizing: border-box;
 	}
 
@@ -82,48 +78,6 @@
 													<th width="40%">影片</th>
 												</tr>
 											</thead>
-											<tbody>
-												<c:forEach var="timetableVO" items="${courseVO.timetableList}">
-													<tr>
-														<td>${timetableVO.timetableDate}</td>
-														<td>${timetableVO.periodText}</td>
-														<td class="d-flex p-1 justify-content-center">
-															<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)!=null}">
-																<FORM class="m-1 mb-0" METHOD="post" ACTION="<%=request.getContextPath()%>/video/video.do">
-																	<button type="submit" class="btn btn-success ">
-																		<span class="fal fa-edit mr-1"></span>
-																		<span>重新上傳</span>
-																	</button>
-																	<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																	<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
-																	<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
-																	<input type="hidden" name="action" value="getOne_For_Update">
-																</FORM>
-																<FORM class="m-1 mb-0" METHOD="post" ACTION="<%=request.getContextPath()%>/video/video.do" style="margin-bottom:0px;">
-																	<button type="submit" class="btn btn-danger">
-																		<span class="fal fa-times mr-1"></span>
-																		<span>下架影片</span>
-																	</button>
-																	<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
-																	<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																	<input type="hidden" name="action" value="delete">
-																</FORM>
-															</c:if>
-															<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)==null}">
-																<FORM class="m-1 mb-0" METHOD="Post" ACTION="<%=request.getContextPath()%>/back-end/video/addVideo.jsp">
-																	<button type="submit" class="btn btn-info ">
-																		<span class="fal fa-upload"></span>
-																		<span>上傳影片</span>
-																	</button>
-																	<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																	<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
-																</FORM>
-															</c:if>
-															<button timetableNo="${timetableVO.timetableNo}" type="button" class="btn btn btn-dark" data-toggle="modal" data-target=".example-modal-centered-transparent">Transparent Centered</button>
-														</td>
-													</tr>
-												</c:forEach>
-											</tbody>
 										</table>
 										<!-- datatable end -->
 									</div>
@@ -137,59 +91,139 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade example-modal-centered-transparent" tabindex="-1" role="dialog" aria-hidden="true">
+	<div id="videoModal" class="modal fade example-modal-centered-transparent" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-xl modal-dialog modal-dialog-centered modal-transparent" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title text-white">
-						Basic Modals
-						<small class="m-0 text-white opacity-70">
-							Below is a static modal example
-						</small>
-					</h4>
+					<h4 class="modal-title text-white"></h4>
 					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true"><i class="fal fa-times"></i></span>
 					</button>
 				</div>
 				<div class="modal-body">
-					...
 					<div id="film">
 						<video id="videoViewer" src="" preload controls loop allowFullScreen></video>
 					</div>
-					<p>File Name : <span id="filename"></span></p>
-					<p>File Type : <span id="filetype"></span></p>
-					<p>File Size :<span id="filesize"></span></p>
+					<table class="videoinfo table table-bordered text-white">
+						<thead>
+							<tr>
+								<th>影片名稱</th>
+								<th>影片類型</th>
+								<th>影片大小</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="videoinfo filename"></td>
+								<td class="videoinfo filetype"></td>
+								<td class="videoinfo filesize"></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<div class="modal-footer">
 					<input id="videoFile" type="file" />
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button id="uploadVideo" type="button" class="btn btn-primary">Save changes</button>
+					<button id="cancelUpload" type="button" class="btn btn-secondary">取消上傳</button>
+					<button id="uploadVideo" type="button" class="btn btn-primary">上傳影片</button>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
 	<%@ include file="/back-end/template/quick_menu.jsp" %>
 	<%@ include file="/back-end/template/messager.jsp" %>
 	<%@ include file="/back-end/template/basic_js.jsp" %>
-
-
-	<script src="<%=request.getContextPath() %>/SmartAdmin4/js/datagrid/datatables/datatables.bundle.js"></script>
 	<script>
-
-
 		$(document).ready(function () {
 			var workStatus = 'none';
 			var _timetableNo = '';
-			$('#coursetable').dataTable({
+			var _videoNo = '';
+			var _todo = '';
+			var viewer = {
+				load: function (e) {
+					$('#videoViewer').attr('src', e.target.result);
+				}, setProperties: function (file) {
+					$('.videoinfo.filename').text(file.name);
+					$('.videoinfo.filetype').text(file.type);
+					$('.videoinfo.filesize').text(Math.round(file.size / 1024 / 1024) + 'MB');
+				}
+			}
+			$('table.videoinfo').hide();
+
+			var columnSet = [
+				{
+					title: "上課日期",
+					id: "timetableDate",
+					data: "timetableDate",
+					type: "text"
+				},
+				{
+					title: "時段",
+					id: "periodText",
+					data: "periodText",
+					type: "text"
+				},
+				{
+					title: "影片",
+					id: "videoNo",
+					data: "videoNo",
+					render(data, type, row, meta) {
+						let html = ``;
+						if (row.videoNo == '') {
+							html = `<button timetableNo="${'${row.timetableNo}'}" type="button" class="insert btn btn-info m-1 mb-0">
+														<span class="fal fa-upload mr-1"></span>
+														<span>新增影片</span>
+													 </button>`;
+						} else {
+							html = `<button videoNo="${'${row.videoNo}'}" type="button" class="update btn btn-success m-1 mb-0">
+														<span class="fal fa-edit mr-1"></span>
+														<span>重新上傳</span>
+													</button>
+													<button videoNo="${'${row.videoNo}'}" type="button" class="delete btn btn-danger m-1 mb-0">
+														<span class="fal fa-times mr-1"></span>
+														<span>下架影片</span>
+													</button>`;
+						}
+						return html;
+					}
+				}];
+
+			var coursetable = $('#coursetable').DataTable({
 				responsive: true,
 				language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' },
 				"columnDefs": [{
 					"targets": [-1, -2],
 					"orderable": false
-				}]
+				}],
+				columns: columnSet,
+				ajax: {
+					url: '<%=request.getContextPath()%>/video/video.ajax',
+					type: 'POST',
+					async: true,
+					cache: false,
+					data: {
+						action: 'datatable',
+						courseNo: '${ courseNo}'
+					}
+				}
 			});
+
+			$('#videoFile').on('change', function () {
+				let file = this.files[0];
+				let reader = new FileReader();
+				reader.onload = viewer.load;
+				reader.readAsDataURL(file);
+				viewer.setProperties(file);
+				$('table.videoinfo').show();
+			});
+
+			function resetViewer() {
+				$('#videoViewer').attr('src', '');
+				$('table.videoinfo').hide();
+				$('.videoinfo.filename').text('');
+				$('.videoinfo.filetype').text('');
+				$('.videoinfo.filesize').text('');
+				$('h4.modal-title').text('');
+			}
 
 			document.getElementById('aListAllCourse').addEventListener('click', function (e) {
 				e.preventDefault();
@@ -207,52 +241,105 @@
 				myForm.submit();
 			}, false);
 
-			$('#videoFile').on('change', function () {
-				let file = this.files[0];
-				let reader = new FileReader();
-				reader.onload = viewer.load;
-				reader.readAsDataURL(file);
-				viewer.setProperties(file);
-			});
-
-			var viewer = {
-				load: function (e) {
-					$('#videoViewer').attr('src', e.target.result);
-				}, setProperties: function (file) {
-					$('#filename').text(file.name);
-					$('#filetype').text(file.type);
-					$('#filesize').text(Math.round(file.size / 1024));
-				}
-			}
-
-			$(document).on('click', 'button[timetableNo]', function (e) {
+			$(document).on('click', 'button.insert', function (e) {
 				_timetableNo = this.getAttribute('timetableNo');
+				_todo = 'insert';
+				$('h4.modal-title').text('新增影片');
+				$('#videoModal').modal('show');
 			});
 
-			$('#uploadVideo').click(function () {
+			$(document).on('click', 'button.update', function (e) {
+				_videoNo = this.getAttribute('videoNo');
+				_todo = 'update';
+				$('#videoViewer').attr('src', `<%=request.getContextPath()%>/videos/${'${_videoNo}'}.mp4`);
+				$('h4.modal-title').text('重新上傳');
+				$('#videoModal').modal('show');
+			});
+
+			$(document).on('click', 'button.delete', function (e) {
+				_videoNo = this.getAttribute('videoNo');
 				if (workStatus == 'none') {
-					let form = new FormData();
-					form.append('video', $('#videoFile')[0].files[0]);
-					form.append('action', 'insert');
-					form.append('timetableNo', _timetableNo);
 					$.ajax({
 						beforeSend() {
-							workStatus = 'uploading';
+							workStatus = 'delete';
 						},
 						type: 'POST',
-						url: `<%=request.getContextPath()%>/NewVideo`,
-						processData: false,
-						contentType: false,
-						data: form,
+						url: `<%=request.getContextPath()%>/video/video.ajax`,
+						data: {
+							action: "delete",
+							videoNo: _videoNo
+						},
 						success(res) {
-							alert(res);
+							coursetable.ajax.reload(null, false);
+							$('#videoModal').modal('hide');
 						},
 						complete() {
 							workStatus = 'none';
 						}
-					}
-					);
+					});
 				}
+			});
+
+			$('#uploadVideo').click(function () {
+				if (workStatus == 'none') {
+					if (_todo == 'insert') {
+						let form = new FormData();
+						form.append('video', $('#videoFile')[0].files[0]);
+						form.append('action', 'insert');
+						form.append('timetableNo', _timetableNo);
+						$.ajax({
+							beforeSend() {
+								workStatus = 'insert';
+							},
+							type: 'POST',
+							url: `<%=request.getContextPath()%>/video/video.ajax`,
+							processData: false,
+							contentType: false,
+							data: form,
+							success(res) {
+								coursetable.ajax.reload(null, false);
+								$('#videoModal').modal('hide');
+							},
+							complete() {
+								workStatus = 'none';
+							}
+						});
+					}
+					if (_todo == 'update') {
+						let form = new FormData();
+						form.append('video', $('#videoFile')[0].files[0]);
+						form.append('action', 'update');
+						form.append('videoNo', _videoNo);
+						$.ajax({
+							beforeSend() {
+								workStatus = 'update';
+							},
+							type: 'POST',
+							url: `<%=request.getContextPath()%>/video/video.ajax`,
+							processData: false,
+							contentType: false,
+							data: form,
+							success(res) {
+								coursetable.ajax.reload(null, false);
+								$('#videoModal').modal('hide');
+							},
+							complete() {
+								workStatus = 'none';
+							}
+						});
+					}
+				}
+			});
+
+			$('#cancelUpload').click(function () {
+				$('#videoModal').modal('hide');
+			});
+
+			$("#videoModal").on("hidden.bs.modal", function (e) {
+				resetViewer();
+				_timetableNo = '';
+				_videoNo = '';
+				_todo = '';
 			});
 
 		});
