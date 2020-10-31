@@ -56,7 +56,7 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 									<input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}">
 									<input type="hidden" name="studentNo" value="${sessionScope.studentVO.studentNo}">
 									<input type="hidden" name="action" value="getOne_For_AddFc">
-									<button type="submit"class="btn btn-primary justify-content-center"style="float:right">我要回覆</button>
+									<button type="submit"class="btn btn-primary justify-content-center"style="float:right">新增留言</button>
 
 								</form>
 							</div>

@@ -1,16 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/front-end/template/check.jsp" %>	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.forumpost.model.*"%>
+<%@ page import="com.forumtopic.model.*"%>
+<%@ page import="com.banji.model.*"%>
+<%@ page import="com.forumcomment.model.*"%>
+<%@ page import="com.student.model.*"%>
 
 <%@ page import="java.util.*"%>
-
 <%
-   ForumPostVO forumPostVO = (ForumPostVO) request.getAttribute("forumPostVO");
-%>
-<jsp:useBean id="forumtopicSvc" scope="page" class="com.forumtopic.model.ForumTopicService" />
+BanjiService banjiSvc = new BanjiService();
+StudentService studentSvc = new StudentService(); 
+StudentVO student = studentSvc.getOneStudentByUserNo(userVO.getUserNo());
+BanjiVO banjiVO = banjiSvc.getOneBanji(student.getBanjiNo());
 
+
+ForumTopicService forumtopicSvcList =new ForumTopicService();
+List<ForumTopicVO> forumTopicList =forumtopicSvcList.getByBanJiNo(banjiVO.getBanjiNo());
+pageContext.setAttribute("forumTopicList", forumTopicList);
+
+  ForumPostVO forumPostVO = (ForumPostVO) request.getAttribute("forumPostVO");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +38,10 @@
 	background-color: #64A600;
 }
 
-
+#btn-add:hover {
+	background-color: #467500;
+	font-size: 20px;
+}
 
 .modal-header {
 	background-color: #E0E0E0;
@@ -42,10 +57,15 @@ border-radius: 5px;
 
 
 
+#add:hover{
+    display:inline-block;
+    margin-right:20px;
+    box-shadow:0px 0px 9px #00FFFF;
 
+
+}
 </style>
 </head>
-
 <body
 	class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
 	<script>
@@ -62,91 +82,57 @@ border-radius: 5px;
 					<ol class="breadcrumb page-breadcrumb">
 						<li class="breadcrumb-item"><a
 							href="<%=request.getContextPath()%>/front-end/index/index.jpg">前台首頁</a></li>
-						<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/forumpost/forumPost_index.jsp">班級討論區</a></li>
-						<li class="breadcrumb-item">新增留言</li>
+						<li class="breadcrumb-item"><a href="javascript:void(0);">班級討論區</a></li>
+						<li class="breadcrumb-item">新增主題</li>
 					</ol>
-
-
-
-	<div class="subheader">
+					
+					<div class="subheader">
 						
 						<div class="row">
 						<div class="col col-xl-12">
 						<div class="panel-container show">
 						<div class="panel-content">
-						
-						<section id="One" class="wrapper style3">
-		<div class="inner">
-			<header class="align-center">
-				<h2>新增留言</h2>
-			</header>
-		</div>
-	</section>
-	
-	<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/forumPost/forumPost.do" name="form1" class="was-validated">
-	
-	<div class="form-group">
-                                               <label class="form-label" for="simpleinput">主題:</label>
-                                                 <input type="text" id="simpleinput" class="form-control" readonly name="forumTopicNo" value="${forumtopicSvc.getOneForumTopic(forumPostVO.forumTopicNo).forumTopicName}">
-                                            </div> 
-	
-	
-	<div class="form-group">
-                                               <label class="form-label" for="simpleinput">學員編號:</label>
-                                                 <input type="text" id="simpleinput" class="form-control" readonly name="studentNo" value="${forumPostVO.studentNo}">
-                                            </div>
-                                            
-                      <div class="form-group">
-                                               <label class="form-label" for="simpleinput">貼文標題:</label>
-                                                 <input type="text" id="simpleinput" class="form-control"  name="banjiName" required value="${forumPostVO.title}">
-                                            <div class="invalid-feedback">
-                                                        		  貼文標題請勿空白
-                                         </div>                      
-	
-	            
-	 
-              <div id="panel-2" class="panel">
+					<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/forumPost/forumPost.do" name="form1" class="needs-validation" novalidate>
+                <div>
+                    <label for="forumTopicNo">主題:</label>
+                    <select size="1" name="forumTopicNo">
+                    <c:forEach var="forumTopicVO" items="${forumTopicList}">
+                    	<option value="${forumTopicVO.forumTopicNo}">${forumTopicVO.forumTopicName}</option>
+                    </c:forEach>
+				    </select>
+               </div>
+               
+                 <input id="add"placeholder="請輸入貼文標題" name="title" style="color: black; width: 95%; height: 50px; margin: 20px ;" 
+		value="${forumPostVO.title }" required>
+										<div class="invalid-feedback" style="padding-left:30px;">
+                                                        		請勿空白.
+                                         </div>
+       <div id="panel-2" class="panel">
                                 <div class="panel-container show">
                                     <div class="panel-content" >
-                                        <textarea class="js-summernote" id="democratNote" class="form-control" name="content"  required>${forumPostVO.content}</textarea>
-                                        
-</div>
-                
-<!--                 <p> -->
-<!--                     <label for="title">標題 :</label> -->
-<%-- 									<input type="text" name="title" value="${forumPostVO.title}"> --%>
-<!--                 </p> -->
-<!--                 <p> -->
-<!--                     <label for="content">貼文內容 :</label> -->
-<%--                             <textarea id="summernote"  name="content">${forumPostVO.content}</textarea> --%>
-                    
-<!--                 </p> -->
+                                        <textarea class="js-summernote" id="democratNote" name="content" required></textarea>
+                                        <div class="invalid-feedback">
+                                                        		請勿空白.
+                                         </div>
+                                        <button id="sendNote" type="submit" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">送出</button>
+										<input type="hidden" name="studentNo" value="${studentVO.studentNo}"/>
+										<input type="hidden" name="action" value="insert">
+										
+                                    </div>
+                            
+                            </div>
+                        </div>
+        </form>	
+							 										 </div>
+					
+					</div></div></div></div></main>						</div>
+										
+										</div>
+										
+									</div>
 
-                      <div class="form-group" id="add" >
-												<input type="hidden" name="action" value="update">
-<%-- 												<input type="hidden" name="studentNo" value="${studentVO.studentNo}"> --%>
-												<input type="hidden" name="forumTopicNo" value="${forumTopicVO.forumTopicNo}">
-												<button type="submit" class="btn btn-primary justify-content-center" >送出修改</button>
-											</div>
-                
-              
-        
-        
-<!--          <p> -->
-<!--          <input type="hidden" name="action" value="getOne_For_Update">  -->
-<!-- 				<input type="submit"> -->
-<%-- 	 <input type="hidden" name="studentNo" value="${studentVO.studentNo}"> --%>
-				
-<%-- 	  <input type="hidden" name="forumTopicNo" value="${forumTopicVO.forumTopicNo}"> --%>
-<!-- 				</p> -->
-
-</div>
-</div>
-        </div></form>
-        </div>
-        
-        
-  <main id="js-page-content" role="main" class="page-content">
+								
+<main id="js-page-content" role="main" class="page-content">
     <div class="modal fade" id="editorEvaluation" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             
@@ -274,14 +260,5 @@ border-radius: 5px;
                                                 })();
 
                                             </script>
-                                            </div>
-                                            </div>
-                                            </div>
-                                            </div>
-                                            </main>
-                                            </div>
-                                            </div>
-                                            </div>
-                                            
 </body>
 </html>
