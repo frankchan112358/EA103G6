@@ -241,7 +241,7 @@ public class ReplyServlet extends HttpServlet {
 					ReplyService replySvc = new ReplyService();
 					replyVO = replySvc.addReply(courseAskNo, teacherNo, studentNo, replyContent, updateTime);
 
-					String url = "/front-end/courseAsk/courseAsk.jsp";
+					String url = "/front-end/courseAsk/NewFile.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
 				} catch (Exception e) {

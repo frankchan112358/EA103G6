@@ -43,7 +43,7 @@
                 </a>
             </li>
              <li>
-                <a href="<%=request.getContextPath() %>/front-end/courseAsk/courseAsk.jsp" title="課程提問">
+                <a href="<%=request.getContextPath() %>/front-end/courseAsk/NewFile.jsp" title="課程提問">
                     <i class="fal fa-file-edit"></i>
                     <span class="nav-link-text">課程提問</span>
                 </a>
