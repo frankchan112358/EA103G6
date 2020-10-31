@@ -73,7 +73,10 @@ margin:5px;}
 font-size:30px;
 color:#336666;
 }
-
+#head{
+font-weight:bold;
+font-size:15px;
+}
 }
 </style>
 </head>
@@ -113,21 +116,28 @@ color:#336666;
 					
                                         <div class="panel-content" >
                                             <div class="card m-auto border"  >
-                                                <div class="card-header">
-                                                  ${courseAskVO.title }<span></span>
+                                                <div id="head"class="card-header">
+                                                  ${courseAskVO.title }
+                                                  <br><span>發問者:</span>${studentSvc.getOneStudent(courseAskVO.getStudentNo()).studentName}
                                                 </div>
+                                                
                                                 <div class="card-body">
                                                     <p class="card-text" style="padding-left: 30px">${courseAskVO.question}</p>
                                                     <c:set var="replySize" value="${fn:length(replySvc.getAllWithCouseAskNo(courseAskVO.courseAskNo))}"></c:set>
 					<div id="num" style="float:right; position: relative;right:5px;padding-top: 5px;padding-right: 30px;text-align:center;">${replySize}<div style="font-size:15px;">回覆</div></div>
                                                     <div align="center">
-                                                    <form method="post"action="<%=request.getContextPath()%>/courseAsk/courseAsk.do"class="m-1">
-							<input type="hidden" name="action" value="getOne_For_Display"> 
-							<input type="hidden" name="courseAskNo" value="${courseAskVO.courseAskNo }">
-							<button type="submit"class="btn-write btn btn-sm btn-primary" >
-								<strong>我要回覆</strong>
-							</button>
-						</form></div>
+                                                   
+                                                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/courseAsk/courseAsk.do"class="m-1">
+                                                                   		<input type="hidden" name="replyNo"  value="${replyVO.replyNo}">
+                                                                  		 <input type="hidden" name="studentNo" value="${studentVO.studentNo}"/>
+			     														<input type="hidden" name="courseAskNo" value="${courseAskVO.courseAskNo}"/>
+			     														<input type="hidden" name="teacherNo" value="${teacherVO.teacherNo}"/>
+			     														<input type="hidden" name="action" value="insert1"> 
+                                                              			<button type="submit"class="btn-write btn btn-sm btn-primary" >
+																		<strong>我要回覆</strong>
+																					</button>
+							 										 </FORM>	
+                                                    </div>
                                                 </div>
                                                 <div class="d-flex align-items-center">
                                          <span class="text-sm text-muted font-italic" style="padding-left: 30px ;padding-bottom: 10px;"><i class="fal fa-clock mr-1"></i><span>發問時間:</span><fmt:formatDate value="${courseAskVO.updateTime}" pattern="yyyy-MM-dd HH:mm"/></span>
