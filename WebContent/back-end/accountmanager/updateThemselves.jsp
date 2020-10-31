@@ -267,6 +267,10 @@ pageContext.setAttribute("userVOForUpdateAccount", userVOForUpdateAccount);
     </c:if>
     
     
+    <c:if test="${enableUpdate ne null}">
+    	Swal.fire("請完整填寫個人資訊");
+    </c:if>
+    
     </script>
 </body>
 </html>

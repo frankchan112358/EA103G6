@@ -37,7 +37,6 @@ public class ChatServlet {
 	@OnOpen
 	public void onOpen(@PathParam("userNo") String userNo, Session userSession) throws IOException {
 		sessionsMap.put(userNo, userSession);
-		System.out.println(123);
 		Set<String> userNos = sessionsMap.keySet(); 
 		
 		/*********************新增名字********************/
@@ -62,13 +61,13 @@ public class ChatServlet {
 		for (Session session : sessions) {
 			if (session.isOpen()) {
 				session.getAsyncRemote().sendText(stateMessageJson);
-				System.out.println(stateMessageJson);
+//				System.out.println(stateMessageJson);
 			}
 		}
 
-		String text = String.format("Session ID = %s, connected; userNo = %s%nusers: %s", userSession.getId(),
-				userNo, userNos);
-		System.out.println(text);
+//		String text = String.format("Session ID = %s, connected; userNo = %s%nusers: %s", userSession.getId(),
+//				userNo, userNos);
+//		System.out.println(text);
 	}
 	
 	@OnMessage
@@ -83,7 +82,7 @@ public class ChatServlet {
 			WebsocketChatVO cmHistory = new WebsocketChatVO("history", sender, receiver, historyMsg);
 			if (userSession != null && userSession.isOpen()) {
 				userSession.getAsyncRemote().sendText(gson.toJson(cmHistory));
-				System.out.println("history = " + gson.toJson(cmHistory));
+//				System.out.println("history = " + gson.toJson(cmHistory));
 				return;
 			}
 		}
@@ -95,7 +94,7 @@ public class ChatServlet {
 			WebsocketChatDAO.saveChatMessage(sender, receiver, message);
 		}
 		
-		System.out.println("Message received: " + message);
+//		System.out.println("Message received: " + message);
 	}
 	
 	@OnError
@@ -137,13 +136,13 @@ public class ChatServlet {
 			Collection<Session> sessions = sessionsMap.values();
 			for (Session session : sessions) {
 				session.getAsyncRemote().sendText(stateMessageJson);
-				System.out.println(stateMessageJson);
+//				System.out.println(stateMessageJson);
 			}
 		}
 
-		String text = String.format("session ID = %s, disconnected; close code = %d%nusers: %s", userSession.getId(),
-				reason.getCloseCode().getCode(), userNos);
-		System.out.println(text);
+//		String text = String.format("session ID = %s, disconnected; close code = %d%nusers: %s", userSession.getId(),
+//				reason.getCloseCode().getCode(), userNos);
+//		System.out.println(text);
 	}
 
 }

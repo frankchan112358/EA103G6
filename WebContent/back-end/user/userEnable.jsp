@@ -1,10 +1,7 @@
 <%@ page import="com.user.model.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-	UserVO userVO = (UserVO) request.getAttribute("userVO");  
-	
-%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -40,13 +37,13 @@
 							<div class="row text-left">
 								<div class="col mb-3">
 									<label class="form-label " for="account">帳號 (預設為信箱帳號)</label> 
-									<input type="text" class="form-control" id="account" placeholder="Account" value="${userVO.account}" disabled>
+									<input type="text" class="form-control" id="account" placeholder="Account" value="${userVOForEnable.account}" disabled>
 								</div>
 							</div>
 							<div class="row text-left">
 								<div class="col mb-3">
 									<label class="form-label " for="password">密碼 (密碼長度需大於五碼)</label> 
-									<input type="text" class="form-control" id="password" placeholder="Password" name="password" value="${userVO eq null?'':userVO.password }" required>
+									<input type="password" class="form-control" id="password" placeholder="Password" name="password" value="${userVOForEnable eq null?'':userVOForEnable.password }" required>
 									<div class="invalid-feedback" id="wrongPassword">請輸入密碼</div>
 								</div>
 							</div>
@@ -58,9 +55,9 @@
 								</div>
 							</div>
 							<input type="hidden" name="action" value="enableUpdate">
-							<input type="hidden" name="account" value="${userVO.account}">
-							<input type="hidden" name="id" value="${userVO.id}">
-							<input type="hidden" name="type" value="${userVO.type}">
+							<input type="hidden" name="account" value="${userVOForEnable.account}">
+							<input type="hidden" name="id" value="${userVOForEnable.id}">
+							<input type="hidden" name="type" value="${userVOForEnable.type}">
 							<button id="submitAddEmp" class="btn btn-primary ml-auto">確認送出</button>
 						</form>
 						</div>
