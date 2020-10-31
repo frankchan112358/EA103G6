@@ -58,7 +58,7 @@ public class CourseAskServlet extends HttpServlet {
 				}
 
 				req.setAttribute("courseAskVO", courseAskVO);
-				String url = "/back-end/courseAsk/listOneCourseAsk.jsp";
+				String url = "/front-end/courseAsk/listOneCourseAsk.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 

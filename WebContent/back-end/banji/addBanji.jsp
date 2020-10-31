@@ -94,13 +94,15 @@
 								<div class="form-group">
 									<label class="form-label" for="example-date">開訓日:</label> <input
 										class="form-control" name="startDay" id="f_date1" 
-										onfocus="this.blur()"> <font color=red>${errorMsgs.startDay}</font>
+										onfocus="this.blur()"> <font color=red>${errorMsgs.compare}</font>
+										<font color=red>${errorMsgs.compare1}</font>
 								</div>
 
 								<div class="form-group">
 									<label class="form-label" for="example-date">結訓日:</label> <input
 										class="form-control" name="endDay" id="f_date2"
-										onfocus="this.blur()"> <font color=red>${errorMsgs.endDay}</font>
+										onfocus="this.blur()"> <font color=red>${errorMsgs.compare}</font>
+										<font color=red>${errorMsgs.compare1}</font>
 								</div>
 
 								<div class="form-group">
