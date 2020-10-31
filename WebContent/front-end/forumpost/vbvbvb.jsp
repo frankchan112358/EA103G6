@@ -3,15 +3,26 @@
 <%@ include file="/front-end/template/check.jsp" %>	
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="com.forumpost.model.*"%>
+<%@ page import="com.forumtopic.model.*"%>
+<%@ page import="com.banji.model.*"%>
 <%@ page import="com.forumcomment.model.*"%>
+<%@ page import="com.student.model.*"%>
 
 <%@ page import="java.util.*"%>
-
-
 <%
-  ForumCommentVO forumCommentVO = (ForumCommentVO) request.getAttribute("forumCommentVO");
-%>
+BanjiService banjiSvc = new BanjiService();
+StudentService studentSvc = new StudentService(); 
+StudentVO student = studentSvc.getOneStudentByUserNo(userVO.getUserNo());
+BanjiVO banjiVO = banjiSvc.getOneBanji(student.getBanjiNo());
 
+
+ForumTopicService forumtopicSvcList =new ForumTopicService();
+List<ForumTopicVO> forumTopicList =forumtopicSvcList.getByBanJiNo(banjiVO.getBanjiNo());
+pageContext.setAttribute("forumTopicList", forumTopicList);
+
+  ForumPostVO forumPostVO = (ForumPostVO) request.getAttribute("forumPostVO");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,7 +66,6 @@ border-radius: 5px;
 }
 </style>
 </head>
-
 <body
 	class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
 	<script>
@@ -72,45 +82,43 @@ border-radius: 5px;
 					<ol class="breadcrumb page-breadcrumb">
 						<li class="breadcrumb-item"><a
 							href="<%=request.getContextPath()%>/front-end/index/index.jpg">前台首頁</a></li>
-						<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/forumpost/forumPost_index.jsp">班級討論區</a></li>
-						<li class="breadcrumb-item">新增留言</li>
+						<li class="breadcrumb-item"><a href="javascript:void(0);">班級討論區</a></li>
+						<li class="breadcrumb-item">新增主題</li>
 					</ol>
-
-
-
-	<div class="subheader">
+					
+					<div class="subheader">
 						
 						<div class="row">
 						<div class="col col-xl-12">
 						<div class="panel-container show">
 						<div class="panel-content">
-						
-						<section id="One" class="wrapper style3">
-		<div class="inner">
-			<header class="align-center">
-				<h2>新增留言</h2>
-			</header>
-		</div>
-	</section>
-	
-	<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/forumComment/forumComment.do" name="form1"class="needs-validation" novalidate>
-	
-	                          <div id="panel-2" class="panel">
+					<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/forumPost/forumPost.do" name="form1" class="needs-validation" novalidate>
+                <div>
+                    <label for="forumTopicNo">主題:</label>
+                    <select size="1" name="forumTopicNo">
+                    <c:forEach var="forumTopicVO" items="${forumTopicList}">
+                    	<option value="${forumTopicVO.forumTopicNo}">${forumTopicVO.forumTopicName}</option>
+                    </c:forEach>
+				    </select>
+               </div>
+               
+                 <input id="add"placeholder="請輸入貼文標題" name="title" style="color: black; width: 95%; height: 50px; margin: 20px ;" 
+		value="${forumPostVO.title }" required>
+										<div class="invalid-feedback" style="padding-left:30px;">
+                                                        		請勿空白.
+                                         </div>
+       <div id="panel-2" class="panel">
                                 <div class="panel-container show">
                                     <div class="panel-content" >
                                         <textarea class="js-summernote" id="democratNote" name="content" required></textarea>
                                         <div class="invalid-feedback">
                                                         		請勿空白.
                                          </div>
-	            
-	
-	
-								   <input type="hidden" name="action" value="insert"/>
-								   <input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}">								
-	                                <input type="hidden" name="studentNo" value="${studentVO.studentNo}">
                                         <button id="sendNote" type="submit" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">送出</button>
-	                           
-							</div>
+										<input type="hidden" name="studentNo" value="${studentVO.studentNo}"/>
+										<input type="hidden" name="action" value="insert">
+										
+                                    </div>
                             
                             </div>
                         </div>

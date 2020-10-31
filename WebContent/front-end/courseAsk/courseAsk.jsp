@@ -183,8 +183,8 @@ border-radius: 5px;
      
                  <input id="add"placeholder="輸入您的問題" name="title" style="color: black; width: 95%; height: 50px; margin: 20px ;" 
 		value="${courseAskVO.title }" required>
-											<div class="invalid-feedback">
-                                                        		請勿空白.
+											<div class="invalid-feedback" style="padding-left: 30px;">
+                                                       	請勿空白.
                                          </div>
 		
                    <div class="modal-footer">
@@ -193,7 +193,7 @@ border-radius: 5px;
                                 <div class="panel-container show">
                                     <div class="panel-content" >
                                         <textarea class="js-summernote" id="democratNote" name="question" required></textarea>
-                                        <div class="invalid-feedback">
+                                        <div class="invalid-feedback"  >
                                                         		請勿空白.
                                          </div>
                                         <button id="sendNote" type="submit" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">送出</button>

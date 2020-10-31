@@ -21,5 +21,7 @@
 <script>
 $(document).ready(function (){	
 	messagerInit();//此方法寫在messager.jsp
+	getAllMessager(); //此方法在messager.jsp中作為顯示聊天列表
+
 }); 
 </script>

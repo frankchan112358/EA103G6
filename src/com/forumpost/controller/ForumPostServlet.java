@@ -74,35 +74,6 @@ public class ForumPostServlet extends HttpServlet {
 			}
 		}
 
-		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
-
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			try {
-				/*************************** 1.接收請求參數 ****************************************/
-				String forumPostNo = new String(req.getParameter("forumPostNo"));
-
-				/*************************** 2.開始查詢資料 ****************************************/
-				ForumPostService forumpostSvc = new ForumPostService();
-				ForumPostVO forumPostVO = forumpostSvc.getOneForumPost(forumPostNo);
-
-				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				req.setAttribute("forumPostVO", forumPostVO); // 資料庫取出的empVO物件,存入req
-				String url = "/front-end/forumpost/updateForumPost.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
-				successView.forward(req, res);
-
-				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/forumpost/studentCenter_forum.jsp");
-				failureView.forward(req, res);
-			}
-		}
-
 		if ("update".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -111,27 +82,16 @@ public class ForumPostServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String forumPostNo = new String(req.getParameter("forumPostNo").trim());
-
 				String forumTopicNo = req.getParameter("forumTopicNo");
-				if (forumTopicNo == null || forumTopicNo.trim().length() == 0) {
-					errorMsgs.add("主題編號: 請勿空白");
-				}
-
-				String studentNo = req.getParameter("studentNo").trim();
-				if (studentNo == null || studentNo.trim().length() == 0) {
-					errorMsgs.add("學員編號請勿空白");
-				}
-
+				String studentNo = req.getParameter("studentNo").trim();				
 				String title = req.getParameter("title").trim();
 				if (title == null || title.trim().length() == 0) {
 					errorMsgs.add("貼文標題請勿空白");
 				}
-
 				String content = req.getParameter("content").trim();
 				if (content == null || content.trim().length() == 0) {
 					errorMsgs.add("貼文內容請勿空白");
 				}
-
 				ForumPostVO forumPostVO = new ForumPostVO();
 				forumPostVO.setForumPostNo(forumPostNo);
 				forumPostVO.setForumTopicNo(forumTopicNo);
@@ -242,16 +202,15 @@ public class ForumPostServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				String forumPostNo = new String(req.getParameter("forumPostNo"));
-
 				/*************************** 2.開始查詢資料 ****************************************/
 				ForumPostService forumpostSvc = new ForumPostService();
 				ForumPostVO forumPostVO = forumpostSvc.getOneForumPost(forumPostNo);
-
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("forumPostVO", forumPostVO);
 				String url = "/front-end/forumpost/updateForumPost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
+				return;
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
