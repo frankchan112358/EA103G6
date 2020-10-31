@@ -6,7 +6,10 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.reply.model.*;
+import com.student.model.StudentService;
 
 public class ReplyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -217,13 +220,14 @@ public class ReplyServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			HttpSession session = req.getSession();
-			if (session.getAttribute("reply") != null) {
+//			if (session.getAttribute("reply") != null) {
 				try {
 
 					String courseAskNo = req.getParameter("courseAskNo");
 					String teacherNo = req.getParameter("teacherNo");
 					String studentNo = req.getParameter("studentNo");
 					String replyContent = req.getParameter("replyContent");
+					replyContent = replyContent.substring(replyContent.indexOf(">") + 1, replyContent.lastIndexOf("<"));
 					java.sql.Timestamp updateTime = new java.sql.Timestamp((new java.util.Date()).getTime());
 
 					ReplyVO replyVO = new ReplyVO();
@@ -241,20 +245,27 @@ public class ReplyServlet extends HttpServlet {
 					ReplyService replySvc = new ReplyService();
 					replyVO = replySvc.addReply(courseAskNo, teacherNo, studentNo, replyContent, updateTime);
 
-					String url = "/front-end/courseAsk/NewFile.jsp";
-					RequestDispatcher successView = req.getRequestDispatcher(url);
-					successView.forward(req, res);
+					PrintWriter out = res.getWriter();
+	                res.setCharacterEncoding("UTF-8");
+	                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+	                System.out.println(gson.toJson(replyVO).toString());
+	                out.print(gson.toJson(replyVO).toString());
+	                out.flush();
+	                out.close();
+//					String url = "/front-end/courseAsk/NewFile.jsp";
+//					RequestDispatcher successView = req.getRequestDispatcher(url);
+//					successView.forward(req, res);
 				} catch (Exception e) {
 					errorMsgs.add("資料失敗" + e.getMessage());
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/reply/addReply.jsp");
 					failureView.forward(req, res);
 				}
-				session.removeAttribute("reply");
-			} else {
-				String url = "/front-end/courseAsk/courseAsk.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
-			}
+//				session.removeAttribute("reply");
+//			} else {
+//				String url = "/front-end/courseAsk/courseAsk.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);
+//				successView.forward(req, res);
+//			}
 		}
 
 		if ("delete".equals(action)) {

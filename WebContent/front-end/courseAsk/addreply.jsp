@@ -39,8 +39,7 @@ session.setAttribute("reply", "reply");
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a></li>
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">課程提問</a></li>
-                        <li class="breadcrumb-item">課程提問總覽</li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/courseAsk/NewFile.jsp">課程提問</a></li>
                          <li class="breadcrumb-item">回覆</li>
                     </ol>
                     <div class="subheader">
@@ -76,15 +75,27 @@ session.setAttribute("reply", "reply");
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                <br>
+                                                <table id="tableEvaluation1" class="table table-bordered table-hover table-striped w-100">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>導師</th>
+                                                            <th>學員</th>
+                                                            <th>回覆內容</th>
+                                                            <th>回覆時間</th>
+                                                        </tr>                                                            
+                                                    </thead>
+                                                   
+                                                </table>
                                         <textarea class="js-summernote" id="democratNote" name="replyContent" required></textarea>
                                         <div class="invalid-feedback">
                                                         		回覆請勿空白.
-                                         </div>
-                                        <button id="sendNote" type="submit" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">送出</button>
-                                         <input type="hidden" name="courseAskNo" value="${replyVO.courseAskNo}"/>
-                                         <input type="hidden" name="studentNo" value="${studentVO.studentNo}"/>
-                                         <input type="hidden" name="teacherNo" value="${teacherVO.teacherNo}"/>
-                                        <input type="hidden" name="action" value="insert">
+                                         </div><div style="padding-left:50%;">
+                                        <button id="sendNote" type="submit" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left" onclick='return false;'>回覆</button>
+                                         <input id="courseAskNo" type="hidden" name="courseAskNo" value="${replyVO.courseAskNo}"/>
+                                         <input id="studentNo" type="hidden" name="studentNo" value="${studentVO.studentNo}"/>
+                                         <input id="teacherNo" type="hidden" name="teacherNo" value="${teacherVO.teacherNo}"/>
+                                        <input type="hidden" name="action" value="insert"></div>
                                        	</FORM> 
                                     </div>
                                 </div>
@@ -184,6 +195,49 @@ session.setAttribute("reply", "reply");
                                                 })();
 
                                             </script>
+                                            	<script type="text/javascript">
+		$("#sendNote").click(function() {
+			$.ajax({
+				// url is servlet url, ?archive_seat is tell servlet execute which one judgment
+				url: "<%=request.getContextPath()%>/reply/reply.do",
+				type: "post",
+				// synchronize is false
+				async: false,
+				data: {
+					"action": "insert",
+					"replyContent": $("#democratNote").val(),
+					"courseAskNo":$("#courseAskNo").val(),
+					"teacherNo":$("#teacherNo").val(),
+					"studentNo":$("#studentNo").val(),
+				},
+				success: function(messages) {
+					console.log(messages);
+					console.log(JSON.parse(messages));
+					let replyVO = JSON.parse(messages);
+					
+					let table = $('#tableEvaluation1');
+					let tbody= $("<tbody>");
+					let tr=$('<tr>');
+					$('<td>').text(replyVO.teacherNo).appendTo(tr);
+					tr.appendTo(tbody);
+					tbody.appendTo(table);
+					$('<td>').text(replyVO.studentNo).appendTo(tr);
+					tr.appendTo(tbody);
+					tbody.appendTo(table);
+					$('<td>').text(replyVO.replyContent).appendTo(tr);
+					tr.appendTo(tbody);
+					tbody.appendTo(table);
+					$('<td>').text(replyVO.updateTime).appendTo(tr);
+					tr.appendTo(tbody);
+					tbody.appendTo(table);
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+				},
+			});
+			return false;
+		});
+
+	</script>
 </body>
 
 </html>

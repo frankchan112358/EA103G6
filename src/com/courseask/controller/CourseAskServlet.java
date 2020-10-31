@@ -250,7 +250,7 @@ public class CourseAskServlet extends HttpServlet {
 				CourseAskService courseAskSvc = new CourseAskService();
 				courseAskVO = courseAskSvc.addCourseAsk(courseNo, studentNo, title, question, updateTime);
 
-				String url = "/front-end/courseAsk/courseAsk.jsp";
+				String url = "/front-end/courseAsk/NewFile.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
