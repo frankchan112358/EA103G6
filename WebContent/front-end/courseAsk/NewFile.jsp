@@ -97,7 +97,6 @@ font-size:15px;
 						<li class="breadcrumb-item"><a
 							href="<%=request.getContextPath()%>/front-end/index/index.jpg">前台首頁</a></li>
 						<li class="breadcrumb-item"><a href="javascript:void(0);">課程提問</a></li>
-						<li class="breadcrumb-item">課程提問總覽</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
