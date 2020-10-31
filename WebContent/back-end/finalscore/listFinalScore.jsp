@@ -11,9 +11,6 @@
 
 <head>
 	<%@ include file="/back-end/template/head.jsp" %>
-	<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath()%>/SmartAdmin4/css/datagrid/datatables/datatables.bundle.css">
-
-
 	<style>
 		.table th,
 		.table td {
@@ -76,7 +73,7 @@
 										<button type="button" class="mr-1 btn btn-danger waves-effect waves-themed float-left cancel">
 											<span class="fal fa-cancel mr-1"></span>
 											<span>取消</span>
-										</button>										
+										</button>
 										<!-- datatable start -->
 										<table id="coursetable" class="table table-bordered table-hover table-striped w-100">
 											<thead style="background-color:#E5F4FF;">
@@ -110,12 +107,11 @@
 															${studentVO.studentName}</td>
 														<td class="scoreTd">
 															<c:if test="${finalScoreSvc.getScore(courseNo, studentVO.studentNo)!=null}">
-  																<input studentNo="studentVO.studentNo" class="score" type="number" value="${finalScoreSvc.getScore(courseNo, studentVO.studentNo)}" style="width:4em;text-align:center">  
+																<input studentNo="${studentVO.studentNo}" class="score" type="number" value="${finalScoreSvc.getScore(courseNo, studentVO.studentNo)}" oldValue="${finalScoreSvc.getScore(courseNo, studentVO.studentNo)}" style="width:4em;text-align:center">
 																<span class="score">${finalScoreSvc.getScore(courseNo, studentVO.studentNo)}</span>
-																
 															</c:if>
 															<c:if test="${finalScoreSvc.getScore(courseNo, studentVO.studentNo)==null}">
- 																<input studentNo="studentVO.studentNo" class="score" type="number" value="" disabled style="width:4em;text-align:center" >
+																<input studentNo="${studentVO.studentNo}" class="score" type="number" value="" oldValue="" disabled style="width:4em;text-align:center">
 																<span class="score">尚未評分</span>
 															</c:if>
 														</td>
@@ -143,9 +139,6 @@
 	<%@ include file="/back-end/template/quick_menu.jsp" %>
 	<%@ include file="/back-end/template/messager.jsp" %>
 	<%@ include file="/back-end/template/basic_js.jsp" %>
-
-
-	<script src="<%=request.getContextPath() %>/SmartAdmin4/js/datagrid/datatables/datatables.bundle.js"></script>
 	<script>
 
 
@@ -156,52 +149,99 @@
 			$('button.cancel').hide();
 			$('button.edit').show();
 			$('#coursetable').dataTable({
-					responsive: true,
-					language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' },
-					"columnDefs": [{
-						"targets": [-2, -4],
-						"orderable": false,
-					}]
-				});
+				responsive: true,
+				language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' },
+				"columnDefs": [{
+					"targets": [-2, -4],
+					"orderable": false,
+				}]
+			});
 
-
-			$("button.edit").click(function () {		
+			//切換到編輯模式
+			$("button.edit").click(function () {
+				//1.隱藏按鈕
 				$('button.submit').show();
 				$('button.cancel').show();
+				//2.顯示按鈕
 				$('button.edit').hide();
+				//3.顯示input
 				$('input.score').show();
+				//4.隱藏span
 				$('span.score').hide();
-				
-				//前端資料驗證
-				
+			});
+
+			//TO DO 取消編輯，並切換到檢視模式
+			$('button.cancel').click(function () {
+				//1.顯示按鈕
+
+				//2.隱藏按鈕
+
+				//3.還原input的value，提示input的attr有偷存oldValue
+
+				//4.隱藏input
+
+				//5.顯示span
+			});
+
+			//送出成績資料
+			$('button.submit').click(function () {
+				//TO DO 前端資料驗證，提示如果不合格，要return;，不然就會資料出去
+				//Future 可以提示使用者，你哪個沒有填
+
+				//驗證資料ok之後，把前面的input的資料包成陣列
 				let scoreList = [];
-				$('input.score').each(function(index,score){
-					   let finalScoreVO ={}; 
-					   finalScoreVO.courseNo = '${courseNo}';
-					   finalScoreVO.studentNo = $(score).attr('studentNo');
-					   finalScoreVO.score = $(score).val();
-					   scoreList.add(finalScoreVO);
+				$('input.score').each(function (index, score) {
+					let finalScoreVO = {};
+					finalScoreVO.finalScoreNo = "";
+					finalScoreVO.courseNo = '${courseNo}';
+					finalScoreVO.studentNo = $(score).attr('studentNo');
+					finalScoreVO.score = $(score).val();
+					scoreList.push(finalScoreVO);
 				});
-				
-                $.ajax({
-                    type: 'POST',
-                    url: '<%=request.getContextPath()%>/finalScore/finalScore.ajax',
-                    data: {
-                    	action:'update',
-                    	scoreList:JSON.stringify(scoreList)
-                    },
-                    success(res){
-                        if(res=='ok'){
-                            
-                        }                       
-                    },
-                    error(err){
-                        console.log(err);
-                    }
-                });     
-				
-			}
-			)
+
+				//利用ajax的方式送到後台
+				$.ajax({
+					beforeSend() {
+						//再送出之前，可以做一些處理，but不能取消送出!!
+					},
+					type: 'POST',
+					url: '<%=request.getContextPath()%>/finalScore/finalScore.ajax',
+					data: {
+						action: 'update',
+						scoreList: JSON.stringify(scoreList)
+					},
+					success(res) {
+						//servlet的res會在這邊處理
+						if (res == "ok") {
+							//TO DO 如果成功，請切換回檢視模式
+							//1.顯示按鈕
+
+							//2.隱藏按鈕
+
+							//3.更新input的oldValue，提示oldValue = value
+
+							//4.更新span的text
+
+							//5.隱藏input
+
+							//6.顯示span
+
+							alert('成績上傳成功');
+						} else {
+							console.log(res);
+							alert('成績上傳失敗');
+							//Future 可以提示使用者，你哪個成績是失敗的
+						}
+					},
+					error(err) {
+						console.log(err);
+						alert('成績上傳失敗');
+					},
+					complete(){
+						//整個ajax完成之後，收尾前還有想做的事情
+					}
+				});
+			});
 		});
 	</script>
 </body>

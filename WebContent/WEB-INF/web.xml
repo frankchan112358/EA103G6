@@ -381,21 +381,21 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>FinalScoreServlet</servlet-name>
-		<servlet-class>com.finalsocre.controller.FinalScoreServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>FinalScoreServlet</servlet-name>
-		<url-pattern>/finalScore/finalScore.do</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
 		<servlet-name>FinalScoreAjax</servlet-name>
-		<servlet-class>com.finalsocre.controller.FinalScoreAjax</servlet-class>
+		<servlet-class>com.finalscore.controller.FinalScoreAjax</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>FinalScoreAjax</servlet-name>
 		<url-pattern>/finalScore/finalScore.ajax</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>FinalScoreServlet</servlet-name>
+		<servlet-class>com.finalscore.controller.FinalScoreServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FinalScoreServlet</servlet-name>
+		<url-pattern>/finalScore/finalScore.do</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
