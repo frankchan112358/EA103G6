@@ -92,6 +92,9 @@ public class ChatServlet {
 			receiverSession.getAsyncRemote().sendText(message);
 			userSession.getAsyncRemote().sendText(message);
 			WebsocketChatDAO.saveChatMessage(sender, receiver, message);
+		}else { //就算對方不再線上也可以傳輸訊息
+			userSession.getAsyncRemote().sendText(message);
+			WebsocketChatDAO.saveChatMessage(sender, receiver, message);
 		}
 		
 //		System.out.println("Message received: " + message);
