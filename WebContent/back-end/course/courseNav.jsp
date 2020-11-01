@@ -15,6 +15,9 @@
 			<a class="courseWork nav-link" courseWork="courseVideo" href="javascript:void(0)" style="font-size: 15px">課程影片管理</a>
 		</li>
 		<li class="nav-item">
+			<a class="courseWork nav-link" courseWork="teachingNote" href="javascript:void(0)" style="font-size: 15px">教學筆記管理</a>
+		</li>
+		<li class="nav-item">
 			<a class="courseWork nav-link" courseWork="teachingFile" href="javascript:void(0)" style="font-size: 15px">課程教材管理</a>
 		</li>
 		<li class="nav-item">
@@ -66,6 +69,15 @@
 				myForm.action = '<%=request.getContextPath()%>/course/courseTT.do';
 				myForm.method = 'POST';
 				myForm.append(courseNavInput('hidden','action','getTTDisplayList'));
+				myForm.submit();
+			}
+			if (courseWork == 'teachingNote') {
+				e.preventDefault();
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/teachingNote/teachingNote';
+				myForm.method = 'POST';
+				myForm.append(courseNavInput('hidden','action','getTNDisplayList'));
 				myForm.submit();
 			}
 			if (courseWork == 'teachingFile') {
