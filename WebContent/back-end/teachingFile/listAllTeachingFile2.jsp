@@ -119,15 +119,15 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 																				<input type="hidden" name="action" value="preRead">
 																			</FORM>
 
+																					<a href="<%=request.getContextPath()%>/teachingFile/download.do?${teachingFileVO.teachingFileNo}" download>
 																				<button id="addCourse" type="submit" class="m-1 mb-0 btn btn-primary">
 																					<span class="fal fa-file-download mr-1"></span>
 																					<span>下載</span>
-																					<a href="<%=request.getContextPath()%>/teachingFile/download.do?${teachingFileVO.teachingFileNo}" download>
 																					
 																			    	<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
 																			    	<input type="hidden" name="teachingFileNo" value="${teachingFileVO.teachingFileNo}">
-																			    	</a>
 																				</button>
+																			    	</a>
 
 																			<FORM class="m-1 mb-0" METHOD="post" ACTION="<%=request.getContextPath()%>/teachingFile/teachingFile.do">
 																				<button id="addCourse" type="submit" class="btn btn-danger">

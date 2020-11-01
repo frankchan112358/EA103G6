@@ -1,4 +1,4 @@
-package com.test.controller;
+package com.timetable.controller;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -22,9 +22,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-@WebServlet("/Summernote")
+@WebServlet("/TeachingNoteSummernote")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024)
-public class Summernote extends HttpServlet {
+public class TeachingNoteSummernote extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	String driver = "oracle.jdbc.driver.OracleDriver";
@@ -42,7 +42,7 @@ public class Summernote extends HttpServlet {
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement("SELECT democratNote FROM Democrat WHERE democratNo='1'");
+			pstmt = con.prepareStatement("UPDATE timetable set teachingLog=? where timetableNo=?");
 			rs = pstmt.executeQuery();
 			if (rs.next() && rs.getString("democratNote") != null) {
 				Reader reader = rs.getCharacterStream("democratNote");
@@ -92,8 +92,9 @@ public class Summernote extends HttpServlet {
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement("UPDATE Democrat SET democratNote=? WHERE democratNo='1'");
+			pstmt = con.prepareStatement("UPDATE timetable set teachingLog=? where timetableNo=?");
 			part.getInputStream();
+			String timetableNo = req.getParameter("timetableNo") ;
 			InputStream in = part.getInputStream();
 			ByteArrayOutputStream bao = new ByteArrayOutputStream();
 			byte[] notes = new byte[in.available()];
@@ -101,12 +102,14 @@ public class Summernote extends HttpServlet {
 			bao.write(notes);
 			Reader reader = new InputStreamReader(new ByteArrayInputStream(notes));
 			pstmt.setCharacterStream(1, reader);
+			pstmt.setString(2, timetableNo);			
 			bao.close();
 			in.close();
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
+		se.printStackTrace();
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (pstmt != null) {

@@ -35,7 +35,8 @@ public class TimetableJDBCDAO implements TimetableDAO_interface {
 			pstmt.setString(1, timetableVO.getCourseNo());
 			pstmt.setString(2, timetableVO.getClassroomNo());
 			pstmt.setInt(3, timetableVO.getTimetablePeriod());
-			pstmt.setDate(4, timetableVO.getTimetableDate());;
+			pstmt.setDate(4, timetableVO.getTimetableDate());
+			;
 			pstmt.setString(5, timetableVO.getTeachingLog());
 
 			pstmt.executeUpdate();
@@ -65,7 +66,6 @@ public class TimetableJDBCDAO implements TimetableDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
 
-			
 			pstmt.setString(1, timetableVO.getCourseNo());
 			pstmt.setString(2, timetableVO.getClassroomNo());
 			pstmt.setInt(3, timetableVO.getTimetablePeriod());
@@ -206,16 +206,14 @@ public class TimetableJDBCDAO implements TimetableDAO_interface {
 				timetableVO.setTimetablePeriod(rs.getInt("timetablePeriod"));
 				timetableVO.setTimetableDate(rs.getDate("timetableDate"));
 				timetableVO.setTeachingLog(rs.getString("teachingLog"));
-				
+
 				list.add(timetableVO);
 			}
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver." 
-					+ e.getMessage());
+			throw new RuntimeException("Couldn't load database driver." + e.getMessage());
 		} catch (SQLException se) {
 			se.printStackTrace();
-			throw new RuntimeException("A database error occured." 
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured." + se.getMessage());
 		} finally {
 			if (rs != null) {
 				try {
@@ -243,51 +241,51 @@ public class TimetableJDBCDAO implements TimetableDAO_interface {
 	}
 
 	public static void main(String[] args) throws IOException {
-		
+
 		TimetableJDBCDAO dao = new TimetableJDBCDAO();
-		
-		//新增
-		TimetableVO timetableVO1 = new TimetableVO();
-		timetableVO1.setCourseNo("C001");
-		timetableVO1.setClassroomNo("1");
-		timetableVO1.setTimetablePeriod(2);
-		timetableVO1.setTimetableDate(Date.valueOf("2015-03-31"));
-		timetableVO1.setTeachingLog("C:\\20201112日誌.txt");
-		dao.insert(timetableVO1);
-		
-		//修改
-		TimetableVO timetableVO2 = new TimetableVO();
-		timetableVO2.setTimetableNo("TT000003");
-		timetableVO2.setCourseNo("C001");
-		timetableVO2.setClassroomNo("2");
-		timetableVO2.setTimetablePeriod(2);
-		timetableVO2.setTimetableDate(Date.valueOf("2015-03-31"));
-		timetableVO2.setTeachingLog("Hello everybody, my name is Ivy.");
-		dao.update(timetableVO2);
-		
-		//刪除
-		dao.delete("TT000003");
-		
-		//查詢
-		TimetableVO timetableVO3 = dao.findByPrimaryKey("TT000002");
-		System.out.println(timetableVO3.getTimetableNo());
-		System.out.println(timetableVO3.getCourseNo());
-		System.out.println(timetableVO3.getClassroomNo());
-		System.out.println(timetableVO3.getTimetablePeriod());
-		System.out.println(timetableVO3.getTimetableDate());
-		System.out.println(timetableVO3.getTeachingLog());
-		
-		//查詢
-		List<TimetableVO> list = dao.getAll();
-		for (TimetableVO timetableVO : list) {
-			System.out.println(timetableVO.getTimetableNo());
-			System.out.println(timetableVO.getCourseNo());
-			System.out.println(timetableVO.getClassroomNo());
-			System.out.println(timetableVO.getTimetablePeriod());
-			System.out.println(timetableVO.getTimetableDate());
-			System.out.println(timetableVO.getTeachingLog());		
-			System.out.println("-------");
-		}
+
+		// 新增
+//		TimetableVO timetableVO1 = new TimetableVO();
+//		timetableVO1.setCourseNo("C001");
+//		timetableVO1.setClassroomNo("1");
+//		timetableVO1.setTimetablePeriod(2);
+//		timetableVO1.setTimetableDate(Date.valueOf("2015-03-31"));
+//		timetableVO1.setTeachingLog("C:\\20201112日誌.txt");
+//		dao.insert(timetableVO1);
+
+		// 修改
+//		TimetableVO timetableVO2 = new TimetableVO();
+//		timetableVO2.setTimetableNo("TT000003");
+//		timetableVO2.setCourseNo("C001");
+//		timetableVO2.setClassroomNo("2");
+//		timetableVO2.setTimetablePeriod(2);
+//		timetableVO2.setTimetableDate(Date.valueOf("2015-03-31"));
+//		timetableVO2.setTeachingLog("Hello everybody, my name is Ivy.");
+//		dao.update(timetableVO2);
+
+		// 刪除
+//		dao.delete("TT000003");
+
+		// 查詢
+//		TimetableVO timetableVO3 = dao.findByPrimaryKey("TT000002");
+//		System.out.println(timetableVO3.getTimetableNo());
+//		System.out.println(timetableVO3.getCourseNo());
+//		System.out.println(timetableVO3.getClassroomNo());
+//		System.out.println(timetableVO3.getTimetablePeriod());
+//		System.out.println(timetableVO3.getTimetableDate());
+//		System.out.println(timetableVO3.getTeachingLog());
+
+		// 查詢
+//		List<TimetableVO> list = dao.getAll();
+//		for (TimetableVO timetableVO : list) {
+//			System.out.println(timetableVO.getTimetableNo());
+//			System.out.println(timetableVO.getCourseNo());
+//			System.out.println(timetableVO.getClassroomNo());
+//			System.out.println(timetableVO.getTimetablePeriod());
+//			System.out.println(timetableVO.getTimetableDate());
+//			System.out.println(timetableVO.getTeachingLog());		
+//			System.out.println("-------");
+//		}
 	}
-	
+
 }

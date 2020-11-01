@@ -161,6 +161,15 @@
 		<servlet-name>TimetableServlet</servlet-name>
 		<url-pattern>/timetable/timetable.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>TeachingNoteSummernote</servlet-name>
+		<servlet-class>com.timetable.controller.TeachingNoteSummernote</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeachingNoteSummernote</servlet-name>
+		<url-pattern>/timetable/teachingNoteSummernote</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>VideoLogServlet</servlet-name>
@@ -503,6 +512,15 @@
 	<servlet-mapping>
 		<servlet-name>TeachingFileServlet</servlet-name>
 		<url-pattern>/teachingFile/teachingFile.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>TeachingNote</servlet-name>
+		<servlet-class>com.teachingnote.controller.TeachingNote</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeachingNote</servlet-name>
+		<url-pattern>/teachingNote/teachingNote</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

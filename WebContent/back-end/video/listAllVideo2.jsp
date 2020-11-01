@@ -46,7 +46,7 @@
 							<a id="aListAllCourse" banjiNo="${courseSvc.getOneCourse(courseNo).banjiNo}" href="javascript:void(0)">課程總覽</a>
 						</li>
 						<li class="breadcrumb-item">
-							影片管理
+							影片管理${courseVO.courseNo} ${courseSvc.getOneCourse(courseNo).banjiNo}
 						</li>
 					</ol>
 					<div class="subheader">
