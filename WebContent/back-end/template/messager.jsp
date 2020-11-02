@@ -104,10 +104,10 @@
 				refreshFriendStatus(jsonObj);
 			} else if ("history" === jsonObj.type){
 				$("#chat_container").empty();
-				var messages = JSON.parse(jsonObj.message);
-				for (var i = 0; i < messages.length; i++) {
-					var historyData = JSON.parse(messages[i]);
-					var showMsg = historyData.message;
+				let messages = JSON.parse(jsonObj.message);
+				for (let i = 0; i < messages.length; i++) {
+					let historyData = JSON.parse(messages[i]);
+					let showMsg = historyData.message;
 					if(historyData.sender === ChatMyself){
 						$("#chat_container").append(`
 						<div class="chat-segment chat-segment-sent">
@@ -131,7 +131,7 @@
 				}
 				$("#chat_container").scrollTop($("#chat_container").prop('scrollHeight'));
 			}else if ("chat" === jsonObj.type){
-				var showMsg = jsonObj.message;
+				let showMsg = jsonObj.message;
 				if(jsonObj.sender!==ChatMyself&&jsonObj.sender !== $("#topChatName").attr("value")) return; //防止收訊息者 沒有跟指定對象聊天卻還收到訊息
 				if(jsonObj.sender === ChatMyself){
 					$("#chat_container").append(`
@@ -161,32 +161,35 @@
 	
 	function refreshFriendStatus(jsonObj){
 		if("close" === jsonObj.type){ //改變下線使用者的狀態
-			var friendsValue=jsonObj.user;
-			var friendsName=$("a[value="+friendsValue+"]").attr("name"); //取得離線人的名字，後端設計無傳送其姓名只傳送其編號
+			let friendsValue=jsonObj.user;
+			let friendsName=$("a[value="+friendsValue+"]").attr("name"); //取得離線人的名字，後端設計無傳送其姓名只傳送其編號
 			$("#"+friendsValue+"Status").text("Offline"); 
 			$("#"+friendsValue+"Status").removeClass("text-success"); //改變其狀態顏色
 			$("#"+friendsValue+"StatusDot").removeClass("status-success"); //改變其狀態點點顏色
 			$("a[value="+friendsValue+"]").attr("data-filter-tags",friendsName+" offline"); //更改其搜尋的內容
 			$("a[value="+friendsValue+"]").parent().insertBefore("#js-msgr-listfilter li:last");//下線將其放置最後(其實是倒數第二)
-		}
+
+		}else{
 		
-		var onlineList = jsonObj.users;
-		var friendsValue;
-		var friendsName;
-		for (var i = 0; i < onlineList.length; i++){
-			if (onlineList[i].userNo === ChatMyself) { continue; }
-			friendsValue=onlineList[i].userNo;
-			friendsName=onlineList[i].userName;
-			$("#"+friendsValue+"Status").text("Online");
-			$("#"+friendsValue+"Status").addClass("text-success");
-			$("#"+friendsValue+"StatusDot").addClass("status-success")
-			$("#"+friendsValue+"StatusDot").parent().attr("data-filter-tags",friendsName+" online");  //更改其搜尋的內容
-			$("a[value="+friendsValue+"]").parent().insertBefore("#js-msgr-listfilter li:eq(0)"); //上線將其位置擺第一		
+			let onlineList = jsonObj.users;
+			let friendsValue;
+			let friendsName;
+			for (let i = 0; i < onlineList.length; i++){
+				if (onlineList[i].userNo === ChatMyself) { continue; }
+				friendsValue=onlineList[i].userNo;
+				friendsName=onlineList[i].userName;
+				$("#"+friendsValue+"Status").text("Online");
+				$("#"+friendsValue+"Status").addClass("text-success");
+				$("#"+friendsValue+"StatusDot").addClass("status-success")
+				$("#"+friendsValue+"StatusDot").parent().attr("data-filter-tags",friendsName+" online");  //更改其搜尋的內容
+				$("a[value="+friendsValue+"]").parent().insertBefore("#js-msgr-listfilter li:eq(0)"); //上線將其位置擺第一		
+
+			}
 		}
 		addListener();
-	}//$("a[value=U000009]").parent().insertBefore("#js-msgr-listfilter li:last-child");
+	}
 		
-	function addListener(){//e.srcElement.textContent
+	function addListener(){
 		var container = document.getElementById("js-msgr-listfilter");
 		container.addEventListener("click", function(e) {
 			var friend = ($(e.srcElement).parents(".d-table").attr("name")==undefined?$(e.srcElement).attr("name"):$(e.srcElement).parents(".d-table").attr("name")); 
@@ -253,7 +256,8 @@ function getAllMessager(){
 	<jsp:useBean id="studentSvcChat" scope="page" class="com.student.model.StudentService" />
 	<jsp:useBean id="teacherSvcChat" scope="page" class="com.teacher.model.TeacherService" />
 	<jsp:useBean id="userSvcChat" scope="page" class="com.user.model.UserService" />
-	
+
+<c:if test="${userVO.userNo ne 'U000001'}"> //讓管理者聊天室沒有人，因為其他人也無法跟管理者聊天
 <c:forEach var="messager" items="${empSvcChat.all}">
 	<c:if test="${messager.userNo ne userVO.userNo}">
 	
@@ -331,6 +335,6 @@ function getAllMessager(){
     	</li>`)
 	</c:if>
 </c:forEach>
-
+</c:if>
 }
 </script>
