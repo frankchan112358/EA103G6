@@ -21,7 +21,7 @@ public class ImageUtil {
 	public static byte[] shrink(byte[] srcImageData, int scaleSize) {
 		ByteArrayInputStream bais = new ByteArrayInputStream(srcImageData);
 		// 縮小比例，4代表除以4
-		int sampleSize = 8;
+		int sampleSize = 1;
 		int imageWidth = 0;
 		int imageHeight = 0;
 
