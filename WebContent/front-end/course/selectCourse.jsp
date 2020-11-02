@@ -67,7 +67,6 @@
 }
 
 .card:hover {
-	box-shadow: 0 5px 10px rgba(0, 0, 0, .3);
 	transition: box-shadow 0.3s ease-in-out;
 }
 
@@ -210,6 +209,7 @@ input[type=search]::-webkit-search-cancel-button{
 		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 		    });
 		  });
+		 
 		});
 	
 
