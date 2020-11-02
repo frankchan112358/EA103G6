@@ -110,7 +110,7 @@ text-overflow: ellipsis;
 												<tr style="cursor: pointer;" data-toggle="modal" data-target="#teachingPlanModal${teachingPlanVO.teachingPlanNo}">
 														<td align="center">第${teachingPlanVO.week}週</td>
 														<td align="center">${teachingPlanVO.lesson}</td>
-														<td align="center">${teachingPlanVO.planContent}</td>
+														<td class="table_tit" align="center">${teachingPlanVO.planContent}</td>
 													</tr>
 												</c:if>
 											</c:forEach>
