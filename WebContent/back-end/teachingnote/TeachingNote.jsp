@@ -212,6 +212,7 @@
 					data: form,
 					success(res) {
 						console.log(res);
+						location.reload(); 
 					}
 				});
 			});

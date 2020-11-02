@@ -63,7 +63,7 @@
 				e.preventDefault();
 				let myForm = document.createElement('form');
 				document.body.appendChild(myForm);
-				myForm.action = '#';
+				myForm.action = '<%=request.getContextPath()%>/front-end/teachingfile/listAllTeachingFile2.jsp';
 				myForm.method = 'POST';
 				myForm.submit();
 			}
@@ -71,7 +71,7 @@
 				e.preventDefault();
 				let myForm = document.createElement('form');
 				document.body.appendChild(myForm);
-				myForm.action = '#';
+				myForm.action = '<%=request.getContextPath()%>/front-end/courseAsk/courseAsk.jsp';
 				myForm.method = 'POST';
 				myForm.submit();
 			}
@@ -79,7 +79,7 @@
 				e.preventDefault();
 				let myForm = document.createElement('form');
 				document.body.appendChild(myForm);
-				myForm.action = '#';
+				myForm.action = '<%=request.getContextPath()%>/front-end/evaluation/selectEvaluation.jsp';
 				myForm.method = 'POST';
 				myForm.submit();
 			}

@@ -3,9 +3,9 @@
 <%@ include file="/front-end/template/check.jsp"%>
 <%@ page import="com.course.model.*,com.timetable.model.*, com.teachingfile.model.*"%>
 <%@ page import="java.util.*"%>
+<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 
 <%
-CourseService courseSvc = new CourseService();
 List<CourseVO> courseList = courseSvc.getAll();
 
 TimetableService timetableSvc =new TimetableService();
@@ -17,9 +17,6 @@ List<TeachingFileVO> teachingFileList = teachingFileSvc.getAll();
 pageContext.setAttribute("courseList", courseList);
 pageContext.setAttribute("timetableList", timetableList);
 pageContext.setAttribute("teachingFileList", teachingFileList);
-
-CourseVO choose_courseVO = (CourseVO) request.getAttribute("courseVO");
-pageContext.setAttribute("choose_courseVO", choose_courseVO);
 %>
 
 <!DOCTYPE html>
@@ -59,16 +56,16 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 							<a id="aListAllCourse" banjiNo="${courseSvc.getOneCourse(courseNo).banjiNo}" href="javascript:void(0)">課程總覽</a>
 						</li>
 						<li class="breadcrumb-item">
-							教材管理
+							教材管理 ${courseSvc.getOneCourse(courseNo).banjiNo} 嗨嗨
 						</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
 							<i class="subheader-icon fal fa-file-code"></i>
-							教材管理
+							教材管理${courseNo} 安安
 						</h1>
 					</div>
-					<div class="row">
+					<div class="row  align-items-center justify-content-center">
 						<div class="col-11">
 							<jsp:include page="/front-end/course/courseDetail.jsp"></jsp:include>
 							<div id="panel-1" class="panel">
@@ -90,14 +87,12 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach var="courseVO" items="${courseList}">
-													<c:if test="${courseVO.courseNo eq choose_courseVO.courseNo }">
-														<c:forEach var="timetableVO" items="${timetableList}">
-															<c:if test="${courseVO.courseNo eq timetableVO.courseNo}">
+														<c:forEach var="timetableVO" items="${courseSvc.getOneCourse(courseNo).timetableList}">
+															<c:if test="${courseNo eq timetableVO.courseNo}">
 																<c:forEach var="teachingFileVO" items="${teachingFileList}">
 																	<c:if test="${timetableVO.timetableNo eq teachingFileVO.timetableNo}">
 																		<tr>
-																			<td>${courseVO.courseNo}</td>
+																			<td>${courseNo}</td>
 																			<td>${teachingFileVO.teachingFileNo}</td>
 																			<td>${teachingFileVO.teachingFileName}</td>
 																			<td class="d-flex p-1 justify-content-center">
@@ -107,7 +102,7 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 																					<span class=" fal fa-file-code mr-1"></span>
 																					<span>預覽</span>
 																				</button>
-																				<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+																				<input type="hidden" name="courseNo" value="${courseNo}">
 																				<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
 																				<input type="hidden" name="teachingFileNo" value="${teachingFileVO.teachingFileNo}">
 																				<input type="hidden" name="action" value="preRead">
@@ -118,7 +113,7 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 																					<span>下載</span>
 																					<a href="<%=request.getContextPath()%>/teachingFile/download.do?${teachingFileVO.teachingFileNo}" download>
 																					
-																			    	<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+																			    	<input type="hidden" name="courseNo" value="${courseNo}">
 																			    	<input type="hidden" name="teachingFileNo" value="${teachingFileVO.teachingFileNo}">
 																			    	</a>
 																				</button>
@@ -129,9 +124,6 @@ pageContext.setAttribute("choose_courseVO", choose_courseVO);
 																</c:forEach>
 															</c:if>
 														</c:forEach>
-													</c:if>
-												</c:forEach>
-												
 											</tbody>
 										</table>
 										<!-- datatable end -->
