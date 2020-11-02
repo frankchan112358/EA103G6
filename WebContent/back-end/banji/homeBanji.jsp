@@ -65,7 +65,17 @@
 								<div class="panel-hdr bg-primary-800 bg-success-gradient ">
 									<h2 class="text-white">養成班列表</h2>
 								</div>
-								<div class="panel-container show">
+								 <div class="panel-container show" style="margin: 20px 20px;">
+                                    <div style="text-align: center;">
+                                        <c:if test="${empty empVO.banjiList}">
+                                            <h2>
+                                                <i class="fal fa-calendar-times"></i>
+                                                你目前尚無任何班級
+                                                <i class="fal fa-calendar-times"></i>
+                                            </h2>
+                                        </c:if>
+                                    </div>
+                                    <div>
 									<div class="panel-content">
 										<!-- datatable start -->
 										<table id="banjiTable"
@@ -116,7 +126,8 @@
 							</div>
 						</div>
 					</div>
-				</main>
+				</div>
+					</main>
 				<div class="page-content-overlay" data-action="toggle"
 					data-class="mobile-nav-on"></div>
 				<%@ include file="/back-end/template/footer.jsp"%>
