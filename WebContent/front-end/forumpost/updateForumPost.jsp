@@ -57,6 +57,8 @@
                                             <div class="form-group">
                                                 <label class="form-label" for="simpleinput">貼文內容:</label>
                                                 <textarea class="js-summernote" id="democratNote" class="form-control" name="content" required>${forumPostVO.content}</textarea>
+                                                <div class="invalid-feedback">貼文內容請勿空白</div>
+                                                
                                             </div>
                                             <input type="hidden" name="action" value="update">
                                             <input type="hidden" name="forumTopicNo" value="${forumPostVO.forumTopicNo}">
