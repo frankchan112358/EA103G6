@@ -18,6 +18,15 @@
 <%@ include file="/front-end/template/head.jsp"%>
 
 <style>
+[aria-expanded="true"] .collapsed-reveal {
+	display: inline;
+	margin: 10px;
+}
+
+[aria-expanded="false"] .collapsed-hidden {
+	display: inline;
+	margin: 10px;
+}
 </style>
 </head>
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
@@ -35,7 +44,7 @@
 							<a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-						<a href="<%=request.getContextPath()%>/front-end/course/selectCourse.jsp">我的課程</a>
+							<a href="<%=request.getContextPath()%>/front-end/course/selectCourse.jsp">我的課程</a>
 						</li>
 						<li class="breadcrumb-item">課程公告</li>
 					</ol>
@@ -73,10 +82,11 @@
 															<span>
 																<b>【${coursePostVO.title}】</b>
 															</span>
-															<span>
-																<fmt:formatDate value="${coursePostVO.updateTime}" pattern="yyyy年MM月dd日 HH'點'mm'分'" />
-															</span>
 															<span class="ml-auto">
+																<span>
+																	<i class="fal fa-clock mr-1"></i>
+																	<fmt:formatDate value="${coursePostVO.updateTime}" pattern="yyyy年MM月dd日 HH'點'mm'分'" />
+																</span>
 																<span class="collapsed-reveal">
 																	<i class="fal fa-minus fs-xl"></i>
 																</span>

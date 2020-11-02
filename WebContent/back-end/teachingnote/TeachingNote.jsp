@@ -79,6 +79,7 @@
 														<td>${timetableVO.periodText}</td>
 														<td class="d-flex p-1 justify-content-center">
 															<c:if test="${timetableVO.teachingLog!=null}">
+															${timetableVO.teachingLog}
 																<button timetableNo="${timetableVO.timetableNo}" type="button" id="btn-add" class="btn-write btn btn-success mr-2 edit" data-toggle="modal" data-target="#editorEvaluation">
 																	<span class="fal fa-edit"></span>
 																	<span>修改</span>

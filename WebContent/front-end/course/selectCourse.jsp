@@ -49,6 +49,10 @@
 				height: 14vw;
 			}
 		}
+		
+.card:hover {
+	transition: box-shadow 0.3s ease-in-out;
+}
 
 		@media (min-width : 1200px) {
 			.card-columns {
@@ -164,6 +168,7 @@
 	<%@ include file="/front-end/template/messager.jsp"%>
 	<%@ include file="/front-end/template/basic_js.jsp"%>
 	<script>
+	
 		$(document).ready(function () {
 			$('.searchbox-input').on("keyup", function () {
 				var value = $(this).val().toLowerCase();

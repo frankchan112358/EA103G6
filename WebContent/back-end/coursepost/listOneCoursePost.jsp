@@ -35,6 +35,9 @@ font-size: 15px;
 	text-align: center;
 }
 
+.panel .panel-container .panel-content {
+    margin: auto;
+}
 
 
 </style>
@@ -80,25 +83,21 @@ font-size: 15px;
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
 									<h2>課程公告資料</h2>
 								</div>
-								<div class="panel-container show">
-									<div class="panel-content">
-										<!-- datatable start -->
-										<table class="table table-bordered table-hover table-striped w-100" style="width:100%;table-layout:fixed">
-											<tr>
-												<th width="20%">公告標題</th>
-												<td>${coursePostVO.title}</td>
-											</tr>
-											<tr>
-												<th>公告內容</th>
-												<td>${coursePostVO.postContent}</td>
-											</tr>
-											<tr>
-												<th>公告時間</th>
-												<td><fmt:formatDate value="${coursePostVO.updateTime}" pattern="yyyy年MM月dd日 HH'點'mm'分'" /></td>
-											</tr>
-											
-										</table>
-										<!-- datatable end -->
+								<div class="panel-container show justify-content-center">
+									<div class="panel-content col-8">
+										    <div class="card border ">
+                                                <div class="card-header py-2" style="background-color:#E5F4FF;">
+                                                    <div class="card-title" style="font-size:1.5em">
+                                                        ${coursePostVO.title}
+                                                    </div>
+                                                </div>
+                                                <div class="card-body" style="font-size:15px">
+                                                    <blockquote class="blockquote mb-0">
+                                                        <p>${coursePostVO.postContent}</p>
+                                                        <footer class="blockquote-footer"><i class="fal fa-clock mr-1"></i><fmt:formatDate value="${coursePostVO.updateTime}" pattern="yyyy年MM月dd日 HH'點'mm'分'" /></footer>
+                                                    </blockquote>
+                                                </div>
+                                            </div>
 									</div>
 								</div>
 							</div>

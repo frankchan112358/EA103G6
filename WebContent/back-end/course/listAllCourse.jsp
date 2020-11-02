@@ -34,7 +34,7 @@ font-size: 15px;
     text-align: center;  
 }
 
-  img {  
+img {  
     vertical-align: sub;  
     width: 20%;  
   	height: auto;  

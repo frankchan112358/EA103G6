@@ -139,10 +139,10 @@ img {
 
 											<div class="form-group">
 												<label class="form-label">教室<span class="text-danger">*</span></label>
-												<select class="custom-select form-control" name="classroomNo" required>
+												<select class="custom-select form-control" name="classroomNo" required >
 													<option value="">請選擇教室</option>
 													<c:forEach var="classroomVO" items="${classroomSvc.all}">
-														<option value="${classroomVO.classroomNo}" ${(courseVO.classroomNo==classroomVO.classroomNo)?'selected':'' }>${classroomVO.classroomName}</option>
+														<option  value="${classroomVO.classroomNo}" ${(courseVO.classroomNo==classroomVO.classroomNo)?'selected':'' }>${classroomVO.classroomName}</option>
 													</c:forEach>
 												</select>
 												<font color=red>${errorMsgs.classroomNo}</font>
