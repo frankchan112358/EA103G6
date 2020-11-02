@@ -150,7 +150,7 @@
 																		<c:if test="${timetableVO.timetablePeriod=='2'}">晚上</c:if><br>
 																		<div class="in-sb-log">
 																			<div class="log">
-																				<button timeteableNo="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).timetableVO.timetableNo}" type="button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size: small;">
+																				<button timeteableNo="${timetableVO.timetableNo}" type="button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size: small;">
 																					教學筆記
 																				</button>
 																			</div>
@@ -170,7 +170,7 @@
 																		<c:if test="${timetableVO.timetablePeriod=='2'}">晚上</c:if><br>
 																		<div class="in-sb-log">
 																			<div class="log">
-																				<button  type=" button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size: small;">
+																				<button timeteableNo="${timetableVO.timetableNo}" type=" button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size: small;">
 																					教學筆記
 																				</button>
 																			</div>
@@ -202,7 +202,7 @@
 		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">教學日誌</h4>
+					<h4 class="modal-title">教學筆記</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true"><i class="fal fa-times"></i></span>
 					</button>
@@ -247,9 +247,10 @@
 			$(document).on('click', '.in-sb-log button', function (event) {
 				let timeteableNo = this.getAttribute('timeteableNo');
 				$.ajax({
-					type: 'GET',
-					url: '<%=request.getContextPath()%>/video/video.getsblog',
+					type: 'POST',
+					url: '<%=request.getContextPath()%>/timetable/teachingNoteSummernote',
 					data: {
+						action: 'read',
 						timetableNo: timeteableNo
 					},
 					success(res) {

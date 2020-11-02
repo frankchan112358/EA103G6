@@ -13,7 +13,6 @@
 
 <head>
 	<%@ include file="/back-end/template/head.jsp" %>
-<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath()%>/SmartAdmin4/css/datagrid/datatables/datatables.bundle.css">
 <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath()%>/SmartAdmin4/css/formplugins/summernote/summernote.css">
 
 <style>
@@ -78,25 +77,30 @@
 														<td>${timetableVO.timetableDate}</td>
 														<td>${timetableVO.periodText}</td>
 														<td class="d-flex p-1 justify-content-center">
-															<c:if test="${timetableVO.teachingLog!=null}">
-															${timetableVO.teachingLog}
-																<button timetableNo="${timetableVO.timetableNo}" type="button" id="btn-add" class="btn-write btn btn-success mr-2 edit" data-toggle="modal" data-target="#editorEvaluation">
+															<c:if test="${timetableVO.teachingLog==null}">
+																<button timetableNo="${timetableVO.timetableNo}" type="button" class="btn-write btn btn-success mr-2 update" style="display: none;">
 																	<span class="fal fa-edit"></span>
 																	<span>修改</span>
 																</button>
-
-																<FORM class="m-1 mb-0" METHOD="post" ACTION="<%=request.getContextPath()%>/timetable/timetable.do" style="margin-bottom:0px;">
-																	<button timetableNo="${timetableVO.timetableNo}" type="submit" class="btn-write btn btn-danger mr-2">
-																		<span class="fal fa-times "></span>
-																		<span>刪除</span>
-																	</button>
-																	<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-																	<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
-																	<input type="hidden" name="action" value="delete_teachingLog">
-																</FORM>
+																<button timetableNo="${timetableVO.timetableNo}" type="button" class="btn-write btn btn-danger mr-2 delete" style="display: none;">
+																	<span class="fal fa-times"></span>
+																	<span>刪除</span>
+																</button>
+																<button timetableNo="${timetableVO.timetableNo}" type="button" class="btn-write btn btn-info mr-2 insert">
+																	<span class="fal fa-upload"></span>
+																	<span>新增</span>
+																</button>
 															</c:if>
-															<c:if test="${timetableVO.teachingLog==null}">
-																<button timetableNo="${timetableVO.timetableNo}" type="button" id="btn-add" class="btn-write btn btn-info mr-1 edit" data-toggle="modal" data-target="#editorEvaluation">
+															<c:if test="${timetableVO.teachingLog!=null}">
+																<button timetableNo="${timetableVO.timetableNo}" type="button" class="btn-write btn btn-success mr-2 update">
+																	<span class="fal fa-edit"></span>
+																	<span>修改</span>
+																</button>
+																<button timetableNo="${timetableVO.timetableNo}" type="button" class="btn-write btn btn-danger mr-2 delete">
+																	<span class="fal fa-times"></span>
+																	<span>刪除</span>
+																</button>
+																<button timetableNo="${timetableVO.timetableNo}" type="button" class="btn-write btn btn-info mr-2 insert" style="display: none;">
 																	<span class="fal fa-upload"></span>
 																	<span>新增</span>
 																</button>
@@ -118,58 +122,58 @@
 			</div>
 		</div>
 	</div>
-
-	<main id="js-page-content" role="main" class="page-content">
-		<div class="modal fade" id="editorEvaluation" tabindex="-1" role="dialog" aria-hidden="true">
-			<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-				<div class="modal-content">
-
-					<div class="modal-header">
-						<h5 class="modal-title">新增教學筆記</h5>
-					</div>
-						<div class="modal-footer">
-							<div id="panel-2" class="panel">
-								<div class="panel-container show">
-									<div class="panel-content">
-										<textarea class="js-summernote" id="democratNote" name="question" required></textarea>
-										<div class="invalid-feedback">
-											請勿空白.
-										</div>
-										<button id="sendNote" type="submit" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">送出</button>
-
-									</div>
-								</div>
-							</div>
-						</div>
+	<div id="teachingNoteModal" class="modal fade example-modal-centered-transparent" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-xl modal-dialog modal-dialog-centered modal-transparent" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title text-white"></h4>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true"><i class="fal fa-times"></i></span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<textarea class="js-summernote" id="teachingNote"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button id="cancelSend" type="button" class="btn btn-secondary">取消</button>
+					<button id="sendNote" type="button" class="btn btn-primary">送出</button>
 				</div>
 			</div>
 		</div>
-	</main>
+	</div>
 	<%@ include file="/back-end/template/quick_menu.jsp" %>
 	<%@ include file="/back-end/template/messager.jsp" %>
 	<%@ include file="/back-end/template/basic_js.jsp" %>
 	<script src="<%=request.getContextPath() %>/SmartAdmin4/js/formplugins/summernote/summernote.js"></script>
-	<script src="<%=request.getContextPath() %>/SmartAdmin4/js/datagrid/datatables/datatables.bundle.js"></script>
 	<script>
-
+		$(document).ready(function () {
+			var workStatus = 'none';
 			var _timetableNo = '';
-		$(document).ready(
-				
-			function () {
+			var _todo = '';
 
-			$(document).on('click', 'button.edit', function (e) {
-				_timetableNo = this.getAttribute('timetableNo');
-			})
+			document.getElementById('aListAllCourse').addEventListener('click', function (e) {
+				e.preventDefault();
+				let _this = this;
+				let banjiNo = this.getAttribute('banjiNo');
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/course/course.do';
+				myForm.method = 'POST';
+				let banjiNoInput = document.createElement('input');
+				banjiNoInput.type = 'hidden';
+				banjiNoInput.name = 'banjiNo';
+				banjiNoInput.value = banjiNo;
+				myForm.append(banjiNoInput);
+				myForm.submit();
+			}, false);
 
 			$('#tableEvaluation').dataTable({
 				responsive: true,
 				language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' }
 			});
 
-			$('#democratNote').summernote();
-
-			$('#democratNote').summernote({
-				height: 250,
+			$('#teachingNote').summernote({
+				height: 300,
 				tabsize: 2,
 				placeholder: "請輸入",
 				dialogsFade: true,
@@ -187,36 +191,131 @@
 					['view', ['fullscreen', 'codeview', 'help']]
 				],
 				callbacks: {
-					onInit: function (e) {
-						$.ajax({
-							url: '<%=request.getContextPath() %>/timetable/teachingNoteSummernote',
-							type: 'get',
-							success(res) {
-								$('#democratNote').summernote('code', res);
-							}
-						});
-					},
-					onChange: function (contents, $editable) { }
 				}
 			});
 
-			$('#sendNote').click(function () {
-				let form = new FormData();
-				form.append("democratNote", $('#democratNote').summernote('code'));
-				form.append('timetableNo', _timetableNo);
+			$(document).on('click', 'button.insert', function (e) {
+				_timetableNo = this.getAttribute('timetableNo');
+				_todo = 'insert';
+				$('h4.modal-title').text('新增筆記');
+				$('#teachingNoteModal').modal('show');
+			});
 
+			$(document).on('click', 'button.update', function (e) {
+				_timetableNo = this.getAttribute('timetableNo');
+				_todo = 'update';
 				$.ajax({
 					url: '<%=request.getContextPath() %>/timetable/teachingNoteSummernote',
 					type: 'post',
-					processData: false,
-					contentType: false,
-					data: form,
-					success(res) {
-						console.log(res);
-						location.reload(); 
+					data: {
+						action: 'read',
+						timetableNo: _timetableNo
+					},
+					success: function (res) {
+						if (res != null) {
+							$('#teachingNote').summernote('code', res);
+						}
+					},
+					complete: function () {
+						$('h4.modal-title').text('修改筆記');
+						$('#teachingNoteModal').modal('show');
 					}
 				});
 			});
+
+			$(document).on('click', 'button.delete', function (e) {
+				_timetableNo = this.getAttribute('timetableNo');
+				$.ajax({
+					url: '<%=request.getContextPath() %>/timetable/teachingNoteSummernote',
+					type: 'post',
+					data: {
+						action: 'delete_teachingLog',
+						timetableNo: _timetableNo
+					},
+					success: function (res) {
+						if (res == 'ok') {
+							switchToInsert();
+						}
+					},
+					complete: function () {
+					}
+				});
+			});
+
+			$('#sendNote').click(function () {
+				if (_todo == 'insert') {
+					let form = new FormData();
+					form.append("teachingNote", $('#teachingNote').summernote('code'));
+					form.append('timetableNo', _timetableNo);
+					form.append('action', 'insert');
+					$.ajax({
+						url: '<%=request.getContextPath() %>/timetable/teachingNoteSummernote',
+						type: 'post',
+						processData: false,
+						contentType: false,
+						data: form,
+						success: function (res) {
+							if (res == 'ok') {
+								switchToUpdateDelete();
+								$('#teachingNoteModal').modal('hide');
+							}
+						},
+						complete: function () {
+						}
+					});
+				}
+				if (_todo == 'update') {
+					let form = new FormData();
+					form.append("teachingNote", $('#teachingNote').summernote('code'));
+					form.append('timetableNo', _timetableNo);
+					form.append('action', 'update');
+					$.ajax({
+						url: '<%=request.getContextPath() %>/timetable/teachingNoteSummernote',
+						type: 'post',
+						processData: false,
+						contentType: false,
+						data: form,
+						success: function (res) {
+							if (res == 'ok') {
+								$('#teachingNoteModal').modal('hide');
+							}
+						},
+						complete: function () {
+						}
+					});
+				}
+			});
+
+			$('#cancelSend').click(function () {
+				$('#teachingNoteModal').modal('hide');
+			});
+
+			$("#teachingNoteModal").on("hidden.bs.modal", function (e) {
+				$('#teachingNote').summernote('code', '');
+				_timetableNo = '';
+				_todo = '';
+			});
+
+			function teachingNoteInput(type, name, value) {
+				let courseInput = document.createElement('input');
+				courseInput.type = type;
+				courseInput.name = name;
+				courseInput.value = value;
+				return courseInput;
+			}
+
+			function switchToUpdateDelete() {
+				$(`button.insert[timetableNo=${"${_timetableNo}"}]`).css('display', 'none');
+				$(`button.update[timetableNo=${"${_timetableNo}"}]`).css('display', 'block');
+				$(`button.delete[timetableNo=${"${_timetableNo}"}]`).css('display', 'block');
+			}
+
+			function switchToInsert() {
+				$(`button.insert[timetableNo=${"${_timetableNo}"}]`).css('display', 'block');
+				$(`button.update[timetableNo=${"${_timetableNo}"}]`).css('display', 'none');
+				$(`button.delete[timetableNo=${"${_timetableNo}"}]`).css('display', 'none');
+			}
+
 		});
 
 	</script>
