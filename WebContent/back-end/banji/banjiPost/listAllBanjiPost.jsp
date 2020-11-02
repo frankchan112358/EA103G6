@@ -27,6 +27,7 @@
     position:absolute;
     top:65px;
 	right:120px;
+	 -webkit-box-shadow: 0 2px 6px 0 rgba(255,178, 15);
     }
     #add2{
     position:absolute;
@@ -99,7 +100,7 @@
 										<input type="hidden" name="action"value="getOne_For_Update"> <input type="hidden"name="banjiPostNo" value="${banjiPostVO.banjiPostNo}">
 									</form>
 									 <form method="post"action="<%=request.getContextPath()%>/banji/banji.banjipost"class="m-1">
-									<button  id="add2" type="submit" class="btn btn-sm btn-danger">
+									<button  id="add2" type="submit" class="btn1 btn-sm btn-danger">
 											<span class="fal fa-edit mr-1"></span> <span>刪除</span>
 										</button>
 										<input type="hidden" name="action"value="delete"> <input type="hidden"name="banjiPostNo" value="${banjiPostVO.banjiPostNo}">
@@ -126,6 +127,22 @@
     $(document).ready(function () {
             $("th").addClass("align-middle");
             $("td").addClass("align-middle");
+            
+            $(document).on('click', 'button.btn1', function (event) {
+                event.preventDefault();
+                let _this = $(this);
+                Swal.fire({
+                    title: "你確定要刪除嗎?",
+                    text: "如果刪除後，就無法復原了!",
+                    type: "warning",
+                    showCancelButton: true,
+                    cancelButtonText: "先不要",
+                    confirmButtonText: "我要刪除!"
+                }).then(function (result) {
+                    if (result.value)
+                        _this.parent()[0].submit();
+                });
+            });
             
         });
     </script>
