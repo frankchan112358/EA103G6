@@ -75,7 +75,7 @@
 				myForm.append(courseNavInput('hidden','action','getTTDisplayList'));
 				myForm.submit();
 			}
-<<<<<<< HEAD
+
 			if (courseWork == 'courseVideoAjax') {
 				e.preventDefault();
 				let myForm = document.createElement('form');
@@ -83,7 +83,9 @@
 				myForm.action = '<%=request.getContextPath()%>/course/courseTT.do';
 				myForm.method = 'POST';
 				myForm.append(courseNavInput('hidden','action','getTTDisplayListAjax'));
-=======
+				myForm.submit();
+			}
+
 			if (courseWork == 'teachingNote') {
 				e.preventDefault();
 				let myForm = document.createElement('form');
@@ -91,7 +93,6 @@
 				myForm.action = '<%=request.getContextPath()%>/teachingNote/teachingNote';
 				myForm.method = 'POST';
 				myForm.append(courseNavInput('hidden','action','getTNDisplayList'));
->>>>>>> refs/heads/Ivy_TeachingNote(back-end)&TeachingFile(front-end)
 				myForm.submit();
 			}
 			if (courseWork == 'teachingFile') {
