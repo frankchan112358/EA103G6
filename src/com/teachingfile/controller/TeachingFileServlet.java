@@ -219,8 +219,6 @@ public class TeachingFileServlet extends HttpServlet {
 				teachingFileVO.setTimetableNo(timetableNo);
 				teachingFileVO.setTeachingFileName(teachingFileName);
 				teachingFileVO.setTeachingFile(teachingFiles);
-				System.out.println("this is in TFS line 228");
-				System.out.println(teachingFileVO.getTeachingFile());
 				
 				TeachingFileService teachingFileSvc = new TeachingFileService();
 				teachingFileVO = teachingFileSvc.addTeachingFile(teachingFileVO.getTimetableNo(),
