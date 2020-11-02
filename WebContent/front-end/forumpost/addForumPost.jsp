@@ -182,10 +182,9 @@ border-radius: 5px;
             language:{url:'<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json'}
         });   
        
-        $('#democratNote').summernote();
         
         $('#democratNote').summernote({
-            height: 250,
+            height: 500,
             tabsize: 2,
             placeholder: "請輸入",
             dialogsFade: true,

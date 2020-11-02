@@ -61,53 +61,59 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 								</form>
 							</div>
 						</div>
-<%-- 											<%@ include file="page1_ByCompositeQuery.file"%> --%>
 						
-						<div class="row">
-							<div class="col-md-2" id="studentInfo">
-							
+						 <div class="card mb-g border shadow-0">
+                                    <div class="card-header p-0">
+                                        <div class="p-3 d-flex flex-row">
+                                            <div class="d-block flex-shrink-0">
+                                            </div>
+							<div class="d-block ml-2"<b>${forumPostVO.title}</b>>
 								<div><b>樓主</b></div>
-							<hr>
+								
                             <c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumPostVO.studentNo).userNo).photo eq null}">
                            <img src="<%=request.getContextPath() %>/images/noPicture.png" style="width: 100px; height: 100px;">
                           </c:if>
                           <c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumPostVO.studentNo).userNo).photo ne null}">
                           <img src="<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${studentSvc.getOneStudent(forumPostVO.studentNo).userNo}" style="width: 100px; height: 100px;">
                          </c:if>							
-							
-							
-							
+
 							<div class="col-md-12" id="AstudentName"><b>${studentSvc.getOneStudent(forumPostVO.studentNo).studentName}</b></div>
 							</div>
 							
+							 <div class="card-header p-0">
+                                        <div class="p-10 d-flex flex-row" style="font-size:30px;text-align:center;">
+                                            <div class="d-block flex-shrink-1">
+                                            <i class="fas fa-star mr-1" style="text-align:center;">標題：</i>
+                                            <span> ${forumPostVO.title}</span>
+                                            <div class="card-body ">
+                                        <span>
+                                        ${forumPostVO.content}</span>
+                                    	</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+							
 
 							
-							<div class="col-md-10">
-									<div class="row">
-										<div class="col-md-8" style="font-size:35px;text-align:center;"><b>${forumPostVO.title}</b></div>
-										<div class="col-md-4">
-										
-										
-										
 
-
-
-											</div>
-										</div>
-									</div>
-									<div class="clear"></div>
 									
-									<hr>
-									<div class="row">
-										<div class="col-md-12" style="text-align:center;">${forumPostVO.content}</div>
-									</div>
+
+
 							</div>
 						</div>
 						
-						<hr>
+						
+						
+						
 						<c:forEach var="forumCommentVO" items="${list}" varStatus="tag">
-								<div class="row">
-									<div class="col-md-2" id="studentInfo">
+								 <div class="card mb-g border shadow-0">
+                                    <div class="card-header p-0">
+                                        <div class="p-3 d-flex flex-row">
+                                            <div class="d-block flex-shrink-0">
+                                            </div>
+                                            							<div class="d-block ml-2"<b>${forumPostVO.title}</b>>
+                                            
 										<div id="reply"><b>${tag.index}樓</b></div>
                            <c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumCommentVO.studentNo).userNo).photo eq null}">
                           <img src="<%=request.getContextPath() %>/images/noPicture.png" style="width: 100px; height: 100px;">
@@ -118,6 +124,7 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 							
 							<div class="col-md-12" id="studentName${tag.index}"><b>${studentSvc.getOneStudent(forumCommentVO.studentNo).studentName}</b></div>
 									</div>
+									
 									<div class="col-md-10">
 										<div class="container">
 											<div class="row" id="content">
@@ -126,6 +133,12 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 										</div>
 									</div>
 								</div>
+								
+								<div class="card-footer">
+                                        <div class="d-flex align-items-center">
+                                         <span class="text-sm text-muted font-italic"><i class="fal fa-clock mr-1"></i><span>回覆時間:</span><fmt:formatDate value="${forumCommentVO.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
+                                        </div>
+                                    </div>
 								
 								
 								<form method="post" action="<%=request.getContextPath() %>/front-end/report/report.do">
@@ -141,14 +154,16 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 
 
 								<div class="clear"></div>
-								<hr>
+								
+								</div>
+								</div>
 						</c:forEach>
-<%-- 												<%@ include file="page2_ByCompositeQuery.file"%> --%>
 						
 					</div>
 				</div>
 			</div>
-		
+		</div>
+		</div>
 	</section>
 	
 	
