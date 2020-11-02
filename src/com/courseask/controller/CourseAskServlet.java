@@ -226,8 +226,8 @@ public class CourseAskServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-
-				String courseNo = req.getParameter("courseNo");
+				HttpSession session = req.getSession();
+				String courseNo = (String)session.getAttribute("courseNo");
 
 				String studentNo = req.getParameter("studentNo");
 
@@ -248,13 +248,9 @@ public class CourseAskServlet extends HttpServlet {
 
 				CourseAskVO courseAskVO = new CourseAskVO();
 				courseAskVO.setCourseNo(courseNo);
-			
 				courseAskVO.setStudentNo(studentNo);
-			
 				courseAskVO.setTitle(title);
-				
 				courseAskVO.setQuestion(question);
-			
 				courseAskVO.setUpdateTime(updateTime);
 		
 				
@@ -269,9 +265,12 @@ public class CourseAskServlet extends HttpServlet {
 				CourseAskService courseAskSvc = new CourseAskService();
 				courseAskVO = courseAskSvc.addCourseAsk(courseNo, studentNo, title, question, updateTime);
 
-				String url = "/front-end/courseAsk/NewFile.jsp";
+				List<CourseAskVO> courseAskList = new CourseAskService().getAllWithCourseNo(courseNo);
+				req.setAttribute("courseAskList", courseAskList);
+				String url = "/front-end/courseAsk/listCourseAskWithCourseNo.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
+				return;
 
 			} catch (Exception e) {
 				errorMsgs.add("資料新增失敗" + e.getMessage());
