@@ -72,7 +72,8 @@
 				e.preventDefault();
 				let myForm = document.createElement('form');
 				document.body.appendChild(myForm);
-				myForm.action = '<%=request.getContextPath()%>/front-end/courseAsk/courseAsk.jsp';
+				myForm.action = '<%=request.getContextPath()%>/courseAsk/courseAsk.do';
+				myForm.append(courseNavInput('hidden','action','listCourseAskWithCourseNo'));
 				myForm.method = 'POST';
 				myForm.submit();
 			}

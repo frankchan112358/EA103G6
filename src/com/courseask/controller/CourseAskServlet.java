@@ -9,9 +9,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.courseask.model.CourseAskService;
 import com.courseask.model.CourseAskVO;
+import com.coursepost.model.CoursePostService;
+import com.coursepost.model.CoursePostVO;
 import com.reply.model.ReplyService;
 import com.reply.model.ReplyVO;
 
@@ -28,6 +31,22 @@ public class CourseAskServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
+		if ("listCourseAskWithCourseNo".equals(action)) {
+			try {
+				HttpSession session = req.getSession();
+				String courseNo = (String)session.getAttribute("courseNo");
+				List<CourseAskVO> courseAskList = new CourseAskService().getAllWithCourseNo(courseNo);
+				req.setAttribute("courseAskList", courseAskList);
+				session.setAttribute("courseWork", "courseAsk");
+				String url = "/front-end/courseAsk/listCourseAskWithCourseNo.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				return;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		if ("getOne_For_Display".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();

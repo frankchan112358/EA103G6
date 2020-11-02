@@ -1,5 +1,7 @@
 package com.courseask.model;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class CourseAskService {
@@ -53,5 +55,14 @@ public class CourseAskService {
 
 	public List<CourseAskVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public List<CourseAskVO> getAllWithCourseNo(String courseNo) {
+		List<CourseAskVO> list = new ArrayList<CourseAskVO>();
+		for (CourseAskVO courseAskVO : getAll()) {
+			if (courseNo.equals(courseAskVO.getCourseNo())) 
+				list.add(courseAskVO);
+		}
+		return list;
 	}
 }
