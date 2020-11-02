@@ -219,8 +219,6 @@ public class ReplyServlet extends HttpServlet {
 		if ("insert".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			HttpSession session = req.getSession();
-//			if (session.getAttribute("reply") != null) {
 				try {
 
 					String courseAskNo = req.getParameter("courseAskNo");
@@ -260,7 +258,6 @@ public class ReplyServlet extends HttpServlet {
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/reply/addReply.jsp");
 					failureView.forward(req, res);
 				}
-//				session.removeAttribute("reply");
 //			} else {
 //				String url = "/front-end/courseAsk/courseAsk.jsp";
 //				RequestDispatcher successView = req.getRequestDispatcher(url);

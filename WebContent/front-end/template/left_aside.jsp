@@ -42,12 +42,6 @@
                     <span class="nav-link-text">請假申請</span>
                 </a>
             </li>
-             <li>
-                <a href="<%=request.getContextPath() %>/front-end/courseAsk/NewFile.jsp" title="課程提問">
-                    <i class="fal fa-file-edit"></i>
-                    <span class="nav-link-text">課程提問</span>
-                </a>
-            </li>
             <li>
                 <a href="<%=request.getContextPath() %>/front-end/evaluation/selectEvaluation.jsp" title="教學評鑑">
                     <i class="fal fa-clipboard-check"></i>

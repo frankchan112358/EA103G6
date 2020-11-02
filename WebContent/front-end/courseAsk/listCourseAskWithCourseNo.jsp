@@ -45,8 +45,11 @@ color:#336666;
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a
-                               href="<%=request.getContextPath()%>/front-end/index/index.jpg">前台首頁</a></li>
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">課程提問</a></li>
+                               href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a></li>
+                        <li class="breadcrumb-item">
+							<a href="<%=request.getContextPath()%>/front-end/course/selectCourse.jsp">我的課程</a>
+						</li>
+						      <li class="breadcrumb-item">問題討論</li>
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
@@ -95,7 +98,7 @@ color:#336666;
                                                 <div class="card-body">
                                                     <p class="card-text" style="padding-left: 30px">${courseAskVO.question}</p>
                                                     <c:set var="replySize" value="${fn:length(replySvc.getAllWithCouseAskNo(courseAskVO.courseAskNo))}"></c:set>
-                                                    <div id="num" style="float:right; position: relative;right:5px;padding-top: 5px;padding-right: 30px;text-align:center;">${replySize}<div style="font-size:15px;">回覆</div>
+                                                    <div id="num" style="float:right;padding-right: 30px;text-align:center;">${replySize}<div style="font-size:15px;">回覆</div>
                                                     </div>
                                                     <div align="center">
                                                         <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/courseAsk/courseAsk.do" class="m-1">
