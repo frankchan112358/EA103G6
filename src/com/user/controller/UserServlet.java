@@ -1,5 +1,7 @@
 package com.user.controller;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -29,6 +31,7 @@ import com.student.model.StudentService;
 import com.student.model.StudentVO;
 import com.teacher.model.TeacherService;
 import com.teacher.model.TeacherVO;
+import com.user.image.ImageUtil;
 import com.user.model.UserRedisDAO;
 import com.user.model.UserRedisMisVO;
 import com.user.model.UserRedisVO;
@@ -57,7 +60,8 @@ public class UserServlet extends HttpServlet {
 
 			ServletOutputStream out = res.getOutputStream();
 			res.setContentType("image/gif");
-
+			
+			/***************此為原本直接輸出code********************/
 			byte[] buf = new byte[4 * 1024];
 			int len = 0;
 
@@ -66,6 +70,25 @@ public class UserServlet extends HttpServlet {
 			}
 			out.flush();
 			in.close();
+			/***************上述為原本直接輸出code********************/
+			
+//			BufferedInputStream bis = new BufferedInputStream(in);
+//			byte[] buf = new byte[4 * 1024];
+//			int len = 0;
+//			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//	        while((len = bis.read(buf))!=-1){
+//	            bos.write(buf, 0, len);
+//	        }
+//	        bis.close();
+//	        bos.close();
+//	        
+//	        byte[] picByte=bos.toByteArray();
+//	        
+//	        picByte=ImageUtil.shrink(picByte, 100);
+//	        out.write(picByte);
+//	        out.flush();
+//	        out.close();
+	        
 		}
 
 		if ("getOne_For_Display".equals(action)) {
