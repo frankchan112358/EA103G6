@@ -24,11 +24,20 @@
 <link rel="stylesheet" media="screen, print"
       href="<%=request.getContextPath()%>/SmartAdmin4/css/formplugins/summernote/summernote.css">
 <style>
-#num{
-font-size:30px;
-color:#336666;
-}
+    .num {
+        font-size: 30px !important;
+        color: #336666 !important;
+        padding-right: 30px !important;
+        text-align: center !important;
+        position: absolute !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        padding-bottom: 16px !important;
+    }
 
+    .ask-title {
+        display: inline-flex !important;
+    }
 </style>
 </head>
 
@@ -47,9 +56,9 @@ color:#336666;
                         <li class="breadcrumb-item"><a
                                href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a></li>
                         <li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/front-end/course/selectCourse.jsp">我的課程</a>
-						</li>
-						      <li class="breadcrumb-item">問題討論</li>
+                            <a href="<%=request.getContextPath()%>/front-end/course/selectCourse.jsp">我的課程</a>
+                        </li>
+                        <li class="breadcrumb-item">問題討論</li>
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
@@ -60,7 +69,7 @@ color:#336666;
                     <div class="row align-items-center justify-content-center">
                         <div class="col-11">
                             <jsp:include page="/front-end/course/courseDetail.jsp"></jsp:include>
-                            <div id="panel-2" class="panel">
+                            <div id="panel-1" class="panel">
                                 <div class="panel-hdr bg-primary-800 bg-success-gradient ">
                                     <h2 class="text-white">課程提問總覽</h2>
                                 </div>
@@ -75,48 +84,38 @@ color:#336666;
                                         </c:if>
                                     </div>
                                     <div>
-                                        <button type="button" id="btn-add"
-                                                class="btn-write btn btn-sm btn-primary" data-toggle="modal"
-                                                data-target="#editorEvaluation">
+                                        <button type="button" id="btn-add" class="btn-write btn btn-sm btn-primary">
                                             <strong>我要問問題</strong>
                                         </button>
                                     </div><br>
                                     <div class="accordion accordion-outline" id="courseAsk">
                                         <c:forEach var="courseAskVO" items="${courseAskList}">
-                                            <div class="card">
+                                            <div class="card" data-toggle="collapse" data-target="#courseAsk${courseAskVO.courseAskNo}" aria-expanded="false">
                                                 <div class="card-header">
-                                                    <a href="javascript:void(0);" class="card-title collapsed" data-toggle="collapse" data-target="#courseAsk${courseAskVO.courseAskNo}" aria-expanded="false">
+                                                    <div class="ask-title card-title collapsed">
                                                         <i class="fal fa-books mr-3 fa-2x"></i>
                                                         <span>
                                                             ${courseAskVO.title }
                                                             <br><span>發問者:</span>${studentSvc.getOneStudent(courseAskVO.getStudentNo()).studentName}
+                                                            <br><span>發問時間:</span>
+                                                            <fmt:formatDate value="${courseAskVO.updateTime}" pattern="yyyy-MM-dd HH:mm" />
                                                         </span>
-                                                    </a>
+                                                    </div>
+                                                    <c:set var="replySize" value="${fn:length(replySvc.getAllWithCouseAskNo(courseAskVO.courseAskNo))}"></c:set>
+                                                    <div class="num">
+                                                        ${replySize}
+                                                        <div style="font-size:15px;">回覆</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div id="courseAsk${courseAskVO.courseAskNo}" class="collapse" data-parent="#courseAsk">
                                                 <div class="card-body">
-                                                    <p class="card-text" style="padding-left: 30px">${courseAskVO.question}</p>
-                                                    <c:set var="replySize" value="${fn:length(replySvc.getAllWithCouseAskNo(courseAskVO.courseAskNo))}"></c:set>
-                                                    <div id="num" style="float:right;padding-right: 30px;text-align:center;">${replySize}<div style="font-size:15px;">回覆</div>
-                                                    </div>
-                                                    <div align="center">
-                                                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/courseAsk/courseAsk.do" class="m-1">
-                                                            <input type="hidden" name="replyNo" value="${replyVO.replyNo}">
-                                                            <input type="hidden" name="studentNo" value="${studentVO.studentNo}" />
-                                                            <input type="hidden" name="courseAskNo" value="${courseAskVO.courseAskNo}" />
-                                                            <input type="hidden" name="teacherNo" value="${teacherVO.teacherNo}" />
-                                                            <input type="hidden" name="action" value="insert1">
-                                                            <button type="submit" class="btn-write btn btn-sm btn-primary">
-                                                                <strong>我要回覆</strong>
-                                                            </button>
-                                                        </FORM>
+                                                    <div class="card-text fs-xxl" style="padding-left: 30px">${courseAskVO.question}</div>
+                                                    <div class="m-5 d-flex">
+                                                        <div courseAskNo="${courseAskVO.courseAskNo}" class="replyAll"></div>
+                                                        <button type="button" class="reply mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">回覆</button>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <span class="text-sm text-muted font-italic" style="padding-left: 30px ;padding-bottom: 10px;"><i class="fal fa-clock mr-1"></i><span>發問時間:</span>
-                                                    <fmt:formatDate value="${courseAskVO.updateTime}" pattern="yyyy-MM-dd HH:mm" /></span>
                                             </div>
                                         </c:forEach>
                                     </div>
@@ -128,39 +127,46 @@ color:#336666;
             </div>
         </div>
     </div>
-    <main id="js-page-content" role="main" class="page-content">
-        <div class="modal fade" id="editorEvaluation" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">新增問題</h4>
-                    </div>
-                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/courseAsk/courseAsk.do" name="form1" class="needs-validation" novalidate>
-                        <input id="add" placeholder="輸入您的問題" name="title" style="color: black; width: 95%; height: 50px; margin: 20px ;"
-                               value="${courseAskVO.title }" required>
-                        <div class="invalid-feedback">
-                            請勿空白.
-                        </div>
-                        <div class="modal-footer">
-                            <div id="panel-2" class="panel">
-                                <div class="panel-container show">
-                                    <div class="panel-content">
-                                        <textarea class="js-summernote" id="democratNote" name="question" required></textarea>
-                                        <div class="invalid-feedback">
-                                            請勿空白.
-                                        </div>
-                                        <button id="sendNote" type="submit" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">送出</button>
-                                        <input type="hidden" name="studentNo" value="${studentVO.studentNo}" />
-                                        <input type="hidden" name="action" value="insert">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </FORM>
+    <div class="modal fade" id="courseAskModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">新增問題</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="<%=request.getContextPath()%>/courseAsk/courseAsk.do" class="needs-validation" novalidate>
+                        <input id="add" placeholder="輸入您的問題" name="title" style="color: black; width: 95%; height: 50px; margin: 20px ;" value="${courseAskVO.title }" required>
+                        <div class="invalid-feedback">請勿空白</div>
+                        <textarea class="js-summernote" id="democratNote" name="question" required></textarea>
+                        <div class="invalid-feedback">請勿空白</div>
+                        <input type="hidden" name="studentNo" value="${studentVO.studentNo}" />
+                        <input type="hidden" name="action" value="insert">
+                        <button id="sendNote" type="submit" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">送出</button>
+                    </form>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+    <div class="modal fade" id="replyModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">回覆問題</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="<%=request.getContextPath()%>/reply/reply.do" class="needs-validation" novalidate>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
     <%@ include file="/front-end/template/footer.jsp"%>
     <%@ include file="/front-end/template/quick_menu.jsp"%>
@@ -168,38 +174,21 @@ color:#336666;
     <%@ include file="/front-end/template/basic_js.jsp"%>
     <script src="<%=request.getContextPath() %>/SmartAdmin4/js/formplugins/summernote/summernote.js"></script>
     <script>
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (function () {
-            'use strict';
-            window.addEventListener('load', function () {
-                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                var forms = document.getElementsByClassName('needs-validation');
-                // Loop over them and prevent submission
-                var validation = Array.prototype.filter.call(forms, function (form) {
-                    form.addEventListener('submit', function (event) {
-                        if (form.checkValidity() === false) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                        form.classList.add('was-validated');
-                    }, false);
-                });
-            }, false);
-        })();
-    </script>
-
-    <script>
-
         $(document).ready(function () {
-            $('#tableEvaluation').dataTable({
-                responsive: true,
-                language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' }
+
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
             });
 
-            $('#democratNote').summernote();
-
             $('#democratNote').summernote({
-                height: 250,
+                height: 300,
                 tabsize: 2,
                 placeholder: "請輸入",
                 dialogsFade: true,
@@ -216,34 +205,17 @@ color:#336666;
                     ['insert', ['link', 'picture', 'video']],
                     ['view', ['fullscreen', 'codeview', 'help']]
                 ],
-                callbacks: {
-                    onInit: function (e) {
-                        $.ajax({
-                            url: '<%=request.getContextPath() %>/Summernote',
-                            type: 'get',
-                            success(res) {
-                                $('#democratNote').summernote('code', res);
-                            }
-                        });
-                    },
-                    onChange: function (contents, $editable) { }
-                }
+                callbacks: {}
             });
 
-            $('#sendNote').click(function () {
-                let form = new FormData();
-                form.append("democratNote", $('#democratNote').summernote('code'));
-                $.ajax({
-                    url: '<%=request.getContextPath() %>/Summernote',
-                    type: 'post',
-                    processData: false,
-                    contentType: false,
-                    data: form,
-                    success(res) {
-                        console.log(res);
-                    }
-                });
+            $('#btn-add').click(function () {
+                $('#courseAskModal').modal('show');
             });
+
+            $(document).on('click', 'button.reply', function () {
+                $('#replyModal').modal('show');
+            });
+
         });
 
     </script>
