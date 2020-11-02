@@ -111,7 +111,7 @@
 																<span class="score">${finalScoreSvc.getScore(courseNo, studentVO.studentNo)}</span>
 															</c:if>
 															<c:if test="${finalScoreSvc.getScore(courseNo, studentVO.studentNo)==null}">
-																<input studentNo="${studentVO.studentNo}" class="score" type="number" value="" oldValue="" disabled style="width:4em;text-align:center">
+																<input studentNo="${studentVO.studentNo}" class="score" type="number" value="" oldValue=""  style="width:4em;text-align:center">
 																<span class="score">尚未評分</span>
 															</c:if>
 														</td>
@@ -141,7 +141,6 @@
 	<%@ include file="/back-end/template/basic_js.jsp" %>
 	<script>
 
-
 		$(document).ready(function () {
 			$('input.score').hide();
 			$('span.score').show();
@@ -170,17 +169,24 @@
 				$('span.score').hide();
 			});
 
-			//TO DO 取消編輯，並切換到檢視模式
+			//TO DO 取消編輯，並切換到檢視模式 (按鈕顯示/隱藏/input消失/值還原)
 			$('button.cancel').click(function () {
 				//1.顯示按鈕
-
+				$('button.edit').show();
 				//2.隱藏按鈕
-
+				$('button.submit').hide();
+				$('button.cancel').hide();
 				//3.還原input的value，提示input的attr有偷存oldValue
-
+				let scorelist = $('input.score');
+				for (let i=0; i < scorelist.length; i++){
+					let scoreinput=scorelist[i];
+					let oldvalue = scoreinput.getAttribute('oldvalue');
+					scoreinput.value = oldvalue;
+				}
 				//4.隱藏input
-
+				$('input.score').hide();
 				//5.顯示span
+				$('span.score').show();
 			});
 
 			//送出成績資料
@@ -201,8 +207,8 @@
 
 				//利用ajax的方式送到後台
 				$.ajax({
-					beforeSend() {
-						//再送出之前，可以做一些處理，but不能取消送出!!
+					beforeSend:function() {
+					//再送出之前，可以做一些處理，but不能取消送出!!
 					},
 					type: 'POST',
 					url: '<%=request.getContextPath()%>/finalScore/finalScore.ajax',
@@ -210,21 +216,32 @@
 						action: 'update',
 						scoreList: JSON.stringify(scoreList)
 					},
-					success(res) {
+					success:function(res) {
 						//servlet的res會在這邊處理
 						if (res == "ok") {
 							//TO DO 如果成功，請切換回檢視模式
 							//1.顯示按鈕
-
+							$('button.edit').show();
 							//2.隱藏按鈕
-
-							//3.更新input的oldValue，提示oldValue = value
-
-							//4.更新span的text
+							$('button.submit').hide();
+							$('button.cancel').hide();
+							
+							
+							let scorelist = $('input.score');
+							let spanlist = $('span.score');
+							for (let i=0; i < scorelist.length; i++){
+								//3.更新input的oldValue，提示oldValue = value
+								let scoreinput=scorelist[i];
+								scoreinput.setAttribute('oldvalue', scoreinput.value);
+								//4.更新span的text
+								let spanscore = spanlist[i];
+								spanscore.innerHTML = scoreinput.value;
+							}
 
 							//5.隱藏input
-
+							$('input.score').hide();
 							//6.顯示span
+							$('span.score').show();
 
 							alert('成績上傳成功');
 						} else {
@@ -233,7 +250,7 @@
 							//Future 可以提示使用者，你哪個成績是失敗的
 						}
 					},
-					error(err) {
+					error:function(err) {
 						console.log(err);
 						alert('成績上傳失敗');
 					},
