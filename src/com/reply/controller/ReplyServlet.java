@@ -217,6 +217,7 @@ public class ReplyServlet extends HttpServlet {
 		}
 
 		if ("insert".equals(action)) {
+			res.setCharacterEncoding("UTF-8");
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 				try {
@@ -244,7 +245,6 @@ public class ReplyServlet extends HttpServlet {
 					replyVO = replySvc.addReply(courseAskNo, teacherNo, studentNo, replyContent, updateTime);
 
 					PrintWriter out = res.getWriter();
-	                res.setCharacterEncoding("UTF-8");
 	                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 	                System.out.println(gson.toJson(replyVO).toString());
 	                out.print(gson.toJson(replyVO).toString());

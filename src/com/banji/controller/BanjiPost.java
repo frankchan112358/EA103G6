@@ -1,6 +1,7 @@
 package com.banji.controller;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,12 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
+
 import com.banji.model.BanjiService;
 import com.banji.model.BanjiVO;
 import com.banjipost.model.BanjiPostService;
 import com.banjipost.model.BanjiPostVO;
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
+import com.student.model.StudentService;
+import com.student.model.StudentVO;
 import com.user.model.UserVO;
 import com.websocketnotify.controller.NotifyServlet;
 
@@ -198,7 +203,13 @@ public class BanjiPost extends HttpServlet {
 				BanjiPostService banjiPostSvc = new BanjiPostService();
 				banjiPostVO = banjiPostSvc.addBanjiPost(banjiNo, title, banjiPostContent, updateTime, status);
 				
-				
+				StudentService studentService=new StudentService();
+				List<StudentVO> stulList= studentService.getAllWithBanji(banjiNo);
+				for(StudentVO stuVO:stulList) {
+					NotifyServlet notifyServlet =new NotifyServlet();
+					notifyServlet.broadcast(stuVO.getUserNo(), "班級公告", "你有一則班級公告!!");
+					
+				}
 				req.setAttribute("list", new BanjiPostService().getAllWhitBanjiNo(banjiNo));
 				req.setAttribute("banjiVO", banjiVO);
 				String url = "/back-end/banji/banjiPost/listAllBanjiPost.jsp";
