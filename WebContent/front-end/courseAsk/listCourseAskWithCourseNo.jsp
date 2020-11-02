@@ -65,6 +65,13 @@ color:#336666;
                                     <h2 class="text-white">課程提問總覽</h2>
                                 </div>
                                 <div class="panel-container show" style="margin: 20px 20px;">
+                                    <div>
+                                        <button type="button" id="btn-add"
+                                                class="btn-write btn btn-sm btn-primary" data-toggle="modal"
+                                                data-target="#editorEvaluation">
+                                            <strong>我要問問題</strong>
+                                        </button>
+                                    </div><br>
                                     <div style="text-align: center;">
                                         <c:if test="${empty courseAskList}">
                                             <h2>
@@ -74,13 +81,6 @@ color:#336666;
                                             </h2>
                                         </c:if>
                                     </div>
-                                    <div>
-                                        <button type="button" id="btn-add"
-                                                class="btn-write btn btn-sm btn-primary" data-toggle="modal"
-                                                data-target="#editorEvaluation">
-                                            <strong>我要問問題</strong>
-                                        </button>
-                                    </div><br>
                                     <div class="accordion accordion-outline" id="courseAsk">
                                         <c:forEach var="courseAskVO" items="${courseAskList}">
                                             <div class="card">
@@ -136,10 +136,12 @@ color:#336666;
                         <h4 class="modal-title">新增問題</h4>
                     </div>
                     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/courseAsk/courseAsk.do" name="form1" class="needs-validation" novalidate>
+                       <div class="col mb-2">
                         <input id="add" placeholder="輸入您的問題" name="title" style="color: black; width: 95%; height: 50px; margin: 20px ;"
                                value="${courseAskVO.title }" required>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback" style=" margin-left: 20px ;">
                             請勿空白.
+                        </div>
                         </div>
                         <div class="modal-footer">
                             <div id="panel-2" class="panel">

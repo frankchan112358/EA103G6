@@ -76,7 +76,7 @@
 								</div>
                                <div class="panel-container show" style="margin: 20px 20px;">
                                     <div style="text-align: center;">
-                                        <c:if test="${empty courseAskList}">
+                                        <c:if test="${empty list}">
                                             <h2>
                                                 <i class="fal fa-calendar-times"></i>
                                                 目前尚無任何公告
@@ -89,7 +89,6 @@
                                         <!-- datatable start -->
                                         <c:forEach var="banjiPostVO" items="${list}">
                                        <div class="card mb-g border shadow-0">
-                                      
                                     <div class="card-header p-0">
                                         <div class="p-3 d-flex flex-row">
                                             <div class="d-block flex-shrink-1">
