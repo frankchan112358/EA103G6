@@ -114,4 +114,13 @@ public class UserService {
 		return userVO;
 		
 	}
+	
+	public UserVO update_Password_backEnd(String userNo,String password) {
+		
+		UserVO userVO = new UserVO();
+		userVO.setUserNo(userNo);;
+		userVO.setPassword(password);
+		dao.update_Password_backEnd(userVO);
+		return userVO;
+	}
 }
