@@ -12,7 +12,6 @@
 
 <%
 	String courseNo =  (String) request.getSession().getAttribute("courseNo");
-	System.out.println("video - courseNo: " + courseNo);
 
 	List<CourseVO> courseList = courseSvc.getAll();
 	CourseVO courseVO = courseSvc.getOneCourse(courseNo);
@@ -152,7 +151,7 @@
 																		<div class="in-sb-log">
 																			<div class="log">
 																				<button timeteableNo="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).timetableVO.timetableNo}" type="button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size: small;">
-																					教學日誌
+																					教學筆記
 																				</button>
 																			</div>
 																		</div>
@@ -171,8 +170,8 @@
 																		<c:if test="${timetableVO.timetablePeriod=='2'}">晚上</c:if><br>
 																		<div class="in-sb-log">
 																			<div class="log">
-																				<button " type=" button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size: small;">
-																					教學日誌
+																				<button  type=" button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size: small;">
+																					教學筆記
 																				</button>
 																			</div>
 																		</div>
