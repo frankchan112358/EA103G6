@@ -8,9 +8,6 @@
 
 
 <%
-	@SuppressWarnings("unchecked")
-	List<CoursePostVO> list = (List<CoursePostVO>) session.getAttribute("coursePostVO");
-	pageContext.setAttribute("list", list);
 %>
 
 
@@ -57,7 +54,7 @@
 								</div>
 								<div class="panel-container show" style="margin: 20px 20px;">
 									<div style="text-align: center;">
-										<c:if test="${empty list}">
+										<c:if test="${empty coursePostList}">
 											<h2>
 												<i class="fal fa-calendar-times"></i>
 												目前尚無任何課程公告
@@ -67,8 +64,8 @@
 										</c:if>
 									</div>
 									<div class="accordion accordion-outline" id="coursePost">
-										<c:forEach var="coursePostVO" items="${list}">
-											<c:if test="${!empty list}">
+										<c:forEach var="coursePostVO" items="${coursePostList}">
+											<c:if test="${!empty coursePostList}">
 												<div class="card">
 													<div class="card-header">
 														<a href="javascript:void(0);" class="card-title collapsed" data-toggle="collapse" data-target="#coursePost${coursePostVO.coursePostNo}" aria-expanded="false">

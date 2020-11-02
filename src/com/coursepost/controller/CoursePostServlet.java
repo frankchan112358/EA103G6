@@ -20,20 +20,13 @@ public class CoursePostServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		res.setCharacterEncoding("UTF-8");
-
 		String action = req.getParameter("action");
-
-		if ("listCoursePost_ByCourseNo".equals(action)) {
-
-			String courseNo = new String(req.getParameter("courseNo").trim());
-
-			CoursePostService coursePostSvc = new CoursePostService();
-			List<CoursePostVO> coursePostVO = coursePostSvc.getCoursePostByCourseNo(courseNo);
-
+		if ("listCoursePost_ByCourseNo".equals(action)||"studentSelectCourseAndForwardToCoursePost".equals(action)) {
 			HttpSession session = req.getSession();
-			session.setAttribute("coursePostVO", coursePostVO);
-			session.setAttribute("courseNo", courseNo);
-
+			String courseNo = (String)session.getAttribute("courseNo");
+			List<CoursePostVO> coursePostList = new CoursePostService().getCoursePostByCourseNo(courseNo);
+			req.setAttribute("coursePostList", coursePostList);
+			session.setAttribute("courseWork", "coursePost");
 			String url = "/front-end/course/coursePost.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);

@@ -38,7 +38,8 @@
 				e.preventDefault();
 				let myForm = document.createElement('form');
 				document.body.appendChild(myForm);
-				myForm.action = '<%=request.getContextPath()%>/front-end/course/coursePost.jsp';
+				myForm.action = '<%=request.getContextPath()%>/coursePost/coursePost.do';
+				myForm.append(courseNavInput('hidden','action','listCoursePost_ByCourseNo'));
 				myForm.method = 'POST';
 				myForm.submit();
 			}

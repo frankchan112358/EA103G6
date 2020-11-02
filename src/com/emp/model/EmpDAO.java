@@ -172,6 +172,7 @@ public class EmpDAO implements EmpDAO_interface{
 			}
 			
 		}catch (SQLException se) {
+			se.printStackTrace();
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
