@@ -34,9 +34,23 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
     font-size: 20px;
 }
 
+
 .table th, .table td {
     vertical-align: middle;
 }
+
+.table{
+width: 100%;
+height: 100%;
+table-layout: fixed;
+}
+
+.table_tit{
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
 
 
 </style>
@@ -92,27 +106,28 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 												<tr>
 													<th>週次</th>
 													<th>堂數</th>
-													<th width="60%">教學內容</th>
+													<th width="50%">教學內容</th>
 													<th width="20%">操作</th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach var="teachingPlanVO" items="${teachingPlanSvc.getTeachingPlanByCourseNo(courseNo)}">
-												<tr>
-														<td align="center" onclick="location.href='<%=request.getContextPath()%>/teachingPlan/teachingPlan.do?action=getOne_For_Display&teachingPlanNo=${teachingPlanVO.teachingPlanNo}';" style="cursor: pointer;">第${teachingPlanVO.week}週</td>
-														<td align="center" onclick="location.href='<%=request.getContextPath()%>/teachingPlan/teachingPlan.do?action=getOne_For_Display&teachingPlanNo=${teachingPlanVO.teachingPlanNo}';" style="cursor: pointer;">${teachingPlanVO.lesson}</td>
-														<td align="center" onclick="location.href='<%=request.getContextPath()%>/teachingPlan/teachingPlan.do?action=getOne_For_Display&teachingPlanNo=${teachingPlanVO.teachingPlanNo}';" style="cursor: pointer;">${teachingPlanVO.planContent}</td>
+												<tr style="cursor: pointer;" data-toggle="modal" data-target="#teachingPlanModal${teachingPlanVO.teachingPlanNo}">
+												
+														<td align="center">第${teachingPlanVO.week}週</td>
+														<td align="center">${teachingPlanVO.lesson}</td>
+														<td class="table_tit" align="center">${teachingPlanVO.planContent}</td>
 														
-														<td class="d-flex p-1 justify-content-center ">
-															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/teachingPlan/teachingPlan.do" style="margin-bottom: 0px;" class="m-1">
-																<button type="submit" class="btn btn-outline-primary btn-icon rounded-circle">
+														<td class="d-flex p-1 justify-content-center">
+															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/teachingPlan/teachingPlan.do" style="margin-bottom: 0px;" class="m-1"  style=" margin: auto;">
+																<button type="submit" class="btn btn-outline-primary btn-icon rounded-circle rowbtn">
 																<i class="fal fa-edit"></i>
 																</button>
 																<input type="hidden" name="teachingPlanNo" value="${teachingPlanVO.teachingPlanNo}">
 																<input type="hidden" name="action" value="getOne_For_Update">
 															</FORM>
-																<FORM id="deleteTeachingPlan" METHOD="post" ACTION="<%=request.getContextPath()%>/teachingPlan/teachingPlan.do" style="margin-bottom: 0px;" class="m-1">
-																<button id="submitDeleteTeachingPlan" type="submit" class="btn btn-outline-danger btn-icon rounded-circle">
+																<FORM id="${teachingPlanVO.teachingPlanNo}" METHOD="post" ACTION="<%=request.getContextPath()%>/teachingPlan/teachingPlan.do" style="margin-bottom: 0px;" class="m-1">
+																<button class="submitDeleteTeachingPlan btn btn-outline-danger btn-icon rounded-circle rowbtn" value="${teachingPlanVO.teachingPlanNo}">
                                                         		<i class="fal fa-times"></i>
 																</button>
 																<input type="hidden" name="teachingPlanNo" value="${teachingPlanVO.teachingPlanNo}">
@@ -122,9 +137,41 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 													</tr>
 												</c:forEach>
 											</tbody>
-
 										</table>
 										<!-- datatable end -->
+										<c:forEach var="teachingPlanVO" items="${teachingPlanSvc.getTeachingPlanByCourseNo(courseNo)}">
+										 <div class="modal fade" id="teachingPlanModal${teachingPlanVO.teachingPlanNo}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+														<div class="modal-content">
+                                                        <div class="modal-header">
+														<h4 class="modal-title" style="font-size:2em">教學計劃資料</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+ 															
+														<div class="form-group">
+															<label class="form-label" style="font-size:1.5em">週次</label>
+															<input type="text" name="week" class="form-control" style="font-size:15px" value="第${teachingPlanVO.week}週" readonly/>
+															</div>
+														<div class="form-group">
+															<label class="form-label" style="font-size:1.5em">堂數</label>
+															<input type="text" name="lesson" class="form-control" style="font-size:15px" value="${teachingPlanVO.week}" readonly/>
+														</div>		
+														<div class="form-group">
+															<label class="form-label" style="font-size:1.5em">教學內容</label>
+															<textarea class="form-control" name="planContent" rows="7" style="font-size:15px" readonly>${teachingPlanVO.planContent}</textarea>
+														</div>															
+                                                       
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </c:forEach>
 									</div>
 								</div>
 							</div>
@@ -146,6 +193,8 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 
 
 	<script src="<%=request.getContextPath()%>/SmartAdmin4/js/datagrid/datatables/datatables.bundle.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/table-dragger@1.0.3/dist/table-dragger.js"></script>
+	
 	<script>
     
      
@@ -161,8 +210,9 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 					}
 					});
                 
-        		$("#submitDeleteTeachingPlan").on("click", function(event) {
+        		$(".submitDeleteTeachingPlan").on("click", function(event) {
 					event.preventDefault();
+					var str = $(this).val();
 					var swalWithBootstrapButtons = Swal.mixin({
 						customClass : {
 							confirmButton : "btn btn-primary",
@@ -182,7 +232,7 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 						if (result.value) {
 							swalWithBootstrapButtons.fire("刪除請求送出", "請稍等跳轉頁面", "success");
 							setTimeout(function() {
-								$('#deleteTeachingPlan').submit();
+								$("[id='"+str+"']").submit();
 							}, 1000);
 						} else if (
 						// Read more about handling dismissals
@@ -190,10 +240,10 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 							swalWithBootstrapButtons.fire("刪除請求取消", "刪除教學計劃請再三確認", "error");
 						}
 					});
-					event.stopPropagation();
 				}); // A message with a custom image and CSS animation disabled		
-
-                
+				$('.rowbtn').on('click', function(e){
+					e.stopPropagation();
+				});
 			});
 	</script>
 </body>

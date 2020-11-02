@@ -45,6 +45,22 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
     color: #666666;
 }
 
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.table{
+width: 100%;
+height: 100%;
+table-layout: fixed;
+}
+
+.table_tit{
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
 </style>
 </head>
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
@@ -85,13 +101,13 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 											<tr>
 												<th>週次</th>
 												<th>堂數</th>
-												<th>教學內容</th>
+												<th width="80%">教學內容</th>
 											</tr>
 										</thead>
 										<tbody>
 											<c:forEach var="teachingPlanVO" items="${list}">
 												<c:if test="${!empty list}">
-													<tr>
+												<tr style="cursor: pointer;" data-toggle="modal" data-target="#teachingPlanModal${teachingPlanVO.teachingPlanNo}">
 														<td align="center">第${teachingPlanVO.week}週</td>
 														<td align="center">${teachingPlanVO.lesson}</td>
 														<td align="center">${teachingPlanVO.planContent}</td>
@@ -100,6 +116,39 @@ table.dataTable tr.dtrg-group.dtrg-level-0 td {
 											</c:forEach>
 										</tbody>
 									</table>
+									<c:forEach var="teachingPlanVO" items="${list}">
+										 <div class="modal fade" id="teachingPlanModal${teachingPlanVO.teachingPlanNo}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+														<div class="modal-content">
+                                                        <div class="modal-header">
+														<h4 class="modal-title" style="font-size:2em">教學計劃資料</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+ 															
+														<div class="form-group">
+															<label class="form-label" style="font-size:1.5em">週次</label>
+															<input type="text" name="week" class="form-control" style="font-size:15px" value="第${teachingPlanVO.week}週" readonly/>
+															</div>
+														<div class="form-group">
+															<label class="form-label" style="font-size:1.5em">堂數</label>
+															<input type="text" name="lesson" class="form-control" style="font-size:15px" value="${teachingPlanVO.week}" readonly/>
+														</div>		
+														<div class="form-group">
+															<label class="form-label" style="font-size:1.5em">教學內容</label>
+															<textarea class="form-control" name="planContent" rows="7" style="font-size:15px" readonly>${teachingPlanVO.planContent}</textarea>
+														</div>															
+                                                       
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                       </c:forEach>
 								</div>
 							</div>
 						</div>

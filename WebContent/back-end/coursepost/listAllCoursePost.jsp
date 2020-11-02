@@ -37,6 +37,18 @@ font-size: 15px;
 	text-align: center;
 }
 
+.table{
+width: 100%;
+height: 100%;
+table-layout: fixed;
+}
+
+.table_tit{
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
 
 </style>
 
@@ -83,27 +95,27 @@ font-size: 15px;
 												<span>新增</span>
 											</button>
 											<input type="hidden" name="coursePostNo" value="${coursePostVO.coursePostNo}">
-											<input type="hidden" name="action" value="new">
 										</FORM>
 										<!-- datatable start -->
 										<table id="coursePostTable" class="table table-bordered table-hover table-striped w-100">
 										
 											<thead style="background-color: #E5F4FF;">
 												<tr>
-													<th>公告編號</th>
-													<th width="50%">公告標題</th>
+													<th width="10%">公告編號</th>
+													<th width="20%">公告標題</th>
+													<th width="30%">公告內容</th>
 													<th width="20%">公告時間</th>
 													<th width="20%">操作</th>
 												</tr>
 											</thead>
 											<tbody>
 											<c:forEach var="coursePostVO" items="${coursePostSvc.getCoursePostByCourseNo(courseNo)}">
-												<tr data-toggle="modal" data-target="#coursePostModal${coursePostVO.coursePostNo}">
-<!-- 												<tr > -->
+												<tr style="cursor: pointer;" data-toggle="modal" data-target="#coursePostModal${coursePostVO.coursePostNo}">
 														
-														<td>${coursePostVO.coursePostNo}</td>
-														<td>${coursePostVO.title}</td>
-														<td >
+														<td align="center">${coursePostVO.coursePostNo}</td>
+														<td class="table_tit" align="center">${coursePostVO.title}</td>
+														<td class="table_tit" align="center">${coursePostVO.postContent}</td>
+														<td align="center">
 															<fmt:formatDate value="${coursePostVO.updateTime}" pattern="yyyy年MM月dd日 HH'點'mm'分'" />
 														</td>
 														<td class="d-flex p-1 justify-content-center">
@@ -114,9 +126,10 @@ font-size: 15px;
 																<input type="hidden" name="coursePostNo" value="${coursePostVO.coursePostNo}">
 																<input type="hidden" name="action" value="getOne_For_Update">
 															</FORM>
-																<FORM id="deleteCoursePost" METHOD="post" ACTION="<%=request.getContextPath()%>/coursePost/coursePost.do" style="margin-bottom: 0px;" class="m-1">
-																<button class="submitDeleteCoursePost btn btn-outline-danger btn-icon rounded-circle rowbtn">
+																<FORM id="${coursePostVO.coursePostNo}" METHOD="post" ACTION="<%=request.getContextPath()%>/coursePost/coursePost.do" style="margin-bottom: 0px;" class="m-1">
+																<button class="submitDeleteCoursePost btn btn-outline-danger btn-icon rounded-circle rowbtn" value="${coursePostVO.coursePostNo}"> 
                                                         		<i class="fal fa-times"></i>
+                                                        		
 																</button>
 																<input type="hidden" name="coursePostNo" value="${coursePostVO.coursePostNo}">
 																<input type="hidden" name="action" value="delete">
@@ -140,28 +153,22 @@ font-size: 15px;
                                                         </div>
                                                         <div class="modal-body">
  															
-<!--  															<table id="teachingPlanTable" class="table table-bordered table-hover table-striped w-100"> -->
 														<div class="form-group">
 															<label class="form-label" style="font-size:1.5em">公告標題</label>
 															<input type="text" name="title" class="form-control" style="font-size:15px" value="${coursePostVO.title}" readonly/>
-															</div>														
-																
-																<tr>
-																<th>公告標題</th>
-																<td>${coursePostVO.title}</td>
-																</tr>				
-																<tr>
-																<th>公告內容</th>
-																<td  width="85%">${coursePostVO.postContent}</td>
-																</tr>
-																<tr>
-																<th>公告時間</th>
-																<td class="updateTime"><fmt:formatDate value="${coursePostVO.updateTime}" pattern="yyyy年MM月dd日 HH'點'mm'分'" /></td>
-																</tr>
-<!-- 																</table>                                                            -->
-                                                        </div>
+															</div>	
+														<div class="form-group">
+															<label class="form-label" style="font-size:1.5em">公告內容</label>
+															<textarea class="form-control" name="postContent" rows="5" placeholder="公告內容" style="font-size:15px" readonly>${coursePostVO.postContent}</textarea>
+														</div>															
+														<div class="form-group">
+														<label class="form-label" style="font-size:1.5em"><i class="fal fa-clock mr-1"></i>公告時間</label>
+														<fmt:formatDate value="${coursePostVO.updateTime}" pattern="yyyy年MM月dd日 HH'點'mm'分'" />
+                                                       </div>
+                                                       
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -219,6 +226,8 @@ font-size: 15px;
 					
 					$(".submitDeleteCoursePost").on("click", function(event) {
 						event.preventDefault();
+						console.log($(this).val()+"here");
+						var str = $(this).val();
 						var swalWithBootstrapButtons = Swal.mixin({
 							customClass : {
 								confirmButton : "btn btn-primary",
@@ -238,7 +247,7 @@ font-size: 15px;
 							if (result.value) {
 								swalWithBootstrapButtons.fire("刪除請求送出", "請稍等跳轉頁面", "success");
 								setTimeout(function() {
-									$('#deleteCoursePost').submit();
+									$("[id='"+str+"']").submit();
 								}, 1000);
 							} else {
 								swalWithBootstrapButtons.fire("刪除請求取消", "刪除公告請再三確認", "error");
