@@ -111,7 +111,7 @@ pageContext.setAttribute("teachingFileList", teachingFileList);
 																					<a href="<%=request.getContextPath()%>/teachingFile/download.do?${teachingFileVO.teachingFileNo}" download>
 																				<button id="addCourse" type="submit" class="m-1 mb-0 btn btn-primary">
 																					<span class="fal fa-file-download mr-1"></span>
-																					<span>下載${teachingFileVO.teachingFileNo}</span>
+																					<span>下載</span>
 																					
 																			    	<input type="hidden" name="courseNo" value="${courseNo}">
 																			    	<input type="hidden" name="teachingFileNo" value="${teachingFileVO.teachingFileNo}">
