@@ -61,6 +61,17 @@ public class TimetableService {
 
 		return timetableVO;
 	}
+	
+	public TimetableVO updateTimetableLog(String timetableNo, String teachingLog) {
+
+		TimetableVO timetableVO = new TimetableVO();
+
+		timetableVO.setTimetableNo(timetableNo);
+		timetableVO.setTeachingLog(teachingLog);
+		TimetableDAO.update_teachingLog(timetableVO);
+
+		return timetableVO;
+	}
 
 	public void deleteTimetable(String timetableNo) {
 		VideoService videoService = new VideoService();
@@ -79,6 +90,12 @@ public class TimetableService {
 		new AttendanceService().deleteAttendanceWithTimetableNo(timetableNo);
 
 		dao.delete(timetableNo);
+	}
+	
+	public void deleteTimetableLog(String timetableNo) {
+
+		TimetableDAO timetableDAO = new TimetableDAO();
+		timetableDAO.delete_teachingLog(timetableNo);
 	}
 
 	public TimetableVO getOneTimetable(String timetableNo) {

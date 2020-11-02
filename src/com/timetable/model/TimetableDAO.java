@@ -26,8 +26,10 @@ public class TimetableDAO implements TimetableDAO_interface{
 	private static final String GET_ALL_STMT = "SELECT timetableNo, courseNo, classroomNo, timetablePeriod, timetableDate, teachingLog FROM timetable where isDelete=0 order by timetableDate, timetablePeriod ";
 	private static final String GET_ONE_STMT = "SELECT timetableNo, courseNo, classroomNo, timetablePeriod, timetableDate, teachingLog FROM timetable where timetableNo = ?";
 	private static final String DELETE = "UPDATE timetable set isDelete = 1 where timetableNo=?";
+	private static final String DELETE_TEACHINGLOG = "UPDATE timetable set teachingLog = '' where timetableNo=?";
 	private static final String UPDATE = "UPDATE timetable set courseNo=?, classroomNo=?, timetablePeriod=?, timetableDate=?, teachingLog=? where timetableNo=? ";
-
+	private static final String UPDATE_TEACHINGLOG = "UPDATE timetable set teachingLog=? where timetableNo=? ";
+	
 	@Override
 	public void insert(TimetableVO timetableVO) {
 		Connection con = null;
@@ -67,7 +69,6 @@ public class TimetableDAO implements TimetableDAO_interface{
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
-
 			
 			pstmt.setString(1, timetableVO.getCourseNo());
 			pstmt.setString(2, timetableVO.getClassroomNo());
@@ -75,6 +76,32 @@ public class TimetableDAO implements TimetableDAO_interface{
 			pstmt.setDate(4, timetableVO.getTimetableDate());
 			pstmt.setString(5, timetableVO.getTeachingLog());
 			pstmt.setString(6, timetableVO.getTimetableNo());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("Couldn't load database driver." + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	public static void update_teachingLog(TimetableVO timetableVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_TEACHINGLOG);
+			
+			pstmt.setString(1, timetableVO.getTeachingLog());
+			pstmt.setString(2, timetableVO.getTimetableNo());
 
 			pstmt.executeUpdate();
 
@@ -124,6 +151,38 @@ public class TimetableDAO implements TimetableDAO_interface{
 		}
 	}
 
+	public void delete_teachingLog(String timetableNo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(DELETE_TEACHINGLOG);
+
+			pstmt.setString(1, timetableNo);
+
+			pstmt.executeUpdate();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
 	@Override
 	public TimetableVO findByPrimaryKey(String timetableNo) {
 
