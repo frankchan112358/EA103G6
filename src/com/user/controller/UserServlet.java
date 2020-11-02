@@ -2,8 +2,9 @@ package com.user.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -20,6 +21,7 @@ import javax.servlet.http.Part;
 
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
+import com.google.gson.Gson;
 import com.mail.service.MailService;
 import com.permission.model.PermissionService;
 import com.permission.model.PermissionVO;
@@ -27,11 +29,12 @@ import com.student.model.StudentService;
 import com.student.model.StudentVO;
 import com.teacher.model.TeacherService;
 import com.teacher.model.TeacherVO;
+import com.user.model.UserRedisDAO;
+import com.user.model.UserRedisMisVO;
+import com.user.model.UserRedisVO;
 import com.user.model.UserService;
 import com.user.model.UserVO;
 import com.userpermission.model.UserPermissionService;
-import com.userpermission.model.UserPermissionVO;
-import com.websocketnotify.controller.NotifyServlet;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 
@@ -949,6 +952,133 @@ public class UserServlet extends HttpServlet {
 		}
 
 		if ("updatePassword".equals(action)) {
+			res.setCharacterEncoding("UTF-8");
+			HttpSession session = req.getSession();
+			UserVO userVO = (UserVO) session.getAttribute("userVO");
+			String CodeAction=req.getParameter("CodeAction");
+			
+			Gson gson = new Gson();
+			/***************** 隨機產生亂數開始 **************/
+			if("sendCode".equals(CodeAction)) {
+			res.setContentType("text/html;");
+			int arrayA[] = new int[62];
+			// 數字、英文最後用型別轉換成字元
+			for (int i = 0; i < arrayA.length; i++) {
+				if (i < 10)
+					arrayA[i] = 48 + i; // 數字10個(0-9)
+
+				else if (i < 36)
+					arrayA[i] = 55 + i; // 大寫英文字26個參照 ASCII
+
+				else
+					arrayA[i] = 61 + i; // 小寫英文字26個參照 ASCII
+			}
+			int arrayB[] = new int[8];
+			Random r = new Random();
+			String ranSen = "";
+			for (int i = 0; i < arrayB.length; i++) {
+				arrayB[i] = arrayA[r.nextInt(62)];
+				char ranChar = (char) arrayB[i];
+				String charToString = String.valueOf(ranChar);
+				ranSen = ranSen + charToString;
+			}
+
+			/***************** 隨機產生亂數結束 **************/
+			
+			UserRedisVO userRedisVO=new UserRedisVO();
+			userRedisVO.setCode(ranSen);
+			userRedisVO.setTime(new Date().getTime());
+			String jsonCode=gson.toJson(userRedisVO);
+			UserRedisDAO.keepRandCode(userVO.getUserNo(), jsonCode); //將物件轉成json存進資料庫
+			
+			MailService sendMail = new MailService(); //寄出驗證信
+			sendMail.sendMail("yymm55680@gmail.com", "更改密碼驗證", ranSen);
+			PrintWriter out = res.getWriter();
+			out.print("ok");
+			return;
+			}
+			//輸入驗證碼之驗證
+			if("checkCode".equals(CodeAction)) {
+				res.setContentType("application/json;");
+				String inputCode=req.getParameter("inputCode");
+				if(inputCode!=null)inputCode.trim();
+				
+				String checkJson=UserRedisDAO.getRandCode(userVO.getUserNo());
+				UserRedisVO userRedisVO=gson.fromJson(checkJson, UserRedisVO.class);
+				
+				boolean checkCodeVar=userRedisVO.getCode().equals(inputCode);
+				boolean checkTimeVar=(new Date().getTime()-userRedisVO.getTime())<1000*60;
+				
+				if(checkCodeVar&&checkTimeVar) {
+					//驗證成功開始回傳給前台讓其轉換modal
+					UserRedisVO userRedisVOForSuc=new UserRedisVO();
+					userRedisVOForSuc.setStatus("success");
+					PrintWriter out = res.getWriter();
+					out.print(gson.toJson(userRedisVOForSuc));
+					return;
+					
+				}else {
+					//驗證失敗傳送失敗訊息
+					UserRedisMisVO userRedisMisVO =new UserRedisMisVO();
+					userRedisMisVO.setStatus("mistake");;
+					if(!checkTimeVar) { //只會送出其中一個錯誤碼，先檢查時間
+						userRedisMisVO.setMistake("驗證碼已過期請重新寄送");
+					}else {
+						userRedisMisVO.setMistake("驗證碼輸入錯誤");
+					}
+					PrintWriter out = res.getWriter();
+					out.print(gson.toJson(userRedisMisVO));
+					return;
+				}
+			}
+			
+			if("checkPSW".equals(CodeAction)) {
+				res.setContentType("application/json;");
+				String oldPSW=req.getParameter("oldPSW");
+				String newPSW=req.getParameter("newPSW");
+				String newPSWCheck=req.getParameter("newPSWCheck");
+				
+				if(oldPSW !=null)oldPSW.trim();
+				if(newPSW !=null)newPSW.trim();
+				if(newPSWCheck !=null)newPSWCheck.trim();
+				
+				UserRedisMisVO userRedisMisVO=new UserRedisMisVO();
+				
+				/*******************錯誤驗證開始*********************/
+				UserService userSerVice =new UserService();
+				UserVO userVOForChange=userSerVice.getOneUser(userVO.getUserNo());
+				
+				if(!userVOForChange.getPassword().equals(oldPSW)) {
+					userRedisMisVO.setStatus("mistake");
+					userRedisMisVO.setMisOldPSW("舊密碼輸入錯誤");;
+					
+				}
+				String passwordReg = "\\w{6,12}";
+				if (!newPSW.matches(passwordReg)) {
+					userRedisMisVO.setStatus("mistake");
+					userRedisMisVO.setMisNewPSW("密碼僅能輸入英文字母及數字，且長度為6-12");
+					
+				}
+				
+				if(!newPSWCheck.equals(newPSW)) {
+					userRedisMisVO.setStatus("mistake");
+					userRedisMisVO.setMisNewPSWCheck("新密碼輸入不一致");
+				}
+				
+				if("mistake".equals(userRedisMisVO.getStatus())) {
+					PrintWriter out = res.getWriter();
+					out.print(gson.toJson(userRedisMisVO));
+					return;
+				}
+				/*******************錯誤驗證結束修改密碼*********************/
+				UserService userService =new UserService();
+				userService.update_Password_backEnd(userVO.getUserNo(), newPSW);
+				userRedisMisVO.setStatus("success");
+				PrintWriter out = res.getWriter();
+				out.print(gson.toJson(userRedisMisVO));
+				return;
+				
+			}
 
 		}
 		
