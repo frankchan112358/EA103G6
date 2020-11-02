@@ -34,6 +34,18 @@ public class FinalScoreService {
 
 		return finalScoreVO;
 	}
+	
+	public FinalScoreVO updateScore(String courseNo, String studentNo, Integer score) {
+
+		FinalScoreVO finalScoreVO = new FinalScoreVO();
+
+		finalScoreVO.setCourseNo(courseNo);
+		finalScoreVO.setStudentNo(studentNo);
+		finalScoreVO.setScore(score);
+		FinalScoreDAO.updateScore(finalScoreVO);
+
+		return finalScoreVO;
+	}
 
 	public void deleteFinalScore(String finalScoreNo) {
 		dao.delete(finalScoreNo);
@@ -58,8 +70,4 @@ public class FinalScoreService {
 		return score;
 	}
 	
-	public Integer updateScore(String courseNo, String studentNo) {
-		Integer score = null;
-		return score;
-	}
 }
