@@ -11,19 +11,27 @@ public class WebsocketNotifyDAO {
 	
 	public static List<String> getHistoryNotify(String userNO){
 		Jedis jedis = null;
-		jedis = pool.getResource();
-		jedis.auth("123456");
-		List<String> historyData = jedis.lrange(userNO, 0, -1);
-		jedis.close();
-		return historyData;
+		try {
+			jedis = pool.getResource();
+			jedis.auth("123456");
+			List<String> historyData = jedis.lrange(userNO, 0, -1);
+			return historyData;
+		}finally {
+			jedis.close();
+
+		}
 	}
 												//傳進的notify設計為json
 	public static void saveNotify(String userNo,String notify) {
-		Jedis jedis = pool.getResource();
-		jedis.auth("123456");
+		Jedis jedis =null;
+		try {
+			jedis = pool.getResource();
+			jedis.auth("123456");
+			jedis.rpush(userNo, notify); //rpush新進來的資料就放在右邊(表示最新)
+			
+		}finally{
+			jedis.close();
+		}
 		
-		jedis.rpush(userNo, notify); //rpush新進來的資料就放在右邊(表示最新)
-		
-		jedis.close();
 	}
 }
