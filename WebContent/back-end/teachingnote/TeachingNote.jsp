@@ -211,7 +211,7 @@
 					processData: false,
 					contentType: false,
 					data: form,
-					success(res) {
+					success:function(res) {
 						console.log(res);
 						location.reload(); 
 					}
