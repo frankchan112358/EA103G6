@@ -24,7 +24,10 @@
 <link rel="stylesheet" media="screen, print"
       href="<%=request.getContextPath()%>/SmartAdmin4/css/formplugins/summernote/summernote.css">
 <style>
-
+#num{
+font-size:30px;
+color:#336666;
+}
 
 </style>
 </head>
@@ -47,7 +50,7 @@
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-calendar-exclamation'></i>
+                            <i class='subheader-icon fal fa-books'></i>
                             課程提問
                         </h1>
                     </div>
@@ -74,13 +77,13 @@
                                                 data-target="#editorEvaluation">
                                             <strong>我要問問題</strong>
                                         </button>
-                                    </div>
+                                    </div><br>
                                     <div class="accordion accordion-outline" id="courseAsk">
                                         <c:forEach var="courseAskVO" items="${courseAskList}">
                                             <div class="card">
                                                 <div class="card-header">
                                                     <a href="javascript:void(0);" class="card-title collapsed" data-toggle="collapse" data-target="#courseAsk${courseAskVO.courseAskNo}" aria-expanded="false">
-                                                        <i class="fal fa-comment-alt-smile mr-3 fa-2x"></i>
+                                                        <i class="fal fa-books mr-3 fa-2x"></i>
                                                         <span>
                                                             ${courseAskVO.title }
                                                             <br><span>發問者:</span>${studentSvc.getOneStudent(courseAskVO.getStudentNo()).studentName}
@@ -130,11 +133,6 @@
                         <h4 class="modal-title">新增問題</h4>
                     </div>
                     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/courseAsk/courseAsk.do" name="form1" class="needs-validation" novalidate>
-                        <select size="1" name="courseNo" style="color: black; width: 95%; height: 50px; margin: 20px ;">
-                            <c:forEach var="courseVO" items="${courseSvc.all}">
-                                <option value="${courseVO.courseNo}">${courseVO.courseName}
-                            </c:forEach>
-                        </select>
                         <input id="add" placeholder="輸入您的問題" name="title" style="color: black; width: 95%; height: 50px; margin: 20px ;"
                                value="${courseAskVO.title }" required>
                         <div class="invalid-feedback">
