@@ -25,6 +25,7 @@ public class FinalScoreDAO implements FinalScoreDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT FINALSCORENO, COURSENO, STUDENTNO, SCORE FROM FINALSCORE WHERE FINALSCORENO=?";
 	private static final String DELETE = "DELETE FROM FINALSCORE WHERE FINALSCORENO=?";
 	private static final String UPDATE = "UPDATE FINALSCORE SET COURSENO=?, STUDENTNO=?, SCORE=? WHERE FINALSCORENO=?";
+	private static final String UPDATESCORE = "UPDATE FINALSCORE SET SCORE=? WHERE COURSENO=? AND STUDENTNO=?";
 
 	@Override
 	public void insert(FinalScoreVO finalScoreVO) {
@@ -43,6 +44,7 @@ public class FinalScoreDAO implements FinalScoreDAO_interface {
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
+			se.printStackTrace();
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
@@ -99,6 +101,41 @@ public class FinalScoreDAO implements FinalScoreDAO_interface {
 		}
 	}
 
+	public static void updateScore(FinalScoreVO finalScoreVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATESCORE);
+			
+
+			pstmt.setInt(1, finalScoreVO.getScore());
+			pstmt.setString(2, finalScoreVO.getCourseNo());
+			pstmt.setString(3, finalScoreVO.getStudentNo());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
 	@Override
 	public void delete(String finalScoreNo) {
 

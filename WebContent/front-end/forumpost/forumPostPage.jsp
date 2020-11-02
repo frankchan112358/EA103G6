@@ -67,7 +67,7 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
                                         <div class="p-3 d-flex flex-row">
                                             <div class="d-block flex-shrink-0">
                                             </div>
-							<div class="d-block ml-2"<b>${forumPostVO.title}</b>>
+							<div class="d-block ml-2"${forumPostVO.title}>
 								<div><b>樓主</b></div>
 								
                             <c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumPostVO.studentNo).userNo).photo eq null}">
@@ -112,7 +112,7 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
                                         <div class="p-3 d-flex flex-row">
                                             <div class="d-block flex-shrink-0">
                                             </div>
-                                            							<div class="d-block ml-2"<b>${forumPostVO.title}</b>>
+                                            							<div class="d-block ml-2"${forumPostVO.title}>
                                             
 										<div id="reply"><b>${tag.index}樓</b></div>
                            <c:if test="${userSvc.getOneUser(studentSvc.getOneStudent(forumCommentVO.studentNo).userNo).photo eq null}">

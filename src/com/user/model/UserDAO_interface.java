@@ -20,4 +20,5 @@ public interface UserDAO_interface {
 	public UserVO UserLogin(String account, String password, Integer type);
 	public UserVO UserForget(String id) ;
 	public void update_Password(UserVO userVO);
+	public void update_Password_backEnd(UserVO userVO);
 }

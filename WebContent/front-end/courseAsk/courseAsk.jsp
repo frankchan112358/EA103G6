@@ -183,7 +183,7 @@ border-radius: 5px;
      
                  <input id="add"placeholder="輸入您的問題" name="title" style="color: black; width: 95%; height: 50px; margin: 20px ;" 
 		value="${courseAskVO.title }" required>
-											<div class="invalid-feedback" style="padding-left: 30px;">
+											<div class="invalid-feedback">
                                                        	請勿空白.
                                          </div>
 		

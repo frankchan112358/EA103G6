@@ -40,7 +40,8 @@ public class UserDAO implements UserDAO_interface {
 	private static final String LOGIN="SELECT USERNO,ACCOUNT,PASSWORD,TYPE,NAME,MAIL,PHONE,ADDRESS,ID,PHOTO,ENABLE FROM WJLUSER WHERE ISDELETE=0 AND LOWER(ACCOUNT)=? AND PASSWORD=? AND TYPE=?";
 	private static final String FORGET="SELECT USERNO,ACCOUNT,PASSWORD,TYPE,NAME,MAIL,PHONE,ADDRESS,ID,PHOTO,ENABLE FROM WJLUSER WHERE ISDELETE=0 AND ID = ? ";
 	private static final String UPDATE_PASSWORD = "UPDATE WJLUSER SET PASSWORD=? WHERE ID = ?";
-	
+	private static final String UPDATE_PASSWORD_BACKEND = "UPDATE WJLUSER SET PASSWORD=? WHERE USERNO = ?";
+
 	@Override
 	public void insert(UserVO userVO) {
 		Connection con = null;
@@ -715,5 +716,41 @@ public class UserDAO implements UserDAO_interface {
 
 		
 	}
-
+	@Override
+	public void update_Password_backEnd(UserVO userVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_PASSWORD_BACKEND);
+			
+			pstmt.setString(1, userVO.getPassword());
+			pstmt.setString(2, userVO.getUserNo());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		
+	}
+	
 }
