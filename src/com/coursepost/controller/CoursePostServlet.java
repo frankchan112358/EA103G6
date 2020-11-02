@@ -166,7 +166,7 @@ public class CoursePostServlet extends HttpServlet {
 				CoursePostService coursePostSvc = new CoursePostService();
 				coursePostVO = coursePostSvc.updateCoursePost(coursePostNo, courseNo, title, postContent);
 				req.setAttribute("coursePostVO", coursePostVO);
-				String url = "/back-end/coursepost/listOneCoursePost.jsp";
+				String url = "/back-end/coursepost/listAllCoursePost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 

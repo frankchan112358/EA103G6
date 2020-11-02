@@ -79,7 +79,7 @@
 													<div class="card-header">
 														<a href="javascript:void(0);" class="card-title collapsed" data-toggle="collapse" data-target="#coursePost${coursePostVO.coursePostNo}" aria-expanded="false">
 															<i class="fal fa-comment-alt-smile mr-3 fa-2x"></i>
-															<span>
+															<span> 
 																<b>【${coursePostVO.title}】</b>
 															</span>
 															<span class="ml-auto">
