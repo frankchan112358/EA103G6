@@ -992,7 +992,7 @@ public class UserServlet extends HttpServlet {
 			UserRedisDAO.keepRandCode(userVO.getUserNo(), jsonCode); //將物件轉成json存進資料庫
 			
 			MailService sendMail = new MailService(); //寄出驗證信
-			sendMail.sendMail("yymm55680@gmail.com", "更改密碼驗證", ranSen);
+			sendMail.sendMail(userVO.getMail(), "更改密碼驗證", ranSen);
 			PrintWriter out = res.getWriter();
 			out.print("ok");
 			return;
