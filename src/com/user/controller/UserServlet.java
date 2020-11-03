@@ -385,8 +385,12 @@ public class UserServlet extends HttpServlet {
 				String messageText = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort()
 						+ req.getContextPath() + "/user.do?action=enable&guest=" + encoding + "&userNo=" + ranSen;
 
+				String picLink=req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort()
+				+ req.getContextPath() +"/login/login.jsp";
+				
 				MailService sendMail = new MailService();
-				sendMail.sendMail(mail, "Work Join Learn 會員啟用", messageText);
+//				sendMail.sendMail(mail, "Work Join Learn 會員啟用", messageText);
+				sendMail.sendHTMLMail(mail, "Work Join Learn 會員啟用", messageText,picLink);
 
 				/*************************** 5.新增完成,準備轉交畫面 ***********/
 				// 轉交前端
@@ -1014,8 +1018,11 @@ public class UserServlet extends HttpServlet {
 			String jsonCode=gson.toJson(userRedisVO);
 			UserRedisDAO.keepRandCode(userVO.getUserNo(), jsonCode); //將物件轉成json存進資料庫
 			
+			String picLink=req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort()
+			+ req.getContextPath() +"/login/login.jsp";
+			
 			MailService sendMail = new MailService(); //寄出驗證信
-			sendMail.sendMail(userVO.getMail(), "更改密碼驗證", ranSen);
+			sendMail.sendUpdatePSWMail(userVO.getMail(),"Work Join Learn 更改密碼驗證", ranSen, picLink);
 			PrintWriter out = res.getWriter();
 			out.print("ok");
 			return;
