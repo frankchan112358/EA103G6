@@ -85,10 +85,14 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
                                             <div class="d-block flex-shrink-1">
                                             <i class="fas fa-star mr-1" style="text-align:center;">標題：</i>
                                             <span> ${forumPostVO.title}</span>
-                                            <div class="card-body ">
-                                        <span>
-                                        ${forumPostVO.content}</span>
+                                            <div class="card-body "><span>${forumPostVO.content}</span>
                                     	</div>
+                                    	
+                                    	<div class="card-footer">
+                                        <div class="d-flex align-items-center">
+                                         <span class="text-sm text-muted font-italic"><i class="fal fa-clock mr-1"></i><span>發文時間:</span><fmt:formatDate value="${forumPostVO.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
+                                        </div>
+                                    </div>
                                             </div>
                                         </div>
                                     </div>

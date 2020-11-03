@@ -106,14 +106,14 @@
 								<form method="post"action="<%=request.getContextPath()%>/forumPost/forumPost.do">
 									<input type="text" name="title">
 									 <input type="hidden"name="action" value="search">
-									 <input type="submit"value="搜尋">
+									 <button type="submit"class="btn btn-primary justify-content-center">搜尋</button>
 								</form>
 							</div>
 							
 						</div>
 
 					</div>
-					<%@ include file="page1_ByCompositeQuery.file"%>
+					
 					<hr>
 
 					<div class="container">
@@ -126,6 +126,7 @@
 							
 						</div>
 						<hr>
+						<%@ include file="page1_ByCompositeQuery.file"%>
 
 						<c:forEach var="forumPostVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 
@@ -165,7 +166,7 @@
                                                                     <div class="d-block text-muted fs-sm">
                                                                         <fmt:formatDate value="${forumPostVO.createTime}"
 										                                 pattern="yyyy-MM-dd HH:mm:ss" />
-                                                                        
+                                                                      
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -200,7 +201,7 @@
                    					</div>
 
 
-								<div class="col-md-2">${forumcommentSvc.getFcResponsesByFpNo(forumPostVO.forumPostNo)}</div>
+<%-- 								<div class="col-md-2">${forumcommentSvc.getFcResponsesByFpNo(forumPostVO.forumPostNo)}</div> --%>
 
 
 							</div>

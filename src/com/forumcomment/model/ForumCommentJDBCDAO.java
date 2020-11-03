@@ -17,9 +17,9 @@ public class ForumCommentJDBCDAO implements ForumCommentDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO forumcomment (forumcommentno,forumpostno,studentno, content ,updatetime,createtime) VALUES (forumcomment_seq.NEXTVAL,?, ?,?, ?, ?)";
 	// 顯示出一則貼文的留言
-	private static final String GET_ONE_FP_ALLFC_STMT = "SELECT forumcommentno,forumpostno,studentno, content ,updatetime,createtime FROM forumcomment where forumpostno = ?";
+	private static final String GET_ONE_FP_ALLFC_STMT = "SELECT forumcommentno,forumpostno,studentno, content ,updatetime,createtime FROM forumcomment where forumpostno = ? order by createtime";
 	// 在一篇文章下留言
-	private static final String GET_ONE_FP_ADD_FC = "SELECT forumpostno,studentno FROM forumcomment WHERE forumpostno =? ";
+	private static final String GET_ONE_FP_ADD_FC = "SELECT forumpostno,studentno FROM forumcomment WHERE forumpostno =? order by createtime ";
 	private static final String GET_ALL_STMT = "SELECT forumcommentno,forumpostno,studentno, content ,updatetime,createtime FROM forumcomment where isDelete = 0 order by to_number(forumcommentno) DESC";
 	// 取得一篇留言
 	private static final String GET_ONE_STMT = "SELECT forumcommentno,forumpostno,studentno, content ,updatetime,createtime FROM forumcomment where forumcommentno = ?";

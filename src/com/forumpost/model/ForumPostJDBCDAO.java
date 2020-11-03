@@ -23,7 +23,7 @@ public  class ForumPostJDBCDAO implements ForumPostDAO_interface {
 	private static final String UPDATE_STMT = "UPDATE forumpost SET title = ? , content = ? WHERE forumpostno=?";
 	private static final String ADD_VIEWS = "UPDATE forumpost SET forumpostviews = ? WHERE forumpostno=?";
 	private static final String RESEARCH_STMT = "SELECT * FROM forumpost WHERE title like ? and isDelete = 0";
-	private static final String GETBYTOPIC = "SELECT * FROM forumpost WHERE forumtopicno = ?";
+	private static final String GETBYTOPIC = "SELECT * FROM forumpost WHERE forumtopicno = ? order by forumpostviews DESC";
 
 
 
@@ -601,15 +601,18 @@ System.out.println("test");
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				forumPostVO = new ForumPostVO();
-				forumPostVO.setForumPostNo(rs.getString("forumPostNo"));
-				forumPostVO.setForumTopicNo(rs.getString("forumTopicNo"));
-				forumPostVO.setStudentNo(rs.getString("studentNo"));
-				forumPostVO.setTitle(rs.getString("title"));
-				forumPostVO.setContent(rs.getString("content"));
-				forumPostVO.setUpdateTime(rs.getTimestamp("updateTime"));
-				forumPostVO.setCreateTime(rs.getTimestamp("createTime"));
-				list.add(forumPostVO);
+				if (rs.getInt("isDelete") == 0) {
+					forumPostVO = new ForumPostVO();
+					forumPostVO.setForumPostNo(rs.getString("forumPostNo"));
+					forumPostVO.setForumTopicNo(rs.getString("forumTopicNo"));
+					forumPostVO.setStudentNo(rs.getString("studentNo"));
+					forumPostVO.setTitle(rs.getString("title"));
+					forumPostVO.setContent(rs.getString("content"));
+					forumPostVO.setUpdateTime(rs.getTimestamp("updateTime"));
+					forumPostVO.setCreateTime(rs.getTimestamp("createTime"));
+					forumPostVO.setForumPostViews(rs.getInt("forumPostViews"));
+					list.add(forumPostVO);
+				}
 			}
 			
 			// Handle any driver errors ( JDBC 驅動 )
