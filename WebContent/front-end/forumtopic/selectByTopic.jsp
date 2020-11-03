@@ -81,19 +81,19 @@ pageContext.setAttribute("list", list);
 						<div class="row">
 							<div class="col-md-3">
 								<div id="heading1">
-									<b>最多回覆</b>
+									<b>回應數</b>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div id="heading2">
-									<a href="<%=request.getContextPath()%>/front-end/forumpost/forumIndex_hot.jsp"><b>最多觀看</b></a>
+									<a href="<%=request.getContextPath()%>/front-end/forumpost/forumIndex_hot.jsp"><b>觀看數</b></a>
 								</div>
 							</div>
 							<div class="col-md-5">
 								<form method="post"action="<%=request.getContextPath()%>/forumPost/forumPost.do">
 									<input type="text" name="title">
 									 <input type="hidden"name="action" value="search">
-									 <input type="submit"value="搜尋">
+									 <button type="submit"class="btn btn-primary justify-content-center">搜尋</button>
 								</form>
 							</div>
 							
@@ -186,8 +186,8 @@ pageContext.setAttribute("list", list);
                    						</div>
                    					</div>
 
-
 								<div class="col-md-2">${forumcommentSvc.getFcResponsesByFpNo(forumPostVO.forumPostNo)}</div>
+								
 
 
 							</div>

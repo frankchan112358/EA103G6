@@ -83,7 +83,7 @@ border-radius: 5px;
 						<li class="breadcrumb-item"><a
 							href="<%=request.getContextPath()%>/front-end/index/index.jpg">前台首頁</a></li>
 						<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/forumpost/forumPost_index.jsp">班級討論區</a></li>
-						<li class="breadcrumb-item">新增主題</li>
+						<li class="breadcrumb-item">新增貼文</li>
 					</ol>
 					<div class="subheader">
 						
