@@ -78,6 +78,8 @@
 							
 							
 							
+							
+							
 							<div class="col-md-1">
 							<form method="post" action="<%=request.getContextPath()%>/forumPost/forumPost.do">
 								<input type="submit" value="修改">
@@ -92,26 +94,13 @@
 								<input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}">
 							</form>
 							<div class="col-8 col-md-3 hidden-md-down">
-                                                        <div class="p-3 p-md-3">
-                                                            <div class="d-flex align-items-center">
-<!--                                                                 <div class="d-inline-block align-middle status status-success status-sm mr-2"> -->
-<!--                                                                     <span class="profile-image-md rounded-circle d-block" style="background-image:url('img/demo/avatars/avatar-a.png'); background-size: cover;"></span> -->
-<!--                                                                 </div> -->
-                                                                <div class="flex-1 min-width-0">
-<!--                                                                     <a href="javascript:void(0)" class="d-block text-truncate"> -->
-<!--                                                                         Duis vitae sapien urna. Proin pellentesque laoreet ligula pharetra semper. -->
-<!--                                                                     </a> -->
-<!--                                                                     <div class="text-muted small text-truncate"> -->
-<!--                                                                         Today, 12:12 <a href="javascript:void(0)" class="text-info">katty60</a> -->
-<!--                                                                     </div> -->
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                       
 							</div>
+						</div>
 						</div>
 						<hr>
 					</c:forEach>
+					
 					<%@ include file="page2_ByCompositeQuery.file" %>
 
 </main>
