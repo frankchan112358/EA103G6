@@ -1,6 +1,25 @@
+<%@page import="com.course.model.CourseVO"%>
+<%@page import="com.course.model.CourseService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%
+String courseNav_courseNo = (String)session.getAttribute("courseNo");
+CourseVO courseNav_courseVO = new CourseService().getOneCourse(courseNav_courseNo);
+pageContext.setAttribute("courseNav_courseVO", courseNav_courseVO);
+%>
+<div class="bg-info-400 card p-2 pl-3 pr-3 mb-4" style="display: inline-block;">
+	<img src="<%=request.getContextPath() %>/course/course.do?action=getCourseImg&courseNo=${courseNav_courseVO.courseNo}" class="rounded" style="width: 4.125rem;height: 4.125rem;">
+	<div class="info-card-text ml-3" style="vertical-align: top;">
+		<h5 class="card-title mb-1">
+			<label class="fs-xxl">${courseNav_courseVO.courseName}</label>
+			<label class="fs-xxl"> </label>
+			<i class="fal fa-hand-point-right"></i>
+			<label>【${courseNav_courseVO.banjiVO.banjiName}】</label>
+		</h5>
+		<span class="float-lg-right fs-xl"> <i class="fal fa-smile"></i>
+			${courseNav_courseVO.teacherVO.teacherName}</span>
+	</div>
+</div>
 <div id="panel-10" class="panel">
 	<ul class="nav nav-pills nav-justified" role="tablist">
 		<li class="nav-item"><a class="courseWork nav-link" courseWork="courseInfo" href="javascript:void(0)" style="font-size: 15px">課程資料管理</a></li>

@@ -13,34 +13,34 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
-    <%@ include file="/back-end/template/head.jsp" %> 
-    <link rel="stylesheet" media="screen, print" href="<%=request.getContextPath()%>/SmartAdmin4/css/datagrid/datatables/datatables.bundle.css">
+	<%@ include file="/back-end/template/head.jsp" %>
+	<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath()%>/SmartAdmin4/css/datagrid/datatables/datatables.bundle.css">
 
 
-<style>
+	<style>
+		th {
+			font-size: 15px;
+		}
 
-th{
-font-size: 15px;
-}
-
-td{
-font-size: 15px;
-}
+		td {
+			font-size: 15px;
+		}
 
 
-.table th, .table td {
-    vertical-align: middle;
-    text-align: center;  
-}
+		.table th,
+		.table td {
+			vertical-align: middle;
+			text-align: center;
+		}
 
-img {  
-    vertical-align: sub;  
-    width: 20%;  
-  	height: auto;  
-  } 
-
-</style>
+		img {
+			vertical-align: sub;
+			width: 20%;
+			height: auto;
+		}
+	</style>
 
 </head>
 
@@ -75,21 +75,21 @@ img {
 									<div class="panel-content">
 										<div class="btn-group mb-3" role="group">
 											<c:forEach var="banjiVO" items="${empVO.banjiList}">
-													<button type="button" class="banji btn btn-lg ${banjiVO.banjiNo == banjiNo ? 'btn-primary' : 'btn-outline-primary'} " banjiNo="${banjiVO.banjiNo}">
-															<span class="fal fa-book mr-1"></span>${banjiVO.banjiName}
-													</button>
+												<button type="button" class="banji btn btn-lg ${banjiVO.banjiNo == banjiNo ? 'btn-primary' : 'btn-outline-primary'} " banjiNo="${banjiVO.banjiNo}">
+													<span class="fal fa-book mr-1"></span>${banjiVO.banjiName}
+												</button>
 											</c:forEach>
-									</div>									
-									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
-                                        <button id="addCourse" type="submit" class="btn btn-success waves-effect waves-themed float-left">
-                                       <span class="far fa-plus-circle mr-1"></span>
-                                        <span>新增</span>                 
-                                        </button>
-                                        <input type="hidden" name="banjiNo" value="${banjiNo}">
-										<input type="hidden" name="action" value="new">
+										</div>
+										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
+											<button id="addCourse" type="submit" class="btn btn-success waves-effect waves-themed float-left">
+												<span class="far fa-plus-circle mr-1"></span>
+												<span>新增</span>
+											</button>
+											<input type="hidden" name="banjiNo" value="${banjiNo}">
+											<input type="hidden" name="action" value="new">
 										</FORM>
 										<!-- datatable start -->
-                                            <table id="coursetable" class="table table-bordered table-hover table-striped w-100">
+										<table id="coursetable" class="table table-bordered table-hover table-striped w-100">
 											<thead style="background-color:#E5F4FF;">
 												<tr>
 													<th>課程編號</th>
@@ -106,7 +106,7 @@ img {
 											</thead>
 											<tbody>
 												<c:forEach var="courseVO" items="${courseList}">
-												<tr onclick="location.href='<%=request.getContextPath()%>/course/course.do?action=getOne_For_Display&courseNo=${courseVO.courseNo}';" style="cursor: pointer;" >
+													<tr courseNo="${courseVO.courseNo}" class="courseManage" style="cursor: pointer;">
 														<td>${courseVO.courseNo}</td>
 														<td>${courseVO.courseName}</td>
 														<td>${banjiSvc.getOneBanji(courseVO.banjiNo).banjiName}</td>
@@ -122,17 +122,16 @@ img {
 																<c:when test="${courseVO.status=='2'}">課程結束</c:when>
 															</c:choose>
 														</td>
-														
 														<td>
-                                                        <c:if test="${courseVO.courseImg eq null}">
-                                                        <span> </span>
-														<i class="fal fa-file fa-2x"></i>
-														</c:if>
-														<c:if test="${courseVO.courseImg ne null}">
-														 <span></span>
-														<i class="fal fa-file-image fa-2x"></i>
-														</c:if>
-                                                  	</td>
+															<c:if test="${courseVO.courseImg eq null}">
+																<span> </span>
+																<i class="fal fa-file fa-2x"></i>
+															</c:if>
+															<c:if test="${courseVO.courseImg ne null}">
+																<span></span>
+																<i class="fal fa-file-image fa-2x"></i>
+															</c:if>
+														</td>
 													</tr>
 												</c:forEach>
 											</tbody>
@@ -145,47 +144,66 @@ img {
 						</div>
 					</div>
 				</main>
+				<div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
+				<%@ include file="/back-end/template/footer.jsp" %>
+			</div>
+		</div>
+	</div>
 
-		
-              <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
-                <%@ include file="/back-end/template/footer.jsp" %>
-            </div>
-        </div>
-    </div>
-														
-    
-    <%@ include file="/back-end/template/quick_menu.jsp" %>
-    <%@ include file="/back-end/template/messager.jsp" %>
-    <%@ include file="/back-end/template/basic_js.jsp" %>
-    
-    
-        <script src="<%=request.getContextPath() %>/SmartAdmin4/js/datagrid/datatables/datatables.bundle.js"></script>
-     <script>
-    
-     
-            $(document).ready(function()
-            {
-                $('#coursetable').dataTable(
-                {
-                    responsive: true,
-                    language:{url:'<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json'},
-                });
-           
-                $(document).on('click', 'button.banji', function (event) {
-                    let _this = this;
-                    let banjiNo = this.getAttribute('banjiNo');
-					let myForm = document.createElement('form');
-					document.body.appendChild(myForm);
-					myForm.action = '<%=request.getContextPath()%>/course/course.do';
-					myForm.method = 'POST';
-					let banjiNoInput = document.createElement('input');
-					banjiNoInput.type = 'hidden';
-					banjiNoInput.name = 'banjiNo';
-					banjiNoInput.value = banjiNo;
-					myForm.append(banjiNoInput);
-					myForm.submit();
-                });
-            });
-     </script>
+
+	<%@ include file="/back-end/template/quick_menu.jsp" %>
+	<%@ include file="/back-end/template/messager.jsp" %>
+	<%@ include file="/back-end/template/basic_js.jsp" %>
+
+
+	<script src="<%=request.getContextPath() %>/SmartAdmin4/js/datagrid/datatables/datatables.bundle.js"></script>
+	<script>
+
+
+		$(document).ready(function () {
+			$('#coursetable').dataTable(
+				{
+					responsive: true,
+					language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' },
+				});
+
+			$(document).on('click', 'button.banji', function (event) {
+				let _this = this;
+				let banjiNo = this.getAttribute('banjiNo');
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/course/course.do';
+				myForm.method = 'POST';
+				let banjiNoInput = document.createElement('input');
+				banjiNoInput.type = 'hidden';
+				banjiNoInput.name = 'banjiNo';
+				banjiNoInput.value = banjiNo;
+				myForm.append(banjiNoInput);
+				myForm.submit();
+			});
+
+			$(document).on('click','tr.courseManage',function (e) {
+				e.preventDefault();
+				let _this = this;
+				let courseNo = this.getAttribute('courseNo');
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/course/course.do';
+				myForm.method = 'POST';
+				let courseNoInput = document.createElement('input');
+				courseNoInput.type = 'hidden';
+				courseNoInput.name = 'courseNo';
+				courseNoInput.value = courseNo;
+				myForm.append(courseNoInput);
+				let actionInput = document.createElement('input');
+				actionInput.type = 'hidden';
+				actionInput.name = 'action';
+				actionInput.value = 'getOne_For_Display';
+				myForm.append(actionInput);
+				myForm.submit();
+			  });
+		});
+	</script>
 </body>
+
 </html>

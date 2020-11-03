@@ -73,6 +73,9 @@ public class CourseServlet extends HttpServlet {
 			byte[] buf = new byte[4 * 1024];
 			int len = 0;
 
+			if (in == null) {
+				in = getServletContext().getResourceAsStream("/images/尚無圖片.jpg");
+			}
 			while ((len = in.read(buf)) > 0) {
 				out.write(buf, 0, len);
 			}

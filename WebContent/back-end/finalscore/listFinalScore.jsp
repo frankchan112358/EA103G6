@@ -41,7 +41,7 @@
 							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>
+							<a id="aListAllCourse" banjiNo="${courseSvc.getOneCourse(courseNo).banjiNo}" href="javascript:void(0)">課程總覽</a>
 						</li>
 						<li class="breadcrumb-item">
 							成績管理
@@ -49,7 +49,7 @@
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class="fas fa-star-half-alt" style="color: #374EFA;"></i>
+							<i class="subheader-icon fal fa-clipboard-list-check"></i>
 							成績管理
 						</h1>
 					</div>
@@ -89,15 +89,7 @@
 												<c:forEach var="studentVO" items="${courseSvc.getOneCourse(courseNo).banjiVO.studentList}">
 													<tr>
 														<td class="pic">
-															<c:if test="${studentVO.face==null}">
-																<img src="<%=request.getContextPath()%>/images/noPicture.png">
-
-															</c:if>
-
-															<c:if test="${studentVO.face!=null}">
-																<img src="<%=request.getContextPath()%>/user.do?action=getPhoto&userNo=${studentVO.userNo}">
-															</c:if>
-
+															<img class="rounded profile-image" src="<%=request.getContextPath()%>/user.do?action=getPhoto&userNo=${studentVO.userNo}">
 														</td>
 														<td>
 															<input type="hidden" name="studentNo" value="${studentVO.studentNo}">
@@ -111,7 +103,7 @@
 																<span class="score">${finalScoreSvc.getScore(courseNo, studentVO.studentNo)}</span>
 															</c:if>
 															<c:if test="${finalScoreSvc.getScore(courseNo, studentVO.studentNo)==null}">
-																<input studentNo="${studentVO.studentNo}" class="score" type="number" value="" oldValue=""  style="width:4em;text-align:center">
+																<input studentNo="${studentVO.studentNo}" class="score" type="number" value="" oldValue="" style="width:4em;text-align:center">
 																<span class="score">尚未評分</span>
 															</c:if>
 														</td>
@@ -178,8 +170,8 @@
 				$('button.cancel').hide();
 				//3.還原input的value，提示input的attr有偷存oldValue
 				let scorelist = $('input.score');
-				for (let i=0; i < scorelist.length; i++){
-					let scoreinput=scorelist[i];
+				for (let i = 0; i < scorelist.length; i++) {
+					let scoreinput = scorelist[i];
 					let oldvalue = scoreinput.getAttribute('oldvalue');
 					scoreinput.value = oldvalue;
 				}
@@ -207,8 +199,8 @@
 
 				//利用ajax的方式送到後台
 				$.ajax({
-					beforeSend:function() {
-					//再送出之前，可以做一些處理，but不能取消送出!!
+					beforeSend: function () {
+						//再送出之前，可以做一些處理，but不能取消送出!!
 					},
 					type: 'POST',
 					url: '<%=request.getContextPath()%>/finalScore/finalScore.ajax',
@@ -216,7 +208,7 @@
 						action: 'update',
 						scoreList: JSON.stringify(scoreList)
 					},
-					success:function(res) {
+					success: function (res) {
 						//servlet的res會在這邊處理
 						if (res == "ok") {
 							//TO DO 如果成功，請切換回檢視模式
@@ -225,13 +217,13 @@
 							//2.隱藏按鈕
 							$('button.submit').hide();
 							$('button.cancel').hide();
-							
-							
+
+
 							let scorelist = $('input.score');
 							let spanlist = $('span.score');
-							for (let i=0; i < scorelist.length; i++){
+							for (let i = 0; i < scorelist.length; i++) {
 								//3.更新input的oldValue，提示oldValue = value
-								let scoreinput=scorelist[i];
+								let scoreinput = scorelist[i];
 								scoreinput.setAttribute('oldvalue', scoreinput.value);
 								//4.更新span的text
 								let spanscore = spanlist[i];
@@ -250,15 +242,30 @@
 							//Future 可以提示使用者，你哪個成績是失敗的
 						}
 					},
-					error:function(err) {
+					error: function (err) {
 						console.log(err);
 						alert('成績上傳失敗');
 					},
-					complete(){
+					complete() {
 						//整個ajax完成之後，收尾前還有想做的事情
 					}
 				});
 			});
+			document.getElementById('aListAllCourse').addEventListener('click', function (e) {
+				e.preventDefault();
+				let _this = this;
+				let banjiNo = this.getAttribute('banjiNo');
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/course/course.do';
+				myForm.method = 'POST';
+				let banjiNoInput = document.createElement('input');
+				banjiNoInput.type = 'hidden';
+				banjiNoInput.name = 'banjiNo';
+				banjiNoInput.value = banjiNo;
+				myForm.append(banjiNoInput);
+				myForm.submit();
+			}, false);
 		});
 	</script>
 </body>
