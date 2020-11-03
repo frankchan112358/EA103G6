@@ -551,6 +551,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>ReplyAjax</servlet-name>
+		<servlet-class>com.reply.controller.ReplyAjax</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReplyAjax</servlet-name>
+		<url-pattern>/reply/reply.ajax</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>CourseAskServlet</servlet-name>
 		<servlet-class>com.courseask.controller.CourseAskServlet</servlet-class>
 	</servlet>
