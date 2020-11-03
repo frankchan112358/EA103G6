@@ -30,6 +30,7 @@ pageContext.setAttribute("courseNav_courseVO", courseNav_courseVO);
 		<li class="nav-item"><a class="courseWork nav-link" courseWork="teachingNote" href="javascript:void(0)" style="font-size: 15px">教學筆記管理</a></li>
 		<li class="nav-item"><a class="courseWork nav-link" courseWork="teachingFile" href="javascript:void(0)" style="font-size: 15px">課程教材管理</a></li>
 		<li class="nav-item"><a class="courseWork nav-link" courseWork="finalScore" href="javascript:void(0)" style="font-size: 15px">成績管理</a></li>
+		<li class="nav-item"><a class="courseWork nav-link" courseWork="courseAsk" href="javascript:void(0)" style="font-size: 15px">提問管理</a></li>
 	</ul>
 	<div class="tab-content"></div>
 </div>
@@ -116,6 +117,15 @@ pageContext.setAttribute("courseNav_courseVO", courseNav_courseVO);
 				myForm.append(courseNavInput('hidden', 'action', 'getFSDisplayList'));
 				myForm.submit();
 			}
+			if (courseWork == 'courseAsk') {
+				e.preventDefault();
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/courseAsk/courseAsk.do';
+				myForm.append(courseNavInput('hidden','action','listCourseAskWithCourseNo1'));
+				myForm.method = 'POST';
+				myForm.submit();
+				}
 		});
 	}
 

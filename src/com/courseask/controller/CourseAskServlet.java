@@ -47,6 +47,24 @@ public class CourseAskServlet extends HttpServlet {
 			}
 		}
 		
+		if ("listCourseAskWithCourseNo1".equals(action)) {
+			try {
+				HttpSession session = req.getSession();
+				String courseNo = (String)session.getAttribute("courseNo");
+				List<CourseAskVO> courseAskList = new CourseAskService().getAllWithCourseNo(courseNo);
+				req.setAttribute("courseAskList", courseAskList);
+				session.setAttribute("courseWork", "courseAsk");
+				String url = "/back-end/courseAsk/listCourseAskWithCourseNo.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				return;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
 		if ("getOne_For_Display".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
