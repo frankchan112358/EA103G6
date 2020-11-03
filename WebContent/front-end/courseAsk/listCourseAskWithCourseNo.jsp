@@ -10,8 +10,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:useBean id="studentSvc" scope="page" class="com.student.model.StudentService" />
-<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
-<jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
 <jsp:useBean id="replySvc" scope="page" class="com.reply.model.ReplyService" />
 <%
 %>
@@ -37,6 +35,11 @@
 
     .ask-title {
         display: inline-flex !important;
+    }
+
+    .replyList {
+        background-color: bisque;
+        min-height: 3em;
     }
 </style>
 </head>
@@ -88,9 +91,9 @@
                                             <strong>我要問問題</strong>
                                         </button>
                                     </div><br>
-                                    <div class="accordion accordion-outline" id="courseAsk">
+                                    <div class="accordion accordion-outline" id="courseAskList">
                                         <c:forEach var="courseAskVO" items="${courseAskList}">
-                                            <div class="card" data-toggle="collapse" data-target="#courseAsk${courseAskVO.courseAskNo}" aria-expanded="false">
+                                            <div class="card courseAsk" courseAskNo="${courseAskVO.courseAskNo}" data-toggle="collapse" data-target="#courseAsk${courseAskVO.courseAskNo}" aria-expanded="false">
                                                 <div class="card-header">
                                                     <div class="ask-title card-title collapsed">
                                                         <i class="fal fa-books mr-3 fa-2x"></i>
@@ -108,12 +111,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="courseAsk${courseAskVO.courseAskNo}" class="collapse" data-parent="#courseAsk">
+                                            <div id="courseAsk${courseAskVO.courseAskNo}" class="collapse" data-parent="#courseAskList">
                                                 <div class="card-body">
                                                     <div class="card-text fs-xxl" style="padding-left: 30px">${courseAskVO.question}</div>
                                                     <div class="m-5 d-flex">
-                                                        <div courseAskNo="${courseAskVO.courseAskNo}" class="replyAll"></div>
-                                                        <button type="button" class="reply mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">回覆</button>
+                                                        <div courseAskNo="${courseAskVO.courseAskNo}" class="replyList"></div>
+                                                        <button courseAskNo="${courseAskVO.courseAskNo}" type="button" class="reply mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">回覆</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -144,7 +147,7 @@
                         <div class="invalid-feedback">請勿空白</div>
                         <input type="hidden" name="studentNo" value="${studentVO.studentNo}" />
                         <input type="hidden" name="action" value="insert">
-                        <button id="sendNote" type="submit" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">送出</button>
+                        <button id="sendCourseAsk" type="submit" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">送出</button>
                     </form>
                 </div>
             </div>
@@ -160,7 +163,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="<%=request.getContextPath()%>/reply/reply.do" class="needs-validation" novalidate>
+                    <form id="formReply" class="needs-validation" novalidate>
+                        <textarea name="replyContent" required></textarea>
+                        <div class="invalid-feedback">請勿空白</div>
+                        <input type="hidden" name="courseAskNo" value="" />
+                        <input type="hidden" name="userNo" value="${userVO.userNo}" />
+                        <input type="hidden" name="action" value="insertWithStudent">
+                        <button id="sendReply" type="button" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">送出</button>
                     </form>
                 </div>
             </div>
@@ -175,6 +184,8 @@
     <script src="<%=request.getContextPath() %>/SmartAdmin4/js/formplugins/summernote/summernote.js"></script>
     <script>
         $(document).ready(function () {
+
+            var myUserNo = '${userVO.userNo}';
 
             var forms = document.getElementsByClassName('needs-validation');
             var validation = Array.prototype.filter.call(forms, function (form) {
@@ -213,9 +224,62 @@
             });
 
             $(document).on('click', 'button.reply', function () {
+                let _courseAskNo = this.getAttribute('courseAskNo');
+                $('#formReply').find('[name=courseAskNo]').val(_courseAskNo);
                 $('#replyModal').modal('show');
             });
 
+            $(document).on('click', 'div.card.courseAsk', function (e) {
+                let _courseAskNo = this.getAttribute('courseAskNo');
+                $.ajax({
+                    beforeSend() { },
+                    type: 'POST',
+                    url: `<%=request.getContextPath()%>/reply/reply.ajax`,
+                    data: {
+                        action: 'getAllWithCourseAskNo',
+                        courseAskNo: _courseAskNo
+                    },
+                    success(res) {
+                        loadReplyList(_courseAskNo, res);
+                    },
+                    complete() { }
+                });
+            });
+
+            $('#sendReply').click(function (e) {
+                e.preventDefault();
+                let _courseAskNo = $(formReply).find('input[name=courseAskNo]').val();
+                $.ajax({
+                    type: 'POST',
+                    url: '<%=request.getContextPath()%>/reply/reply.ajax',
+                    data: $(formReply).serialize(),
+                    success(res) {
+                        loadReplyList(_courseAskNo, res);
+                        $('#replyModal').modal('hide');
+                    }
+                });
+            });
+
+            function loadReplyList(courseAskNo, array) {
+                let divReplyList = $(`div.replyList[courseAskNo=${'${courseAskNo}'}]`);
+                divReplyList.html('');
+                for (let index = 0; index < array.length; index++) {
+                    let divReply = document.createElement('div');
+                    let divReplyContent = document.createElement('div');
+                    let divReplyUserName = document.createElement('div');
+                    let divReplyUpdateTime = document.createElement('div');
+
+                    $(divReplyContent).html(array[index].replyContent);
+                    $(divReplyUserName).html(array[index].userName);
+                    $(divReplyUpdateTime).html(array[index].updateTime);
+
+                    $(divReply).append(divReplyContent);
+                    $(divReply).append(divReplyUserName);
+                    $(divReply).append(divReplyUpdateTime);
+
+                    divReplyList.append(divReply);
+                }
+            }
         });
 
     </script>

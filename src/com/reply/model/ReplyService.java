@@ -69,7 +69,9 @@ public class ReplyService {
 		for (ReplyVO replyVO : getAllWithCouseAskNo(courseAskNo)) {
 			JsonObject jsonObject = gson.fromJson(gson.toJson(replyVO), JsonObject.class);
 			UserVO userVO = new UserService().getOneUser(replyVO.getUserNo());
-			jsonObject.add("userVO", gson.fromJson(gson.toJson(userVO), JsonObject.class));
+			jsonObject.addProperty("userNo", userVO.getUserNo());
+			jsonObject.addProperty("userName", userVO.getName());
+			jsonObject.addProperty("userType", userVO.getType());
 			jsonArray.add(jsonObject);
 		}
 		String jsonStr = gson.toJson(jsonArray);
@@ -81,7 +83,9 @@ public class ReplyService {
 		ReplyVO replyVO = dao.findByPrimaryKey(replyNo);
 		JsonObject jsonObject = gson.fromJson(gson.toJson(replyVO), JsonObject.class);
 		UserVO userVO = new UserService().getOneUser(replyVO.getUserNo());
-		jsonObject.add("userVO", gson.fromJson(gson.toJson(userVO), JsonObject.class));
+		jsonObject.addProperty("userNo", userVO.getUserNo());
+		jsonObject.addProperty("userName", userVO.getName());
+		jsonObject.addProperty("userType", userVO.getType());
 		return gson.toJson(jsonObject);
 	}
 }
