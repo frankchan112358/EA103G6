@@ -56,7 +56,7 @@ public class UserServlet extends HttpServlet {
 			String userNo = req.getParameter("userNo");
 
 			UserService userSvc = new UserService();
-			InputStream in = userSvc.getPic(userNo);
+			
 
 			ServletOutputStream out = res.getOutputStream();
 			res.setContentType("image/gif");
@@ -65,11 +65,15 @@ public class UserServlet extends HttpServlet {
 			byte[] buf = new byte[4 * 1024];
 			int len = 0;
 
+			InputStream in = userSvc.getPic(userNo);
+			if (in == null) {
+				in = getServletContext().getResourceAsStream("/images/noPicture.png");
+			}
 			while ((len = in.read(buf)) > 0) {
 				out.write(buf, 0, len);
 			}
 			out.flush();
-			in.close();
+			in.close();		
 			/***************上述為原本直接輸出code********************/
 			
 //			BufferedInputStream bis = new BufferedInputStream(in);
