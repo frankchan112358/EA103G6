@@ -75,7 +75,8 @@ public class ForgetServlet extends HttpServlet{
 			
 			
 			String encoding = userVO.getId();
-			String messageText = "http://localhost:8081" + req.getContextPath() + "/ChangePassword/ChangePassword.do?id="
+			String messageText = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort()
+			+ req.getContextPath()  + "/ChangePassword/ChangePassword.do?id="
 					+ encoding;
 
 			MailService sendMail = new MailService();
