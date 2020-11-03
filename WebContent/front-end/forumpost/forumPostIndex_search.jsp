@@ -41,38 +41,23 @@ pageContext.setAttribute("list", list);
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a></li>
                         <li class="breadcrumb-item">討論區</li>
                     </ol>
-<!--                          <div class="input-group input-group-lg mb-g"> -->
-<!--                                     <input type="text" class="form-control shadow-inset-2" placeholder="Search Discussion"> -->
-<!--                                     <div class="input-group-append"> -->
-<!--                                         <span class="input-group-text"><i class="fal fa-search"></i></span> -->
-<!--                                     </div> -->
-<!--                                 </div> -->
 
-<!--                                 <div class="subheader"> -->
-<!--                         <h1 class="subheader-title"> -->
-<!--                             <i class='subheader-icon fal fa-democrat'></i> 討論區 -->
-<!--                         </h1> -->
-                       
-<!--                                          </div> -->
-<!--                                                               </main>            -->
-                                         
-<!--                                          </div> -->
-<!--                                          </div> -->
-<!--                     </div> -->
-                    
-<!--                     <section id="One" class="wrapper style3"> -->
-<!-- 		<div class="inner"> -->
-<!-- 			<header class="align-center"> -->
-				
-<!-- 			</header> -->
-<!-- 		</div> -->
-<!-- 	</section> -->
-	<!-- Two -->
 	<section id="two" class="wrapper style2">
 		<div class="inner">
 			<div class="box" style="text-align:center">
 				<div class="content">
-					<header class="align-center">
+					
+					<div class="container">
+						<div class="row">
+							
+							<div class="col-md-5" id="search">
+								<form method="post" action="<%=request.getContextPath() %>/forumPost/forumPost.do">
+									<input type="text" name="title">
+									<input type="hidden" name="action" value="search">
+									<button type="submit"class="btn btn-primary justify-content-center">搜尋</button>
+								</form>
+							</div>
+							<header class="align-center">
 						<c:if test="${not empty errorMsgs}">
 							<font style="color: red">請修正以下錯誤:</font>
 							<ul>
@@ -82,44 +67,24 @@ pageContext.setAttribute("list", list);
 							</ul>
 						</c:if>
 					</header>
-					<div class="container">
-						<div class="row">
-							<div class="col-md-3">
-								<div id="heading1">
-									<b>最多回覆</b>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div id="heading2">
-									<a href="<%=request.getContextPath()%>/front-end/forumpost/forumIndex_hot.jsp"><b>最多觀看</b></a>
-								</div>
-							</div>
-							<div class="col-md-5" id="search">
-								<form method="post" action="<%=request.getContextPath() %>/forumPost/forumPost.do">
-									<input type="text" name="title">
-									<input type="hidden" name="action" value="search">
-									<input type="submit" value="搜尋">
-								</form>
-							</div>
-							<div class="col d-flex">
-                                                <a class="btn btn-outline-success btn-sm ml-auto mr-2 flex-shrink-0" onclick="location.href='${pageContext.request.contextPath}/front-end/forumpost/addForumPost.jsp'">新增貼文</a>
-                                            </div>
+							
 						</div>
 						
 					</div>
-					<%@ include file="page1_ByCompositeQuery.file"%>
 				<hr>
 			
 					<div class="container">
 						<div class="row">
-							<div class="col-md-8" id="title" style="font-weight: bold;">貼文標題</div>
+							<div class="col-md-8" id="title" style="font-weight: bold;">發文時間</div>
 							<div class="col-md-2" style="font-weight: 900;">更新時間</div>
 							<div class="col-md-2" style="font-weight: 900;">回應數</div>
-							<div class="col-md-2" style="font-weight: 900;">發文時間</div>
+							
+							<div class="col-md-2" style="font-weight: 900;">貼文標題</div>
 							
 							
 						</div>
 						<hr>
+						 					<%@ include file="page1_ByCompositeQuery.file"%>
 						 
 						<c:forEach var="forumPostVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 															<div class="row">
@@ -217,6 +182,11 @@ pageContext.setAttribute("list", list);
 
 	
 </section>
+</main>
+</div>
+</div>
+</div>
+
 </body>
 
 
