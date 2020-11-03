@@ -10,8 +10,17 @@ public class ReplyVO implements java.io.Serializable {
 	private String studentNo;
 	private String replyContent;
 	private Timestamp updateTime;
-
+	private String userNo;
+	
 	public ReplyVO() {
+	}
+
+	public String getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(String userNo) {
+		this.userNo = userNo;
 	}
 
 	public String getReplyNo() {
