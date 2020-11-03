@@ -3,11 +3,10 @@
 <%@ include file="/back-end/template/check.jsp"%>
 <%@ page import="com.course.model.*,com.timetable.model.*, com.teachingfile.model.*"%>
 <%@ page import="java.util.*"%>
-<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService">
-<jsp:useBean id="timetableSvc" scope="page" class="com.course.model.TimetableService">
-<jsp:useBean id="teachingFileSvc" scope="page" class="com.course.model.TeachingFileService">
+<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+<jsp:useBean id="teachingFileSvc" scope="page" class="com.teachingfile.model.TeachingFileService" />
 
-<%
+			<%
 %>
 
 <!DOCTYPE html>
@@ -158,7 +157,7 @@
 							}
 						}
 
-						$('table.teachingFileinfo').hide();
+						$('table.teachingFileinfo').hide()
 
 						var columnSet = [
 							{

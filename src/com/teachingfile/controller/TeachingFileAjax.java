@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.teachingfile.model.TeachingFileService;
@@ -30,11 +31,13 @@ public class TeachingFileAjax extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		res.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		HttpSession session = req.getSession();
+		
 		if ("insert".equals(action)) {
 			res.setContentType("text/html");
 			try {
 				// 接參數
-				String timetableNo = req.getParameter("timetableNo");
+				String courseNo = (String)session.getAttribute("courseNo");
 				String teachingFileName = req.getParameter("teachingFileName");
 				// 接檔案 >判斷有檔案 > 判斷格式(對>上傳 ; 不對 > print errorMsgs) > 上傳
 				byte[] teachingFiles = null;
@@ -50,7 +53,7 @@ public class TeachingFileAjax extends HttpServlet {
 				out.write(teachingFiles);
 				out.close();
 				in.close();
-				new TeachingFileService().addTeachingFile(timetableNo, teachingFileName, teachingFiles);
+				new TeachingFileService().addTeachingFile(courseNo, teachingFileName, teachingFiles);
 				res.getWriter().append("ok");
 				return;
 			} catch (Exception e) {

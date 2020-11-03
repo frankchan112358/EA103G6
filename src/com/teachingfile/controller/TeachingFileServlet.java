@@ -65,11 +65,11 @@ public class TeachingFileServlet extends HttpServlet {
 			try {
 				String teachingFileNo = req.getParameter("teachingFileNo");
 
-				String timetableNo = req.getParameter("timetableNo");
-				String timetableReg = "[T]{2}[0-9]{6}";
-				if (timetableNo == null || timetableNo.trim().length() == 0) {
+				String courseNo = req.getParameter("courseNo");
+				String courseReg = "[C]{1}[0-9]{3}";
+				if (courseNo == null || courseNo.trim().length() == 0) {
 					errorMsgs.add("課表編號: 請勿空白");
-				} else if (!timetableNo.trim().matches(timetableReg)) {
+				} else if (!courseNo.trim().matches(courseReg)) {
 					errorMsgs.add("課表編號格式錯誤");
 				}
 
@@ -92,7 +92,7 @@ public class TeachingFileServlet extends HttpServlet {
 						System.out.println("here is the errorMsgs in errorMsgs1");
 						TeachingFileVO teachingFileVO = new TeachingFileVO();
 						teachingFileVO.setTeachingFileNo(teachingFileNo);
-						teachingFileVO.setTimetableNo(timetableNo);
+						teachingFileVO.setCourseNo(courseNo);
 						teachingFileVO.setTeachingFileName(teachingFileName);
 						req.setAttribute("teachingFileVO", teachingFileVO);
 						System.out.println("here is the errorMsgs in errorMsgs2");
@@ -115,7 +115,7 @@ public class TeachingFileServlet extends HttpServlet {
 
 					TeachingFileVO teachingFileVO = new TeachingFileVO();
 					teachingFileVO.setTeachingFileNo(teachingFileNo);
-					teachingFileVO.setTimetableNo(timetableNo);
+					teachingFileVO.setCourseNo(courseNo);
 					teachingFileVO.setTeachingFileName(teachingFileName);
 					teachingFileVO.setTeachingFile(teachingFiles);
 
@@ -128,7 +128,7 @@ public class TeachingFileServlet extends HttpServlet {
 					}
 
 					TeachingFileService teachingFileSvc = new TeachingFileService();
-					teachingFileVO = teachingFileSvc.updateTeachingFile(teachingFileNo, timetableNo, teachingFileName,
+					teachingFileVO = teachingFileSvc.updateTeachingFile(teachingFileNo, courseNo, teachingFileName,
 							teachingFiles);
 					req.setAttribute("teachingFileVO", teachingFileVO);
 					String url = "/back-end/teachingFile/listAllTeachingFile.jsp";
@@ -138,7 +138,7 @@ public class TeachingFileServlet extends HttpServlet {
 				} else { // 如果影片名稱有改，則重取檔案 > 重新命名 > 重新存入
 					TeachingFileVO teachingFileVO = new TeachingFileVO();
 					teachingFileVO.setTeachingFileNo(teachingFileNo);
-					teachingFileVO.setTimetableNo(timetableNo);
+					teachingFileVO.setCourseNo(courseNo);
 					teachingFileVO.setTeachingFileName(teachingFileName);
 
 					if (!errorMsgs.isEmpty()) {
@@ -149,7 +149,7 @@ public class TeachingFileServlet extends HttpServlet {
 						return;
 					}
 					TeachingFileService teachingFileSvc = new TeachingFileService();
-					teachingFileVO = teachingFileSvc.updateTeachingFileNOFILE(teachingFileNo, timetableNo,
+					teachingFileVO = teachingFileSvc.updateTeachingFileNOFILE(teachingFileNo, courseNo,
 							teachingFileName);
 
 					req.setAttribute("teachingFileVO", teachingFileVO);
@@ -174,7 +174,6 @@ public class TeachingFileServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
 				String courseNo = req.getParameter("courseNo");
-				String timetableNo = req.getParameter("timetableNo");
 				String teachingFileName = req.getParameter("teachingFileName");
 
 				byte[] teachingFiles = null;
@@ -191,7 +190,7 @@ public class TeachingFileServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("courseNo", courseNo);
 					TeachingFileVO teachingFileVO = new TeachingFileVO();
-					teachingFileVO.setTimetableNo(timetableNo);
+					teachingFileVO.setCourseNo(courseNo);
 					teachingFileVO.setTeachingFileName(teachingFileName);
 					req.setAttribute("teachingFileVO", teachingFileVO);
 					RequestDispatcher failureView = req
@@ -216,12 +215,12 @@ public class TeachingFileServlet extends HttpServlet {
 				req.setAttribute("courseVO", courseVO);
 
 				TeachingFileVO teachingFileVO = new TeachingFileVO();
-				teachingFileVO.setTimetableNo(timetableNo);
+				teachingFileVO.setCourseNo(courseNo);
 				teachingFileVO.setTeachingFileName(teachingFileName);
 				teachingFileVO.setTeachingFile(teachingFiles);
 				
 				TeachingFileService teachingFileSvc = new TeachingFileService();
-				teachingFileVO = teachingFileSvc.addTeachingFile(teachingFileVO.getTimetableNo(),
+				teachingFileVO = teachingFileSvc.addTeachingFile(teachingFileVO.getCourseNo(),
 						teachingFileVO.getTeachingFileName(), teachingFileVO.getTeachingFile());
 				String url = "/back-end/teachingFile/listAllTeachingFile2.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);

@@ -6,6 +6,7 @@ public class TeachingFileVO implements java.io.Serializable{
 	private String timetableNo;
 	private String teachingFileName;
 	private byte[] teachingFile;
+	private String courseNo;
 	
 	public TeachingFileVO() {}
 	
@@ -32,6 +33,13 @@ public class TeachingFileVO implements java.io.Serializable{
 	}
 	public void setTeachingFile(byte[] teachingFile) {
 		this.teachingFile = teachingFile;
+	}
+	
+	public String getCourseNo() {
+		return courseNo;
+	}
+	public void setCourseNo(String courseNo) {
+		this.courseNo = courseNo;
 	}
 	@Override
 	public String toString() {
