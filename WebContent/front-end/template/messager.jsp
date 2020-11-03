@@ -132,10 +132,8 @@
 				$("#chat_container").scrollTop($("#chat_container").prop('scrollHeight'));
 			}else if ("chat" === jsonObj.type){
 				let showMsg = jsonObj.message;
-				console.log(jsonObj.sender===ChatMyself||jsonObj.sender !== $("#topChatName").attr("value"));
 				if(jsonObj.sender!==ChatMyself&&jsonObj.sender !== $("#topChatName").attr("value")) return; //防止收訊息者 沒有跟指定對象聊天卻還收到訊息
 				if(jsonObj.sender === ChatMyself){
-					console.log(showMsg);
 					$("#chat_container").append(`
 					<div class="chat-segment chat-segment-sent">
 						<div class="chat-message">
@@ -171,15 +169,6 @@
 			$("a[value="+friendsValue+"]").attr("data-filter-tags",friendsName+" offline"); //更改其搜尋的內容
 			$("a[value="+friendsValue+"]").parent().insertBefore("#js-msgr-listfilter li:last");//下線將其放置最後(其實是倒數第二)
 			
-			Swal.fire(
-                    {
-                        position: "bottom-end",
-                        type: "success",
-                        title: friendsName+"已離線",
-                        width: 130,
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
 		}else{
 		
 			let onlineList = jsonObj.users;
@@ -195,18 +184,6 @@
 				$("#"+friendsValue+"StatusDot").parent().attr("data-filter-tags",friendsName+" online");  //更改其搜尋的內容
 				$("a[value="+friendsValue+"]").parent().insertBefore("#js-msgr-listfilter li:eq(0)"); //上線將其位置擺第一	
 			
-				if(jsonObj.user!==ChatMyself){ //自己剛上線不跳提醒
-				let onlineName=$("a[value="+jsonObj.user+"]").attr("name");
-				Swal.fire(
-                    {
-                        position: "bottom-end",
-                        type: "success",
-                        title: onlineName+"上線中",
-                        width: 130,
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-				}
 			}
 		}
 		addListener();
@@ -216,7 +193,6 @@
 		var container = document.getElementById("js-msgr-listfilter");
 		container.addEventListener("click", function(e) {
 			var friend = ($(e.srcElement).parents(".d-table").attr("name")==undefined?$(e.srcElement).attr("name"):$(e.srcElement).parents(".d-table").attr("name")); 
-			console.log(friend)
 			var friendVal =($(e.srcElement).parents(".d-table").attr("value")==undefined?$(e.srcElement).attr("value"):$(e.srcElement).parents(".d-table").attr("value"));
 			updateFriendName(friend,friendVal);
 			var jsonObj = {
