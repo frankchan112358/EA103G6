@@ -329,6 +329,7 @@ CREATE TABLE REPLY(
     STUDENTNO VARCHAR2(40),
     REPLYCONTENT CLOB NOT NULL,
     UPDATETIME TIMESTAMP NOT NULL,
+    USERNO VARCHAR2(40),
     CONSTRAINT PK_REPLY PRIMARY KEY(REPLYNO)
 );
 
@@ -890,9 +891,9 @@ INSERT INTO courseask (courseaskno,courseno,studentno,title,question,updatetime,
 --------------------------------------------------------
 --  Insert into 提問回覆 reply
 --------------------------------------------------------
-INSERT INTO reply (replyno,courseaskno,teacherno,studentno,replycontent,updatetime) VALUES (REPLY_SEQ.nextval,'1','T000001',null,'是的',to_timestamp('2020-07-02 20:33:00','YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO reply (replyno,courseaskno,teacherno,studentno,replycontent,updatetime) VALUES (REPLY_SEQ.nextval,'2','T000001',null,'是的',to_timestamp('2020-09-07 17:33:00','YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO reply (replyno,courseaskno,teacherno,studentno,replycontent,updatetime) VALUES (REPLY_SEQ.nextval,'3','T000002',null,'是的',to_timestamp('2020-10-26 09:33:00','YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO reply (replyno,courseaskno,teacherno,studentno,replycontent,updatetime,userno) VALUES (REPLY_SEQ.nextval,'1',null,null,'是的',to_timestamp('2020-07-02 20:33:00','YYYY-MM-DD HH24:MI:SS'),'U000007');
+INSERT INTO reply (replyno,courseaskno,teacherno,studentno,replycontent,updatetime,userno) VALUES (REPLY_SEQ.nextval,'2',null,null,'是的',to_timestamp('2020-09-07 17:33:00','YYYY-MM-DD HH24:MI:SS'),'U000008');
+INSERT INTO reply (replyno,courseaskno,teacherno,studentno,replycontent,updatetime,userno) VALUES (REPLY_SEQ.nextval,'3',null,null,'是的',to_timestamp('2020-10-26 09:33:00','YYYY-MM-DD HH24:MI:SS'),'U000009');
 --------------------------------------------------------
 --  Insert into 課表 timetable
 --------------------------------------------------------
