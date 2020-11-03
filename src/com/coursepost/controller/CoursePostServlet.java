@@ -137,6 +137,9 @@ public class CoursePostServlet extends HttpServlet {
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			
+			Map<String, String> alert = new HashMap<>();
+			req.setAttribute("alert", alert);
 
 			try {
 				String coursePostNo = new String(req.getParameter("coursePostNo").trim());
@@ -166,6 +169,7 @@ public class CoursePostServlet extends HttpServlet {
 				CoursePostService coursePostSvc = new CoursePostService();
 				coursePostVO = coursePostSvc.updateCoursePost(coursePostNo, courseNo, title, postContent);
 				req.setAttribute("coursePostVO", coursePostVO);
+				alert.put("updateOK", "修改成功");
 				String url = "/back-end/coursepost/listAllCoursePost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -183,6 +187,9 @@ public class CoursePostServlet extends HttpServlet {
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			
+			Map<String, String> alert = new HashMap<>();
+			req.setAttribute("alert", alert);
 
 			try {
 
@@ -208,6 +215,7 @@ public class CoursePostServlet extends HttpServlet {
 
 				CoursePostService coursePostSvc = new CoursePostService();
 				coursePostVO = coursePostSvc.addCoursePost(courseNo, title, postContent);
+				alert.put("insertOK", "新增成功");
 				String url = "/back-end/coursepost/listAllCoursePost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
