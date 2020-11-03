@@ -524,6 +524,15 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>TeachingFileAjax</servlet-name>
+		<servlet-class>com.teachingfile.controller.TeachingFileAjax</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeachingFileAjax</servlet-name>
+		<url-pattern>/teachingFile/teachingFileAjax</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>TeachingNote</servlet-name>
 		<servlet-class>com.teachingnote.controller.TeachingNote</servlet-class>
 	</servlet>

@@ -297,8 +297,12 @@
 							contentType: false,
 							data: form,
 							success(res) {
-								coursetable.ajax.reload(null, false);
-								$('#videoModal').modal('hide');
+								if (res == 'ok') {
+									coursetable.ajax.reload(null, false);
+									$('#videoModal').modal('hide');		
+								}else{
+									alert(res);
+								}
 							},
 							complete() {
 								workStatus = 'none';
@@ -320,8 +324,12 @@
 							contentType: false,
 							data: form,
 							success(res) {
-								coursetable.ajax.reload(null, false);
-								$('#videoModal').modal('hide');
+									if (res == 'ok') {
+									coursetable.ajax.reload(null, false);
+									$('#videoModal').modal('hide');		
+								}else{
+									alert(res);
+								}
 							},
 							complete() {
 								workStatus = 'none';
