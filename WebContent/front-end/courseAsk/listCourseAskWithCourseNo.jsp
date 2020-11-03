@@ -38,7 +38,7 @@
     }
 
     .replyList {
-        background-color: bisque;
+        background-color: #f7f9fa;
         min-height: 3em;
     }
 </style>
@@ -106,7 +106,7 @@
                                                     </div>
                                                     <c:set var="replySize" value="${fn:length(replySvc.getAllWithCouseAskNo(courseAskVO.courseAskNo))}"></c:set>
                                                     <div class="num">
-                                                        ${replySize}
+                                                        <span courseAskNo="${courseAskVO.courseAskNo}" class="replySize">${replySize}</span>
                                                         <div style="font-size:15px;">回覆</div>
                                                     </div>
                                                 </div>
@@ -114,9 +114,11 @@
                                             <div id="courseAsk${courseAskVO.courseAskNo}" class="collapse" data-parent="#courseAskList">
                                                 <div class="card-body">
                                                     <div class="card-text fs-xxl" style="padding-left: 30px">${courseAskVO.question}</div>
-                                                    <div class="m-5 d-flex">
-                                                        <div courseAskNo="${courseAskVO.courseAskNo}" class="replyList"></div>
-                                                        <button courseAskNo="${courseAskVO.courseAskNo}" type="button" class="reply mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">回覆</button>
+                                                    <div class="m-5">
+                                                        <div courseAskNo="${courseAskVO.courseAskNo}" class="replyList">
+                                                            <span>目前沒有回覆</span>
+                                                        </div>
+                                                        <button courseAskNo="${courseAskVO.courseAskNo}" type="button" class="reply mt-3 btn btn-info">回覆</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -164,7 +166,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="formReply" class="needs-validation" novalidate>
-                        <textarea name="replyContent" required></textarea>
+                        <textarea name="replyContent" required style="width:100%;height:200px;border:2px green double;" placeholder="請輸入..."></textarea>
                         <div class="invalid-feedback">請勿空白</div>
                         <input type="hidden" name="courseAskNo" value="" />
                         <input type="hidden" name="userNo" value="${userVO.userNo}" />
@@ -262,22 +264,31 @@
 
             function loadReplyList(courseAskNo, array) {
                 let divReplyList = $(`div.replyList[courseAskNo=${'${courseAskNo}'}]`);
+                if (array.length == 0)
+                    return;
                 divReplyList.html('');
-                for (let index = 0; index < array.length; index++) {
-                    let divReply = document.createElement('div');
-                    let divReplyContent = document.createElement('div');
-                    let divReplyUserName = document.createElement('div');
-                    let divReplyUpdateTime = document.createElement('div');
+                for (let i = 0; i < array.length; i++) {
+                    let replyContent = array[i].replyContent;
+                    let userName = array[i].userName;
+                    let updateTime = array[i].updateTime;
+                    let userNo = array[i].userNo;
 
-                    $(divReplyContent).html(array[index].replyContent);
-                    $(divReplyUserName).html(array[index].userName);
-                    $(divReplyUpdateTime).html(array[index].updateTime);
-
-                    $(divReply).append(divReplyContent);
-                    $(divReply).append(divReplyUserName);
-                    $(divReply).append(divReplyUpdateTime);
-
-                    divReplyList.append(divReply);
+                    let _html = `
+<div class="d-flex flex-row px-3 pt-3 pb-2">
+  <span>
+      <span class="profile-image rounded-circle d-inline-block" style="background-image:url('<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${'${userNo}'}')"></span>
+  </span>
+  <div class="ml-3">
+      <a href="javascript:void(0);" title="Lisa Hatchensen" class="fs-b d-block fw-700 text-dark">${'${userName}'} 時間 ${'${updateTime}'}</a>
+      <div class="fs-xl">
+        ${'${replyContent}'}     
+      </div>
+  </div>
+</div>
+                    
+                    `;
+                    divReplyList.append(_html);
+                    $(`span.replySize[courseAskNo=${'${courseAskNo}'}]`).text(array.length);
                 }
             }
         });
