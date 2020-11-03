@@ -97,7 +97,7 @@
 																					
                                             </table>
                                             
-                                            <div class="demo row">
+                                            <div class="demo row" id="managerCannotDelete">
                                             	<button id="submitDeleteEmp" data-toggle="modal" data-target="#sendCodeForCheck" type="button" class="btn btn-danger ml-auto">修改密碼</button>
                                             <form id="updateEmp" method="post" action="<%=request.getContextPath()%>/back-end/accountmanager/updateThemselves.jsp" id="updateEmp">
                                             	<button id="submitUpdateEmp" class="btn btn-primary ml-auto">個資修改</button>
@@ -388,6 +388,12 @@
 		     }
       });
 	}
+</script>
+
+<script>
+<c:if test="${userVO.userNo eq 'U000001'}">
+$("#managerCannotDelete").empty();
+</c:if>
 </script>
 
 </body>

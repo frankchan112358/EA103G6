@@ -38,7 +38,7 @@
     }
 
     .replyList {
-        background-color: #f7f9fa;
+        background-color: white;
         min-height: 3em;
     }
 </style>
@@ -136,7 +136,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">新增問題</h4>
+                    <h4 class="modal-title" style="padding-left:45%;">新增問題</h4>
                     <button type="button" class="close" data-dismiss="modal">
                         <span><i class="fal fa-times"></i></span>
                     </button>
@@ -149,7 +149,7 @@
                         <div class="invalid-feedback">請勿空白</div>
                         <input type="hidden" name="studentNo" value="${studentVO.studentNo}" />
                         <input type="hidden" name="action" value="insert">
-                        <button id="sendCourseAsk" type="submit" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">送出</button>
+                        <button id="sendCourseAsk" type="submit" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-right">送出</button>
                     </form>
                 </div>
             </div>
@@ -171,7 +171,7 @@
                         <input type="hidden" name="courseAskNo" value="" />
                         <input type="hidden" name="userNo" value="${userVO.userNo}" />
                         <input type="hidden" name="action" value="insertWithStudent">
-                        <button id="sendReply" type="button" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">送出</button>
+                        <button id="sendReply" type="button" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-right">送出</button>
                     </form>
                 </div>
             </div>
@@ -201,7 +201,7 @@
             });
 
             $('#democratNote').summernote({
-                height: 300,
+                height: 250,
                 tabsize: 2,
                 placeholder: "請輸入",
                 dialogsFade: true,
@@ -276,10 +276,10 @@
                     let _html = `
 <div class="d-flex flex-row px-3 pt-3 pb-2">
   <span>
-      <span class="profile-image rounded-circle d-inline-block" style="background-image:url('<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${'${userNo}'}')"></span>
+      <span class="profile-image rounded-circle d-inline-block" style="background-image:url('<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${'${userNo}'}');background-size:cover; "></span>
   </span>
   <div class="ml-3">
-      <a href="javascript:void(0);" title="Lisa Hatchensen" class="fs-b d-block fw-700 text-dark">${'${userName}'} 時間 ${'${updateTime}'}</a>
+      <a href="javascript:void(0);" title="Lisa Hatchensen" class="fs-b d-block fw-700 text-dark">${'${userName}'} <i class="fal fa-clock"></i>:${'${updateTime}'}</a>
       <div class="fs-xl">
         ${'${replyContent}'}     
       </div>
