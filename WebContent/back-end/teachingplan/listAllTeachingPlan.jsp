@@ -35,8 +35,7 @@ TeachingPlanVO teachingPlanVO = (TeachingPlanVO) request.getAttribute("teachingP
 		}
 
 
-		.table th,
-		.table td {
+		.table th, .table td {
 			vertical-align: middle;
 		}
 
@@ -50,6 +49,14 @@ TeachingPlanVO teachingPlanVO = (TeachingPlanVO) request.getAttribute("teachingP
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
+		}
+		
+		div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    		margin-top: 2em;
+		}
+
+		div.dataTables_wrapper div.dataTables_info {
+   			 padding-top: 2em;
 		}
 	</style>
 
@@ -201,6 +208,7 @@ TeachingPlanVO teachingPlanVO = (TeachingPlanVO) request.getAttribute("teachingP
 					rowGroup: {
 						dataSrc: 0
 					}
+<<<<<<< HEAD
 				});
 
 			$(".submitDeleteTeachingPlan").on("click", function (event) {
@@ -228,6 +236,52 @@ TeachingPlanVO teachingPlanVO = (TeachingPlanVO) request.getAttribute("teachingP
 							$("[id='" + str + "']").submit();
 						}, 1000);
 					} else if (
+=======
+					});
+                
+            	document.getElementById('aListAllCourse').addEventListener('click',function(e){
+    				e.preventDefault();
+    				let _this = this;
+                    let banjiNo = this.getAttribute('banjiNo');
+    				let myForm = document.createElement('form');
+    				document.body.appendChild(myForm);
+    				myForm.action = '<%=request.getContextPath()%>/course/course.do';
+    				myForm.method = 'POST';
+    				let banjiNoInput = document.createElement('input');
+    				banjiNoInput.type = 'hidden';
+    				banjiNoInput.name = 'banjiNo';
+    				banjiNoInput.value= banjiNo;
+    				myForm.append(banjiNoInput);
+    				myForm.submit();
+    			}, false);
+                
+                
+        		$(".submitDeleteTeachingPlan").on("click", function(event) {
+					event.preventDefault();
+					var str = $(this).val();
+					var swalWithBootstrapButtons = Swal.mixin({
+						customClass : {
+							confirmButton : "btn btn-primary",
+							cancelButton : "btn btn-danger mr-2"
+						},
+						buttonsStyling : false
+					});
+					swalWithBootstrapButtons.fire({
+						icon : "warning",
+						title : "請再次確認是否刪除",
+						text : "教學計劃一旦刪除並無復原可能",
+						showCancelButton : true,
+						confirmButtonText : "確定刪除",
+						cancelButtonText : "暫不刪除",
+						reverseButtons : true
+					}).then(function(result) {
+						if (result.value) {
+							swalWithBootstrapButtons.fire("刪除請求送出", "請稍等跳轉頁面", "success");
+							setTimeout(function() {
+								$("[id='"+str+"']").submit();
+							}, 1000);
+						} else if (
+>>>>>>> refs/heads/Angela3
 						// Read more about handling dismissals
 						result.dismiss === Swal.DismissReason.cancel) {
 						swalWithBootstrapButtons.fire("刪除請求取消", "刪除教學計劃請再三確認", "error");

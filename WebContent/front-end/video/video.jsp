@@ -11,19 +11,19 @@
 <jsp:useBean id="timetableSvc" scope="page" class="com.timetable.model.TimetableService" />
 
 <%
-	String courseNo =  (String) request.getSession().getAttribute("courseNo");
+	String courseNo = (String) request.getSession().getAttribute("courseNo");
 
 	List<CourseVO> courseList = courseSvc.getAll();
 	CourseVO courseVO = courseSvc.getOneCourse(courseNo);
 
 	List<TimetableVO> timetableList = timetableSvc.getAll();
 
-	List<VideoVO> videoList =videoSvc.getAll();
+	List<VideoVO> videoList = videoSvc.getAll();
 
 	pageContext.setAttribute("courseList", courseList);
 	pageContext.setAttribute("timetableList", timetableList);
 	pageContext.setAttribute("videoList", videoList);
-	
+
 	pageContext.setAttribute("courseNo", courseNo);
 	pageContext.setAttribute("courseVO", courseVO);
 	session.setAttribute("courseWork", "courseVideo");
@@ -32,71 +32,162 @@
 <html>
 
 <head>
-	<%@ include file="/front-end/template/head.jsp"%>
-	<link rel="stylesheet" media="screen, print"
-				href="<%=request.getContextPath()%>/SmartAdmin4/css/formplugins/summernote/summernote.css">
-	<style>
-		.slide-bar {
-			position: absolute;
-			height: 100%;
-			width: 32%;
-			left: 0px;
-			top: 0px;
-			bottom: 0px;
-			background-color: #c3dbaa;
-			overflow-y: scroll;
-		}
+<%@ include file="/front-end/template/head.jsp"%>
+<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath()%>/SmartAdmin4/css/formplugins/summernote/summernote.css">
+<style>
+.panel .panel-container .panel-content {
+	padding: 0;
+}
 
-		.player {
-			position: absolute;
-			height: 100%;
-			width: 68%;
-			right: 0px;
-			top: 0px;
-			bottom: 0px;
-			background-color: black;
-			overflow: hidden;
-		}
+.player {
+	width: 100%;
+	background-color: #000;
+}
 
-		.panel-content {
-			height: 430px;
-		}
+video {
+display: block;
+width: 100%;
+margin: 12px auto;
+}
 
-		.in-sb {
-			border-bottom: 5px #9EDF56 double;
-			height: 20%;
-			font-size: large;
-			margin: auto;
-			padding: 10px;
-		}
+.container-fluid, .container-sm, .container-md, .container-lg, .container-xl {
+    padding-right: 0;
+    padding-left: 0;
+}
 
-		.fa-pencil-alt:hover {
-			transform: scale(1.5);
-		}
+#sidebar-wrapper{
+    background-color: #2d3947 !important;
+}
 
-		video {
-			position: absolute;
-			width: 99%;
-			vertical-align: middle;
-			margin: auto;
-			align-self: center;
-			vertical-align: middle;
-		}
+.bg-light {
+    background-color: #000 !important;
+}
 
-		a {
-			color: black;
-		}
+.border-right {
+    border-right: 3px solid #2d3947 !important;
+}
 
-		[poster] {
-			width: 100%;
-			vertical-align: middle;
-			align-self: center;
-		}
-	</style>
+.border-bottom {
+    border-bottom: none !important;
+}
+
+.border-left {
+    border-bottom: none !important;
+}
+
+.in-sb{
+font-size: 1.6em;
+color : white;
+margin-left: 8px;
+}
+
+a[target]:not(.btn) {
+    text-decoration: none !important;
+}
+
+.sb1{
+    padding: 15px;
+    border-bottom: 1px solid #666 !important;
+}
+
+.btn1{
+	margin-left: 40px;
+	margin-top: 10px;
+}
+
+.btn2{
+	background-color: #252f3b;
+	border-color: #2d3947;
+	margin-left: -17px;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    border-radius: 0 5px 5px 0;
+    -webkit-box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
+    font-size: 23px;
+}
+
+.btn2:hover{
+    color: #212529;
+    background-color: #2d3947;
+    border-color: #2d3947;
+    -webkit-box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
+}
+
+
+.btn2:focus{
+    color: #212529;
+    background-color: #2d3947;
+    border-color: #2d3947;
+    -webkit-box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
+}
+
+.fa-list-ul:before {
+	color: #82a82d;;
+}
+
+.videoname{
+	margin-left: 10px;
+	margin-top: 5px;
+}
+
+#sbLog{
+font-size: 1.3em;
+color: #FFFAE6;
+background-color: #658F4B;
+
+}
+
+ #wrapper {
+    overflow: hidden;
+ }
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -14rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+}
+
+#sidebar-wrapper .list-group {
+  width: 14rem;
+}
+
+#page-content-wrapper {
+  min-width: 100%;
+  background-color: #000;
+  
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+    background-color: #000;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -14rem;
+  }
+}
+
+</style>
 </head>
 
-<body
-			class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
+<body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
 	<script>
 		var classHolder = document.getElementsByTagName("BODY")[0];
 	</script>
@@ -113,13 +204,12 @@
 						<li class="breadcrumb-item">
 							<a href="<%=request.getContextPath()%>/front-end/course/selectCourse.jsp">我的課程</a>
 						</li>
-						<li class="breadcrumb-item">
-							教學影片
-						</li>
+						<li class="breadcrumb-item">課程影片</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class="fas fa-video" style="color: yellowgreen;"> 教學影片</i>
+							<i class="subheader-icon fas fa-video"></i>
+							教學影片
 						</h1>
 					</div>
 					<div class="row align-items-center justify-content-center">
@@ -131,60 +221,73 @@
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
-										<div class="slide-bar">
-											<c:forEach var="courseVO" items="${courseList}">
-												<c:if test="${courseVO.courseNo eq courseNo }">
-													<c:forEach var="timetableVO" items="${timetableList}">
-														<c:if test="${courseVO.courseNo eq timetableVO.courseNo}">
-
-															<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)!=null}">
-																<a class=vpath href="<%=request.getContextPath()%>/videos/${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}.mp4" target="player">
-																	<div class="in-sb">
-																		<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
-																		<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
-																		(Y)上課時段 : ${timetableVO.timetableDate}
-																		<input class="videoname" type="hidden" name="videoName" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoName}">
-																		<input type="hidden" name="timetablePeriod" value="${timetableVO.timetablePeriod}">
-																		<c:if test="${timetableVO.timetablePeriod=='0'}">早上</c:if>
-																		<c:if test="${timetableVO.timetablePeriod=='1'}">下午</c:if>
-																		<c:if test="${timetableVO.timetablePeriod=='2'}">晚上</c:if><br>
-																		<div class="in-sb-log">
-																			<div class="log">
-																				<button timeteableNo="${timetableVO.timetableNo}" type="button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size: small;">
-																					教學筆記
-																				</button>
-																			</div>
+										<div class="d-flex" id="wrapper">
+											<div class="bg-light border-right" id="sidebar-wrapper">
+												<div class="list-group list-group-flush">
+													<c:forEach var="courseVO" items="${courseList}">
+														<c:if test="${courseVO.courseNo eq courseNo }">
+															<c:forEach var="timetableVO" items="${timetableList}">
+																<c:if test="${courseVO.courseNo eq timetableVO.courseNo}">
+																	<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo) ne null}">
+																		<div class="sb1">
+																		<a class=vpath href="<%=request.getContextPath()%>/videos/${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}.mp4" target="player">
+																			<span class="in-sb">
+																				<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
+																				<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
+																				<i class="fal fa-calendar-check mr-1"></i>
+																				${timetableVO.timetableDate}
+																				<input class="videoname" type="hidden" name="videoName" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoName}">
+																				<input type="hidden" name="timetablePeriod" value="${timetableVO.timetablePeriod}">
+																				<c:if test="${timetableVO.timetablePeriod=='0'}">早上</c:if>
+																				<c:if test="${timetableVO.timetablePeriod=='1'}">下午</c:if>
+																				<c:if test="${timetableVO.timetablePeriod=='2'}">晚上</c:if>
+																			</span>
+																		</a>
+																			<span class="in-sb-log">
+																				<button timeteableNo="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).timetableVO.timetableNo}" type="button"
+																					class="btn btn-primary btn-pills waves-effect waves-themed btn1" style="font-size: 13px;"><i class="fal fa-book-spells"></i>教學筆記</button>
+																				</span>
 																		</div>
-																	</div>
-																</a>
-															</c:if>
-
-															<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo)==null}">
-																<a class=vpath href="#" target="player">
-																	<div class="in-sb class-img">
-																		<input type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
-																		(N)上課時段: ${timetableVO.timetableDate}
-																		<input type="hidden" name="timetablePeriod" value="${timetableVO.timetablePeriod}">
-																		<c:if test="${timetableVO.timetablePeriod=='0'}">早上</c:if>
-																		<c:if test="${timetableVO.timetablePeriod=='1'}">下午</c:if>
-																		<c:if test="${timetableVO.timetablePeriod=='2'}">晚上</c:if><br>
-																		<div class="in-sb-log">
-																			<div class="log">
-																				<button timeteableNo="${timetableVO.timetableNo}" type=" button" class="btn btn-warning btn-pills waves-effect waves-themed" style="font-size: small;">
-																					教學筆記
-																				</button>
-																			</div>
+																	</c:if>
+																		
+																	<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo) eq null}">
+																		<div class="sb1">
+																		<a class=vpath href="#" target="player">
+																			<span class="in-sb class-img">
+																				<input type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
+																				<i class="fal fa-calendar-times mr-1"></i>
+																				${timetableVO.timetableDate}
+																				<input type="hidden" name="timetablePeriod" value="${timetableVO.timetablePeriod}">
+																				<c:if test="${timetableVO.timetablePeriod=='0'}">早上</c:if>
+																				<c:if test="${timetableVO.timetablePeriod=='1'}">下午</c:if>
+																				<c:if test="${timetableVO.timetablePeriod=='2'}">晚上</c:if>
+																			</span>
+																		</a>
+																			<span class="in-sb-log">
+																				<button type="button" class="btn btn-primary btn-pills waves-effect waves-themed" style="font-size: 13px;"><i class="fal fa-book-spells"></i>教學筆記</button>
+																			</span>
 																		</div>
-																	</div>
-																</a>
-															</c:if>
+																	</c:if>
+																</c:if>
+															</c:forEach>
 														</c:if>
 													</c:forEach>
-												</c:if>
-											</c:forEach>
-										</div>
-										<div class="player">
-											<video src="#" type="video/mp4" loop autoplay poster="<%=request.getContextPath()%>/images/penguins.jpg"></video>
+												</div>
+											</div>
+
+											<div id="page-content-wrapper">
+
+												<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+													<button class="btn btn-primary btn2" id="menu-toggle">
+														<i class="far fa-list-ul"></i>
+													</button>
+												</nav>
+
+												<div class="player container-fluid">
+												 <h1 class="text-white videoname">${courseSvc.getOneCourse(courseNo).courseName}</h1>
+													<video width="100%" height="100%" src="#" type="video/mp4" loop autoplay poster="<%=request.getContextPath()%>/images/bg.png"></video>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -197,14 +300,15 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="sbLogModal" tabindex="-1" role="dialog"
-			 aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+	<div class="modal fade" id="sbLogModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">教學筆記</h4>
+					<h4 class="modal-title" style="font-size:2em">教學筆記</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true"><i class="fal fa-times"></i></span>
+						<span aria-hidden="true">
+							<i class="fal fa-times"></i>
+						</span>
 					</button>
 				</div>
 				<div id="sbLog" class="modal-body"></div>
@@ -219,14 +323,14 @@
 		'use strict';
 		$(document).ready(function () {
 			//這裡是滑鼠進入slide-bar會讓區塊變色
-			$(".in-sb").hover(function () {
-				$(this).css("background-color", "#a9ec62");
-			},
-				function () {
-					$(this).css("background-color", " #c3dbaa");
-				})
+// 			$(".in-sb").hover(function () {
+// 				$(this).css("background-color", "#a9ec62");
+// 			},
+// 				function () {
+// 					$(this).css("background-color", " #c3dbaa");
+// 				})
 
-
+ 
 			var vIndex = 1000;
 			var path = null;
 			//這裡是click(slide-bar)可以開啟影片
@@ -263,6 +367,11 @@
 				});
 			});
 		});
+		
+	    $("#menu-toggle").click(function(e) {
+	        e.preventDefault();
+	        $("#wrapper").toggleClass("toggled");
+	      });
 	</script>
 </body>
 
