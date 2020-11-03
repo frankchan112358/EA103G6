@@ -23,9 +23,9 @@ public class ReplyJNDIDAO implements ReplyDAO_interface {
 	// 查全部
 	private static final String GET_ALL_STMT = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME,USERNO FROM REPLY ORDER BY to_number(REPLYNO)";
 	// 查單個
-	private static final String GET_ALL_COURSEASK = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME,USERNO FROM REPLY WHERE COURSEASKNO=? ORDER BY UPDATETIME";
+	private static final String GET_ALL_COURSEASK = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME,USERNO FROM REPLY WHERE COURSEASKNO=? ORDER BY to_number(REPLYNO)";
 	// 查課程編號
-	private static final String GET_ONE_STMT = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIM,USERNO FROM REPLY  WHERE REPLYNO =?";
+	private static final String GET_ONE_STMT = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME,USERNO FROM REPLY  WHERE REPLYNO =?";
 	// 刪除
 	private static final String DELETE = "DELETE FROM REPLY WHERE REPLYNO=?";
 	// 修改
@@ -81,8 +81,8 @@ public class ReplyJNDIDAO implements ReplyDAO_interface {
 			pstmt.setString(3, replyVO.getStudentNo());
 			pstmt.setString(4, replyVO.getReplyContent());
 			pstmt.setTimestamp(5, replyVO.getUpdateTime());
-			pstmt.setString(6, replyVO.getReplyNo());
-			pstmt.setString(7, replyVO.getUserNo());
+			pstmt.setString(6, replyVO.getUserNo());
+			pstmt.setString(7, replyVO.getReplyNo());
 			
 			pstmt.executeUpdate();
 		} catch (SQLException se) {

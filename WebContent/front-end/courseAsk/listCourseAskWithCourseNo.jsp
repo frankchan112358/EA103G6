@@ -168,9 +168,10 @@
                     <form id="formReply" class="needs-validation" novalidate>
                         <textarea name="replyContent" required style="width:100%;height:200px;border:2px green double;" placeholder="請輸入..."></textarea>
                         <div class="invalid-feedback">請勿空白</div>
-                        <input type="hidden" name="courseAskNo" value="" />
-                        <input type="hidden" name="userNo" value="${userVO.userNo}" />
-                        <input type="hidden" name="action" value="insertWithStudent">
+                        <input type="hidden" name="action" value="" />
+                        <input type="hidden" name="replyNo" value="" />
+                        <input type="hidden" name="courseAskNo" value="" />                       
+                        <input type="hidden" name="userNo" value="${userVO.userNo}" />    
                         <button id="sendReply" type="button" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-right">送出</button>
                     </form>
                 </div>
@@ -186,9 +187,7 @@
     <script src="<%=request.getContextPath() %>/SmartAdmin4/js/formplugins/summernote/summernote.js"></script>
     <script>
         $(document).ready(function () {
-
             var myUserNo = '${userVO.userNo}';
-
             var forms = document.getElementsByClassName('needs-validation');
             var validation = Array.prototype.filter.call(forms, function (form) {
                 form.addEventListener('submit', function (event) {
@@ -228,7 +227,50 @@
             $(document).on('click', 'button.reply', function () {
                 let _courseAskNo = this.getAttribute('courseAskNo');
                 $('#formReply').find('[name=courseAskNo]').val(_courseAskNo);
+                $('#formReply').find('[name=action]').val("insertWithStudent");
                 $('#replyModal').modal('show');
+            });
+
+            
+            $(document).on('click', 'button.btnReplyUpdate', function () {
+                let _replyNo = this.getAttribute('replyNo');
+                let _courseAskNo = this.getAttribute('courseAskNo');
+                $('#formReply').find('[name=courseAskNo]').val(_courseAskNo);
+                $('#formReply').find('[name=replyNo]').val(_replyNo);
+                $('#formReply').find('[name=action]').val("updateWithStudent");
+                $.ajax({
+                    beforeSend() { },
+                    type: 'POST',
+                    url: `<%=request.getContextPath()%>/reply/reply.ajax`,
+                    data: {
+                        action: 'getOne',
+                        replyNo: _replyNo
+                    },
+                    success(res) {
+                        $('#formReply').find('[name=replyContent]').val(res.replyContent);
+                        $('#replyModal').modal('show');
+                    },
+                    complete() { }
+                });
+
+            });
+
+            $(document).on('click', 'button.btnReplyDelete', function () {
+                let _replyNo = this.getAttribute('replyNo');
+                let _courseAskNo = this.getAttribute('courseAskNo');
+                $.ajax({
+                    beforeSend() { },
+                    type: 'POST',
+                    url: `<%=request.getContextPath()%>/reply/reply.ajax`,
+                    data: {
+                        action: 'deleteWithStudent',
+                        replyNo: _replyNo
+                    },
+                    success(res) {
+                        loadReplyList(_courseAskNo, res);
+                    },
+                    complete() { }
+                });
             });
 
             $(document).on('click', 'div.card.courseAsk', function (e) {
@@ -262,9 +304,12 @@
                 });
             });
 
-            
-            
-            
+			$("#videoModal").on("hidden.bs.modal", function (e) {
+                $('#formReply').find('[name=action]').val('');
+                $('#formReply').find('[name=replyNo]').val('');
+                $('#formReply').find('[name=courseAskNo]').val('');
+			});
+
             function loadReplyList(courseAskNo, array) {
                 let divReplyList = $(`div.replyList[courseAskNo=${'${courseAskNo}'}]`);
                 if (array.length == 0)
@@ -276,44 +321,30 @@
                     let updateTime = array[i].updateTime;
                     let userNo = array[i].userNo;
                     let replyNo = array[i].replyNo;
-
+                    let courseAskNo =  array[i].courseAskNo;
                     let _html = `
-<div class="d-flex flex-row px-3 pt-3 pb-2">
-  <span>
-      <span class="profile-image rounded-circle d-inline-block" style="background-image:url('<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${'${userNo}'}');background-size:cover; "></span>
-  </span>
-  <div class="ml-3">
-      <a href="javascript:void(0);" title="Lisa Hatchensen" class="fs-b d-block fw-700 text-dark">${'${userName}'} <i class="fal fa-clock"></i>:${'${updateTime}'}</a>
-      <div class="fs-xl">
-        ${'${replyContent}'}     
-      </div>
-  </div>
-</div>`;
-
-if(userNo == "${userVO.userNo}"){
-	_html+=`
-		<button replyNo="${'${replyNo}'}" class="btnReplyUpdate btn btn-xs btn-warning waves-effect waves-themed" type="button">修改</button>
-		<button replyNo="${'${replyNo}'}" class="btnReplyDelete btn btn-xs btn-danger waves-effect waves-themed" type="button">刪除</button>
-	`;
-}
+                                    <div class="d-flex flex-row px-3 pt-3 pb-2">
+                                    <span>
+                                        <span class="profile-image rounded-circle d-inline-block" style="background-image:url('<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${'${userNo}'}');background-size:cover; "></span>
+                                    </span>
+                                    <div class="ml-3">
+                                        <a href="javascript:void(0);" title="Lisa Hatchensen" class="fs-b d-block fw-700 text-dark">${'${userName}'} <i class="fal fa-clock"></i>:${'${updateTime}'}</a>
+                                        <div class="fs-xl">
+                                            ${'${replyContent}'}     
+                                        </div>
+                                    </div>
+                                    </div>`;
+                    if (userNo == "${userVO.userNo}") {
+                        _html += `
+                                    <button courseAskNo="${'${courseAskNo}'}" replyNo="${'${replyNo}'}" class="btnReplyUpdate btn btn-xs btn-warning waves-effect waves-themed" type="button">修改</button>
+                                    <button courseAskNo="${'${courseAskNo}'}" replyNo="${'${replyNo}'}" class="btnReplyDelete btn btn-xs btn-danger waves-effect waves-themed" type="button">刪除</button>`;
+                    }
                     divReplyList.append(_html);
                     $(`span.replySize[courseAskNo=${'${courseAskNo}'}]`).text(array.length);
                 }
             }
-            
-            $(document).on('click', 'button.btnReplyUpdate', function () {
-                let _replyNo = this.getAttribute('replyNo');
-                alert("todo btnReplyUpdate"+_replyNo);
-            });
-            
-            $(document).on('click', 'button.btnReplyDelete', function () {
-                let _replyNo = this.getAttribute('replyNo');
-                alert("todo btnReplyDelete"+_replyNo);
-            });
-            
+
         });
-   
-        
     </script>
 </body>
 
