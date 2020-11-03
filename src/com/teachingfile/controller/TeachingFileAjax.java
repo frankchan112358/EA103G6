@@ -32,20 +32,22 @@ public class TeachingFileAjax extends HttpServlet {
 		res.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		HttpSession session = req.getSession();
-		
+
 		if ("insert".equals(action)) {
 			res.setContentType("text/html");
 			try {
 				// 接參數
-				String courseNo = (String)session.getAttribute("courseNo");
+				String courseNo = (String) session.getAttribute("courseNo");
 				String teachingFileName = req.getParameter("teachingFileName");
 				// 接檔案 >判斷有檔案 > 判斷格式(對>上傳 ; 不對 > print errorMsgs) > 上傳
 				byte[] teachingFiles = null;
+				System.out.println("TFAjax44");
 				Part teachingFile = req.getPart("upfile2");
-//				if (teachingFile.getSize() != 0) {
-//					if (!"application/pdf".equals(teachingFile.getContentType().toLowerCase())) {
-//						errorMsgs.add("請上傳pdf格式教材");
-//					}
+				System.out.println("TFAjax46");
+				
+				if (!"application/pdf".equals(teachingFile.getContentType().toLowerCase())) {
+					res.getWriter().append("請上傳pdf格式教材");
+				}
 				InputStream in = teachingFile.getInputStream();
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
 				teachingFiles = new byte[in.available()];
