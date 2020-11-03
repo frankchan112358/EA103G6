@@ -262,6 +262,9 @@
                 });
             });
 
+            
+            
+            
             function loadReplyList(courseAskNo, array) {
                 let divReplyList = $(`div.replyList[courseAskNo=${'${courseAskNo}'}]`);
                 if (array.length == 0)
@@ -272,6 +275,7 @@
                     let userName = array[i].userName;
                     let updateTime = array[i].updateTime;
                     let userNo = array[i].userNo;
+                    let replyNo = array[i].replyNo;
 
                     let _html = `
 <div class="d-flex flex-row px-3 pt-3 pb-2">
@@ -284,15 +288,32 @@
         ${'${replyContent}'}     
       </div>
   </div>
-</div>
-                    
-                    `;
+</div>`;
+
+if(userNo == "${userVO.userNo}"){
+	_html+=`
+		<button replyNo="${'${replyNo}'}" class="btnReplyUpdate btn btn-xs btn-warning waves-effect waves-themed" type="button">修改</button>
+		<button replyNo="${'${replyNo}'}" class="btnReplyDelete btn btn-xs btn-danger waves-effect waves-themed" type="button">刪除</button>
+	`;
+}
                     divReplyList.append(_html);
                     $(`span.replySize[courseAskNo=${'${courseAskNo}'}]`).text(array.length);
                 }
             }
+            
+            $(document).on('click', 'button.btnReplyUpdate', function () {
+                let _replyNo = this.getAttribute('replyNo');
+                alert("todo btnReplyUpdate"+_replyNo);
+            });
+            
+            $(document).on('click', 'button.btnReplyDelete', function () {
+                let _replyNo = this.getAttribute('replyNo');
+                alert("todo btnReplyDelete"+_replyNo);
+            });
+            
         });
-
+   
+        
     </script>
 </body>
 
