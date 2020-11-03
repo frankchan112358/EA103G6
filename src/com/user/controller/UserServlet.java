@@ -296,6 +296,10 @@ public class UserServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					// 錯誤導前端
 					if (type.equals(0)) {
+						req.setAttribute("userVOForInsert", userVO);
+						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/student/studentList.jsp");
+						failureView.forward(req, res);
+						return;
 
 						return;
 					// 錯誤導講師頁面

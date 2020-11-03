@@ -34,7 +34,7 @@
                 <%@ include file="/back-end/template/header.jsp" %> 
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
+                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
                         <li class="breadcrumb-item">成員管理</li>
                     </ol>
                     <div class="subheader">
@@ -148,8 +148,10 @@
 									<label class="form-label " for="banji">班級<span class="text-danger">*</span></label> 
 									<select class="custom-select" id="banjiNo" name="banjiNo"  required>
 									<c:forEach var="banjiVO" items="${banjiSvc.all}">
+									<c:if test="${banjiVO.status==1}">
 									<option value="${banjiVO.banjiNo}"
 									${(banjiVO.banjiNo==banjiVO.banjiNo)? 'selected':'' } >${banjiVO.banjiName}
+									</c:if>
 									</c:forEach>
 									</select>
 							</div>
@@ -177,6 +179,7 @@
     </div>
                      
                      
+                    
   <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function()
@@ -275,7 +278,6 @@
     <%@ include file="/back-end/template/quick_menu.jsp" %>
     <%@ include file="/back-end/template/messager.jsp" %>
     <%@ include file="/back-end/template/basic_js.jsp" %>  
-    <script src="<%=request.getContextPath() %>/SmartAdmin4/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
     
     
      <script>
@@ -308,7 +310,7 @@
             });
 
          <c:if test="${not empty errorMsgs.id}"> 
-       	 $('#addTeacher').modal('show'); 
+       	 $('#addStudent').modal('show'); 
        	 </c:if> 
                
        	<c:if test="${not empty errorMsgs.name}">
