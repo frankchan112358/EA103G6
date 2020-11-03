@@ -96,12 +96,12 @@
 						<div class="row">
 							<div class="col-md-3">
 								<div id="heading1">
-									<b>最多回覆</b>
+									<b>回應數</b>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div id="heading2">
-									<a href="<%=request.getContextPath()%>/front-end/forumpost/forumIndex_hot.jsp"><b>最多觀看</b></a>
+									<a href="<%=request.getContextPath()%>/front-end/forumpost/forumIndex_hot.jsp"><b>觀看數</b></a>
 								</div>
 							</div>
 							<div class="col-md-5">
@@ -119,10 +119,17 @@
 
 					<div class="container">
 						<div class="row">
+						
 							<div class="col-md-8" id="title" style="font-weight: bold;">貼文標題</div>
+							
 							<div class="col-md-2" style="font-weight: 900;">更新時間</div>
+							
+							
 							<div class="col-md-2" style="font-weight: 900;">回應數</div>
+							
+							
 							<div class="col-md-2" style="font-weight: 900;">發文時間</div>
+							
 							
 							
 						</div>
