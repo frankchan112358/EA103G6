@@ -6,7 +6,7 @@
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 <jsp:useBean id="teachingFileSvc" scope="page" class="com.teachingfile.model.TeachingFileService" />
 
-			<%
+<%
 %>
 
 <!DOCTYPE html>
