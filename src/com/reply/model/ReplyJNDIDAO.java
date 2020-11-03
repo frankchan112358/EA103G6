@@ -19,17 +19,17 @@ public class ReplyJNDIDAO implements ReplyDAO_interface {
 	}
 
 	// 新增
-	private static final String INSERT_STMT = "INSERT INTO REPLY(REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME) VALUES (REPLY_SEQ.NEXTVAL,?,?,?,?,?)";
+	private static final String INSERT_STMT = "INSERT INTO REPLY(REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME,USERNO) VALUES (REPLY_SEQ.NEXTVAL,?,?,?,?,?,?)";
 	// 查全部
-	private static final String GET_ALL_STMT = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME FROM REPLY ORDER BY to_number(REPLYNO)";
+	private static final String GET_ALL_STMT = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME,USERNO FROM REPLY ORDER BY to_number(REPLYNO)";
 	// 查單個
-	private static final String GET_ALL_COURSEASK = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME FROM REPLY WHERE COURSEASKNO=? ORDER BY UPDATETIME";
+	private static final String GET_ALL_COURSEASK = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME,USERNO FROM REPLY WHERE COURSEASKNO=? ORDER BY UPDATETIME";
 	// 查課程編號
-	private static final String GET_ONE_STMT = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME FROM REPLY  WHERE REPLYNO =?";
+	private static final String GET_ONE_STMT = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIM,USERNO FROM REPLY  WHERE REPLYNO =?";
 	// 刪除
 	private static final String DELETE = "DELETE FROM REPLY WHERE REPLYNO=?";
 	// 修改
-	private static final String UPDATE = "UPDATE REPLY SET COURSEASKNO=?,TEACHERNO=?,STUDENTNO=?,REPLYCONTENT=?,UPDATETIME=?  WHERE REPLYNO=?";
+	private static final String UPDATE = "UPDATE REPLY SET COURSEASKNO=?,TEACHERNO=?,STUDENTNO=?,REPLYCONTENT=?,UPDATETIME=?,USERNO=?  WHERE REPLYNO=?";
 
 	@Override
 	public void insert(ReplyVO replyVO) {
@@ -45,7 +45,7 @@ public class ReplyJNDIDAO implements ReplyDAO_interface {
 			pstmt.setString(3, replyVO.getStudentNo());
 			pstmt.setString(4, replyVO.getReplyContent());
 			pstmt.setTimestamp(5, replyVO.getUpdateTime());
-
+			pstmt.setString(6, replyVO.getUserNo());
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -82,7 +82,8 @@ public class ReplyJNDIDAO implements ReplyDAO_interface {
 			pstmt.setString(4, replyVO.getReplyContent());
 			pstmt.setTimestamp(5, replyVO.getUpdateTime());
 			pstmt.setString(6, replyVO.getReplyNo());
-
+			pstmt.setString(7, replyVO.getUserNo());
+			
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -161,6 +162,7 @@ public class ReplyJNDIDAO implements ReplyDAO_interface {
 				replyVO.setStudentNo(rs.getString("studentNo"));
 				replyVO.setReplyContent(rs.getString("replyContent"));
 				replyVO.setUpdateTime(rs.getTimestamp("updateTime"));
+				replyVO.setUserNo(rs.getString("userNo"));
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -213,6 +215,7 @@ public class ReplyJNDIDAO implements ReplyDAO_interface {
 				replyVO.setStudentNo(rs.getString("studentNo"));
 				replyVO.setReplyContent(rs.getString("replyContent"));
 				replyVO.setUpdateTime(rs.getTimestamp("updateTime"));
+				replyVO.setUserNo(rs.getString("userNo"));
 
 				list.add(replyVO);
 			}
@@ -268,6 +271,7 @@ public class ReplyJNDIDAO implements ReplyDAO_interface {
 				replyVO.setStudentNo(rs.getString("studentNo"));
 				replyVO.setReplyContent(rs.getString("replyContent"));
 				replyVO.setUpdateTime(rs.getTimestamp("updateTime"));
+				replyVO.setUserNo(rs.getString("userNo"));
 
 				list.add(replyVO);
 			}

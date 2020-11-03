@@ -104,8 +104,7 @@ public class ReplyServlet extends HttpServlet {
 
 				String replyNo = req.getParameter("replyNo");
 				String courseAskNo = req.getParameter("courseAskNo");
-				String teacherNo = req.getParameter("teacherNo");
-				String studentNo = req.getParameter("studentNo");
+				String userNo=req.getParameter("userNo");
 				String replyContent = req.getParameter("replyContent");
 				if (replyContent == null || replyContent.trim().length() == 0) {
 					errorMsgs.add("回覆內容請勿空白");
@@ -116,8 +115,7 @@ public class ReplyServlet extends HttpServlet {
 				ReplyVO replyVO = new ReplyVO();
 				replyVO.setReplyNo(replyNo);
 				replyVO.setCourseAskNo(courseAskNo);
-				replyVO.setTeacherNo(teacherNo);
-				replyVO.setStudentNo(studentNo);
+				replyVO.setUserNo(userNo);
 				replyVO.setReplyContent(replyContent);
 				replyVO.setUpdateTime(updateTime);
 
@@ -129,7 +127,7 @@ public class ReplyServlet extends HttpServlet {
 				}
 
 				ReplyService replySvc = new ReplyService();
-				replyVO = replySvc.updateReply(replyNo, courseAskNo, teacherNo, studentNo, replyContent, updateTime);
+				replyVO = replySvc.updateReply(replyNo, courseAskNo,  replyContent, updateTime,userNo);
 
 				req.setAttribute("replyVO", replyVO);
 				String url = "/back-end/reply/listOneReply.jsp";
@@ -149,15 +147,13 @@ public class ReplyServlet extends HttpServlet {
 			try {
 
 				String courseAskNo = req.getParameter("courseAskNo");
-				String teacherNo = req.getParameter("teacherNo");
-				String studentNo = req.getParameter("studentNo");
+				String userNo=req.getParameter("userNo");
 				String replyContent = req.getParameter("replyContent");
 				java.sql.Timestamp updateTime = new java.sql.Timestamp((new java.util.Date()).getTime());
 
 				ReplyVO replyVO = new ReplyVO();
 				replyVO.setCourseAskNo(courseAskNo);
-				replyVO.setTeacherNo(teacherNo);
-				replyVO.setStudentNo(studentNo);
+				replyVO.setUserNo(userNo);
 				replyVO.setReplyContent(replyContent);
 				replyVO.setUpdateTime(updateTime);
 
@@ -167,7 +163,7 @@ public class ReplyServlet extends HttpServlet {
 					return;
 				}
 				ReplyService replySvc = new ReplyService();
-				replyVO = replySvc.addReply(courseAskNo, teacherNo, studentNo, replyContent, updateTime);
+				replyVO = replySvc.addReply(courseAskNo,  replyContent, updateTime,userNo);
 
 				String url = "/back-end/courseAsk/courseAsk.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -186,15 +182,13 @@ public class ReplyServlet extends HttpServlet {
 			try {
 
 				String courseAskNo = req.getParameter("courseAskNo");
-				String teacherNo = req.getParameter("teacherNo");
-				String studentNo = req.getParameter("studentNo");
+				String userNo=req.getParameter("userNo");
 				String replyContent = req.getParameter("replyContent");
 				java.sql.Timestamp updateTime = new java.sql.Timestamp((new java.util.Date()).getTime());
 
 				ReplyVO replyVO = new ReplyVO();
 				replyVO.setCourseAskNo(courseAskNo);
-				replyVO.setTeacherNo(teacherNo);
-				replyVO.setStudentNo(studentNo);
+				replyVO.setUserNo(userNo);
 				replyVO.setReplyContent(replyContent);
 				replyVO.setUpdateTime(updateTime);
 
@@ -223,16 +217,14 @@ public class ReplyServlet extends HttpServlet {
 				try {
 
 					String courseAskNo = req.getParameter("courseAskNo");
-					String teacherNo = req.getParameter("teacherNo");
-					String studentNo = req.getParameter("studentNo");
+					String userNo=req.getParameter("userNo");
 					String replyContent = req.getParameter("replyContent");
-					replyContent = replyContent.substring(replyContent.indexOf(">") + 1, replyContent.lastIndexOf("<"));
+//					replyContent = replyContent.substring(replyContent.indexOf(">") + 1, replyContent.lastIndexOf("<"));
 					java.sql.Timestamp updateTime = new java.sql.Timestamp((new java.util.Date()).getTime());
 
 					ReplyVO replyVO = new ReplyVO();
 					replyVO.setCourseAskNo(courseAskNo);
-					replyVO.setTeacherNo(teacherNo);
-					replyVO.setStudentNo(studentNo);
+					replyVO.setUserNo(userNo);
 					replyVO.setReplyContent(replyContent);
 					replyVO.setUpdateTime(updateTime);
 
@@ -242,17 +234,17 @@ public class ReplyServlet extends HttpServlet {
 						return;
 					}
 					ReplyService replySvc = new ReplyService();
-					replyVO = replySvc.addReply(courseAskNo, teacherNo, studentNo, replyContent, updateTime);
+					replyVO = replySvc.addReply(courseAskNo,  replyContent, updateTime,userNo);
 
-					PrintWriter out = res.getWriter();
-	                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-	                System.out.println(gson.toJson(replyVO).toString());
-	                out.print(gson.toJson(replyVO).toString());
-	                out.flush();
-	                out.close();
-//					String url = "/front-end/courseAsk/NewFile.jsp";
-//					RequestDispatcher successView = req.getRequestDispatcher(url);
-//					successView.forward(req, res);
+//					PrintWriter out = res.getWriter();
+//	                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+//	                System.out.println(gson.toJson(replyVO).toString());
+//	                out.print(gson.toJson(replyVO).toString());
+//	                out.flush();
+//	                out.close();
+					String url = "/front-end/courseAsk/listCourseAskWithCourseNo.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
 				} catch (Exception e) {
 					errorMsgs.add("資料失敗" + e.getMessage());
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/reply/addReply.jsp");
@@ -275,7 +267,7 @@ public class ReplyServlet extends HttpServlet {
 				ReplyService replySvc = new ReplyService();
 				replySvc.deleteReply(replyNo);
 
-				String url = "/back-end/reply/listAllReply.jsp";
+				String url = "/back-end/reply/listCourseAskWithCourseNo.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 

@@ -10,17 +10,17 @@ public class ReplyJDBCDAO implements ReplyDAO_interface {
 	String passwd = "123456";
 
 	// 新增
-	private static final String INSERT_STMT = "INSERT INTO REPLY(REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME) VALUES (REPLY_SEQ.NEXTVAL,?,?,?,?,?)";
+	private static final String INSERT_STMT = "INSERT INTO REPLY(REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME,USERNO) VALUES (REPLY_SEQ.NEXTVAL,?,?,?,?,?,?)";
 	// 查全部
-	private static final String GET_ALL_STMT = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME FROM REPLY ORDER BY REPLYNO";
+	private static final String GET_ALL_STMT = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME,USERNO FROM REPLY ORDER BY to_number(REPLYNO)";
 	// 查單個
-	private static final String GET_ONE_STMT = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME FROM REPLY  WHERE REPLYNO =?";
+	private static final String GET_ONE_STMT = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME,USERNO FROM REPLY  WHERE REPLYNO =?";
 	// 查編號
-	private static final String GET_ALL_COURSEASK = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME FROM REPLY WHERE COURSEASKNO=? ORDER BY UPDATETIME";
+	private static final String GET_ALL_COURSEASK = "SELECT REPLYNO,COURSEASKNO,TEACHERNO,STUDENTNO,REPLYCONTENT,UPDATETIME,USERNO FROM REPLY WHERE COURSEASKNO=? ORDER BY UPDATETIME";
 	// 刪除
 	private static final String DELETE = "DELETE FROM REPLY WHERE REPLYNO=?";
 	// 修改
-	private static final String UPDATE = "UPDATE REPLY SET COURSEASKNO=?,TEACHERNO=?,STUDENTNO=?,REPLYCONTENT=?,UPDATETIME=?  WHERE REPLYNO=?";
+	private static final String UPDATE = "UPDATE REPLY SET COURSEASKNO=?,TEACHERNO=?,STUDENTNO=?,REPLYCONTENT=?,UPDATETIME=?,USERNO=?  WHERE REPLYNO=?";
 
 	@Override
 	public void insert(ReplyVO replyVO) {
@@ -38,6 +38,7 @@ public class ReplyJDBCDAO implements ReplyDAO_interface {
 			pstmt.setString(3, replyVO.getStudentNo());
 			pstmt.setString(4, replyVO.getReplyContent());
 			pstmt.setTimestamp(5, replyVO.getUpdateTime());
+			pstmt.setString(6, replyVO.getUserNo());
 
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException e) {
@@ -79,6 +80,7 @@ public class ReplyJDBCDAO implements ReplyDAO_interface {
 			pstmt.setString(4, replyVO.getReplyContent());
 			pstmt.setTimestamp(5, replyVO.getUpdateTime());
 			pstmt.setString(6, replyVO.getReplyNo());
+			pstmt.setString(7, replyVO.getUserNo());
 
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException e) {
@@ -166,6 +168,7 @@ public class ReplyJDBCDAO implements ReplyDAO_interface {
 				replyVO.setStudentNo(rs.getString("studentNo"));
 				replyVO.setReplyContent(rs.getString("replyContent"));
 				replyVO.setUpdateTime(rs.getTimestamp("updateTime"));
+				replyVO.setUserNo(rs.getString("userNo"));
 			}
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -221,6 +224,7 @@ public class ReplyJDBCDAO implements ReplyDAO_interface {
 				replyVO.setStudentNo(rs.getString("studentNo"));
 				replyVO.setReplyContent(rs.getString("replyContent"));
 				replyVO.setUpdateTime(rs.getTimestamp("updateTime"));
+				replyVO.setUserNo(rs.getString("userNo"));
 
 				list.add(replyVO);
 			}
@@ -278,6 +282,7 @@ public class ReplyJDBCDAO implements ReplyDAO_interface {
 				replyVO.setStudentNo(rs.getString("studentNo"));
 				replyVO.setReplyContent(rs.getString("replyContent"));
 				replyVO.setUpdateTime(rs.getTimestamp("updateTime"));
+				replyVO.setUserNo(rs.getString("userNo"));
 
 				list.add(replyVO);
 			}
@@ -314,15 +319,16 @@ public class ReplyJDBCDAO implements ReplyDAO_interface {
 	public static void main(String[] args) {
 		ReplyJDBCDAO dao = new ReplyJDBCDAO();
 
-		// 新增
-//		ReplyVO replyVO1 = new ReplyVO();
-//		replyVO1.setCourseAskNo("1");
-//		replyVO1.setTeacherNo("T000003");
-//		replyVO1.setStudentNo("S000002");
-//		replyVO1.setReplyContent("是的");
-//		replyVO1.setUpdateTime(new java.sql.Timestamp((new java.util.Date()).getTime()));
-//
-//		dao.insert(replyVO1);
+//		// 新增
+		ReplyVO replyVO1 = new ReplyVO();
+		replyVO1.setCourseAskNo("1");
+		replyVO1.setTeacherNo(null);
+		replyVO1.setStudentNo(null);
+		replyVO1.setUserNo("U000008");
+		replyVO1.setReplyContent("是的");
+		replyVO1.setUpdateTime(new java.sql.Timestamp((new java.util.Date()).getTime()));
+
+		dao.insert(replyVO1);
 
 		// 查詢
 //		ReplyVO replyVO2 = dao.findByPrimaryKey("1");
@@ -349,14 +355,14 @@ public class ReplyJDBCDAO implements ReplyDAO_interface {
 //		dao.delete("5");
 
 		// 修改
-		ReplyVO replyVO3 = new ReplyVO();
-		replyVO3.setCourseAskNo("2");
-		replyVO3.setTeacherNo("T000002");
-		replyVO3.setStudentNo("S000001");
-		replyVO3.setReplyContent("對的");
-		replyVO3.setUpdateTime(new java.sql.Timestamp((new java.util.Date()).getTime()));
-		replyVO3.setReplyNo("1");
-		dao.update(replyVO3);
+//		ReplyVO replyVO3 = new ReplyVO();
+//		replyVO3.setCourseAskNo("2");
+//		replyVO3.setTeacherNo("T000002");
+//		replyVO3.setStudentNo("S000001");
+//		replyVO3.setReplyContent("對的");
+//		replyVO3.setUpdateTime(new java.sql.Timestamp((new java.util.Date()).getTime()));
+//		replyVO3.setReplyNo("1");
+//		dao.update(replyVO3);
 	}
 
 }
