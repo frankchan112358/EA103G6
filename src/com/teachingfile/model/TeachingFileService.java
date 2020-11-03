@@ -18,11 +18,11 @@ public class TeachingFileService {
 		dao = new TeachingFileDAO();
 	}
 	
-	public TeachingFileVO addTeachingFile( String timetableNo, String teachingFileName,	byte[] teachingFile) {
+	public TeachingFileVO addTeachingFile( String courseNo, String teachingFileName,	byte[] teachingFile) {
 
 		TeachingFileVO teachingFileVO = new TeachingFileVO();
 
-		teachingFileVO.setTimetableNo(timetableNo);
+		teachingFileVO.setTimetableNo(courseNo);
 		teachingFileVO.setTeachingFileName(teachingFileName);
 		teachingFileVO.setTeachingFile(teachingFile);
 		dao.insert(teachingFileVO);
@@ -30,13 +30,13 @@ public class TeachingFileService {
 		return teachingFileVO;
 	}
 
-	public TeachingFileVO updateTeachingFile(String teachingFileNo, String timetableNo, String teachingFileName,
+	public TeachingFileVO updateTeachingFile(String teachingFileNo, String courseNo, String teachingFileName,
 			byte[] teachingFile) {
 
 		TeachingFileVO teachingFileVO = new TeachingFileVO();
 
 		teachingFileVO.setTeachingFileNo(teachingFileNo);
-		teachingFileVO.setTimetableNo(timetableNo);
+		teachingFileVO.setTimetableNo(courseNo);
 		teachingFileVO.setTeachingFileName(teachingFileName);
 		teachingFileVO.setTeachingFile(teachingFile);
 		dao.update(teachingFileVO);
@@ -44,12 +44,12 @@ public class TeachingFileService {
 		return teachingFileVO;
 	}
 	
-	public TeachingFileVO updateTeachingFileNOFILE(String teachingFileNo, String timetableNo, String teachingFileName) {
+	public TeachingFileVO updateTeachingFileNOFILE(String teachingFileNo, String courseNo, String teachingFileName) {
 
 		TeachingFileVO teachingFileVO = new TeachingFileVO();
 
 		teachingFileVO.setTeachingFileNo(teachingFileNo);
-		teachingFileVO.setTimetableNo(timetableNo);
+		teachingFileVO.setTimetableNo(courseNo);
 		teachingFileVO.setTeachingFileName(teachingFileName);
 		dao.updateNoFile(teachingFileVO);
 

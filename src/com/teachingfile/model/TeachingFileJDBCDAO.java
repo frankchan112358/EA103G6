@@ -15,17 +15,17 @@ public class TeachingFileJDBCDAO implements TeachingFileDAO_interface{
 	String passwd = "123456";
 	
 	private static final String INSERT_STMT =
-			"INSERT INTO teachingFile (teachingFileNo, timetableNo, teachingFileName, teachingFile) VALUES (TEACHINGFILE_SEQ.nextval, ?, ?, ?)";
+			"INSERT INTO teachingFile (teachingFileNo,teachingFileName, teachingFile, courseNo) VALUES (TEACHINGFILE_SEQ.nextval, ?, ?, ?)";
 	private static final String GET_ALL_STMT =
-			"SELECT teachingFileNo, timetableNo, teachingFileName, teachingFile FROM teachingFile order by to_number(teachingFileNo)";
+			"SELECT teachingFileNo, courseNo, teachingFileName, teachingFile FROM teachingFile order by to_number(teachingFileNo)";
 	private static final String GET_ONE_STMT = 
-			"SELECT teachingFileNo, timetableNo, teachingFileName, teachingFile FROM teachingFile where teachingFileNo = ?";
+			"SELECT teachingFileNo, courseNo, teachingFileName, teachingFile FROM teachingFile where teachingFileNo = ?";
 	private static final String DELETE = 
 			"DELETE FROM teachingFile where teachingFileNo = ?";
 	private static final String UPDATE = 
-			"UPDATE teachingFile set timetableNo=?, teachingFileName=?, teachingFile=? where teachingFileNo = ?";
+			"UPDATE teachingFile set courseNo=?, teachingFileName=?, teachingFile=? where teachingFileNo = ?";
 	private static final String UPDATENOFILE = 
-			"UPDATE teachingFile set timetableNo=?, teachingFileName=? where teachingFileNo = ?";
+			"UPDATE teachingFile set courseNo=?, teachingFileName=? where teachingFileNo = ?";
 
 	@Override
 	public void insert(TeachingFileVO teachingFileVO) {
@@ -37,9 +37,9 @@ public class TeachingFileJDBCDAO implements TeachingFileDAO_interface{
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setString(1, teachingFileVO.getTimetableNo());
-			pstmt.setString(2, teachingFileVO.getTeachingFileName());
-			pstmt.setBytes(3, teachingFileVO.getTeachingFile());
+			pstmt.setString(1, teachingFileVO.getTeachingFileName());
+			pstmt.setBytes(2, teachingFileVO.getTeachingFile());
+			pstmt.setString(3, teachingFileVO.getCourseNo());
 
 			pstmt.executeUpdate();
 			
@@ -70,7 +70,7 @@ public class TeachingFileJDBCDAO implements TeachingFileDAO_interface{
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
 			
-			pstmt.setString(1, teachingFileVO.getTimetableNo());
+			pstmt.setString(1, teachingFileVO.getCourseNo());
 			pstmt.setString(2, teachingFileVO.getTeachingFileName());
 			pstmt.setBytes(3, teachingFileVO.getTeachingFile());
 			pstmt.setString(4, teachingFileVO.getTeachingFileNo());
@@ -111,7 +111,7 @@ public class TeachingFileJDBCDAO implements TeachingFileDAO_interface{
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATENOFILE);
 			
-			pstmt.setString(1, teachingFileVO.getTimetableNo());
+			pstmt.setString(1, teachingFileVO.getCourseNo());
 			pstmt.setString(2, teachingFileVO.getTeachingFileName());
 			pstmt.setString(3, teachingFileVO.getTeachingFileNo());
 			
@@ -201,7 +201,7 @@ public class TeachingFileJDBCDAO implements TeachingFileDAO_interface{
 			while (rs.next()) {
 				teachingFileVO = new TeachingFileVO();
 				teachingFileVO.setTeachingFileNo(rs.getString("teachingFileNo"));
-				teachingFileVO.setTimetableNo(rs.getString("TimetableNo"));
+				teachingFileVO.setCourseNo(rs.getString("courseNo"));
 				teachingFileVO.setTeachingFileName(rs.getString("teachingFileName"));
 				teachingFileVO.setTeachingFile(rs.getBytes("teachingFile"));				
 			}
@@ -257,7 +257,7 @@ public class TeachingFileJDBCDAO implements TeachingFileDAO_interface{
 			while (rs.next()) {
 				teachingFileVO = new TeachingFileVO();
 				teachingFileVO.setTeachingFileNo(rs.getString("teachingFileNo"));
-				teachingFileVO.setTimetableNo(rs.getString("timetableNo"));
+				teachingFileVO.setCourseNo(rs.getString("courseNo"));
 				teachingFileVO.setTeachingFileName(rs.getString("teachingFileName"));
 				teachingFileVO.setTeachingFile(rs.getBytes("teachingFile"));
 				list.add(teachingFileVO); 
@@ -301,40 +301,39 @@ public class TeachingFileJDBCDAO implements TeachingFileDAO_interface{
 
 		// 新增
 		TeachingFileVO teachingFileVO1 = new TeachingFileVO();
-		teachingFileVO1.setTimetableNo("TT000001");
-		teachingFileVO1.setTeachingFileName("JavaScript講義");
+		teachingFileVO1.setTeachingFileName("講義");
+		teachingFileVO1.setCourseNo("C003");
 		dao.insert(teachingFileVO1);
 
 		// 修改
 		TeachingFileVO teachingFileVO2 = new TeachingFileVO();
-		teachingFileVO2.setTeachingFileNo("2");
-		teachingFileVO2.setTimetableNo("TT000001");
+		teachingFileVO2.setTeachingFileNo("33");
+		teachingFileVO2.setCourseNo("C002");
 		teachingFileVO2.setTeachingFileName("JavaScript講義");
 		dao.update(teachingFileVO2);
 
 		// 刪除
-		dao.delete("3");
+		dao.delete("39");
 
 		// 查詢
 		TeachingFileVO teachingFileVO3 = dao.findByPrimaryKey("4");
 		System.out.print(teachingFileVO3);
 		System.out.println("---------------------");
 		System.out.print(teachingFileVO3.getTeachingFileNo() + ",");
-		System.out.print(teachingFileVO3.getTimetableNo() + ",");
+		System.out.print(teachingFileVO3.getCourseNo() + ",");
 		System.out.print(teachingFileVO3.getTeachingFileName() + ",");
-		System.out.print(teachingFileVO3.getTeachingFile() + ",");
+//		System.out.print(teachingFileVO3.getTeachingFile() + ",");
 		System.out.println("---------------------");
 
 		// 查詢
 		List<TeachingFileVO> list = dao.getAll();
 		for (TeachingFileVO teachingFileVO4 : list) {
 			System.out.print(teachingFileVO4.getTeachingFileNo() + ",");
-			System.out.print(teachingFileVO4.getTimetableNo() + ",");
+			System.out.print(teachingFileVO4.getCourseNo() + ",");
 			System.out.print(teachingFileVO4.getTeachingFileName() + ",");
-			System.out.print(teachingFileVO4.getTeachingFile() + ",");
+//			System.out.print(teachingFileVO4.getTeachingFile() + ",");
 			System.out.println("------");
 			System.out.println(teachingFileVO4);
-
 		}
 	}
 }

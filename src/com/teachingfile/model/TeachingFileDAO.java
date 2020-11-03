@@ -26,17 +26,17 @@ public class TeachingFileDAO implements TeachingFileDAO_interface{
 	
 
 	private static final String INSERT_STMT =
-			"INSERT INTO teachingFile (teachingFileNo, timetableNo, teachingFileName, teachingFile) VALUES (TEACHINGFILE_SEQ.nextval, ?, ?, ?)";
+			"INSERT INTO teachingFile (teachingFileNo, courseNo, teachingFileName, teachingFile) VALUES (TEACHINGFILE_SEQ.nextval, ?, ?, ?)";
 	private static final String GET_ALL_STMT =
-			"SELECT teachingFileNo, timetableNo, teachingFileName, teachingFile FROM teachingFile order by to_number(teachingFileNo)";
+			"SELECT teachingFileNo, courseNo, teachingFileName, teachingFile FROM teachingFile order by to_number(teachingFileNo)";
 	private static final String GET_ONE_STMT = 
-			"SELECT teachingFileNo, timetableNo, teachingFileName, teachingFile FROM teachingFile where teachingFileNo = ?";
+			"SELECT teachingFileNo, courseNo, teachingFileName, teachingFile FROM teachingFile where teachingFileNo = ?";
 	private static final String DELETE = 
 			"DELETE FROM teachingFile where teachingFileNo = ?";
 	private static final String UPDATE = 
-			"UPDATE teachingFile set timetableNo=?, teachingFileName=?, teachingFile=? where teachingFileNo = ?";
+			"UPDATE teachingFile set courseNo=?, teachingFileName=?, teachingFile=? where teachingFileNo = ?";
 	private static final String UPDATENOFILE = 
-			"UPDATE teachingFile set timetableNo=?, teachingFileName=? where teachingFileNo = ?";
+			"UPDATE teachingFile set courseNo=?, teachingFileName=? where teachingFileNo = ?";
 
 	@Override
 	public void insert(TeachingFileVO teachingFileVO) {
@@ -48,7 +48,7 @@ public class TeachingFileDAO implements TeachingFileDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setString(1, teachingFileVO.getTimetableNo());
+			pstmt.setString(1, teachingFileVO.getCourseNo());
 			pstmt.setString(2, teachingFileVO.getTeachingFileName());
 			pstmt.setBytes(3, teachingFileVO.getTeachingFile());
 
@@ -77,7 +77,7 @@ public class TeachingFileDAO implements TeachingFileDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			
-			pstmt.setString(1, teachingFileVO.getTimetableNo());
+			pstmt.setString(1, teachingFileVO.getCourseNo());
 			pstmt.setString(2, teachingFileVO.getTeachingFileName());
 			pstmt.setBytes(3, teachingFileVO.getTeachingFile());
 			pstmt.setString(4, teachingFileVO.getTeachingFileNo());
@@ -115,7 +115,7 @@ public class TeachingFileDAO implements TeachingFileDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATENOFILE);
 			
-			pstmt.setString(1, teachingFileVO.getTimetableNo());
+			pstmt.setString(1, teachingFileVO.getCourseNo());
 			pstmt.setString(2, teachingFileVO.getTeachingFileName());
 			pstmt.setString(3, teachingFileVO.getTeachingFileNo());
 			
@@ -197,7 +197,7 @@ public class TeachingFileDAO implements TeachingFileDAO_interface{
 			while (rs.next()) {
 				teachingFileVO = new TeachingFileVO();
 				teachingFileVO.setTeachingFileNo(rs.getString("teachingFileNo"));
-				teachingFileVO.setTimetableNo(rs.getString("TimetableNo"));
+				teachingFileVO.setCourseNo(rs.getString("courseNo"));
 				teachingFileVO.setTeachingFileName(rs.getString("teachingFileName"));
 				teachingFileVO.setTeachingFile(rs.getBytes("teachingFile"));				
 			}
@@ -249,7 +249,7 @@ public class TeachingFileDAO implements TeachingFileDAO_interface{
 			while (rs.next()) {
 				teachingFileVO = new TeachingFileVO();
 				teachingFileVO.setTeachingFileNo(rs.getString("teachingFileNo"));
-				teachingFileVO.setTimetableNo(rs.getString("timetableNo"));
+				teachingFileVO.setCourseNo(rs.getString("CourseNo"));
 				teachingFileVO.setTeachingFileName(rs.getString("teachingFileName"));
 				teachingFileVO.setTeachingFile(rs.getBytes("teachingFile"));
 				list.add(teachingFileVO); 
