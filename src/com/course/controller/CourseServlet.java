@@ -162,6 +162,9 @@ public class CourseServlet extends HttpServlet {
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			
+			Map<String, String> alert = new HashMap<>();
+			req.setAttribute("alert", alert);
 
 			try {
 				String courseNo = new String(req.getParameter("courseNo").trim());
@@ -260,6 +263,7 @@ public class CourseServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				session.setAttribute("courseNo", courseVO.getCourseNo());
 				req.setAttribute("courseVO", courseVO);
+				alert.put("updateOK", "修改成功");
 				String url = "/back-end/course/listOneCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -275,6 +279,9 @@ public class CourseServlet extends HttpServlet {
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			
+			Map<String, String> alert = new HashMap<>();
+			req.setAttribute("alert", alert);
 
 			try {
 				String banjiNo = new String(req.getParameter("banjiNo").trim());
@@ -365,6 +372,7 @@ public class CourseServlet extends HttpServlet {
 				
 				req.setAttribute("banjiNo", banjiNo);
 				req.setAttribute("courseList",  new BanjiService().getOneBanji(banjiNo).getCourseList());
+				alert.put("insertOK", "新增成功");
 				String url = "/back-end/course/listAllCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);

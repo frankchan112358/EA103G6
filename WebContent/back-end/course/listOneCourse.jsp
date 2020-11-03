@@ -242,7 +242,7 @@ img {
 					swalWithBootstrapButtons.fire("刪除請求送出", "請稍等跳轉頁面", "success");
 					setTimeout(function() {
 						$('#deleteCourse').submit();
-					}, 1000);
+					}, 2000);
 				} else if (
 				// Read more about handling dismissals
 				result.dismiss === Swal.DismissReason.cancel) {
@@ -250,9 +250,24 @@ img {
 				}
 			});
 		}); // A message with a custom image and CSS animation disabled
-		
-
 	});		
+	
+    var swalWithBootstrapButtons = Swal.mixin({
+		customClass : {
+			confirmButton : "btn btn-primary",
+			cancelButton : "btn btn-danger mr-2"
+		},
+		buttonsStyling : false
+    });
+		<c:if test="${not empty alert.updateOK }">
+		swalWithBootstrapButtons.fire({
+			icon:'success',
+			title:'修改成功',
+			text:"課程公告已修改完成"
+			});
+		<%request.removeAttribute("updateOK");%>
+		</c:if>
+	
 	</script>
 </body>
 </html>

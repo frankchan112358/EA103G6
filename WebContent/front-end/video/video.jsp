@@ -208,7 +208,7 @@ background-color: #658F4B;
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class="subheader-icon fas fa-video"></i>
+							<i class="subheader-icon fal fa-camera-movie"></i>
 							教學影片
 						</h1>
 					</div>
@@ -228,13 +228,12 @@ background-color: #658F4B;
 														<c:if test="${courseVO.courseNo eq courseNo }">
 															<c:forEach var="timetableVO" items="${timetableList}">
 																<c:if test="${courseVO.courseNo eq timetableVO.courseNo}">
-																	<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo) ne null}">
 																		<div class="sb1">
 																		<a class=vpath href="<%=request.getContextPath()%>/videos/${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}.mp4" target="player">
 																			<span class="in-sb">
 																				<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
 																				<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
-																				<i class="fal fa-calendar-check mr-1"></i>
+																				<i class="fal fa-camera-movie"></i>
 																				${timetableVO.timetableDate}
 																				<input class="videoname" type="hidden" name="videoName" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoName}">
 																				<input type="hidden" name="timetablePeriod" value="${timetableVO.timetablePeriod}">
@@ -248,35 +247,13 @@ background-color: #658F4B;
 																					class="btn btn-primary btn-pills waves-effect waves-themed btn1" style="font-size: 13px;"><i class="fal fa-book-spells"></i>教學筆記</button>
 																				</span>
 																		</div>
-																	</c:if>
-																		
-																	<c:if test="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo) eq null}">
-																		<div class="sb1">
-																		<a class=vpath href="#" target="player">
-																			<span class="in-sb class-img">
-																				<input type="hidden" name="timetableNo" value="${videoVO.timetableNo}">
-																				<i class="fal fa-calendar-times mr-1"></i>
-																				${timetableVO.timetableDate}
-																				<input type="hidden" name="timetablePeriod" value="${timetableVO.timetablePeriod}">
-																				<c:if test="${timetableVO.timetablePeriod=='0'}">早上</c:if>
-																				<c:if test="${timetableVO.timetablePeriod=='1'}">下午</c:if>
-																				<c:if test="${timetableVO.timetablePeriod=='2'}">晚上</c:if>
-																			</span>
-																		</a>
-																			<span class="in-sb-log">
-																				<button type="button" class="btn btn-primary btn-pills waves-effect waves-themed" style="font-size: 13px;"><i class="fal fa-book-spells"></i>教學筆記</button>
-																			</span>
-																		</div>
-																	</c:if>
 																</c:if>
 															</c:forEach>
 														</c:if>
 													</c:forEach>
 												</div>
 											</div>
-
 											<div id="page-content-wrapper">
-
 												<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
 													<button class="btn btn-primary btn2" id="menu-toggle">
 														<i class="far fa-list-ul"></i>
