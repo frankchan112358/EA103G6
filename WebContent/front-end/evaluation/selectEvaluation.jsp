@@ -41,6 +41,7 @@ pageContext.setAttribute("addedList",evaluationSvc.getStudentAddedCourseEvaluati
                     </div>
                     <div class="row">
                         <div class="col">
+                        <jsp:include page="/front-end/course/courseDetail.jsp"></jsp:include>
                             <div id="panel-1" class="panel">
                                 <form class="needs-validation" novalidate method="POST" action="<%=request.getContextPath()%>/evaluation/add">
                                     <div class="panel-hdr bg-primary-800 bg-success-gradient ">
