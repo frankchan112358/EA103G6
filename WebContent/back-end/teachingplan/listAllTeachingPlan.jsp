@@ -51,7 +51,13 @@ overflow: hidden;
 text-overflow: ellipsis;
 }
 
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    margin-top: 2em;
+}
 
+div.dataTables_wrapper div.dataTables_info {
+    padding-top: 2em;
+}
 
 </style>
 
@@ -73,7 +79,7 @@ text-overflow: ellipsis;
 							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/course/listAllCourse.jsp">課程總覽</a>
+							<a id="aListAllCourse" banjiNo="${courseSvc.getOneCourse(courseNo).banjiNo}" href="javascript:void(0)">課程總覽</a>
 						</li>
 						<li class="breadcrumb-item">教學計劃管理</li>
 					</ol>
@@ -209,6 +215,23 @@ text-overflow: ellipsis;
 						dataSrc : 0
 					}
 					});
+                
+            	document.getElementById('aListAllCourse').addEventListener('click',function(e){
+    				e.preventDefault();
+    				let _this = this;
+                    let banjiNo = this.getAttribute('banjiNo');
+    				let myForm = document.createElement('form');
+    				document.body.appendChild(myForm);
+    				myForm.action = '<%=request.getContextPath()%>/course/course.do';
+    				myForm.method = 'POST';
+    				let banjiNoInput = document.createElement('input');
+    				banjiNoInput.type = 'hidden';
+    				banjiNoInput.name = 'banjiNo';
+    				banjiNoInput.value= banjiNo;
+    				myForm.append(banjiNoInput);
+    				myForm.submit();
+    			}, false);
+                
                 
         		$(".submitDeleteTeachingPlan").on("click", function(event) {
 					event.preventDefault();

@@ -28,39 +28,45 @@
 <%@ include file="/front-end/template/head.jsp"%>
 
 <style>
-
-th{
-font-size: 14px;
+th {
+	font-size: 15px;
 }
 
-td{
-font-size: 14px;
+td {
+	font-size: 15px;
 }
 
 table.dataTable tr.dtrg-group.dtrg-level-0 td {
-    font-size: 20px;
+	font-size: 20px;
 }
 
 .dataTables_empty {
-    color: #666666;
+	color: #666666;
 }
 
 .table th, .table td {
-    vertical-align: middle;
+	vertical-align: middle;
 }
 
-.table{
-width: 100%;
-height: 100%;
-table-layout: fixed;
+.table {
+	width: 100%;
+	height: 100%;
+	table-layout: fixed;
 }
 
-.table_tit{
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
+.table_tit {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+	margin-top: 2em;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+	padding-top: 2em;
+}
 </style>
 </head>
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
@@ -95,9 +101,30 @@ text-overflow: ellipsis;
 								<div class="panel-hdr bg-primary-800 bg-success-gradient ">
 									<h2 class="text-white">教學計劃總覽</h2>
 								</div>
+								<div id="cp-1" class="card border" style="margin: 20px 20px;" align="center">
+									<button class="btn btn-lg btn-block" style="background-color: #D9D7D4" data-toggle="collapse" data-target="#cp-1 > .card-body" aria-expanded="true">
+										<span class="collapsed-hidden" style="font-size: 1.1em">
+											<i class="fal fa-plus-circle m-1"></i>
+											查看課程介紹
+											<i class="m-1 fal fa-plus-circle"></i>
+
+
+										</span>
+										<span class="collapsed-reveal" style="font-size: 1.1em">
+											<i class="fal fa-minus-circle m-1"></i>
+											關閉課程介紹
+											<i class="m-1 fal fa-minus-circle"></i>
+										</span>
+									</button>
+									<div class="card-body p-0 show">
+										<div class="p-4">
+											<p style="font-size: 1.2em" class="card-text">${courseSvc.getOneCourse(courseNo).courseOutline}</p>
+										</div>
+									</div>
+								</div>
 								<div class="panel-container show" style="margin: 20px 20px;">
 									<table id="teachingPlan" class="table table-bordered table-hover table-striped w-100">
-										<thead style="background-color: #D6D68D" align="center">
+										<thead style="background-color: #B7D197" align="center">
 											<tr>
 												<th>週次</th>
 												<th>堂數</th>
@@ -107,7 +134,7 @@ text-overflow: ellipsis;
 										<tbody>
 											<c:forEach var="teachingPlanVO" items="${list}">
 												<c:if test="${!empty list}">
-												<tr style="cursor: pointer;" data-toggle="modal" data-target="#teachingPlanModal${teachingPlanVO.teachingPlanNo}">
+													<tr style="cursor: pointer;" data-toggle="modal" data-target="#teachingPlanModal${teachingPlanVO.teachingPlanNo}">
 														<td align="center">第${teachingPlanVO.week}週</td>
 														<td align="center">${teachingPlanVO.lesson}</td>
 														<td class="table_tit" align="center">${teachingPlanVO.planContent}</td>
@@ -117,38 +144,40 @@ text-overflow: ellipsis;
 										</tbody>
 									</table>
 									<c:forEach var="teachingPlanVO" items="${list}">
-										 <div class="modal fade" id="teachingPlanModal${teachingPlanVO.teachingPlanNo}" tabindex="-1" role="dialog" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-														<div class="modal-content">
-                                                        <div class="modal-header">
-														<h4 class="modal-title" style="font-size:2em">教學計劃資料</h4>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true"><i class="fal fa-times"></i></span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
- 															
+										<div class="modal fade" id="teachingPlanModal${teachingPlanVO.teachingPlanNo}" tabindex="-1" role="dialog" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h4 class="modal-title" style="font-size: 2em">教學計劃資料</h4>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">
+																<i class="fal fa-times"></i>
+															</span>
+														</button>
+													</div>
+													<div class="modal-body">
+
 														<div class="form-group">
-															<label class="form-label" style="font-size:1.5em">週次</label>
-															<input type="text" name="week" class="form-control" style="font-size:15px" value="第${teachingPlanVO.week}週" readonly/>
-															</div>
+															<label class="form-label" style="font-size: 1.5em">週次</label>
+															<input type="text" name="week" class="form-control" style="font-size: 15px" value="第${teachingPlanVO.week}週" readonly />
+														</div>
 														<div class="form-group">
-															<label class="form-label" style="font-size:1.5em">堂數</label>
-															<input type="text" name="lesson" class="form-control" style="font-size:15px" value="${teachingPlanVO.week}" readonly/>
-														</div>		
+															<label class="form-label" style="font-size: 1.5em">堂數</label>
+															<input type="text" name="lesson" class="form-control" style="font-size: 15px" value="${teachingPlanVO.week}" readonly />
+														</div>
 														<div class="form-group">
-															<label class="form-label" style="font-size:1.5em">教學內容</label>
-															<textarea class="form-control" name="planContent" rows="7" style="font-size:15px" readonly>${teachingPlanVO.planContent}</textarea>
-														</div>															
-                                                       
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                       </c:forEach>
+															<label class="form-label" style="font-size: 1.5em">教學內容</label>
+															<textarea class="form-control" name="planContent" rows="7" style="font-size: 15px" readonly>${teachingPlanVO.planContent}</textarea>
+														</div>
+
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</c:forEach>
 								</div>
 							</div>
 						</div>
@@ -158,9 +187,6 @@ text-overflow: ellipsis;
 		</div>
 	</div>
 
-
-
-
 	<div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
 
 	<%@ include file="/front-end/template/footer.jsp"%>
@@ -169,8 +195,6 @@ text-overflow: ellipsis;
 	<%@ include file="/front-end/template/quick_menu.jsp"%>
 	<%@ include file="/front-end/template/messager.jsp"%>
 	<%@ include file="/front-end/template/basic_js.jsp"%>
-
-
 	<script>
 				$(document).ready(function() {
 					$('#teachingPlan').dataTable({
@@ -205,8 +229,6 @@ text-overflow: ellipsis;
 					
 					
 				});
-				
-				
 	</script>
 </body>
 </html>

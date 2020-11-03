@@ -49,6 +49,14 @@ overflow: hidden;
 text-overflow: ellipsis;
 }
 
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    margin-top: 2em;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    padding-top: 2em;
+}
+
 
 </style>
 
