@@ -28,12 +28,11 @@ session.setAttribute("courseWork", "courseVideo");
 			background-color: #000;
 		}
 
-		video {
-			display: block;
-			width: 100%;
-			margin: 12px auto;
-		}
-
+video {
+	display: block;
+	width: 100%;
+	margin: 12px auto;
+}
 		.container-fluid,
 		.container-sm,
 		.container-md,
@@ -41,10 +40,6 @@ session.setAttribute("courseWork", "courseVideo");
 		.container-xl {
 			padding-right: 0;
 			padding-left: 0;
-		}
-
-		#sidebar-wrapper {
-			background-color: #2d3947 !important;
 		}
 
 		.bg-light {
@@ -63,10 +58,10 @@ session.setAttribute("courseWork", "courseVideo");
 			border-bottom: none !important;
 		}
 
-		.in-sb {
+		.in-sb{
 			font-size: 1.6em;
-			color: white;
-			margin-left: 8px;
+			color : white;
+			/* 	margin-left: 40px; */
 		}
 
 		a[target]:not(.btn) {
@@ -78,8 +73,8 @@ session.setAttribute("courseWork", "courseVideo");
 			border-bottom: 1px solid #666 !important;
 		}
 
-		.btn1 {
-			margin-left: 40px;
+		.btn1{
+			/* 	margin-left: 80px; */
 			margin-top: 10px;
 		}
 
@@ -123,11 +118,11 @@ session.setAttribute("courseWork", "courseVideo");
 			margin-top: 5px;
 		}
 
-		#sbLog {
+
+		#sbLog{
 			font-size: 1.3em;
 			color: #FFFAE6;
 			background-color: #658F4B;
-
 		}
 
 		#wrapper {
@@ -135,43 +130,47 @@ session.setAttribute("courseWork", "courseVideo");
 		}
 
 		#sidebar-wrapper {
+			background-color: #2d3947 !important;
 			min-height: 100vh;
-			margin-left: -14rem;
+			margin-left: -20rem;	
 			-webkit-transition: margin .25s ease-out;
 			-moz-transition: margin .25s ease-out;
 			-o-transition: margin .25s ease-out;
 			transition: margin .25s ease-out;
 		}
 
-		#sidebar-wrapper .list-group {
-			width: 14rem;
+			#sidebar-wrapper .list-group {
+			width: 20rem;
+			height: 55em;
+			overflow-y: scroll;
 		}
 
 		#page-content-wrapper {
 			min-width: 100%;
 			background-color: #000;
-
 		}
-
+		
 		#wrapper.toggled #sidebar-wrapper {
 			margin-left: 0;
 		}
 
 		@media (min-width: 768px) {
-			#sidebar-wrapper {
-				margin-left: 0;
-			}
+ 		 #sidebar-wrapper {
+			margin-left: 0;
+  		}
 
-			#page-content-wrapper {
-				min-width: 0;
-				width: 100%;
-				background-color: #000;
-			}
+  		#page-content-wrapper {
+  			min-width: 0;
+  			width: 100%;
+  			background-color: #000;
+  		}
 
-			#wrapper.toggled #sidebar-wrapper {
-				margin-left: -14rem;
-			}
-		}
+
+  		#wrapper.toggled #sidebar-wrapper {
+			margin-left: -20rem;
+  		}
+}
+
 	</style>
 </head>
 
@@ -201,7 +200,7 @@ session.setAttribute("courseWork", "courseVideo");
 						</h1>
 					</div>
 					<div class="row align-items-center justify-content-center">
-						<div class="col-11">
+						<div class="col-12">
 							<jsp:include page="/front-end/course/courseDetail.jsp"></jsp:include>
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-success-gradient ">
@@ -216,7 +215,7 @@ session.setAttribute("courseWork", "courseVideo");
 																	<div class="sb1">
 																		<a class=vpath videoNo="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}" href="javascript:void(0)">
 																			<span class="video-title in-sb">
-																				<i class="fal fa-camera-movie"></i>
+																				<i class="fas fa-caret-circle-right"></i>
 																				${timetableVO.timetableDate}
 																				${timetableVO.periodText}
 																			</span>
