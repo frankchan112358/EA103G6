@@ -337,11 +337,7 @@
                                         </div>
                                     </div>
                                     </div>`;
-                                    if("${empVO.userNo}"=="${userVO.userNo}"){
-                                    	 let _html = `<div class="ml-3">
-                                             <a href="javascript:void(0);" title="Lisa Hatchensen" class="fs-b d-block fw-700 text-dark">${'${userName}'} <i class="fal fa-clock"></i>:${'${updateTime}'}</a>
-                                             <div class="fs-xl"> `;
-                                    }
+                                   
                     if (userNo == "${userVO.userNo}") {
                         _html += `
                                     <button courseAskNo="${'${courseAskNo}'}" replyNo="${'${replyNo}'}" class="btnReplyUpdate btn btn-xs btn-warning waves-effect waves-themed" type="button">修改</button>
