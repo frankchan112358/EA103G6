@@ -1,7 +1,6 @@
 package com.teachingfile.controller;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,13 +24,13 @@ public class DownloadFile extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
-		res.setContentType("application/pdf");
+		res.setCharacterEncoding("UTF-8");
 
 		// 傳檔案名稱進來
 		HttpSession session = req.getSession();
 
 		String queryString = req.getQueryString();
-		res.setHeader("content-disposition", "attachment; filename=\"" + queryString + "\"" + ".pdf");
+
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 
@@ -42,6 +41,9 @@ public class DownloadFile extends HttpServlet {
 
 			// 用VO.File取得檔案(byte[])接outputStream
 			ByteArrayInputStream bis = new ByteArrayInputStream(teachingFileVO.getTeachingFile());
+			String str = java.net.URLEncoder.encode(teachingFileVO.getTeachingFileName(), "UTF-8");
+			str = str.replace("+", "%20");
+			res.setHeader("content-disposition", "attachment;filename=" + str);
 			ServletOutputStream sos = res.getOutputStream();
 			byte[] loadFile = new byte[bis.available()];
 			bis.read(loadFile);

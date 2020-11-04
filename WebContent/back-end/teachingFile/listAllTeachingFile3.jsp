@@ -112,7 +112,7 @@
 						<tbody>
 							<tr>
 								<td>
-									<input id="teachingFileName" type="text" size="45" />
+									<input id="teachingFileName" type="text" size="20" />
 								</td>
 								<td class="teachingFileInfo filetype"></td>
 								<td class="teachingFileInfo filesize"></td>
@@ -161,11 +161,19 @@
 					title: "操作",
 					id: "teachingFileNo",
 					data: "teachingFileNo",
+					class: "justify-content-center d-flex",
 					render(data, type, row, meta) {
-						let html = `<button teachingFileNo="${'${row.teachingFileNo}'}" type="button" class="preview btn btn-success m-1 mb-0">
-										<span class="fal fa-file-code mr-1"></span>
-										<span>預覽</span>
-									</button>
+						let html = `
+						<form  class="m-1 mb-0" method="post" action="<%=request.getContextPath()%>/teachingFile/download.do">
+							<button id="addCourse" type="submit" class="btn btn-success">
+								<span class=" fal fa-file-code mr-1"></span>
+								<span>預覽</span>
+							</button>
+							<input type="hidden" name="courseNo" value="${courseNo}">
+							<input type="hidden" name="timetableNo" value="${'${row.teachingFileNo}'}">
+							<input type="hidden" name="teachingFileNo" value="${'${row.teachingFileNo}'}">
+							<input type="hidden" name="action" value="preRead">
+						</form>
 									<a href="<%=request.getContextPath()%>/teachingFile/download.do?${'${row.teachingFileNo}'}" download>
 									<button teachingFileNo="${'${row.teachingFileNo}'}" type="button" class="download btn btn-info m-1 mb-0">
 										<span class="fal fa-file-download mr-1"></span>
@@ -229,6 +237,26 @@
 
 			//about上傳的按鈕
 			$('#uploadFile').click(function (e) {
+				if ($('#teachingFile').val() == '') {
+					Swal.fire({
+							position: "top-end",
+							type: "danger",
+							title: "請選擇上傳檔案",
+							showConfirmButton: false,
+							timer: 1000
+						});
+					return;
+				}
+				if ($('#teachingFileName').val() == '') {
+					Swal.fire({
+							position: "top-end",
+							type: "danger",
+							title: "請填寫檔案名稱",
+							showConfirmButton: false,
+							timer: 1000
+						});
+					return;
+				}
 				if (workStatus == 'none') {
 					let form = new FormData();
 					form.append('teachingFile', $('#teachingFile')[0].files[0]);
