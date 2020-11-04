@@ -7,7 +7,7 @@ CourseVO courseNav_courseVO = new CourseService().getOneCourse(courseNav_courseN
 pageContext.setAttribute("courseNav_courseVO", courseNav_courseVO);
 %>
 <div class="bg-primary-700 bg-success-gradient text-white card p-2 pl-3 pr-3 mb-4" style="display: inline-block;">
-	<img src="<%=request.getContextPath() %>/course/course.do?action=getCourseImg&courseNo=${courseNav_courseVO.courseNo}" class="rounded" style="width: 4.125rem;height: 4.125rem;">
+	<img src="<%=request.getContextPath() %>/course/course.do?action=getCourseImg&courseNo=${courseNav_courseVO.courseNo}" class="rounded" style="width: 6rem;height: 4.125rem;">
 	<div class="info-card-text ml-3">
 		<h5 class="card-title mb-1">
 			<label class="fs-xxl">${courseNav_courseVO.courseName}</label>
