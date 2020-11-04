@@ -9,24 +9,7 @@
 <jsp:useBean id="videoSvc" scope="page" class="com.video.model.VideoService" />
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 <jsp:useBean id="timetableSvc" scope="page" class="com.timetable.model.TimetableService" />
-
 <%
-	String courseNo = (String) request.getSession().getAttribute("courseNo");
-
-	List<CourseVO> courseList = courseSvc.getAll();
-	CourseVO courseVO = courseSvc.getOneCourse(courseNo);
-
-	List<TimetableVO> timetableList = timetableSvc.getAll();
-
-	List<VideoVO> videoList = videoSvc.getAll();
-
-	pageContext.setAttribute("courseList", courseList);
-	pageContext.setAttribute("timetableList", timetableList);
-	pageContext.setAttribute("videoList", videoList);
-
-	pageContext.setAttribute("courseNo", courseNo);
-	pageContext.setAttribute("courseVO", courseVO);
-	session.setAttribute("courseWork", "courseVideo");
 %>
 <!DOCTYPE html>
 <html>
@@ -228,29 +211,21 @@
 										<div class="d-flex" id="wrapper">
 											<div class="bg-light border-right" id="sidebar-wrapper">
 												<div class="list-group list-group-flush">
-													<c:forEach var="courseVO" items="${courseList}">
-														<c:if test="${courseVO.courseNo eq courseNo }">
-															<c:forEach var="timetableVO" items="${timetableList}">
-																<c:if test="${courseVO.courseNo eq timetableVO.courseNo}">
+															<c:forEach var="timetableVO" items="${timetableSvc.getAllWithCourseNo(courseNo)}">
 																	<div class="sb1">
 																		<a class=vpath videoNo="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}" href="javascript:void(0)">
 																			<span class="video-title in-sb">
 																				<i class="fal fa-camera-movie"></i>
 																				${timetableVO.timetableDate}
-																				<c:if test="${timetableVO.timetablePeriod=='0'}">早上</c:if>
-																				<c:if test="${timetableVO.timetablePeriod=='1'}">下午</c:if>
-																				<c:if test="${timetableVO.timetablePeriod=='2'}">晚上</c:if>
+																				${timetableVO.periodText}
 																			</span>
 																		</a>
 																		<span class="in-sb-log">
-																			<button timeteableNo="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).timetableVO.timetableNo}" type="button"
+																			<button timeteableNo="${timetableVO.timetableNo}" type="button"
 																							class="btn btn-primary btn-pills waves-effect waves-themed btn1" style="font-size: 13px;"><i class="fal fa-book-spells"></i>教學筆記</button>
 																		</span>
 																	</div>
-																</c:if>
 															</c:forEach>
-														</c:if>
-													</c:forEach>
 												</div>
 											</div>
 											<div id="page-content-wrapper">
@@ -259,7 +234,6 @@
 														<i class="far fa-list-ul"></i>
 													</button>
 												</nav>
-
 												<div class="player container-fluid">
 													<h1 class="text-white videoname">${courseSvc.getOneCourse(courseNo).courseName}</h1>
 													<video id="videoPlayer" width="100%" height="100%" src="" type="video/mp4" loop autoplay poster="<%=request.getContextPath()%>/images/bg.png"></video>
