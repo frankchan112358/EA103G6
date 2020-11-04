@@ -1,14 +1,17 @@
 package com.teachingfile.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+
+import com.google.gson.JsonArray;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.timetable.model.TimetableService;
-import com.timetable.model.TimetableVO;
-import com.video.model.VideoVO;
+
+
 
 public class TeachingFileService {
 	
@@ -76,19 +79,30 @@ public class TeachingFileService {
 		}
 		return teachingFileVO;
 	}
+	
+	public List<TeachingFileVO> getAllWithCourseNo(String courseNo) {
+		List<TeachingFileVO> list = new ArrayList<TeachingFileVO>();
+		for (TeachingFileVO teachingFileVO : getAll()) {
+			if (courseNo.equals(teachingFileVO.getCourseNo()))
+				list.add(teachingFileVO);
+		}
+		return list;
+	}
 
 	public String getDatatableJson(String courseNo) {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		
 		JsonArray jsonArray = new JsonArray();
-		for (TimetableVO timetableVO : new TimetableService().getAllWithCourseNo(courseNo)) {
-			JsonObject jsonObject = gson.fromJson(gson.toJson(timetableVO), JsonObject.class);
-			jsonObject.addProperty("periodText", timetableVO.getPeriodText());
-			TeachingFileVO teachingFileVO = getOneTeachingFileWithTimetableNo(timetableVO.getTimetableNo());
-			jsonObject.addProperty("videoNo", teachingFileVO == null ? "" : teachingFileVO.getTeachingFileNo());
+		for (TeachingFileVO teachingFileVO : getAllWithCourseNo(courseNo)) {
+			JsonObject jsonObject = new JsonObject();
+			jsonObject.addProperty("teachingFileNo", teachingFileVO.getTeachingFileNo());
+			jsonObject.addProperty("teachingFileName", teachingFileVO.getTeachingFileName());
+			jsonObject.addProperty("courseNo", teachingFileVO.getCourseNo());
 			jsonArray.add(jsonObject);
 		}
 		JsonObject data = new JsonObject();
 		data.add("data", jsonArray);
+
 		return gson.toJson(data);
 	}
 }

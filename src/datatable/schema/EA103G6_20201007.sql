@@ -371,9 +371,10 @@ CREATE TABLE VIDEO(
 
 CREATE TABLE TEACHINGFILE (
     TEACHINGFILENO VARCHAR2(40) NOT NULL,
-    TIMETABLENO VARCHAR2(40) NOT NULL,
+    TIMETABLENO VARCHAR2(40) ,
     TEACHINGFILENAME VARCHAR2(40) NOT NULL,
     TEACHINGFILE BLOB,
+    COURSENO VARCHAR2(40) ,
     CONSTRAINT PK_TEACHINGFILE PRIMARY KEY (TEACHINGFILENO)
 );
 
@@ -903,9 +904,9 @@ INSERT INTO timetable (timetableno,courseno,classroomno,timetableperiod,timetabl
 --------------------------------------------------------
 --  Insert into 教材 teachingfile
 --------------------------------------------------------
-INSERT INTO teachingfile (teachingfileno,timetableno,teachingfilename) VALUES (TEACHINGFILE_SEQ.nextval,'TT000001','JDBC講義.pdf');
-INSERT INTO teachingfile (teachingfileno,timetableno,teachingfilename) VALUES (TEACHINGFILE_SEQ.nextval,'TT000002','JDBC範例.pdf');
-INSERT INTO teachingfile (teachingfileno,timetableno,teachingfilename) VALUES (TEACHINGFILE_SEQ.nextval,'TT000003','JAVA講義.pdf');
+INSERT INTO teachingfile (teachingfileno,timetableno,teachingfilename,courseno) VALUES (TEACHINGFILE_SEQ.nextval,'TT000001','JDBC講義.pdf','C003');
+INSERT INTO teachingfile (teachingfileno,timetableno,teachingfilename,courseno) VALUES (TEACHINGFILE_SEQ.nextval,'TT000002','JDBC範例.pdf','C002');
+INSERT INTO teachingfile (teachingfileno,timetableno,teachingfilename,courseno) VALUES (TEACHINGFILE_SEQ.nextval,'TT000003','JAVA講義.pdf','C001');
 --------------------------------------------------------
 --  Insert into 課堂影片 video
 --------------------------------------------------------

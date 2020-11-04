@@ -28,7 +28,7 @@ pageContext.setAttribute("courseNav_courseVO", courseNav_courseVO);
 		<li style="display: none;" class="nav-item"><a class="courseWork nav-link" courseWork="courseVideo" href="javascript:void(0)" style="font-size: 15px">課程影片管理</a></li>
 		<li class="nav-item"><a class="courseWork nav-link" courseWork="courseVideoAjax" href="javascript:void(0)" style="font-size: 15px">課程影片管理</a></li>
 		<li class="nav-item"><a class="courseWork nav-link" courseWork="teachingNote" href="javascript:void(0)" style="font-size: 15px">教學筆記管理</a></li>
-		<li class="nav-item"><a class="courseWork nav-link" courseWork="teachingFile" href="javascript:void(0)" style="font-size: 15px">課程教材管理</a></li>
+		<li class="nav-item"><a class="courseWork nav-link" courseWork="teachingFileAjax" href="javascript:void(0)" style="font-size: 15px">課程教材管理</a></li>
 		<li class="nav-item"><a class="courseWork nav-link" courseWork="finalScore" href="javascript:void(0)" style="font-size: 15px">成績管理</a></li>
 		<li class="nav-item"><a class="courseWork nav-link" courseWork="courseAsk" href="javascript:void(0)" style="font-size: 15px">提問管理</a></li>
 	</ul>
@@ -106,6 +106,16 @@ pageContext.setAttribute("courseNav_courseVO", courseNav_courseVO);
 				myForm.action = '<%=request.getContextPath()%>/course/courseTT.do';
 				myForm.method = 'POST';
 				myForm.append(courseNavInput('hidden', 'action', 'getTFDisplayList'));
+				myForm.submit();
+			}
+			if (courseWork == 'teachingFileAjax') {
+				
+				e.preventDefault();
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/course/courseTT.do';
+				myForm.method = 'POST';
+				myForm.append(courseNavInput('hidden', 'action', 'getTFDisplayListAjax'));
 				myForm.submit();
 			}
 			if (courseWork == 'finalScore') {
