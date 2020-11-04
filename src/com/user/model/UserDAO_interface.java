@@ -21,4 +21,6 @@ public interface UserDAO_interface {
 	public UserVO UserForget(String id) ;
 	public void update_Password(UserVO userVO);
 	public void update_Password_backEnd(UserVO userVO);
+	public void studentEnable(String userNo);
+	public void studentNoEnable(String userNo);
 }

@@ -37,11 +37,13 @@ public class UserDAO implements UserDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT USERNO,ACCOUNT,PASSWORD,TYPE,NAME,MAIL,PHONE,ADDRESS,ID,PHOTO,ENABLE FROM WJLUSER WHERE ISDELETE=0 AND USERNO = ?";
 	private static final String GET_ONE_STMT_ID = "SELECT USERNO,ID FROM WJLUSER WHERE ID = ?";
 	private static final String DELETE = "UPDATE WJLUSER SET ISDELETE=1 WHERE USERNO=?";
-	private static final String LOGIN="SELECT USERNO,ACCOUNT,PASSWORD,TYPE,NAME,MAIL,PHONE,ADDRESS,ID,PHOTO,ENABLE FROM WJLUSER WHERE ISDELETE=0 AND LOWER(ACCOUNT)=? AND PASSWORD=? AND TYPE=?";
-	private static final String FORGET="SELECT USERNO,ACCOUNT,PASSWORD,TYPE,NAME,MAIL,PHONE,ADDRESS,ID,PHOTO,ENABLE FROM WJLUSER WHERE ISDELETE=0 AND ID = ? ";
+	private static final String LOGIN = "SELECT USERNO,ACCOUNT,PASSWORD,TYPE,NAME,MAIL,PHONE,ADDRESS,ID,PHOTO,ENABLE FROM WJLUSER WHERE ISDELETE=0 AND LOWER(ACCOUNT)=? AND PASSWORD=? AND TYPE=?";
+	private static final String FORGET = "SELECT USERNO,ACCOUNT,PASSWORD,TYPE,NAME,MAIL,PHONE,ADDRESS,ID,PHOTO,ENABLE FROM WJLUSER WHERE ISDELETE=0 AND ID = ? ";
 	private static final String UPDATE_PASSWORD = "UPDATE WJLUSER SET PASSWORD=? WHERE ID = ?";
 	private static final String UPDATE_PASSWORD_BACKEND = "UPDATE WJLUSER SET PASSWORD=? WHERE USERNO = ?";
-
+	private static final String STUDENTENABLE = "UPDATE WJLUSER SET ENABLE=1 WHERE USERNO = ?";
+	private static final String STUDENTNOENABLE = "UPDATE WJLUSER SET ENABLE=2 WHERE USERNO = ?";
+	
 	@Override
 	public void insert(UserVO userVO) {
 		Connection con = null;
@@ -50,7 +52,7 @@ public class UserDAO implements UserDAO_interface {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
-			
+
 			pstmt.setString(1, userVO.getAccount());
 			pstmt.setInt(2, userVO.getType());
 			pstmt.setString(3, userVO.getName());
@@ -87,7 +89,6 @@ public class UserDAO implements UserDAO_interface {
 
 		try {
 			con = ds.getConnection();
-			
 
 			if (userVO.getPhoto() == null) {
 				pstmt = con.prepareStatement(UPDATE_NOPIC);
@@ -143,12 +144,12 @@ public class UserDAO implements UserDAO_interface {
 
 		try {
 			con = ds.getConnection();
-			
+
 			pstmt = con.prepareStatement(USERENABLE);
 			pstmt.setString(1, userVO.getPassword());
 			pstmt.setInt(2, userVO.getEnable());
 			pstmt.setString(3, userVO.getUserNo());
-			
+
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
@@ -171,24 +172,22 @@ public class UserDAO implements UserDAO_interface {
 			}
 		}
 
-
 	}
 
 	@Override
 	public void delete(String userNo) {
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		
-		try{
-			con=ds.getConnection();
-			pstmt=con.prepareStatement(DELETE);
-			
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(DELETE);
+
 			pstmt.setString(1, userNo);
 			pstmt.executeQuery();
-		}catch(SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-		}finally {
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -234,10 +233,10 @@ public class UserDAO implements UserDAO_interface {
 				userVO.setPhone(rs.getString("PHONE"));
 				userVO.setAddress(rs.getString("ADDRESS"));
 				userVO.setId(rs.getString("ID"));
-				Blob photo=rs.getBlob("PHOTO");
-				if(photo==null) {
+				Blob photo = rs.getBlob("PHOTO");
+				if (photo == null) {
 					userVO.setPhoto(null);
-				}else {
+				} else {
 					userVO.setPhoto(rs.getBlob("PHOTO").getBinaryStream());
 				}
 				userVO.setEnable(rs.getInt("ENABLE"));
@@ -271,29 +270,29 @@ public class UserDAO implements UserDAO_interface {
 
 		return userVO;
 	}
-	
+
 	@Override
 	public UserVO findById(String id) {
 		UserVO userVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT_ID);
-			
+
 			pstmt.setString(1, id);
-			
+
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
-				
+
 				userVO = new UserVO();
 				userVO.setUserNo(rs.getString("USERNO"));
 				userVO.setId(rs.getString("ID"));
 			}
-			
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -319,7 +318,7 @@ public class UserDAO implements UserDAO_interface {
 				}
 			}
 		}
-		
+
 		return userVO;
 	}
 
@@ -348,10 +347,10 @@ public class UserDAO implements UserDAO_interface {
 				userVO.setPhone(rs.getString("PHONE"));
 				userVO.setAddress(rs.getString("ADDRESS"));
 				userVO.setId(rs.getString("ID"));
-				Blob photo=rs.getBlob("PHOTO");
-				if(photo==null) {
+				Blob photo = rs.getBlob("PHOTO");
+				if (photo == null) {
 					userVO.setPhoto(null);
-				}else {
+				} else {
 					userVO.setPhoto(rs.getBlob("PHOTO").getBinaryStream());
 				}
 				userVO.setEnable(rs.getInt("ENABLE"));
@@ -398,7 +397,7 @@ public class UserDAO implements UserDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_PIC);
 			pstmt.setString(1, userNo);
-			
+
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -527,7 +526,6 @@ public class UserDAO implements UserDAO_interface {
 		return list;
 	}
 
-
 	@Override
 	public UserVO UserLogin(String account, String password, Integer type) {
 		UserVO userVO = null;
@@ -542,7 +540,7 @@ public class UserDAO implements UserDAO_interface {
 			pstmt.setString(1, account);
 			pstmt.setString(2, password);
 			pstmt.setInt(3, type);
-			
+
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -557,10 +555,10 @@ public class UserDAO implements UserDAO_interface {
 				userVO.setPhone(rs.getString("PHONE"));
 				userVO.setAddress(rs.getString("ADDRESS"));
 				userVO.setId(rs.getString("ID"));
-				Blob photo=rs.getBlob("PHOTO");
-				if(photo==null) {
+				Blob photo = rs.getBlob("PHOTO");
+				if (photo == null) {
 					userVO.setPhoto(null);
-				}else {
+				} else {
 					userVO.setPhoto(rs.getBlob("PHOTO").getBinaryStream());
 				}
 				userVO.setEnable(rs.getInt("ENABLE"));
@@ -612,6 +610,7 @@ public class UserDAO implements UserDAO_interface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public UserVO UserForget(String id) {
 		UserVO userVO = null;
@@ -624,8 +623,7 @@ public class UserDAO implements UserDAO_interface {
 			pstmt = con.prepareStatement(FORGET);
 
 			pstmt.setString(1, id);
-		
-			
+
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -640,10 +638,10 @@ public class UserDAO implements UserDAO_interface {
 				userVO.setPhone(rs.getString("PHONE"));
 				userVO.setAddress(rs.getString("ADDRESS"));
 				userVO.setId(rs.getString("ID"));
-				Blob photo=rs.getBlob("PHOTO");
-				if(photo==null) {
+				Blob photo = rs.getBlob("PHOTO");
+				if (photo == null) {
 					userVO.setPhoto(null);
-				}else {
+				} else {
 					userVO.setPhoto(rs.getBlob("PHOTO").getBinaryStream());
 				}
 				userVO.setEnable(rs.getInt("ENABLE"));
@@ -677,6 +675,7 @@ public class UserDAO implements UserDAO_interface {
 
 		return userVO;
 	}
+
 	@Override
 	public void update_Password(UserVO userVO) {
 		Connection con = null;
@@ -684,13 +683,11 @@ public class UserDAO implements UserDAO_interface {
 
 		try {
 			con = ds.getConnection();
-			
 
-			
-				pstmt = con.prepareStatement(UPDATE_PASSWORD);
-				
-				pstmt.setString(1, userVO.getPassword());
-				pstmt.setString(2, userVO.getId());
+			pstmt = con.prepareStatement(UPDATE_PASSWORD);
+
+			pstmt.setString(1, userVO.getPassword());
+			pstmt.setString(2, userVO.getId());
 
 			pstmt.executeUpdate();
 
@@ -714,26 +711,26 @@ public class UserDAO implements UserDAO_interface {
 			}
 		}
 
-		
 	}
+
 	@Override
 	public void update_Password_backEnd(UserVO userVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_PASSWORD_BACKEND);
-			
+
 			pstmt.setString(1, userVO.getPassword());
 			pstmt.setString(2, userVO.getUserNo());
-			
+
 			pstmt.executeUpdate();
-			
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			
+
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -749,8 +746,73 @@ public class UserDAO implements UserDAO_interface {
 				}
 			}
 		}
-		
-		
+
 	}
 	
+	@Override
+	public void studentEnable(String userNo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(STUDENTENABLE);
+
+			pstmt.setString(1, userNo);
+			pstmt.executeQuery();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	public void studentNoEnable(String userNo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(STUDENTNOENABLE);
+
+			pstmt.setString(1, userNo);
+			pstmt.executeQuery();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+
+
+
 }
+
+

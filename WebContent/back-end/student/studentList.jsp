@@ -67,7 +67,8 @@
                                                         <th>信箱</th>
                                                         <th>電話</th>
                                                         <th>敘述</th>                                                       
-                                                        <th>狀態</th>
+                                                        <th>班級狀態</th>
+                                                        <th>學員狀態</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -89,10 +90,12 @@
                                                     		<td>${studentVO.studentDescription eq null?"暫無資料":studentVO.studentDescription}</td>
                                                     		<td><c:choose>                                                    	
                                                     			<c:when test="${banjiSvc.getOneBanji(studentVO.banjiNo).status==0}">結訓</c:when>
-                                                    			<c:when test="${banjiSvc.getOneBanji(studentVO.banjiNo).status==1}">在訓中</c:when>
+                                                    			<c:when test="${banjiSvc.getOneBanji(studentVO.banjiNo).status==1}">開課中</c:when>
                                                     			<c:when test="${banjiSvc.getOneBanji(studentVO.banjiNo).status==2}">班級延期</c:when>
                                                     			<c:when test="${banjiSvc.getOneBanji(studentVO.banjiNo).status==3}">未開課</c:when>
                                                     		</c:choose>	</td>
+                                                    		
+                                                    		<td>${studentVO.studentStatus == 2?"退訓":"在訓中"}</td>
                                                     		</tr>
                                                     	</c:if>
                                                     </c:forEach>
@@ -107,7 +110,8 @@
                                                         <th>信箱</th>
                                                         <th>電話</th>
                                                         <th>敘述</th>
-                                                        <th>狀態</th>
+                                                        <th>班級狀態</th>
+                                                        <th>學員狀態</th>
                                                     </tr>
                                                 </tfoot>
                                             </table>

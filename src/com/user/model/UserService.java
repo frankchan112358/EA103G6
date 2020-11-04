@@ -123,4 +123,12 @@ public class UserService {
 		dao.update_Password_backEnd(userVO);
 		return userVO;
 	}
+	
+	public void studentEnable(String userNo) {
+		dao.studentEnable(userNo);
+	}
+	
+	public void studentNoEnable(String userNo) {
+		dao.studentNoEnable(userNo);	
+	}
 }

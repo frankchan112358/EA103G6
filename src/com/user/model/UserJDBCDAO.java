@@ -221,4 +221,18 @@ public class UserJDBCDAO implements UserDAO_interface {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	@Override
+	public void studentEnable(String userNo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void studentNoEnable(String userNo) {
+		// TODO Auto-generated method stub
+		
+	}
 }
