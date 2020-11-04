@@ -17,6 +17,7 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import com.google.gson.Gson;
+import com.websocketchat.model.WebsocketChatVO;
 import com.websocketnotify.model.WebsocketNotifyDAO;
 import com.websocketnotify.model.WebsocketNotifyVO;
 
@@ -39,13 +40,26 @@ public class NotifyServlet {
 			}
 		}
 		//測試用的code
-//		String text = String.format("Session ID = %s, connected; userNo = %s", session.getId(),
-//				userNo);
-//		System.out.println(text);
+		String text = String.format("Session ID = %s, connected; userNo = %s", session.getId(),
+				userNo);
+		System.out.println(text);
 	}
 	
 	@OnMessage
 	public void onMessage(Session session, String message) {
+		Set<String> userNos = sessionsMap.keySet();
+		String notifyUserNo=null;
+		for (String userNo : userNos) {
+			if (sessionsMap.get(userNo).equals(session)) {
+				notifyUserNo=userNo;
+			}
+		}
+		WebsocketNotifyVO notifyMessage =gson.fromJson(message,WebsocketNotifyVO.class); 
+		notifyMessage.setStatus("已讀");//更改其狀態為已讀
+		String notifyMessageChange=gson.toJson(notifyMessage); //再次轉換成字串
+		
+		WebsocketNotifyDAO.changeValue(notifyUserNo, notifyMessage.getIndex(), notifyMessageChange);
+		
 		
 	}
 	
@@ -79,7 +93,9 @@ public class NotifyServlet {
 		if(userNo==null)return;
 		
 		//將提醒存進redis資料庫
-		WebsocketNotifyVO notify =new WebsocketNotifyVO(title, content, new Date().getTime());
+		Long index=WebsocketNotifyDAO.getIndex(userNo);
+		
+		WebsocketNotifyVO notify =new WebsocketNotifyVO(title, content, new Date().getTime(),"未讀",index);
 		String notifyJson = gson.toJson(notify);
 		WebsocketNotifyDAO.saveNotify(userNo, notifyJson);
 //		System.out.println("存進資料庫的訊息："+notifyJson);
