@@ -331,12 +331,13 @@
                                         <span class="profile-image rounded-circle d-inline-block" style="background-image:url('<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${'${userNo}'}');background-size:cover; "></span>
                                     </span>
                                     <div class="ml-3">
-                                        <a href="javascript:void(0);" title="Lisa Hatchensen" class="fs-b d-block fw-700 text-dark" style="border:3px red dashed;">${'${userName}'} <i class="fal fa-clock"></i>:${'${updateTime}'}</a>
+                                        <a href="javascript:void(0);" title="Lisa Hatchensen" class="fs-b d-block fw-700 text-dark" id="name">${'${userName}'} <i class="fal fa-clock"></i>:${'${updateTime}'}</a>
                                         <div class="fs-xl">
                                             ${'${replyContent}'}     
                                         </div>
                                     </div>
                                     </div>`;
+                                   
                     if (userNo == "${userVO.userNo}") {
                         _html += `
                                     <button courseAskNo="${'${courseAskNo}'}" replyNo="${'${replyNo}'}" class="btnReplyUpdate btn btn-xs btn-warning waves-effect waves-themed" type="button">修改</button>
