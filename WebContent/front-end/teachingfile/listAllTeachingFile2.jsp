@@ -46,21 +46,19 @@ session.setAttribute("courseWork", "teachingFile");
 			<div class="page-content-wrapper">
 				<%@ include file="/front-end/template/header.jsp"%>
 				<main id="js-page-content" role="main" class="page-content">
-					<ol class="breadcrumb page-breadcrumb">
+						<ol class="breadcrumb page-breadcrumb">
 						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">前台首頁</a>
+							<a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a id="aListAllCourse" banjiNo="${courseSvc.getOneCourse(courseNo).banjiNo}" href="javascript:void(0)">課程總覽</a>
+							<a href="<%=request.getContextPath()%>/front-end/course/selectCourse.jsp">我的課程</a>
 						</li>
-						<li class="breadcrumb-item">
-							教材管理
-						</li>
+						<li class="breadcrumb-item">課程教材</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
 							<i class="subheader-icon fal fa-file-code"></i>
-							教材管理
+							課程教材
 						</h1>
 					</div>
 					<div class="row  align-items-center justify-content-center">
