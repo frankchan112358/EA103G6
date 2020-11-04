@@ -21,17 +21,17 @@
 				if(jsonObj !== null){
 					for(let i=0;i<jsonObj.length;i++){	
 						
-						var dateForNow=new Date().getTime();
-						var detailJson =JSON.parse(jsonObj[i]);
-						var jsonObjForName=jsonObj[i];
-						var notifyTitle=detailJson.title;
-						var notifyContent=detailJson.content;
-						var countTimeForShow=detailJson.time;
+						let dateForNow=new Date().getTime();
+						let detailJson =JSON.parse(jsonObj[i]);
+						let jsonObjForName=jsonObj[i];
+						let notifyTitle=detailJson.title;
+						let notifyContent=detailJson.content;
+						let countTimeForShow=detailJson.time;
 						
 						//進行時間處理，僅適用於 GMT+的地方
-						var dateForLong=dateForNow-countTimeForShow;
-						var timeZone=new Date().getTimezoneOffset();
-						var showNotifyDay;
+						let dateForLong=dateForNow-countTimeForShow;
+						let timeZone=new Date().getTimezoneOffset();
+						let showNotifyDay;
 					
 						if(dateForLong <= (1000*60*60)){ //時間短於一小時
 							showNotifyDay=new Date(dateForLong).getMinutes();							
@@ -53,7 +53,7 @@
 							
 						}else if(dateForLong <= (1000*60*60*24*30)){ //時間短於三十天
 							
-							var minusTimeZoneDate=dateForLong+(timeZone*60*1000);
+							let minusTimeZoneDate=dateForLong+(timeZone*60*1000);
 							showNotifyDay=new Date(minusTimeZoneDate).getDate()-1+"天前";
 							
 						}else{ //時間長於一個月
@@ -93,18 +93,22 @@
 						}
 						
 					}
-					$("#noReadPic").text(noReadCount);
+					//當歷史資料有未讀時顯示被隱藏未讀數字
+					if(noReadCount!=0){
+						$("#noReadPic").text(noReadCount);
+						$("#noReadPic").show("fast");
+					}
+					
 				}
 			}else{
 				if(jsonObj !== null){ 
 
-					var dateForNow=new Date().getTime();				
-					var notifyTitle=jsonObj.title;
-					var notifyContent=jsonObj.content;
-					var countTimeForShow="剛剛";
-					var noReadCount;					
+					let dateForNow=new Date().getTime();				
+					let notifyTitle=jsonObj.title;
+					let notifyContent=jsonObj.content;
+					let countTimeForShow="剛剛";
 										
-					$("#decorateForNotification").prepend(`<li class="unread" name=${event.data}>
+					$("#decorateForNotification_noRead").prepend(`<li class="unread" name=${event.data}>
                             <div class="d-flex align-items-center show-child-on-hover">
                             <span class="d-flex flex-column flex-1">
                                 <span class="name d-flex align-items-center"> ${notifyTitle} <span class="badge badge-success fw-n ml-1">NOTIFY</span></span>
@@ -115,8 +119,15 @@
                             </span>
                         </div>
                     </li>`);
-					noReadCount=$("#noReadPic").text()+1;
-					$("#noReadPic").text("noReadCount");
+					//收到即時提醒時未讀加一
+					if($("#noReadPic").text()!=0){
+						noReadCount=parseInt($("#noReadPic").text())+1;
+						$("#noReadPic").text(noReadCount.toString());
+					}else{
+						noReadCount=1;
+						$("#noReadPic").text(noReadCount.toString());
+						$("#noReadPic").show("fast");
+					}
 
                     Swal.fire(
                     {
@@ -142,19 +153,20 @@
 	}	
 	
 	
-	$(document).ready(function (){
+	$(document).ready(function(){
+		$("#noReadPic").hide();
+		
 		$("#decorateForNotification_noRead").on('click',".unread", function(event) {
+			//狀態改已讀右上小鈴鐺數字改變
 			var noReadCount=parseInt($("#noReadPic").text());
 			webSocketForNotify.send($(this).attr("name"));
 			$(this).insertBefore("#decorateForNotification li:eq(0)");
 			noReadCount=noReadCount-1;
 			$("#noReadPic").text(noReadCount.toString());
-		});
-		
-		$("#decorateForNotification").on('click',".unread", function(event) {
 			
-			webSocketForNotify.send($(this).attr("name"));
-			$(this).insertBefore("#decorateForNotification li:eq(0)");
+			if(noReadCount===0){ //狀態改已讀導致未讀0則時隱藏
+				$("#noReadPic").hide();
+			}
 		});
 		
 	
