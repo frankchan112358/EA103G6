@@ -165,12 +165,12 @@
 										<span class="fal fa-file-code mr-1"></span>
 										<span>預覽</span>
 									</button>
-									<a href="<%=request.getContextPath()%>/teachingFile/download.do?${teachingFileVO.teachingFileNo}" download>
+									<a href="<%=request.getContextPath()%>/teachingFile/download.do?${'${row.teachingFileNo}'}" download>
 									<button teachingFileNo="${'${row.teachingFileNo}'}" type="button" class="download btn btn-info m-1 mb-0">
 										<span class="fal fa-file-download mr-1"></span>
 										<span>下載</span>
 									</button>
-									<input type="hidden" name="teachingFileNo" value="${teachingFileVO.teachingFileNo}">
+									<input type="hidden" name="teachingFileNo" value="${'${row.teachingFileNo}'}">
 									</a>
 									<button teachingFileNo="${'${row.teachingFileNo}'}" type="button" class="delete btn btn-danger m-1 mb-0">
 										<span class="fal fa-times mr-1"></span>

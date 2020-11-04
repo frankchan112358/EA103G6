@@ -63,6 +63,13 @@ public class CourseTTServlet extends HttpServlet {
 			successView.forward(req, res);
 		}
 		
+		if ("getTFDisplayListAjax".equals(action)) {
+			session.setAttribute("courseWork", "teachingFileAjax");
+			req.setAttribute("courseVO", courseVO);
+			RequestDispatcher successView = req.getRequestDispatcher("/back-end/teachingFile/listAllTeachingFile3.jsp");
+			successView.forward(req, res);
+		}
+		
 		if ("getFSDisplayList".equals(action)) {
 			session.setAttribute("courseWork", "finalScore");
 			req.setAttribute("courseVO", courseVO);

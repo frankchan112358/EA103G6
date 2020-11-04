@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.course.model.CourseService;
+import com.course.model.CourseVO;
 import com.teachingfile.model.TeachingFileService;
 import com.teachingfile.model.TeachingFileVO;
 import com.video.model.VideoService;
@@ -32,12 +34,12 @@ public class TeachingFileAjax extends HttpServlet {
 		res.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		HttpSession session = req.getSession();
+		String courseNo = (String) session.getAttribute("courseNo");
 
 		if ("insert".equals(action)) {
 			res.setContentType("text/html");
 			try {
 				// 接參數
-				String courseNo = (String) session.getAttribute("courseNo");
 				String teachingFileName = req.getParameter("teachingFileName");
 				// 接檔案 >判斷有檔案 > 判斷格式(對>上傳 ; 不對 > print errorMsgs) > 上傳
 				byte[] teachingFiles = null;
@@ -78,10 +80,11 @@ public class TeachingFileAjax extends HttpServlet {
 		}
 		if ("datatable".equals(action)) {
 			res.setContentType("application/json;");
-			String courseNo = req.getParameter("courseNo");
 			PrintWriter out = res.getWriter();
 			out.print(new TeachingFileService().getDatatableJson(courseNo));
 			return;
 		}
+		
+		
 	}
 }
