@@ -29,7 +29,7 @@ public class ForumTopicJNDIDAO implements ForumTopicDAO_interface {
 	private static final String GET_ALL_STMT = "SELECT forumtopicno, banjino, forumtopicname FROM forumtopic where isDelete = 0 order by to_number(forumtopicno)";
 	private static final String GET_ONE_STMT = "SELECT forumtopicno, banjino, forumtopicname FROM forumtopic where forumtopicno = ?";
 	private static final String DELETE = "UPDATE forumtopic set isDelete=1 where forumtopicno = ?";
-	private static final String UPDATE = "UPDATE forumtopic set banjino=?, forumtopicname=?";
+	private static final String UPDATE = "UPDATE forumtopic set banjino=?, forumtopicname=? where forumtopicno = ?";
 	private static final String GETBYBANJINO = "select * from forumtopic where banjino = ? and isdelete = 0";
 
 	@Override
@@ -85,7 +85,7 @@ public class ForumTopicJNDIDAO implements ForumTopicDAO_interface {
 			pstmt.setString(1, forumTopicVO.getBanjiNo());
 			pstmt.setString(2, forumTopicVO.getForumTopicName());
 
-			pstmt.setString(6, forumTopicVO.getForumTopicNo());
+			pstmt.setString(3, forumTopicVO.getForumTopicNo());
 
 			pstmt.executeUpdate();
 

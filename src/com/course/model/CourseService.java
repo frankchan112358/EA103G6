@@ -5,8 +5,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.student.model.StudentService;
-import com.student.model.StudentVO;
+import com.google.gson.JsonObject;
 
 public class CourseService {
 
@@ -94,4 +93,18 @@ public class CourseService {
 		return dao.getCourseImg(courseNo);
 	}
 
+	public JsonObject getCourseJsonObject(CourseVO courseVO) {
+		JsonObject jsonObject= new JsonObject();
+		jsonObject.addProperty("courseNo", courseVO.getCourseNo());
+		jsonObject.addProperty("banjiNo", courseVO.getBanjiNo());
+		jsonObject.addProperty("teacherNo", courseVO.getTeacherNo());
+		jsonObject.addProperty("classroomNo", courseVO.getClassroomNo());
+		jsonObject.addProperty("basicCourseNo", courseVO.getBasicCourseNo());
+		jsonObject.addProperty("courseName", courseVO.getCourseName());
+		jsonObject.addProperty("lesson", courseVO.getLesson());
+		jsonObject.addProperty("startDate", courseVO.getStartDate().toString());
+		jsonObject.addProperty("endDate", courseVO.getEndDate().toString());
+		jsonObject.addProperty("status", courseVO.getStatus());
+		return jsonObject;
+	}
 }

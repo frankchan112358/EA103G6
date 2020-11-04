@@ -9,182 +9,169 @@
 <jsp:useBean id="videoSvc" scope="page" class="com.video.model.VideoService" />
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 <jsp:useBean id="timetableSvc" scope="page" class="com.timetable.model.TimetableService" />
-
 <%
-	String courseNo = (String) request.getSession().getAttribute("courseNo");
-
-	List<CourseVO> courseList = courseSvc.getAll();
-	CourseVO courseVO = courseSvc.getOneCourse(courseNo);
-
-	List<TimetableVO> timetableList = timetableSvc.getAll();
-
-	List<VideoVO> videoList = videoSvc.getAll();
-
-	pageContext.setAttribute("courseList", courseList);
-	pageContext.setAttribute("timetableList", timetableList);
-	pageContext.setAttribute("videoList", videoList);
-
-	pageContext.setAttribute("courseNo", courseNo);
-	pageContext.setAttribute("courseVO", courseVO);
-	session.setAttribute("courseWork", "courseVideo");
 %>
 <!DOCTYPE html>
 <html>
 
 <head>
-<%@ include file="/front-end/template/head.jsp"%>
-<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath()%>/SmartAdmin4/css/formplugins/summernote/summernote.css">
-<style>
-.panel .panel-container .panel-content {
-	padding: 0;
-}
+	<%@ include file="/front-end/template/head.jsp"%>
+	<link rel="stylesheet" media="screen, print" href="<%=request.getContextPath()%>/SmartAdmin4/css/formplugins/summernote/summernote.css">
+	<style>
+		.panel .panel-container .panel-content {
+			padding: 0;
+		}
 
-.player {
-	width: 100%;
-	background-color: #000;
-}
+		.player {
+			width: 100%;
+			background-color: #000;
+		}
 
-video {
-display: block;
-width: 100%;
-margin: 12px auto;
-}
+		video {
+			display: block;
+			width: 100%;
+			margin: 12px auto;
+		}
 
-.container-fluid, .container-sm, .container-md, .container-lg, .container-xl {
-    padding-right: 0;
-    padding-left: 0;
-}
+		.container-fluid,
+		.container-sm,
+		.container-md,
+		.container-lg,
+		.container-xl {
+			padding-right: 0;
+			padding-left: 0;
+		}
 
-#sidebar-wrapper{
-    background-color: #2d3947 !important;
-}
+		#sidebar-wrapper {
+			background-color: #2d3947 !important;
+		}
 
-.bg-light {
-    background-color: #000 !important;
-}
+		.bg-light {
+			background-color: #000 !important;
+		}
 
-.border-right {
-    border-right: 3px solid #2d3947 !important;
-}
+		.border-right {
+			border-right: 3px solid #2d3947 !important;
+		}
 
-.border-bottom {
-    border-bottom: none !important;
-}
+		.border-bottom {
+			border-bottom: none !important;
+		}
 
-.border-left {
-    border-bottom: none !important;
-}
+		.border-left {
+			border-bottom: none !important;
+		}
 
-.in-sb{
-font-size: 1.6em;
-color : white;
-margin-left: 8px;
-}
+		.in-sb {
+			font-size: 1.6em;
+			color: white;
+			margin-left: 8px;
+		}
 
-a[target]:not(.btn) {
-    text-decoration: none !important;
-}
+		a[target]:not(.btn) {
+			text-decoration: none !important;
+		}
 
-.sb1{
-    padding: 15px;
-    border-bottom: 1px solid #666 !important;
-}
+		.sb1 {
+			padding: 15px;
+			border-bottom: 1px solid #666 !important;
+		}
 
-.btn1{
-	margin-left: 40px;
-	margin-top: 10px;
-}
+		.btn1 {
+			margin-left: 40px;
+			margin-top: 10px;
+		}
 
-.btn2{
-	background-color: #252f3b;
-	border-color: #2d3947;
-	margin-left: -17px;
-    width: 40px;
-    height: 40px;
-    padding: 5px;
-    border-radius: 0 5px 5px 0;
-    -webkit-box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
-    font-size: 23px;
-}
+		.btn2 {
+			background-color: #252f3b;
+			border-color: #2d3947;
+			margin-left: -17px;
+			width: 40px;
+			height: 40px;
+			padding: 5px;
+			border-radius: 0 5px 5px 0;
+			-webkit-box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
+			box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
+			font-size: 23px;
+		}
 
-.btn2:hover{
-    color: #212529;
-    background-color: #2d3947;
-    border-color: #2d3947;
-    -webkit-box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
-}
+		.btn2:hover {
+			color: #212529;
+			background-color: #2d3947;
+			border-color: #2d3947;
+			-webkit-box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
+			box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
+		}
 
 
-.btn2:focus{
-    color: #212529;
-    background-color: #2d3947;
-    border-color: #2d3947;
-    -webkit-box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
-}
+		.btn2:focus {
+			color: #212529;
+			background-color: #2d3947;
+			border-color: #2d3947;
+			-webkit-box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
+			box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
+		}
 
-.fa-list-ul:before {
-	color: #82a82d;;
-}
+		.fa-list-ul:before {
+			color: #82a82d;
+			;
+		}
 
-.videoname{
-	margin-left: 10px;
-	margin-top: 5px;
-}
+		.videoname {
+			margin-left: 10px;
+			margin-top: 5px;
+		}
 
-#sbLog{
-font-size: 1.3em;
-color: #FFFAE6;
-background-color: #658F4B;
+		#sbLog {
+			font-size: 1.3em;
+			color: #FFFAE6;
+			background-color: #658F4B;
 
-}
+		}
 
- #wrapper {
-    overflow: hidden;
- }
+		#wrapper {
+			overflow: hidden;
+		}
 
-#sidebar-wrapper {
-  min-height: 100vh;
-  margin-left: -14rem;
-  -webkit-transition: margin .25s ease-out;
-  -moz-transition: margin .25s ease-out;
-  -o-transition: margin .25s ease-out;
-  transition: margin .25s ease-out;
-}
+		#sidebar-wrapper {
+			min-height: 100vh;
+			margin-left: -14rem;
+			-webkit-transition: margin .25s ease-out;
+			-moz-transition: margin .25s ease-out;
+			-o-transition: margin .25s ease-out;
+			transition: margin .25s ease-out;
+		}
 
-#sidebar-wrapper .list-group {
-  width: 14rem;
-}
+		#sidebar-wrapper .list-group {
+			width: 14rem;
+		}
 
-#page-content-wrapper {
-  min-width: 100%;
-  background-color: #000;
-  
-}
+		#page-content-wrapper {
+			min-width: 100%;
+			background-color: #000;
 
-#wrapper.toggled #sidebar-wrapper {
-  margin-left: 0;
-}
+		}
 
-@media (min-width: 768px) {
-  #sidebar-wrapper {
-    margin-left: 0;
-  }
+		#wrapper.toggled #sidebar-wrapper {
+			margin-left: 0;
+		}
 
-  #page-content-wrapper {
-    min-width: 0;
-    width: 100%;
-    background-color: #000;
-  }
+		@media (min-width: 768px) {
+			#sidebar-wrapper {
+				margin-left: 0;
+			}
 
-  #wrapper.toggled #sidebar-wrapper {
-    margin-left: -14rem;
-  }
-}
+			#page-content-wrapper {
+				min-width: 0;
+				width: 100%;
+				background-color: #000;
+			}
 
-</style>
+			#wrapper.toggled #sidebar-wrapper {
+				margin-left: -14rem;
+			}
+		}
+	</style>
 </head>
 
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
@@ -224,33 +211,21 @@ background-color: #658F4B;
 										<div class="d-flex" id="wrapper">
 											<div class="bg-light border-right" id="sidebar-wrapper">
 												<div class="list-group list-group-flush">
-													<c:forEach var="courseVO" items="${courseList}">
-														<c:if test="${courseVO.courseNo eq courseNo }">
-															<c:forEach var="timetableVO" items="${timetableList}">
-																<c:if test="${courseVO.courseNo eq timetableVO.courseNo}">
-																		<div class="sb1">
-																		<a class=vpath href="<%=request.getContextPath()%>/videos/${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}.mp4" target="player">
-																			<span class="in-sb">
-																				<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
-																				<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
+															<c:forEach var="timetableVO" items="${timetableSvc.getAllWithCourseNo(courseNo)}">
+																	<div class="sb1">
+																		<a class=vpath videoNo="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}" href="javascript:void(0)">
+																			<span class="video-title in-sb">
 																				<i class="fal fa-camera-movie"></i>
 																				${timetableVO.timetableDate}
-																				<input class="videoname" type="hidden" name="videoName" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoName}">
-																				<input type="hidden" name="timetablePeriod" value="${timetableVO.timetablePeriod}">
-																				<c:if test="${timetableVO.timetablePeriod=='0'}">早上</c:if>
-																				<c:if test="${timetableVO.timetablePeriod=='1'}">下午</c:if>
-																				<c:if test="${timetableVO.timetablePeriod=='2'}">晚上</c:if>
+																				${timetableVO.periodText}
 																			</span>
 																		</a>
-																			<span class="in-sb-log">
-																				<button timeteableNo="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).timetableVO.timetableNo}" type="button"
-																					class="btn btn-primary btn-pills waves-effect waves-themed btn1" style="font-size: 13px;"><i class="fal fa-book-spells"></i>教學筆記</button>
-																				</span>
-																		</div>
-																</c:if>
+																		<span class="in-sb-log">
+																			<button timeteableNo="${timetableVO.timetableNo}" type="button"
+																							class="btn btn-primary btn-pills waves-effect waves-themed btn1" style="font-size: 13px;"><i class="fal fa-book-spells"></i>教學筆記</button>
+																		</span>
+																	</div>
 															</c:forEach>
-														</c:if>
-													</c:forEach>
 												</div>
 											</div>
 											<div id="page-content-wrapper">
@@ -259,10 +234,9 @@ background-color: #658F4B;
 														<i class="far fa-list-ul"></i>
 													</button>
 												</nav>
-
 												<div class="player container-fluid">
-												 <h1 class="text-white videoname">${courseSvc.getOneCourse(courseNo).courseName}</h1>
-													<video width="100%" height="100%" src="#" type="video/mp4" loop autoplay poster="<%=request.getContextPath()%>/images/bg.png"></video>
+													<h1 class="text-white videoname">${courseSvc.getOneCourse(courseNo).courseName}</h1>
+													<video id="videoPlayer" width="100%" height="100%" src="" type="video/mp4" loop autoplay poster="<%=request.getContextPath()%>/images/bg.png"></video>
 												</div>
 											</div>
 										</div>
@@ -300,29 +274,30 @@ background-color: #658F4B;
 		'use strict';
 		$(document).ready(function () {
 			//這裡是滑鼠進入slide-bar會讓區塊變色
-// 			$(".in-sb").hover(function () {
-// 				$(this).css("background-color", "#a9ec62");
-// 			},
-// 				function () {
-// 					$(this).css("background-color", " #c3dbaa");
-// 				})
+			// 			$(".in-sb").hover(function () {
+			// 				$(this).css("background-color", "#a9ec62");
+			// 			},
+			// 				function () {
+			// 					$(this).css("background-color", " #c3dbaa");
+			// 				})
 
- 
+
 			var vIndex = 1000;
 			var path = null;
-			//這裡是click(slide-bar)可以開啟影片
-			$(".in-sb").click(function (e) {
+			$('.vpath').click(function (e) {
 				e.preventDefault();
-				vIndex = $(".in-sb").index(this);
-				path = $('.vpath:eq(' + vIndex + ')').attr('href');
-				$("video").attr('src', path);
-				if (path !== '#') {
-					$("video").prop("controls", true);
-				} else {
+				let _this = $(this);
+				let _videoNo = _this.attr('videoNo');
+				let _videoPlayer = $('#videoPlayer');
+				_videoPlayer.attr('src', '');
+				if (_videoNo != '') {
+					_videoPlayer.attr('src', `<%=request.getContextPath()%>/videos/${'${_videoNo}'}.mp4`);
+					_videoPlayer.prop("controls", true);
+				}else{
 					$("video").prop("controls", false);
 				}
-			})
-
+				$('h1.videoname').html(_this.find('span.video-title').html());
+			});
 
 			//這裡是click(in-sb-log)可以查看日誌
 			$(document).on('click', '.in-sb-log button', function (event) {
@@ -344,11 +319,11 @@ background-color: #658F4B;
 				});
 			});
 		});
-		
-	    $("#menu-toggle").click(function(e) {
-	        e.preventDefault();
-	        $("#wrapper").toggleClass("toggled");
-	      });
+
+		$("#menu-toggle").click(function (e) {
+			e.preventDefault();
+			$("#wrapper").toggleClass("toggled");
+		});
 	</script>
 </body>
 

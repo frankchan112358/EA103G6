@@ -37,19 +37,11 @@
                                 <i class="fal fa-toolbox"></i> 班級管理功能
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <button class="dropdown-item" type="button">班級設定</button>
-                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.banjipost">
-                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">公告管理</button>
-                                </form>
-                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.timetable">
-                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">課表管理</button>
-                                </form>
-                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.leave">
-                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">請假管理</button>
-                                </form>                
-                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.forumtopic">
-                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit">討論區主題</button>
-                                </form>
+                                <button id="gotoUpdateBanji2" class="dropdown-item" type="button">班級設定</button>
+                                <button id="gotoBanjiPost2" class="dropdown-item" type="button">公告管理</button>
+                                <button id="gotoTimetable2" class="dropdown-item" type="button">課表管理</button>
+                                <button id="gotoLeave2" class="dropdown-item" type="button">請假管理</button>
+                                <button id="gotoForumTopic2" class="dropdown-item" type="button">討論區主題</button>
                             </div>
                         </div>
                     </div>
@@ -63,32 +55,29 @@
                                     <div class="panel-content p-0">
                                         <ul id="js_nested_list" class="nav-menu nav-menu-reset nav-menu-compact mb-sm-4 mb-md-0 rounded" data-nav-accordion="true">
                                             <li>
-                                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.do?action=getOne_For_Update&banjiNo=${banjiNo}">
-                                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a> <span class="text-info">班級設定</span></a></button>
-                                                   
-                                                   </form>  
-                                               
+                                                <a id="gotoUpdateBanji" href="javascript:void(0)">
+                                                    <span class="text-info">班級設定</span>
+                                                </a>
                                             </li>
                                             <li>
-                                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.banjipost">
-                                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="text-info">公告管理</span></a></button>
-                                                </form>
+                                                <a id="gotoBanjiPost" href="javascript:void(0)">
+                                                    <span class="text-info">公告管理</span>
+                                                </a>
                                             </li>
                                             <li>
-                                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.timetable">
-                                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="text-info">課表管理</span></a></button>
-                                                </form>
+                                                <a id="gotoTimetable" href="javascript:void(0)">
+                                                    <span class="text-info">課表管理</span>
+                                                </a>
                                             </li>
                                             <li>
-                                                <form method="post" action="<%=request.getContextPath()%>/banji/banji.leave">
-                                                    <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="text-info">請假管理</span></a></button>
-                                                </form>
+                                                <a id="gotoLeave" href="javascript:void(0)">
+                                                    <span class="text-info">請假管理</span>
+                                                </a>
                                             </li>
                                             <li>
-                                                 <form method="post" action="<%=request.getContextPath()%>/banji/banji.forumtopic">
-                                                 <button style="width:100%;background-color: transparent;border: none;padding: 0;" type="submit"><a><span class="text-info">討論區主題</span></a></button>
-                                                 <input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">
-                                                </form>
+                                                <a id="gotoForumTopic" href="javascript:void(0)">
+                                                    <span class="text-info">討論區主題</span>
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -240,6 +229,64 @@
                 }
             });
             calendar.render();
+
+            $('#gotoUpdateBanji,#gotoUpdateBanji2').click(function () {
+                let _this = this;
+                let banjiNo = this.getAttribute('banjiNo');
+                let myForm = banjiGotoFrom('<%=request.getContextPath()%>/banji/banji.do');
+                document.body.appendChild(myForm);
+                myForm.append(banjiGotoInput('hidden', 'action', 'getOne_For_Update'));
+                myForm.append(banjiGotoInput('hidden', 'banjiNo', '${banjiNo}'));
+                myForm.submit();
+            });
+
+            $('#gotoBanjiPost,#gotoBanjiPost2').click(function () {
+                let _this = this;
+                let banjiNo = this.getAttribute('banjiNo');
+                let myForm = banjiGotoFrom('<%=request.getContextPath()%>/banji/banji.banjipost');
+                document.body.appendChild(myForm);
+                myForm.submit();
+            });
+
+            $('#gotoTimetable,#gotoTimetable2').click(function () {
+                let _this = this;
+                let banjiNo = this.getAttribute('banjiNo');
+                let myForm = banjiGotoFrom('<%=request.getContextPath()%>/banji/banji.timetable');
+                document.body.appendChild(myForm);
+                myForm.submit();
+            });
+
+            $('#gotoLeave,#gotoLeave2').click(function () {
+                let _this = this;
+                let banjiNo = this.getAttribute('banjiNo');
+                let myForm = banjiGotoFrom('<%=request.getContextPath()%>/banji/banji.leave');
+                document.body.appendChild(myForm);
+                myForm.submit();
+            });
+        
+            $('#gotoForumTopic,#gotoForumTopic2').click(function () {
+                let _this = this;
+                let banjiNo = this.getAttribute('banjiNo');
+                let myForm = banjiGotoFrom('<%=request.getContextPath()%>/banji/banji.forumtopic');
+                document.body.appendChild(myForm);
+                myForm.append(banjiGotoInput('hidden', 'banjiNo', '${banjiNo}'));
+                myForm.submit();
+            });
+
+            function banjiGotoFrom(url) {
+                let myForm = document.createElement('form');
+                myForm.action = url;
+                myForm.method = 'POST';
+                return myForm;
+            }
+
+            function banjiGotoInput(type, name, value) {
+                let banjiInput = document.createElement('input');
+                banjiInput.type = type;
+                banjiInput.name = name;
+                banjiInput.value = value;
+                return banjiInput;
+            }
         });
     </script>
 </body>

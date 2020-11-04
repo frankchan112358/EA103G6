@@ -11,6 +11,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:useBean id="studentSvc" scope="page" class="com.student.model.StudentService" />
 <jsp:useBean id="replySvc" scope="page" class="com.reply.model.ReplyService" />
+<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 <%
 %>
 <!DOCTYPE html>
@@ -57,11 +58,11 @@
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a
-                               href="<%=request.getContextPath()%>/back-end/index/index.jsp">前台首頁</a></li>
+                               href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
                         <li class="breadcrumb-item">
-                            <a href="<%=request.getContextPath()%>/back-end/course/selectCourse.jsp">我的課程</a>
-                        </li>
-                        <li class="breadcrumb-item">問題討論</li>
+							<a id="aListAllCourse" banjiNo="${courseSvc.getOneCourse(courseNo).banjiNo}" href="javascript:void(0)">課程總覽</a>
+						</li>
+                        <li class="breadcrumb-item">提問管理</li>
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
@@ -70,7 +71,7 @@
                         </h1>
                     </div>
                     <div class="row align-items-center justify-content-center">
-                        <div class="col-11">
+                        <div class="col-12">
                             <jsp:include page="/back-end/course/courseNav.jsp"></jsp:include>
                             <div id="panel-1" class="panel">
                                 <div class="panel-hdr bg-primary-800 bg-success-gradient ">
@@ -158,7 +159,7 @@
     <%@ include file="/front-end/template/messager.jsp"%>
     <%@ include file="/front-end/template/basic_js.jsp"%>
     <script src="<%=request.getContextPath() %>/SmartAdmin4/js/formplugins/summernote/summernote.js"></script>
-    <script>
+      <script>
         $(document).ready(function () {
             var myUserNo = '${userVO.userNo}';
             var forms = document.getElementsByClassName('needs-validation');
@@ -246,6 +247,23 @@
                 });
             });
 
+            document.getElementById('aListAllCourse').addEventListener('click', function (e) {
+				e.preventDefault();
+				let _this = this;
+				let banjiNo = this.getAttribute('banjiNo');
+				let myForm = document.createElement('form');
+				document.body.appendChild(myForm);
+				myForm.action = '<%=request.getContextPath()%>/course/course.do';
+				myForm.method = 'POST';
+				let banjiNoInput = document.createElement('input');
+				banjiNoInput.type = 'hidden';
+				banjiNoInput.name = 'banjiNo';
+				banjiNoInput.value = banjiNo;
+				myForm.append(banjiNoInput);
+				myForm.submit();
+			}, false);
+            
+            
             $(document).on('click', 'div.card.courseAsk', function (e) {
                 let _courseAskNo = this.getAttribute('courseAskNo');
                 $.ajax({
@@ -264,7 +282,16 @@
             });
 
             $('#sendReply').click(function (e) {
-                e.preventDefault();
+            	e.preventDefault();
+            	let formReply =  document.getElementById('formReply');
+                if (formReply.checkValidity() === false){
+                    event.preventDefault();
+                    event.stopPropagation();
+                    formReply.classList.add('was-validated');
+                    return;                          
+                } else{
+                	formReply.classList.add('was-validated');                           
+                }        
                 let _courseAskNo = $(formReply).find('input[name=courseAskNo]').val();
                 $.ajax({
                     type: 'POST',
@@ -277,10 +304,13 @@
                 });
             });
 
-			$("#videoModal").on("hidden.bs.modal", function (e) {
+			$("#replyModal").on("hidden.bs.modal", function (e) {
                 $('#formReply').find('[name=action]').val('');
                 $('#formReply').find('[name=replyNo]').val('');
                 $('#formReply').find('[name=courseAskNo]').val('');
+                $('#formReply').find('[name=replyContent]').val('');
+                $('#formReply').find('[name=replyContent]').text('');
+                
 			});
 
             function loadReplyList(courseAskNo, array) {
@@ -301,7 +331,7 @@
                                         <span class="profile-image rounded-circle d-inline-block" style="background-image:url('<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${'${userNo}'}');background-size:cover; "></span>
                                     </span>
                                     <div class="ml-3">
-                                        <a href="javascript:void(0);" title="Lisa Hatchensen" class="fs-b d-block fw-700 text-dark">${'${userName}'} <i class="fal fa-clock"></i>:${'${updateTime}'}</a>
+                                        <a href="javascript:void(0);" title="Lisa Hatchensen" class="fs-b d-block fw-700 text-dark" style="border:3px red dashed;">${'${userName}'} <i class="fal fa-clock"></i>:${'${updateTime}'}</a>
                                         <div class="fs-xl">
                                             ${'${replyContent}'}     
                                         </div>
