@@ -112,7 +112,7 @@
 																			action="<%=request.getContextPath()%>/banji/banji.do"
 																			class="m-1">
 																	<button type="submit" class="btn btn-sm btn-info">
-																		<span class="fal fa-users-class mr-1"></span> <span>檢視</span>
+																		<span class="fal fa-search mr-1"></span> <span>檢視</span>
 																	</button>
 																	<input type="hidden" name="action" value="getOne_For_Display">
 																	<input type="hidden" name="banjiNo" value="${banjiVO.banjiNo}">

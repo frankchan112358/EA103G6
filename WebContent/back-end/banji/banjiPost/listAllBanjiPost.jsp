@@ -145,8 +145,8 @@
                     text: "如果刪除後，就無法復原了!",
                     type: "warning",
                     showCancelButton: true,
-                    cancelButtonText: "先不要",
-                    confirmButtonText: "我要刪除!"
+                    cancelButtonText: "先緩緩",
+                    confirmButtonText: "我要刪除"
                 }).then(function (result) {
                     if (result.value)
                         _this.parent()[0].submit();
