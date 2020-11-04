@@ -213,7 +213,7 @@
 			//about新增檔案的按鈕
 			$(document).on('click', '#insert', function (e) {
 				_todo = 'insert';
-				$('h4.modal-title').text('新增檔案');
+				$('h4.modal-title').text('新增檔案(僅支援PDF格式)');
 				$('#teachingFileModal').modal('show');
 			});
 
@@ -241,7 +241,7 @@
 					Swal.fire({
 							position: "top-end",
 							type: "danger",
-							title: "請選擇上傳檔案(僅能上傳PDF格式)",
+							title: "請選擇上傳檔案",
 							showConfirmButton: false,
 							timer: 1000
 						});

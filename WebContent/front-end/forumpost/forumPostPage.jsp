@@ -81,7 +81,7 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
 							</div>
 							
 							 <div class="card-header p-0">
-                                        <div class="p-10 d-flex flex-row" style="font-size:30px;text-align:center;">
+                                        <div class="p-10 d-flex flex-row" style="font-size:20px;text-align:center;">
                                             <div class="d-block flex-shrink-1">
                                             <i class="fas fa-star mr-1" style="text-align:center;">標題：</i>
                                             <span> ${forumPostVO.title}</span>
@@ -90,7 +90,7 @@ ForumPostVO forumPostVO = (ForumPostVO)request.getAttribute("forumPostVO");
                                     	
                                     	<div class="card-footer">
                                         <div class="d-flex align-items-center">
-                                         <span class="text-sm text-muted font-italic"><i class="fal fa-clock mr-1"></i><span>發文時間:</span><fmt:formatDate value="${forumPostVO.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
+                                         <span class="text-sm text-muted font-italic"><i class="fal fa-clock mr-1"style="font-size:10px;"></i><span>發文時間:</span><fmt:formatDate value="${forumPostVO.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
                                         </div>
                                     </div>
                                             </div>
