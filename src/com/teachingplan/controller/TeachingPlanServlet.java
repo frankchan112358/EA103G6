@@ -135,6 +135,9 @@ public class TeachingPlanServlet extends HttpServlet {
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			
+			Map<String, String> alert = new HashMap<>();
+			req.setAttribute("alert", alert);
 
 			try {
 				String teachingPlanNo = new String(req.getParameter("teachingPlanNo").trim());
@@ -177,6 +180,7 @@ public class TeachingPlanServlet extends HttpServlet {
 						planContent);
 
 				req.setAttribute("teachingPlanVO", teachingPlanVO);
+				alert.put("updateOK", "修改成功");
 				String url = "/back-end/teachingplan/listAllTeachingPlan.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -193,6 +197,9 @@ public class TeachingPlanServlet extends HttpServlet {
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			
+			Map<String, String> alert = new HashMap<>();
+			req.setAttribute("alert", alert);
 
 			try {
 
@@ -228,7 +235,7 @@ public class TeachingPlanServlet extends HttpServlet {
 
 				TeachingPlanService teachingPlanSvc = new TeachingPlanService();
 				teachingPlanVO = teachingPlanSvc.addTeachingPlan(courseNo, week, lesson, planContent);
-
+				alert.put("insertOK", "新增成功");
 				String url = "/back-end/teachingplan/listAllTeachingPlan.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);

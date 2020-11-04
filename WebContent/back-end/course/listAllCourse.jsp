@@ -203,6 +203,25 @@
 				myForm.submit();
 			  });
 		});
+		
+	    var swalWithBootstrapButtons = Swal.mixin({
+			customClass : {
+				confirmButton : "btn btn-primary",
+				cancelButton : "btn btn-danger mr-2"
+			},
+			buttonsStyling : false
+	    });
+			<c:if test="${not empty alert.insertOK }">
+			swalWithBootstrapButtons.fire({
+				icon:'success',
+				title:'新增成功',
+				text:"課程已新增完成"
+				});
+			<%request.removeAttribute("insertOK");%>
+			</c:if>
+		
+		
+
 	</script>
 </body>
 

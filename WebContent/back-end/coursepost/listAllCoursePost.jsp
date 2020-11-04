@@ -49,6 +49,14 @@ overflow: hidden;
 text-overflow: ellipsis;
 }
 
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    margin-top: 2em;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    padding-top: 2em;
+}
+
 
 </style>
 
@@ -90,11 +98,12 @@ text-overflow: ellipsis;
 								<div class="panel-container show">
 									<div class="panel-content">
 										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/coursePost/coursePost.do">
-											<button id="addCoursePost" type="submit" class="btn btn-success waves-effect waves-themed float-left">
+											<button type="submit" class="btn btn-success waves-effect waves-themed float-left">
 												<span class="far fa-plus-circle mr-1"></span>
 												<span>新增</span>
 											</button>
 											<input type="hidden" name="coursePostNo" value="${coursePostVO.coursePostNo}">
+											<input type="hidden" name="action" value="insert">
 										</FORM>
 										<!-- datatable start -->
 										<table id="coursePostTable" class="table table-bordered table-hover table-striped w-100">
@@ -248,7 +257,7 @@ text-overflow: ellipsis;
 								swalWithBootstrapButtons.fire("刪除請求送出", "請稍等跳轉頁面", "success");
 								setTimeout(function() {
 									$("[id='"+str+"']").submit();
-								}, 1000);
+								}, 2000);
 							} else {
 								swalWithBootstrapButtons.fire("刪除請求取消", "刪除公告請再三確認", "error");
 							}
@@ -258,6 +267,33 @@ text-overflow: ellipsis;
 						e.stopPropagation();
 					});
 			});
+    
+    
+    var swalWithBootstrapButtons = Swal.mixin({
+		customClass : {
+			confirmButton : "btn btn-primary",
+			cancelButton : "btn btn-danger mr-2"
+		},
+		buttonsStyling : false
+    });
+		<c:if test="${not empty alert.updateOK }">
+		swalWithBootstrapButtons.fire({
+			icon:'success',
+			title:'修改成功',
+			text:"課程公告已修改完成"
+			});
+		<%request.removeAttribute("updateOK");%>
+		</c:if>
+		
+		<c:if test="${not empty alert.insertOK }">
+		swalWithBootstrapButtons.fire({
+			icon:'success',
+			title:'新增成功',
+			text:"課程公告已新增完成"
+			});
+		<%request.removeAttribute("insertOK");%>
+		</c:if>
+    
 	</script>
 </body>
 </html>

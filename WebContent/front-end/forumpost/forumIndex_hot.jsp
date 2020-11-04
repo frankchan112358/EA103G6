@@ -94,12 +94,12 @@
 						<div class="row">
 							<div class="col-md-3">
 								<div id="heading1">
-									<a href="<%=request.getContextPath()%>/front-end/forumpost/forumPost_index.jsp"><b>最多回覆</b></a>
+									<a href="<%=request.getContextPath()%>/front-end/forumpost/forumPost_index.jsp"><b>回應數</b></a>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div id="heading2">
-									<b>最多觀看</b>
+									<b>觀看數</b>
 								</div>
 							</div>
 							<div class="col-md-5">
@@ -201,8 +201,7 @@
                    					</div>
 
 
-<%-- 								<div class="col-md-2">${forumcommentSvc.getFcResponsesByFpNo(forumPostVO.forumPostNo)}</div> --%>
-
+<%--                                    <div class="col-md-2">${forumPostVO.forumPostViews}</div> --%>
 
 							</div>
 							<hr>

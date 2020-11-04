@@ -43,9 +43,6 @@ font-size: 15px;
 							<a id="aListAllCourse" banjiNo="${courseSvc.getOneCourse(courseNo).banjiNo}" href="javascript:void(0)">課程總覽</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a id="aListAllCoursePost" href="javascript:void(0)">課程公告管理</a>
-						</li>
-						<li class="breadcrumb-item">
 							<a href="<%=request.getContextPath()%>/back-end/coursepost/listAllCoursePost.jsp">課程公告管理</a>
 						</li>
 						<li class="breadcrumb-item">課程公告新增</li>
@@ -123,16 +120,6 @@ font-size: 15px;
 				banjiNoInput.name = 'banjiNo';
 				banjiNoInput.value= banjiNo;
 				myForm.append(banjiNoInput);
-				myForm.submit();
-			});
-
-			document.getElementById('aListAllCoursePost').addEventListener('click',function(e){
-				e.preventDefault();
-				let _this = this;
-				let myForm = document.createElement('form');
-				document.body.appendChild(myForm);
-				myForm.action = '<%=request.getContextPath()%>/coursePost/coursePost.do';
-				myForm.method = 'POST';
 				myForm.submit();
 			});
 

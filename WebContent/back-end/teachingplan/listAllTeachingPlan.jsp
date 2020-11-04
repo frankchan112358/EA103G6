@@ -35,8 +35,7 @@ TeachingPlanVO teachingPlanVO = (TeachingPlanVO) request.getAttribute("teachingP
 		}
 
 
-		.table th,
-		.table td {
+		.table th, .table td {
 			vertical-align: middle;
 		}
 
@@ -50,6 +49,14 @@ TeachingPlanVO teachingPlanVO = (TeachingPlanVO) request.getAttribute("teachingP
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
+		}
+		
+		div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    		margin-top: 2em;
+		}
+
+		div.dataTables_wrapper div.dataTables_info {
+   			 padding-top: 2em;
 		}
 	</style>
 
@@ -202,32 +209,32 @@ TeachingPlanVO teachingPlanVO = (TeachingPlanVO) request.getAttribute("teachingP
 						dataSrc: 0
 					}
 				});
-
-			$(".submitDeleteTeachingPlan").on("click", function (event) {
-				event.preventDefault();
-				var str = $(this).val();
-				var swalWithBootstrapButtons = Swal.mixin({
-					customClass: {
-						confirmButton: "btn btn-primary",
-						cancelButton: "btn btn-danger mr-2"
-					},
-					buttonsStyling: false
-				});
-				swalWithBootstrapButtons.fire({
-					icon: "warning",
-					title: "請再次確認是否刪除",
-					text: "教學計劃一旦刪除並無復原可能",
-					showCancelButton: true,
-					confirmButtonText: "確定刪除",
-					cancelButtonText: "暫不刪除",
-					reverseButtons: true
-				}).then(function (result) {
-					if (result.value) {
-						swalWithBootstrapButtons.fire("刪除請求送出", "請稍等跳轉頁面", "success");
-						setTimeout(function () {
-							$("[id='" + str + "']").submit();
-						}, 1000);
-					} else if (
+                
+        		$(".submitDeleteTeachingPlan").on("click", function(event) {
+					event.preventDefault();
+					var str = $(this).val();
+					var swalWithBootstrapButtons = Swal.mixin({
+						customClass : {
+							confirmButton : "btn btn-primary",
+							cancelButton : "btn btn-danger mr-2"
+						},
+						buttonsStyling : false
+					});
+					swalWithBootstrapButtons.fire({
+						icon : "warning",
+						title : "請再次確認是否刪除",
+						text : "教學計劃一旦刪除並無復原可能",
+						showCancelButton : true,
+						confirmButtonText : "確定刪除",
+						cancelButtonText : "暫不刪除",
+						reverseButtons : true
+					}).then(function(result) {
+						if (result.value) {
+							swalWithBootstrapButtons.fire("刪除請求送出", "請稍等跳轉頁面", "success");
+							setTimeout(function() {
+								$("[id='"+str+"']").submit();
+							}, 2000);
+						} else if (
 						// Read more about handling dismissals
 						result.dismiss === Swal.DismissReason.cancel) {
 						swalWithBootstrapButtons.fire("刪除請求取消", "刪除教學計劃請再三確認", "error");
@@ -254,6 +261,32 @@ TeachingPlanVO teachingPlanVO = (TeachingPlanVO) request.getAttribute("teachingP
 				myForm.submit();
 			}, false);
 		});
+		
+	    var swalWithBootstrapButtons = Swal.mixin({
+			customClass : {
+				confirmButton : "btn btn-primary",
+				cancelButton : "btn btn-danger mr-2"
+			},
+			buttonsStyling : false
+	    });
+			<c:if test="${not empty alert.updateOK }">
+			swalWithBootstrapButtons.fire({
+				icon:'success',
+				title:'修改成功',
+				text:"教學計劃已修改完成"
+				});
+			<%request.removeAttribute("updateOK");%>
+			</c:if>
+			
+			<c:if test="${not empty alert.insertOK }">
+			swalWithBootstrapButtons.fire({
+				icon:'success',
+				title:'新增成功',
+				text:"教學計劃已新增完成"
+				});
+			<%request.removeAttribute("insertOK");%>
+			</c:if>
+		
 	</script>
 </body>
 

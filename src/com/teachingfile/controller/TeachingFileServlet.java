@@ -66,12 +66,6 @@ public class TeachingFileServlet extends HttpServlet {
 				String teachingFileNo = req.getParameter("teachingFileNo");
 
 				String courseNo = req.getParameter("courseNo");
-				String courseReg = "[C]{1}[0-9]{3}";
-				if (courseNo == null || courseNo.trim().length() == 0) {
-					errorMsgs.add("課表編號: 請勿空白");
-				} else if (!courseNo.trim().matches(courseReg)) {
-					errorMsgs.add("課表編號格式錯誤");
-				}
 
 				String teachingFileName = req.getParameter("teachingFileName");
 				if (teachingFileName == null || teachingFileName.trim().length() == 0) {
