@@ -34,4 +34,30 @@ public class WebsocketNotifyDAO {
 		}
 		
 	}
+	
+	public static Long getIndex(String userNo) {
+		Jedis jedis =null;
+		try {
+			jedis = pool.getResource();
+			jedis.auth("123456");
+			Long index=jedis.llen(userNo); 
+			return index;
+			
+		}finally{
+			jedis.close();
+		}
+	}
+	
+	public static void changeValue(String userNo,long index,String jsonMessage) {
+		Jedis jedis =null;
+		try {
+			jedis = pool.getResource();
+			jedis.auth("123456");
+			jedis.lset(userNo, index, jsonMessage); 
+			
+		}finally{
+			jedis.close();
+		}
+	}
+	
 }

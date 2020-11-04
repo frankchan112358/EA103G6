@@ -43,19 +43,15 @@
         <div>
             <a href="javascript:void(0)" class="header-icon" data-toggle="dropdown" title="You got 2 notifications">
                 <i class="fal fa-bell"></i>
-                <span class="badge badge-icon">2</span>
+                <span class="badge badge-icon" id="noReadPic"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-animated dropdown-xl">
                 <div class="dropdown-header bg-trans-gradient d-flex justify-content-center align-items-center rounded-top mb-2">
                     <h4 class="m-0 text-center color-white">
-                        2 個未讀
-                        <small class="mb-0 opacity-80">你的通知</small>
+                        你的通知
                     </h4>
                 </div>
                 <ul class="nav nav-tabs nav-tabs-clean" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link px-4 fs-md js-waves-on fw-500" data-toggle="tab" href="#tab-1">重要</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link px-4 fs-md js-waves-on fw-500" data-toggle="tab" href="#tab-2">未讀</a>
                     </li>
@@ -64,69 +60,26 @@
                     </li>
                 </ul>
                 <div class="tab-content tab-notification">
-                    <div class="tab-pane" id="tab-1" role="tabpanel">
-                        <div class="custom-scroll h-100">
-                            <ul class="notification" id="decorateForNotification">
-                                <li class="unread">
-                                    <div class="d-flex align-items-center show-child-on-hover">
-                                        <span class="d-flex flex-column flex-1">
-                                            <span class="name d-flex align-items-center">Administrator <span class="badge badge-success fw-n ml-1">UPDATE</span></span>
-                                            <span class="msg-a fs-sm">
-                                                System updated to version <strong>4.5.1</strong> <a href="<%=request.getContextPath() %>/SmartAdmin4/docs_buildnotes.html">(patch notes)</a>
-                                            </span>
-                                            <span class="fs-nano text-muted mt-1">5 mins ago</span>
-                                        </span>
-                                        <div class="show-on-hover-parent position-absolute pos-right pos-bottom p-3">
-                                            <a href="javascript:void(0)" class="text-muted" title="delete"><i class="fal fa-trash-alt"></i></a>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
                     <div class="tab-pane" id="tab-2" role="tabpanel">
                         <div class="custom-scroll h-100">
-                            <ul class="notification">
+                            <ul class="notification" id="decorateForNotification_noRead">
                                 <li class="unread">
-                                    <div class="d-flex align-items-center show-child-on-hover">
-                                        <span class="d-flex flex-column flex-1">
-                                            <span class="name d-flex align-items-center">Administrator <span class="badge badge-success fw-n ml-1">UPDATE</span></span>
-                                            <span class="msg-a fs-sm">
-                                                System updated to version <strong>4.5.1</strong> <a href="<%=request.getContextPath() %>/SmartAdmin4/docs_buildnotes.html">(patch notes)</a>
-                                            </span>
-                                            <span class="fs-nano text-muted mt-1">5 mins ago</span>
-                                        </span>
-                                        <div class="show-on-hover-parent position-absolute pos-right pos-bottom p-3">
-                                            <a href="javascript:void(0)" class="text-muted" title="delete"><i class="fal fa-trash-alt"></i></a>
-                                        </div>
-                                    </div>
+                                    
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="tab-pane" id="tab-3" role="tabpanel">
                         <div class="custom-scroll h-100">
-                            <ul class="notification">
+                            <ul class="notification" id="decorateForNotification">
                                 <li class="unread">
-                                    <div class="d-flex align-items-center show-child-on-hover">
-                                        <span class="d-flex flex-column flex-1">
-                                            <span class="name d-flex align-items-center">Administrator <span class="badge badge-success fw-n ml-1">UPDATE</span></span>
-                                            <span class="msg-a fs-sm">
-                                                System updated to version <strong>4.5.1</strong> <a href="<%=request.getContextPath() %>/SmartAdmin4/docs_buildnotes.html">(patch notes)</a>
-                                            </span>
-                                            <span class="fs-nano text-muted mt-1">5 mins ago</span>
-                                        </span>
-                                        <div class="show-on-hover-parent position-absolute pos-right pos-bottom p-3">
-                                            <a href="javascript:void(0)" class="text-muted" title="delete"><i class="fal fa-trash-alt"></i></a>
-                                        </div>
-                                    </div>
+                                    
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="py-2 px-3 bg-faded d-block rounded-bottom text-right border-faded border-bottom-0 border-right-0 border-left-0">
-                    <a href="javascript:void(0)" class="fs-xs fw-500 ml-auto">觀看所有通知</a>
                 </div>
             </div>
         </div>
