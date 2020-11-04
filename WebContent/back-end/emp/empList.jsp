@@ -261,7 +261,8 @@
             {
                 $('#dt-basic-example').dataTable(
                 {
-                    responsive: true
+                    responsive: true,
+                    language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' },
                 });
 
                 $('.js-thead-colors a').on('click', function()
