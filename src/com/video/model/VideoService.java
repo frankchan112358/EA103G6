@@ -66,9 +66,10 @@ public class VideoService {
 
 	public String getDatatableJson(String courseNo) {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		TimetableService timetableService = new TimetableService();
 		JsonArray jsonArray = new JsonArray();
 		for (TimetableVO timetableVO : new TimetableService().getAllWithCourseNo(courseNo)) {
-			JsonObject jsonObject = gson.fromJson(gson.toJson(timetableVO), JsonObject.class);
+			JsonObject jsonObject = gson.fromJson(timetableService.getTimetableJsonObject(timetableVO), JsonObject.class);
 			jsonObject.addProperty("periodText", timetableVO.getPeriodText());
 			VideoVO videoVO = getOneVideoWithTimetableNo(timetableVO.getTimetableNo());
 			jsonObject.addProperty("videoNo", videoVO == null ? "" : videoVO.getVideoNo());
