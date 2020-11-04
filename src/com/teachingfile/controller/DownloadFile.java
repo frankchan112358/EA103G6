@@ -47,7 +47,6 @@ public class DownloadFile extends HttpServlet {
 			bis.read(loadFile);
 			sos.write(loadFile);
 			sos.close();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			errorMsgs.add("下載資料失敗:" + e.getMessage());
