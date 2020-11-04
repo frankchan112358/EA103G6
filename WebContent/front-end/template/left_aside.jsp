@@ -42,18 +42,6 @@
                     <span class="nav-link-text">請假申請</span>
                 </a>
             </li>
-            <li>
-                <a href="<%=request.getContextPath() %>/front-end/evaluation/selectEvaluation.jsp" title="教學評鑑">
-                    <i class="fal fa-clipboard-check"></i>
-                    <span class="nav-link-text">教學評鑑</span>
-                </a>
-            </li>
-            <li>
-                <a href="<%=request.getContextPath() %>/front-end/democrat/democrat.jsp" title="DEMOCRAT">
-                    <i class="fal fa-democrat"></i>
-                    <span class="nav-link-text">DEMOCRAT</span>
-                </a>
-            </li>
         </ul>
         <div class="filter-message js-filter-message bg-success-600"></div>
     </nav>
