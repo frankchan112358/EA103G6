@@ -62,6 +62,7 @@ public class DownloadFile extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
+
 		String action = req.getParameter("action");
 
 		if ("preRead".equals(action)) { // 來自addTeachingFile.jsp的請求
@@ -70,7 +71,7 @@ public class DownloadFile extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
 				String teachingFileNo = req.getParameter("teachingFileNo");
-				System.out.println(73);
+				System.out.println("73 - teachingFileNo : " + teachingFileNo);
 
 				TeachingFileService teachingFileSvc = new TeachingFileService();
 				TeachingFileVO teachingFileVO = teachingFileSvc.getOneTeachingFile(teachingFileNo);
@@ -85,17 +86,17 @@ public class DownloadFile extends HttpServlet {
 				bis.close();
 				System.out.println(86);
 
-				String url = "/back-end/teachingFile/listAllTeachingFile3.jsp";
+//				String url = "/back-end/teachingFile/listAllTeachingFile3.jsp";
 				System.out.println(89);
-				RequestDispatcher successView = req.getRequestDispatcher(url);
+//				RequestDispatcher successView = req.getRequestDispatcher(url);
 				System.out.println(91);
-				successView.forward(req, res);
+//				successView.forward(req, res);
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingFile/listAllTeachingFile3.jsp");
-				failureView.forward(req, res);
+//				errorMsgs.add(e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingFile/listAllTeachingFile3.jsp");
+//				failureView.forward(req, res);
 			}
 		}
 	}

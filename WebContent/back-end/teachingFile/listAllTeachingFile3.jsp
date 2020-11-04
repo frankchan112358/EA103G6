@@ -107,21 +107,21 @@
 						<thead>
 							<tr>
 								<th>檔案名稱</th>
-								<th>檔案類型</th>
+								<!-- <th>檔案類型</th> -->
 								<th>檔案大小</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td><input type="TEXT" name="teachingFileName" size="45" value="${teachingFileVO.teachingFileName}"/></td>
-								<td class="teachingFileInfo filetype"></td>
+								<td><input ID="inputFileName" type="TEXT" name="teachingFileName" size="45"/></td>
+								<!-- <td class="teachingFileInfo filetype"></td> -->
 								<td class="teachingFileInfo filesize"></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<div class="modal-footer">
-					<input id="teachingFile_File" type="file" name="upfile2"/>
+					<input id="teachingFile_File" type="file" name="upfile2" accept=".pdf"/>
 					<button id="cancelUpload" type="button" class="btn btn-secondary">取消上傳</button>
 					<button id="uploadFile" type="button" class="btn btn-primary">上傳檔案</button>
 				</div>
@@ -143,6 +143,7 @@
 			var workStatus = 'none';
 			var _teachingFileNo = '';
 			var _todo = '';
+			var _inputFileName = '';
 			var _courseNo = `${'courseNo'}`;
 
 			//隱藏modal的table
@@ -212,7 +213,7 @@
 			$('#teachingFileModal').on('hidden.bs.modal', function(e){
 				$('table.teachingFileInfo').hide();
 				$(':text').attr( 'placeholder', '');
-				$('.teachingFileInfo.filetype').text('');
+				// $('.teachingFileInfo.filetype').text('');
 				$('.teachingFileInfo.filesize').text('');
 				$()
 			})
@@ -223,8 +224,8 @@
 				var e = window.event;
 				var files = e.target.files;
 				$(':text').attr( 'placeholder', files[0].name);
-				$('.teachingFileInfo.filetype').text(files.type);
-				$('.teachingFileInfo.filesize').text(Math.round(files.size / 1024 / 1024) + 'MB');
+				// $('.teachingFileInfo.filetype').text(files.type);
+				$('.teachingFileInfo.filesize').text(Math.round(files[0].size / 1024) + 'KB');
 			})
 			
 			//about上傳的按鈕
@@ -239,6 +240,8 @@
 						data: {
 							action: 'insert',
 							courseNo: _courseNo,
+							teachingFileName: $('#inputFileName').val(),
+							enctype: 'multipart/form-data'
 						},
 						complete() {
 								workStatus = 'none';
@@ -256,6 +259,7 @@
 			//about預覽的按鈕
 			$(document).on('click','button.preview', function(e){
 				_teachingFileNo = this.getAttribute('teachingFileNo');
+				console.log("_teachingFileNo:" + _teachingFileNo);
 				if(workStatus == 'none'){
 					$.ajax({
 						beforeSend(){
