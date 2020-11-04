@@ -159,19 +159,16 @@ video {
 			margin-left: 0;
   		}
 
-  #page-content-wrapper {
-  	min-width: 0;
-  	width: 100%;
-  	background-color: #000;
-  }
-		@media (min-width: 768px) {
-			#sidebar-wrapper {
-				margin-left: 0;
-			}
+  		#page-content-wrapper {
+  			min-width: 0;
+  			width: 100%;
+  			background-color: #000;
+  		}
 
-  #wrapper.toggled #sidebar-wrapper {
-	margin-left: -20rem;
-  }
+
+  		#wrapper.toggled #sidebar-wrapper {
+			margin-left: -20rem;
+  		}
 }
 
 	</style>
@@ -218,7 +215,7 @@ video {
 																	<div class="sb1">
 																		<a class=vpath videoNo="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}" href="javascript:void(0)">
 																			<span class="video-title in-sb">
-																				<i class="fal fa-camera-movie"></i>
+																				<i class="fas fa-caret-circle-right"></i>
 																				${timetableVO.timetableDate}
 																				${timetableVO.periodText}
 																			</span>
