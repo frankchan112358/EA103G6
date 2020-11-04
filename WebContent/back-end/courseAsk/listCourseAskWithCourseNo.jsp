@@ -70,7 +70,7 @@
                         </h1>
                     </div>
                     <div class="row align-items-center justify-content-center">
-                        <div class="col-11">
+                        <div class="col-12">
                             <jsp:include page="/back-end/course/courseNav.jsp"></jsp:include>
                             <div id="panel-1" class="panel">
                                 <div class="panel-hdr bg-primary-800 bg-success-gradient ">
@@ -158,7 +158,7 @@
     <%@ include file="/front-end/template/messager.jsp"%>
     <%@ include file="/front-end/template/basic_js.jsp"%>
     <script src="<%=request.getContextPath() %>/SmartAdmin4/js/formplugins/summernote/summernote.js"></script>
-    <script>
+      <script>
         $(document).ready(function () {
             var myUserNo = '${userVO.userNo}';
             var forms = document.getElementsByClassName('needs-validation');
@@ -264,7 +264,16 @@
             });
 
             $('#sendReply').click(function (e) {
-                e.preventDefault();
+            	e.preventDefault();
+            	let formReply =  document.getElementById('formReply');
+                if (formReply.checkValidity() === false){
+                    event.preventDefault();
+                    event.stopPropagation();
+                    formReply.classList.add('was-validated');
+                    return;                          
+                } else{
+                	formReply.classList.add('was-validated');                           
+                }        
                 let _courseAskNo = $(formReply).find('input[name=courseAskNo]').val();
                 $.ajax({
                     type: 'POST',
@@ -277,10 +286,13 @@
                 });
             });
 
-			$("#videoModal").on("hidden.bs.modal", function (e) {
+			$("#replyModal").on("hidden.bs.modal", function (e) {
                 $('#formReply').find('[name=action]').val('');
                 $('#formReply').find('[name=replyNo]').val('');
                 $('#formReply').find('[name=courseAskNo]').val('');
+                $('#formReply').find('[name=replyContent]').val('');
+                $('#formReply').find('[name=replyContent]').text('');
+                
 			});
 
             function loadReplyList(courseAskNo, array) {
