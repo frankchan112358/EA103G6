@@ -241,7 +241,7 @@
 					Swal.fire({
 							position: "top-end",
 							type: "danger",
-							title: "請選擇上傳檔案(僅能上傳PDF格式)",
+							title: "請選擇上傳檔案",
 							showConfirmButton: false,
 							timer: 1000
 						});
