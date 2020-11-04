@@ -33,16 +33,16 @@ public class NotifyServlet {
 		List<String> historyData = WebsocketNotifyDAO.getHistoryNotify(userNo);
 //		System.out.println(historyData);
 		String historyStr = gson.toJson(historyData);
-		if (historyStr != null) {
+		if (historyStr.length()!=0) {
 			if (session.isOpen()) {
 				session.getAsyncRemote().sendText(historyStr);
 
 			}
 		}
 		//測試用的code
-		String text = String.format("Session ID = %s, connected; userNo = %s", session.getId(),
-				userNo);
-		System.out.println(text);
+//		String text = String.format("Session ID = %s, connected; userNo = %s", session.getId(),
+//				userNo);
+//		System.out.println(text);
 	}
 	
 	@OnMessage
