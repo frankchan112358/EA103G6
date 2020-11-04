@@ -104,6 +104,7 @@
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="enable">帳號啟用狀態 <span class="text-danger">*</span></label>
                                                             <select class="custom-select" id="enable" name="enable" required >
+                                                            	<option value="0" ${userVOForUpdate.enable eq 0?"selected":""}>未啟用</option>
                                                                 <option value="1" ${userVOForUpdate.enable eq 1?"selected":""}>啟用中</option>
                                                                 <option value="2" ${userVOForUpdate.enable eq 2?"selected":""}>停用中</option>
                                                             </select>
@@ -116,6 +117,14 @@
 																請輸入電子郵件
                                                             </div>
                                                         </div>
+                                                        <div class="col-md-6 mb-3">
+                                                         <div class="form-group">
+                                                    	<label class="form-label" for="enable">學員狀態 <span class="text-danger">*</span></label>
+                                                            <select class="custom-select" id="studentStatus" name="studentStatus" required >
+                                                                <option value="1" ${studentVOForUpdate.studentStatus eq 1?"selected":""}>在訓中</option>
+                                                                <option value="2" ${studentVOForUpdate.studentStatus eq 2?"selected":""}>退訓</option>
+                                                            </select>
+                                                	</div></div>  
                                                         
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="id">身分證字號 <span class="text-danger">*</span> </label>
@@ -123,21 +132,15 @@
                                                             <div class="invalid-feedback" id="wrongId">
 																請輸入身分證字號
                                                             </div>
-                                                            
                                                         </div>
                                                         </div>
-                                                       
-                                                    
+
                                                     <div >地址</div>
                                                     <div id="twzipcode"></div>
                                                     <div class="form-group">
                                                     	<input type="text" id="address" name="address" class="form-control" placeholder="Address" value="${userVOForUpdate eq null?'':userVOForUpdate.address }">
                                                 	</div>
-                                                	
-                                                	
-                                                    
-                                                    
-                                                    
+               
                                                     <div class="form-group mb-3">
                                                     	<label class="form-label">上傳大頭照</label>
                                                     	<div class="custom-file">
@@ -145,18 +148,17 @@
                                                        	 <label class="custom-file-label" for="customFile">Choose Picture</label>
                                                     	</div>
                                                		</div>
-                                               		
-                                            
+       
                                                     <div class="form-group mb-3">
                                                         <label class="form-label" for="description">學員詳細描述 </label>
                                                          <textarea class="form-control" id="description"  name="description" placeholder="Description" >${studentVOForUpdate eq null?'':studentVOForUpdate.studentDescription}</textarea>
                                                     </div>
                                                     
                                                     
-                                                        <div class="col-md-6 mb-3">
-                                                            <label class="form-label" for="studentStatus"> <span class="text-danger"></span></label>
-                                                            <input type="hidden" class="form-control" id="studentStatus"  name="studentStatus" value="1">                                                     
-                                                        </div>
+<!--                                                         <div class="col-md-6 mb-3"> -->
+<!--                                                             <label class="form-label" for="studentStatus"> <span class="text-danger"></span></label> -->
+<!--                                                             <input type="hidden" class="form-control" id="studentStatus"  name="studentStatus" value="1">                                                      -->
+<!--                                                         </div> -->
                                                         
                                                 </div>
                                                 <div class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row align-items-center">

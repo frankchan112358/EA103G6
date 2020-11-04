@@ -42,13 +42,21 @@ public class LoginHandler extends HttpServlet {
 			UserVO userVO = userSvc.UserLogin(account, password, type);
 			
 			
+			
 			if (userVO == null) {
 				errorMsgs.add("帳號或密碼或型別輸入錯誤");
 				RequestDispatcher failureView = req.getRequestDispatcher("/login/login.jsp");
 				failureView.forward(req, res);
 				return;
 			}
-		
+			StudentService studentSvc = new StudentService();
+			StudentVO studentVOFORcheck=studentSvc.findByPrimaryKeyByuserNo(userVO.getUserNo());
+			if(userVO.getEnable()==2 && studentVOFORcheck.getStudentStatus()==2) {
+				errorMsgs.add("您已退訓，若有疑慮請聯絡系統管理員");
+				RequestDispatcher failureView = req.getRequestDispatcher("/login/login.jsp");
+				failureView.forward(req, res);
+				return;
+			}
 			
 			if(userVO.getEnable()==2) {
 				errorMsgs.add("您沒有權限登入，請聯繫系統管理員");
