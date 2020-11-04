@@ -98,9 +98,9 @@
                                                     <div class="ask-title card-title collapsed">
                                                         <i class="fal fa-books mr-3 fa-2x"></i>
                                                         <span>
-                                                            ${courseAskVO.title }
-                                                            <br><span>發問者:</span>${studentSvc.getOneStudent(courseAskVO.getStudentNo()).studentName}
-                                                            <br><span>發問時間:</span>
+                                                            <span style="font-weight:bolder;">  ${courseAskVO.title } </span>
+                                                            <br><i class="fal  fa-user-edit"></i>:${studentSvc.getOneStudent(courseAskVO.getStudentNo()).studentName}
+                                                            <br><i class="fal fa-user-clock"></i>:
                                                             <fmt:formatDate value="${courseAskVO.updateTime}" pattern="yyyy-MM-dd HH:mm" />
                                                         </span>
                                                     </div>
