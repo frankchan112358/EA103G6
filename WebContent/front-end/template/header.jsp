@@ -37,7 +37,6 @@
         <!-- app message -->
         <a href="javascript:void(0)" class="header-icon" data-toggle="modal" data-target=".js-modal-messenger">
             <i class="fal fa-comments"></i>
-            <span class="badge badge-icon">!</span>
         </a>
         <!-- app notification -->
         <div>
