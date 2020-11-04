@@ -10,6 +10,7 @@
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 <jsp:useBean id="timetableSvc" scope="page" class="com.timetable.model.TimetableService" />
 <%
+session.setAttribute("courseWork", "courseVideo");
 %>
 <!DOCTYPE html>
 <html>

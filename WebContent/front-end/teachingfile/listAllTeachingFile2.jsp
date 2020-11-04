@@ -13,6 +13,8 @@ List<TeachingFileVO> teachingFileList = teachingFileSvc.getAll();
 
 pageContext.setAttribute("courseList", courseList);
 pageContext.setAttribute("teachingFileList", teachingFileList);
+
+session.setAttribute("courseWork", "teachingFile");
 %>
 
 <!DOCTYPE html>
