@@ -4,19 +4,17 @@
 <%@ page import="com.course.model.*,com.timetable.model.*, com.teachingfile.model.*"%>
 <%@ page import="java.util.*"%>
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+<jsp:useBean id="teachingFileSvc" scope="page" class="com.teachingfile.model.TeachingFileService" />
 
 <%
 List<CourseVO> courseList = courseSvc.getAll();
 
-TimetableService timetableSvc =new TimetableService();
-List<TimetableVO> timetableList = timetableSvc.getAll();
-
-TeachingFileService teachingFileSvc =new TeachingFileService();
 List<TeachingFileVO> teachingFileList = teachingFileSvc.getAll();
 
 pageContext.setAttribute("courseList", courseList);
-pageContext.setAttribute("timetableList", timetableList);
 pageContext.setAttribute("teachingFileList", teachingFileList);
+
+session.setAttribute("courseWork", "teachingFile");
 %>
 
 <!DOCTYPE html>
@@ -56,13 +54,13 @@ pageContext.setAttribute("teachingFileList", teachingFileList);
 							<a id="aListAllCourse" banjiNo="${courseSvc.getOneCourse(courseNo).banjiNo}" href="javascript:void(0)">課程總覽</a>
 						</li>
 						<li class="breadcrumb-item">
-							教材管理 ${courseSvc.getOneCourse(courseNo).banjiNo} 嗨嗨
+							教材管理
 						</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
 							<i class="subheader-icon fal fa-file-code"></i>
-							教材管理${courseNo} 安安
+							教材管理
 						</h1>
 					</div>
 					<div class="row  align-items-center justify-content-center">
@@ -87,10 +85,8 @@ pageContext.setAttribute("teachingFileList", teachingFileList);
 												</tr>
 											</thead>
 											<tbody>
-														<c:forEach var="timetableVO" items="${courseSvc.getOneCourse(courseNo).timetableList}">
-															<c:if test="${courseNo eq timetableVO.courseNo}">
-																<c:forEach var="teachingFileVO" items="${teachingFileList}">
-																	<c:if test="${timetableVO.timetableNo eq teachingFileVO.timetableNo}">
+														<c:forEach var="teachingFileVO" items="${teachingFileSvc.getAllWithCourseNo(courseNo)}">
+															<c:if test="${courseNo == teachingFileVO.courseNo}">
 																		<tr>
 																			<td>${courseNo}</td>
 																			<td>${teachingFileVO.teachingFileNo}</td>
@@ -122,8 +118,7 @@ pageContext.setAttribute("teachingFileList", teachingFileList);
 																		</tr>
 																	</c:if>
 																</c:forEach>
-															</c:if>
-														</c:forEach>
+															
 											</tbody>
 										</table>
 										<!-- datatable end -->

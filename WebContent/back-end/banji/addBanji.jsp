@@ -46,7 +46,7 @@
 					<ol class="breadcrumb page-breadcrumb">
 						<li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
 						<li class="breadcrumb-item"><a
-							href="<%=request.getContextPath()%>/back-end/banji/homeBanji.jsp">養成班管理</a></li>
+							href="<%=request.getContextPath()%>/banji/banji.manage">養成班管理</a></li>
 						<li class="breadcrumb-item">新增養成班</li>
 					</ol>
 					<div class="subheader">

@@ -1,5 +1,22 @@
+<%@page import="com.course.model.CourseVO"%>
+<%@page import="com.course.model.CourseService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%
+String courseNav_courseNo = (String)session.getAttribute("courseNo");
+CourseVO courseNav_courseVO = new CourseService().getOneCourse(courseNav_courseNo);
+pageContext.setAttribute("courseNav_courseVO", courseNav_courseVO);
+%>
+<div class="bg-primary-700 bg-success-gradient text-white card p-2 pl-3 pr-3 mb-4" style="display: inline-block;">
+	<img src="<%=request.getContextPath() %>/course/course.do?action=getCourseImg&courseNo=${courseNav_courseVO.courseNo}" class="rounded" style="width: 4.125rem;height: 4.125rem;">
+	<div class="info-card-text ml-3">
+		<h5 class="card-title mb-1">
+			<label class="fs-xxl">${courseNav_courseVO.courseName}</label>
+			<label class="fs-xxl"> </label>
+			<i class="fal fa-smile"></i>
+			<label>${courseNav_courseVO.teacherVO.teacherName}</label>
+		</h5>
+	</div>
+</div>
 <div id="panel-10" class="panel">
 	<ul class="nav nav-pills nav-justified" role="tablist">
 		<li class="nav-item">
@@ -18,7 +35,7 @@
 			<a class="courseWork nav-link" courseWork="courseAsk" href="javascript:void(0)" style="font-size: 15px">問題討論</a>
 		</li>
 		<li class="nav-item">
-			<a class="courseWork nav-link" courseWork="evaluation" href="javascript:void(0)" style="font-size: 15px">教學評鑑</a>
+			<a class="courseWork nav-link" courseWork="finalScore" href="javascript:void(0)" style="font-size: 15px">課程成績</a>
 		</li>
 
 	</ul>
@@ -77,11 +94,11 @@
 				myForm.method = 'POST';
 				myForm.submit();
 			}
-			if (courseWork == 'evaluation') {
+			if (courseWork == 'finalScore') {
 				e.preventDefault();
 				let myForm = document.createElement('form');
 				document.body.appendChild(myForm);
-				myForm.action = '<%=request.getContextPath()%>/front-end/evaluation/selectEvaluation.jsp';
+				myForm.action = '<%=request.getContextPath()%>/front-end/finalscore/listFinalScore.jsp';
 				myForm.method = 'POST';
 				myForm.submit();
 			}

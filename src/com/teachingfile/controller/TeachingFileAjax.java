@@ -4,11 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.LinkedList;
-import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,17 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import com.course.model.CourseService;
-import com.course.model.CourseVO;
 import com.teachingfile.model.TeachingFileService;
-import com.teachingfile.model.TeachingFileVO;
-import com.video.model.VideoService;
 
 @WebServlet("/TeachingFileAjax")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024)
+
 public class TeachingFileAjax extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		doPost(req, res);
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -34,7 +31,7 @@ public class TeachingFileAjax extends HttpServlet {
 		res.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		HttpSession session = req.getSession();
-		String courseNo = (String) session.getAttribute("courseNo");
+		String courseNo = (String)session.getAttribute("courseNo");
 
 		if ("insert".equals(action)) {
 			res.setContentType("text/html");
@@ -42,14 +39,12 @@ public class TeachingFileAjax extends HttpServlet {
 				// 接參數
 				String teachingFileName = req.getParameter("teachingFileName");
 				// 接檔案 >判斷有檔案 > 判斷格式(對>上傳 ; 不對 > print errorMsgs) > 上傳
-				byte[] teachingFiles = null;
-				System.out.println("TFAjax44");
-				Part teachingFile = req.getPart("upfile2");
-				System.out.println("TFAjax46");
-				
+				Part teachingFile = req.getPart("teachingFile");
 				if (!"application/pdf".equals(teachingFile.getContentType().toLowerCase())) {
 					res.getWriter().append("請上傳pdf格式教材");
+					return;
 				}
+				byte[] teachingFiles = null;
 				InputStream in = teachingFile.getInputStream();
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
 				teachingFiles = new byte[in.available()];
@@ -83,8 +78,6 @@ public class TeachingFileAjax extends HttpServlet {
 			PrintWriter out = res.getWriter();
 			out.print(new TeachingFileService().getDatatableJson(courseNo));
 			return;
-		}
-		
-		
+		}		
 	}
 }

@@ -26,7 +26,7 @@
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage">養成班管理</a></li>
-                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage?action=read">${banjiVO.banjiName}</a></li>
+                        <li class="breadcrumb-item"><a id="gotoReadBanji" href="javascript:void(0)">${banjiVO.banjiName}</a></li>
                         <li class="breadcrumb-item">學員請假審核</li>
                     </ol>
                     <div class="subheader">
@@ -294,6 +294,29 @@
                     }
                 });
             });
+            
+            $('#gotoReadBanji').click(function () {
+                let _this = this;
+                let myForm = banjiGotoFrom('<%=request.getContextPath()%>/banji/banji.manage');
+                document.body.appendChild(myForm);
+                myForm.append(banjiGotoInput('hidden', 'action', 'read'));
+                myForm.submit();
+            });
+
+            function banjiGotoFrom(url) {
+                let myForm = document.createElement('form');
+                myForm.action = url;
+                myForm.method = 'POST';
+                return myForm;
+            }
+
+            function banjiGotoInput(type, name, value) {
+                let banjiInput = document.createElement('input');
+                banjiInput.type = type;
+                banjiInput.name = name;
+                banjiInput.value = value;
+                return banjiInput;
+            }
         });
     </script>
 </body>

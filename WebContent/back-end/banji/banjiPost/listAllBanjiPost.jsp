@@ -50,7 +50,7 @@
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/index/index.jsp">後台首頁</a></li>
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage">養成班管理</a></li>
-                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/banji/banji.manage?action=read">${banjiVO.banjiName}</a></li>
+                        <li class="breadcrumb-item"><a id="gotoReadBanji" href="javascript:void(0)">${banjiVO.banjiName}</a></li>
                         <li class="breadcrumb-item">公告管理</li>
                     </ol>
                     
@@ -110,7 +110,7 @@
 									</form>
 									 <form method="post"action="<%=request.getContextPath()%>/banji/banji.banjipost"class="m-1">
 									<button  id="add2" type="submit" class="btn1 btn-sm btn-danger">
-											<span class="fal fa-edit mr-1"></span> <span>刪除</span>
+											<span class="fal fa-times mr-1"></span> <span>刪除</span>
 										</button>
 										<input type="hidden" name="action"value="delete"> <input type="hidden"name="banjiPostNo" value="${banjiPostVO.banjiPostNo}">
                                     </form>
@@ -145,14 +145,38 @@
                     text: "如果刪除後，就無法復原了!",
                     type: "warning",
                     showCancelButton: true,
-                    cancelButtonText: "先不要",
-                    confirmButtonText: "我要刪除!"
+                    cancelButtonText: "先緩緩",
+                    confirmButtonText: "我要刪除"
                 }).then(function (result) {
                     if (result.value)
                         _this.parent()[0].submit();
                 });
             });
             
+            $('#gotoReadBanji').click(function () {
+                let _this = this;
+                let banjiNo = this.getAttribute('banjiNo');
+                let myForm = banjiGotoFrom('<%=request.getContextPath()%>/banji/banji.manage');
+                document.body.appendChild(myForm);
+                myForm.append(banjiGotoInput('hidden', 'action', 'read'));
+                myForm.submit();
+            });
+
+            function banjiGotoFrom(url) {
+                let myForm = document.createElement('form');
+                myForm.action = url;
+                myForm.method = 'POST';
+                return myForm;
+            }
+
+            function banjiGotoInput(type, name, value) {
+                let banjiInput = document.createElement('input');
+                banjiInput.type = type;
+                banjiInput.name = name;
+                banjiInput.value = value;
+                return banjiInput;
+            }
+
         });
     </script>
 </body>

@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
+import com.google.gson.JsonObject;
 
 public class BanjiService {
 	private BanjiDAO_interface dao;
@@ -96,5 +97,20 @@ public class BanjiService {
 			}
 		}
 		return map;
+	}
+	
+	public JsonObject getBanjiJsonObject(BanjiVO banjiVO) {
+		JsonObject jsonObject= new JsonObject();
+		jsonObject.addProperty("banjiNo", banjiVO.getBanjiNo());
+		jsonObject.addProperty("empNo", banjiVO.getEmpNo());
+		jsonObject.addProperty("banjiTypeNo", banjiVO.getBanjiTypeNo());
+		jsonObject.addProperty("startDay", banjiVO.getStartDay().toString());
+		jsonObject.addProperty("endDay", banjiVO.getEndDay().toString());
+		jsonObject.addProperty("banjiName", banjiVO.getBanjiName());
+		jsonObject.addProperty("classHours", banjiVO.getClassHours());
+		jsonObject.addProperty("numberOfStudent", banjiVO.getNumberOfStudent());
+		jsonObject.addProperty("classroomNo", banjiVO.getClassroomNo());
+		jsonObject.addProperty("status", banjiVO.getStatus());
+		return jsonObject;
 	}
 }

@@ -17,8 +17,6 @@ import com.google.gson.JsonObject;
 import com.leave.model.LeaveService;
 import com.leave.model.LeaveStatus;
 import com.teacher.model.TeacherVO;
-import com.teachingfile.model.TeachingFileService;
-import com.teachingfile.model.TeachingFileVO;
 import com.video.model.VideoService;
 import com.video.model.VideoVO;
 
@@ -78,12 +76,6 @@ public class TimetableService {
 		VideoVO videoVO = videoService.getOneVideoWithTimetableNo(timetableNo);
 		if (videoVO != null)
 			videoService.deleteVideo(videoVO.getVideoNo());
-
-		TeachingFileService teachingFileService = new TeachingFileService();
-		for (TeachingFileVO teachingFileVO : teachingFileService.getAll()) {
-			if (timetableNo.equals(teachingFileVO.getTimetableNo()))
-				teachingFileService.deleteTeachingFile(teachingFileVO.getTeachingFileNo());
-		}
 
 		new LeaveService().updateStatusWhenTimetableEdit(timetableNo, LeaveStatus.Reschedule.getNum());
 
@@ -158,8 +150,9 @@ public class TimetableService {
 	public String getAllByJsonStrWithBanjiNoCourseNo(String banjiNo, String courseNo, String mode) {
 		java.sql.Timestamp now = getNow();
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		CourseService courseService = new CourseService();
 		JsonObject jsonObject = new JsonObject();
-		TeacherVO teacherVO = new CourseService().getOneCourse(courseNo).getTeacherVO();
+		TeacherVO teacherVO = courseService.getOneCourse(courseNo).getTeacherVO();
 		String teacherNo = teacherVO.getTeacherNo();
 		JsonArray jsonArray = new JsonArray();
 		for (TimetableVO ttVO : getAll()) {
@@ -196,7 +189,7 @@ public class TimetableService {
 			jsonObj.addProperty("start",
 					String.format("%sT%s", ttVO.getTimetableDate(), ttVO.getPeriodEnum().getStart()));
 			jsonObj.addProperty("end", String.format("%sT%s", ttVO.getTimetableDate(), ttVO.getPeriodEnum().getEnd()));
-			JsonObject extendedProps = gson.fromJson(gson.toJson(ttVO), JsonObject.class);
+			JsonObject extendedProps = gson.fromJson(getTimetableJsonObject(ttVO), JsonObject.class);
 			extendedProps.addProperty("courseName", ttVO.getCourseVO().getCourseName());
 			extendedProps.addProperty("classroomName", ttVO.getClassroomVO().getClassroomName());
 			extendedProps.addProperty("periodText", ttVO.getPeriodText());
@@ -205,9 +198,9 @@ public class TimetableService {
 			jsonArray.add(jsonObj);
 		}
 		jsonObject.add("events", jsonArray);
-		CourseVO courseVO = new CourseService().getOneCourse(courseNo);
+		CourseVO courseVO = courseService.getOneCourse(courseNo);
 		courseVO.setCourseImg(null);
-		JsonObject _courseVO = gson.fromJson(gson.toJson(courseVO), JsonObject.class);
+		JsonObject _courseVO = gson.fromJson(courseService.getCourseJsonObject(courseVO), JsonObject.class);
 		_courseVO.addProperty("teacherName", courseVO.getTeacherVO().getTeacherName());
 		_courseVO.addProperty("statusText", courseVO.getStatusText());
 		_courseVO.addProperty("timetableSize", getAllWithCourseNo(courseNo).size());
@@ -218,6 +211,7 @@ public class TimetableService {
 
 	public String getAllByJsonStrWithBanjiNo(String banjiNo) {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		BanjiService banjiService = new BanjiService();
 		JsonArray jsonArray = new JsonArray();
 		for (TimetableVO ttVO : getAll()) {
 			String ttBanjiNo = ttVO.getCourseVO().getBanjiNo();
@@ -233,7 +227,7 @@ public class TimetableService {
 						String.format("%sT%s", ttVO.getTimetableDate(), ttVO.getPeriodEnum().getStart()));
 				jsonObj.addProperty("end",
 						String.format("%sT%s", ttVO.getTimetableDate(), ttVO.getPeriodEnum().getEnd()));
-				JsonObject extendedProps = gson.fromJson(gson.toJson(ttVO), JsonObject.class);
+				JsonObject extendedProps = gson.fromJson(getTimetableJsonObject(ttVO), JsonObject.class);
 				extendedProps.addProperty("courseName", ttVO.getCourseVO().getCourseName());
 				extendedProps.addProperty("classroomName", ttVO.getClassroomVO().getClassroomName());
 				extendedProps.addProperty("periodText", ttVO.getPeriodText());
@@ -243,7 +237,7 @@ public class TimetableService {
 			}
 		}
 		BanjiVO banjiVO = new BanjiService().getOneBanji(banjiNo);
-		JsonObject _banjiVO = gson.fromJson(gson.toJson(banjiVO), JsonObject.class);
+		JsonObject _banjiVO = gson.fromJson(banjiService.getBanjiJsonObject(banjiVO), JsonObject.class);
 		_banjiVO.addProperty("empName", banjiVO.getEmpVO().getEmpName());
 		_banjiVO.addProperty("statusText", banjiVO.getStatusText());
 		_banjiVO.addProperty("timetableSize", getAllWithBanjiNo(banjiNo).size());
@@ -318,5 +312,15 @@ public class TimetableService {
 		if (timetableDate.after(courseVO.getEndDate()))
 			return "請勿排在課程結束時間之後";
 		return "pass";
+	}
+	
+	public JsonObject getTimetableJsonObject(TimetableVO timetableVO) {
+		JsonObject jsonObject= new JsonObject();
+		jsonObject.addProperty("timetableNo", timetableVO.getTimetableNo());
+		jsonObject.addProperty("courseNo", timetableVO.getCourseNo());
+		jsonObject.addProperty("classroomNo", timetableVO.getClassroomNo());
+		jsonObject.addProperty("timetablePeriod", timetableVO.getTimetablePeriod());
+		jsonObject.addProperty("timetableDate", timetableVO.getTimetableDate().toString());
+		return jsonObject;
 	}
 }

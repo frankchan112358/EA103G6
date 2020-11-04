@@ -12,7 +12,7 @@ CourseService courseSvc = new CourseService();
 List<CourseVO> courseList = courseSvc.getAll();
 
 pageContext.setAttribute("courseList", courseList);
-
+session.setAttribute("courseWork", "finalScore");
 %>
 
 <!DOCTYPE html>
@@ -48,17 +48,19 @@ pageContext.setAttribute("courseList", courseList);
 							<a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
-							成績管理
+							<a href="<%=request.getContextPath()%>/front-end/course/selectCourse.jsp">我的課程</a>
 						</li>
+						<li class="breadcrumb-item">課程成績</li>
 					</ol>
 					<div class="subheader">
 						<h1 class="subheader-title">
-							<i class="fas fa-star-half-alt" style="color: yellowgreen;">
-								成績管理</i>
+							<i class="subheader-icon fal fa-clipboard-list-check"></i>
+								課程成績
 						</h1>
 					</div>
-					<div class="row">
-						<div class="col-xl-12">
+					<div class="row align-items-center justify-content-center">
+						<div class="col-11">
+							<jsp:include page="/front-end/course/courseDetail.jsp"></jsp:include>
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">
 									<h2>成績列表</h2>

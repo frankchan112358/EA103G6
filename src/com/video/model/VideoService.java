@@ -66,9 +66,10 @@ public class VideoService {
 
 	public String getDatatableJson(String courseNo) {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		TimetableService timetableService = new TimetableService();
 		JsonArray jsonArray = new JsonArray();
 		for (TimetableVO timetableVO : new TimetableService().getAllWithCourseNo(courseNo)) {  //取到timetableVO list
-			JsonObject jsonObject = gson.fromJson(gson.toJson(timetableVO), JsonObject.class); //換成json物件
+			JsonObject jsonObject = gson.fromJson(timetableService.getTimetableJsonObject(timetableVO), JsonObject.class); //換成json物件
 			jsonObject.addProperty("periodText", timetableVO.getPeriodText()); //列舉值的部分
 			VideoVO videoVO = getOneVideoWithTimetableNo(timetableVO.getTimetableNo()); //取得單個videoVO 物件
 			jsonObject.addProperty("videoNo", videoVO == null ? "" : videoVO.getVideoNo()); //取得videoNo

@@ -1,7 +1,6 @@
 package com.teachingfile.controller;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,15 +24,13 @@ public class DownloadFile extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
-		res.setContentType("application/pdf");
+		res.setCharacterEncoding("UTF-8");
 
 		// 傳檔案名稱進來
 		HttpSession session = req.getSession();
-		String courseNo = (String) session.getAttribute("courseNo");
-		String teachingFileNo = req.getParameter("teachingFileNo");
 
 		String queryString = req.getQueryString();
-		res.setHeader("content-disposition", "attachment; filename=\"" + queryString + "\"" + ".pdf");
+
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 
@@ -44,12 +41,14 @@ public class DownloadFile extends HttpServlet {
 
 			// 用VO.File取得檔案(byte[])接outputStream
 			ByteArrayInputStream bis = new ByteArrayInputStream(teachingFileVO.getTeachingFile());
+			String str = java.net.URLEncoder.encode(teachingFileVO.getTeachingFileName(), "UTF-8");
+			str = str.replace("+", "%20");
+			res.setHeader("content-disposition", "attachment;filename=" + str+".pdf");
 			ServletOutputStream sos = res.getOutputStream();
 			byte[] loadFile = new byte[bis.available()];
 			bis.read(loadFile);
 			sos.write(loadFile);
 			sos.close();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			errorMsgs.add("下載資料失敗:" + e.getMessage());
@@ -62,6 +61,7 @@ public class DownloadFile extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
+
 		String action = req.getParameter("action");
 
 		if ("preRead".equals(action)) { // 來自addTeachingFile.jsp的請求
@@ -70,11 +70,9 @@ public class DownloadFile extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
 				String teachingFileNo = req.getParameter("teachingFileNo");
-				System.out.println(73);
 
 				TeachingFileService teachingFileSvc = new TeachingFileService();
 				TeachingFileVO teachingFileVO = teachingFileSvc.getOneTeachingFile(teachingFileNo);
-				System.out.println("77: " + teachingFileVO.getTeachingFileName());
 
 				ByteArrayInputStream bis = new ByteArrayInputStream(teachingFileVO.getTeachingFile());
 				ServletOutputStream sos = res.getOutputStream();
@@ -83,19 +81,8 @@ public class DownloadFile extends HttpServlet {
 				sos.write(file);
 				sos.close();
 				bis.close();
-				System.out.println(86);
-
-				String url = "/back-end/teachingFile/listAllTeachingFile3.jsp";
-				System.out.println(89);
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				System.out.println(91);
-				successView.forward(req, res);
-
 			} catch (Exception e) {
 				e.printStackTrace();
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingFile/listAllTeachingFile3.jsp");
-				failureView.forward(req, res);
 			}
 		}
 	}
