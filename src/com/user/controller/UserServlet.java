@@ -301,7 +301,7 @@ public class UserServlet extends HttpServlet {
 						failureView.forward(req, res);
 						return;
 
-						return;
+						
 					// 錯誤導講師頁面
 					} else if (type.equals(1)) {
 

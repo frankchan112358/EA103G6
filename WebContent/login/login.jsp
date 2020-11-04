@@ -94,8 +94,8 @@ abgne-menu-20140101-1 input[type="radio"] + label {
 								<div class="abgne-menu-20140101-1">
 								
 								<span style="background-color:#FFFFFF;font-size:20px;font-color:#00000;font-weight:bold;border-radius:10px;padding:20px 40px 20px 40px;opacity:0.3">	
-	    						<input type="radio" id="emp" name="type" value="emp"  onclick="javascript:document.getElementById('mytheme').href='<%=request.getContextPath() %>/SmartAdmin4/css/themes/cust-theme-0.css';javascript:document.getElementById('img').src='<%=request.getContextPath() %>/images/emp.png'">	    						
-	   							<label for="emp">我是導師</label></span>
+	    						<input type="radio" id="emp" name="type" value="emp" checked onclick="javascript:document.getElementById('mytheme').href='<%=request.getContextPath() %>/SmartAdmin4/css/themes/cust-theme-0.css';javascript:document.getElementById('img').src='<%=request.getContextPath() %>/images/emp.png'">	    						
+	   							<label for="emp" style="border:200px">我是導師</label></span>
 	   										 
  								<span style="background-color:#FFFFFF;font-size:20px;font-color:#00000;font-weight:bold;border-radius:10px;padding:20px 40px 20px 40px;opacity:0.3">	
 	   							<input type="radio" id="teacher" name="type" value="teacher" onclick="javascript:document.getElementById('mytheme').href='<%=request.getContextPath() %>/SmartAdmin4/css/themes/cust-theme-1.css';javascript:document.getElementById('img').src='<%=request.getContextPath() %>/images/teacher.png'">
@@ -106,6 +106,7 @@ abgne-menu-20140101-1 input[type="radio"] + label {
 	 							<label for="student">我是學生</label></span>
 	 							<div class="mt-6 ;">
 	 							  <img src="" id="img"  style=" margin-left:120px;" />
+	 						
 	 							 </div>
 								</div>			
 								</div>
@@ -195,7 +196,19 @@ abgne-menu-20140101-1 input[type="radio"] + label {
                 $(`#${"${type}"}select`).parent().show();
             }
           
+            
+            
+            function img(){
+            	var img = document.getElementById('img');
+            	if(img.src===null){
+            		img.src='<%=request.getContextPath() %>/images/emp.png'
+            	}      	
             }
+            
+            
+            $(document).ready(function() {
+            	javascript:document.getElementById('mytheme').href='<%=request.getContextPath() %>/SmartAdmin4/css/themes/cust-theme-0.css';javascript:document.getElementById('img').src='<%=request.getContextPath() %>/images/emp.png'
+            });
         </script>
     </body>
 
