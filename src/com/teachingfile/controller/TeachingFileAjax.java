@@ -28,24 +28,23 @@ public class TeachingFileAjax extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-
+		res.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		HttpSession session = req.getSession();
-		String courseNo = (String) session.getAttribute("courseNo");
+		String courseNo = (String)session.getAttribute("courseNo");
 
 		if ("insert".equals(action)) {
+			res.setContentType("text/html");
 			try {
 				// 接參數
 				String teachingFileName = req.getParameter("teachingFileName");
 				// 接檔案 >判斷有檔案 > 判斷格式(對>上傳 ; 不對 > print errorMsgs) > 上傳
-				byte[] teachingFiles = null;
-				System.out.println("TFAjax44");
-				Part teachingFile = req.getPart("upfile2");
-				System.out.println("TFAjax46");
-				
+				Part teachingFile = req.getPart("teachingFile");
 				if (!"application/pdf".equals(teachingFile.getContentType().toLowerCase())) {
 					res.getWriter().append("請上傳pdf格式教材");
+					return;
 				}
+				byte[] teachingFiles = null;
 				InputStream in = teachingFile.getInputStream();
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
 				teachingFiles = new byte[in.available()];
@@ -79,8 +78,6 @@ public class TeachingFileAjax extends HttpServlet {
 			PrintWriter out = res.getWriter();
 			out.print(new TeachingFileService().getDatatableJson(courseNo));
 			return;
-		}
-		
-		
+		}		
 	}
 }

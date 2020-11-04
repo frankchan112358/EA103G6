@@ -29,8 +29,6 @@ public class DownloadFile extends HttpServlet {
 
 		// 傳檔案名稱進來
 		HttpSession session = req.getSession();
-		String courseNo = (String) session.getAttribute("courseNo");
-		String teachingFileNo = req.getParameter("teachingFileNo");
 
 		String queryString = req.getQueryString();
 		res.setHeader("content-disposition", "attachment; filename=\"" + queryString + "\"" + ".pdf");
@@ -71,11 +69,9 @@ public class DownloadFile extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
 				String teachingFileNo = req.getParameter("teachingFileNo");
-				System.out.println("73 - teachingFileNo : " + teachingFileNo);
 
 				TeachingFileService teachingFileSvc = new TeachingFileService();
 				TeachingFileVO teachingFileVO = teachingFileSvc.getOneTeachingFile(teachingFileNo);
-				System.out.println("77: " + teachingFileVO.getTeachingFileName());
 
 				ByteArrayInputStream bis = new ByteArrayInputStream(teachingFileVO.getTeachingFile());
 				ServletOutputStream sos = res.getOutputStream();
@@ -84,19 +80,8 @@ public class DownloadFile extends HttpServlet {
 				sos.write(file);
 				sos.close();
 				bis.close();
-				System.out.println(86);
-
-//				String url = "/back-end/teachingFile/listAllTeachingFile3.jsp";
-				System.out.println(89);
-//				RequestDispatcher successView = req.getRequestDispatcher(url);
-				System.out.println(91);
-//				successView.forward(req, res);
-
 			} catch (Exception e) {
 				e.printStackTrace();
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/teachingFile/listAllTeachingFile3.jsp");
-//				failureView.forward(req, res);
 			}
 		}
 	}

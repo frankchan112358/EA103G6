@@ -223,6 +223,7 @@
 				$('.videoinfo.filetype').text('');
 				$('.videoinfo.filesize').text('');
 				$('h4.modal-title').text('');
+				$('#videoFile').val('');
 			}
 
 			document.getElementById('aListAllCourse').addEventListener('click', function (e) {

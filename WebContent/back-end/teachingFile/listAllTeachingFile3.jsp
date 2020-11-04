@@ -66,7 +66,7 @@
 								</div>
 								<div class="panel-container show">
 									<div class="panel-content">
-										<button ID="insert"type="button" class="btn btn-primary waves-effect waves-themed float-left">
+										<button ID="insert" type="button" class="btn btn-primary waves-effect waves-themed float-left">
 											<span class="far fa-plus-circle mr-1"></span>
 											<span>新增</span>
 										</button>
@@ -75,7 +75,7 @@
 											<thead style="background-color:#E5F4FF;">
 												<tr>
 													<th width="30%">檔案名稱</th>
-													<th >操作</th>
+													<th>操作</th>
 												</tr>
 											</thead>
 										</table>
@@ -101,27 +101,27 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div id="film">
-					</div>
 					<table class="teachingFileInfo table table-bordered text-white">
 						<thead>
 							<tr>
 								<th>檔案名稱</th>
-								<!-- <th>檔案類型</th> -->
+								<th>檔案類型</th>
 								<th>檔案大小</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td><input ID="inputFileName" type="TEXT" name="teachingFileName" size="45"/></td>
-								<!-- <td class="teachingFileInfo filetype"></td> -->
+								<td>
+									<input id="teachingFileName" type="text" size="45" />
+								</td>
+								<td class="teachingFileInfo filetype"></td>
 								<td class="teachingFileInfo filesize"></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<div class="modal-footer">
-					<input id="teachingFile_File" type="file" name="upfile2" accept=".pdf"/>
+					<input id="teachingFile" type="file" accept=".pdf" />
 					<button id="cancelUpload" type="button" class="btn btn-secondary">取消上傳</button>
 					<button id="uploadFile" type="button" class="btn btn-primary">上傳檔案</button>
 				</div>
@@ -162,7 +162,7 @@
 					id: "teachingFileNo",
 					data: "teachingFileNo",
 					render(data, type, row, meta) {
-					let html = `<button teachingFileNo="${'${row.teachingFileNo}'}" type="button" class="preview btn btn-success m-1 mb-0">
+						let html = `<button teachingFileNo="${'${row.teachingFileNo}'}" type="button" class="preview btn btn-success m-1 mb-0">
 										<span class="fal fa-file-code mr-1"></span>
 										<span>預覽</span>
 									</button>
@@ -203,66 +203,74 @@
 				});
 
 			//about新增檔案的按鈕
-			$(document).on('click', '#insert', function(e){
+			$(document).on('click', '#insert', function (e) {
 				_todo = 'insert';
 				$('h4.modal-title').text('新增檔案');
 				$('#teachingFileModal').modal('show');
-			});			
+			});
 
 			//關閉modal
-			$('#teachingFileModal').on('hidden.bs.modal', function(e){
+			$('#teachingFileModal').on('hidden.bs.modal', function (e) {
 				$('table.teachingFileInfo').hide();
-				$(':text').attr( 'placeholder', '');
-				// $('.teachingFileInfo.filetype').text('');
+				$('#teachingFile').val('');
+				$('#teachingFileName').val('');
+				$('.teachingFileInfo.filetype').text('');
 				$('.teachingFileInfo.filesize').text('');
-				$()
 			})
 
 			//選擇檔案、更新table
-			$('#teachingFile_File').on('change', function(){
-				$('table.teachingFileInfo').show();
-				var e = window.event;
-				var files = e.target.files;
-				$(':text').attr( 'placeholder', files[0].name);
-				// $('.teachingFileInfo.filetype').text(files.type);
+			$('#teachingFile').on('change', function (e) {
+				let files = e.target.files;
+				$('#teachingFileName').val(files[0].name);
+				$('.teachingFileInfo.filetype').text(files[0].type);
 				$('.teachingFileInfo.filesize').text(Math.round(files[0].size / 1024) + 'KB');
+				$('table.teachingFileInfo').show();
 			})
-			
+
 			//about上傳的按鈕
-			$(document).on('click','#uploadFile', function(e){
-				if(workStatus == 'none'){
+			$('#uploadFile').click(function (e) {
+				if (workStatus == 'none') {
+					let form = new FormData();
+					form.append('teachingFile', $('#teachingFile')[0].files[0]);
+					form.append('action', 'insert');
+					form.append('teachingFileName', $('#teachingFileName').val());
 					$.ajax({
-						beforeSend(){
+						beforeSend: function () {
 							workStatus = 'upload';
 						},
 						type: 'POST',
 						url: `<%=request.getContextPath() %>/teachingFile/teachingFileAjax`,
-						data: {
-							action: 'insert',
-							courseNo: _courseNo,
-							teachingFileName: $('#inputFileName').val(),
-							enctype: 'multipart/form-data'
-						},
-						complete() {
-								workStatus = 'none';
-								_todo = '';
+						processData: false,
+						contentType: false,
+						data: form,
+						success: function (res) {
+							if (res == 'ok') {
+								coursetable.ajax.reload(null, false);
+								$('#teachingFileModal').modal('hide');
+							} else {
+								alert(res);
 							}
+						},
+						complete: function () {
+							workStatus = 'none';
+							_todo = '';
+						}
 					})
 				}
-			})
+			});
 
 			//about取消的按鈕
-			$('#cancelUpload').click(function(){
+			$('#cancelUpload').click(function () {
 				$('#teachingFileModal').modal('hide');
 			});
 
 			//about預覽的按鈕
-			$(document).on('click','button.preview', function(e){
+			$(document).on('click', 'button.preview', function (e) {
 				_teachingFileNo = this.getAttribute('teachingFileNo');
 				console.log("_teachingFileNo:" + _teachingFileNo);
-				if(workStatus == 'none'){
+				if (workStatus == 'none') {
 					$.ajax({
-						beforeSend(){
+						beforeSend() {
 							workStatus = 'preview';
 						},
 						type: 'POST',
@@ -272,9 +280,9 @@
 							teachingFileNo: _teachingFileNo
 						},
 						complete() {
-								workStatus = 'none';
-								_todo = '';
-							}
+							workStatus = 'none';
+							_todo = '';
+						}
 					})
 				}
 			});
@@ -282,11 +290,11 @@
 			//about下載的按鈕(在上面a標籤裡面)
 
 			//about刪除的按鈕
-			$(document).on('click','button.delete', function(e){
+			$(document).on('click', 'button.delete', function (e) {
 				_teachingFileNo = this.getAttribute('teachingFileNo');
-				if(workStatus == 'none'){
+				if (workStatus == 'none') {
 					$.ajax({
-						beforeSend(){
+						beforeSend() {
 							workStatus = 'delete';
 						},
 						type: 'POST',
@@ -295,14 +303,14 @@
 							action: 'delete',
 							teachingFileNo: _teachingFileNo
 						},
-						success(res){
+						success(res) {
 							coursetable.ajax.reload(null, false);
 							$('#videoModal').modal('hide');
 						},
 						complete() {
-								workStatus = 'none';
-								_todo = '';
-							}
+							workStatus = 'none';
+							_todo = '';
+						}
 					});
 				}
 			});

@@ -21,11 +21,11 @@ public class TeachingFileService {
 		dao = new TeachingFileDAO();
 	}
 	
-	public TeachingFileVO addTeachingFile( String courseNo, String teachingFileName,	byte[] teachingFile) {
+	public TeachingFileVO addTeachingFile( String courseNo, String teachingFileName, byte[] teachingFile) {
 
 		TeachingFileVO teachingFileVO = new TeachingFileVO();
 
-		teachingFileVO.setTimetableNo(courseNo);
+		teachingFileVO.setCourseNo(courseNo);
 		teachingFileVO.setTeachingFileName(teachingFileName);
 		teachingFileVO.setTeachingFile(teachingFile);
 		dao.insert(teachingFileVO);
@@ -39,7 +39,7 @@ public class TeachingFileService {
 		TeachingFileVO teachingFileVO = new TeachingFileVO();
 
 		teachingFileVO.setTeachingFileNo(teachingFileNo);
-		teachingFileVO.setTimetableNo(courseNo);
+		teachingFileVO.setCourseNo(courseNo);
 		teachingFileVO.setTeachingFileName(teachingFileName);
 		teachingFileVO.setTeachingFile(teachingFile);
 		dao.update(teachingFileVO);
@@ -52,7 +52,7 @@ public class TeachingFileService {
 		TeachingFileVO teachingFileVO = new TeachingFileVO();
 
 		teachingFileVO.setTeachingFileNo(teachingFileNo);
-		teachingFileVO.setTimetableNo(courseNo);
+		teachingFileVO.setCourseNo(courseNo);
 		teachingFileVO.setTeachingFileName(teachingFileName);
 		dao.updateNoFile(teachingFileVO);
 
