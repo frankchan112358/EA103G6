@@ -66,7 +66,7 @@ pageContext.setAttribute("teachingFileList", teachingFileList);
 						</h1>
 					</div>
 					<div class="row  align-items-center justify-content-center">
-						<div class="col-11">
+						<div class="col-12">
 							<jsp:include page="/front-end/course/courseDetail.jsp"></jsp:include>
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-gradient-info">

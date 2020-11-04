@@ -45,9 +45,9 @@
 }
 
 video {
-display: block;
-width: 100%;
-margin: 12px auto;
+	display: block;
+	width: 100%;
+	margin: 12px auto;
 }
 
 .container-fluid, .container-sm, .container-md, .container-lg, .container-xl {
@@ -55,9 +55,6 @@ margin: 12px auto;
     padding-left: 0;
 }
 
-#sidebar-wrapper{
-    background-color: #2d3947 !important;
-}
 
 .bg-light {
     background-color: #000 !important;
@@ -76,9 +73,9 @@ margin: 12px auto;
 }
 
 .in-sb{
-font-size: 1.6em;
-color : white;
-margin-left: 8px;
+	font-size: 1.6em;
+	color : white;
+/* 	margin-left: 40px; */
 }
 
 a[target]:not(.btn) {
@@ -91,7 +88,7 @@ a[target]:not(.btn) {
 }
 
 .btn1{
-	margin-left: 40px;
+/* 	margin-left: 80px; */
 	margin-top: 10px;
 }
 
@@ -134,10 +131,11 @@ a[target]:not(.btn) {
 	margin-top: 5px;
 }
 
+
 #sbLog{
-font-size: 1.3em;
-color: #FFFAE6;
-background-color: #658F4B;
+	font-size: 1.3em;
+	color: #FFFAE6;
+	background-color: #658F4B;
 
 }
 
@@ -146,41 +144,45 @@ background-color: #658F4B;
  }
 
 #sidebar-wrapper {
-  min-height: 100vh;
-  margin-left: -14rem;
-  -webkit-transition: margin .25s ease-out;
-  -moz-transition: margin .25s ease-out;
-  -o-transition: margin .25s ease-out;
-  transition: margin .25s ease-out;
+	background-color: #2d3947 !important;
+	min-height: 100vh;
+	margin-left: -20rem;	
+	-webkit-transition: margin .25s ease-out;
+	-moz-transition: margin .25s ease-out;
+	-o-transition: margin .25s ease-out;
+	transition: margin .25s ease-out;
 }
 
 #sidebar-wrapper .list-group {
-  width: 14rem;
+	width: 20rem;
+	height: 55em;
+	overflow-y: scroll;
 }
 
+
 #page-content-wrapper {
-  min-width: 100%;
-  background-color: #000;
+	min-width: 100%;
+	background-color: #000;
   
 }
 
 #wrapper.toggled #sidebar-wrapper {
-  margin-left: 0;
+	margin-left: 0;
 }
 
 @media (min-width: 768px) {
   #sidebar-wrapper {
-    margin-left: 0;
+	margin-left: 0;
   }
 
   #page-content-wrapper {
-    min-width: 0;
-    width: 100%;
-    background-color: #000;
+  	min-width: 0;
+  	width: 100%;
+  	background-color: #000;
   }
 
   #wrapper.toggled #sidebar-wrapper {
-    margin-left: -14rem;
+	margin-left: -20rem;
   }
 }
 
@@ -213,7 +215,7 @@ background-color: #658F4B;
 						</h1>
 					</div>
 					<div class="row align-items-center justify-content-center">
-						<div class="col-11">
+						<div class="col-12">
 							<jsp:include page="/front-end/course/courseDetail.jsp"></jsp:include>
 							<div id="panel-1" class="panel">
 								<div class="panel-hdr bg-primary-800 bg-success-gradient ">
@@ -233,7 +235,7 @@ background-color: #658F4B;
 																			<span class="in-sb">
 																				<input type="hidden" name="videoNo" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoNo}">
 																				<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
-																				<i class="fal fa-camera-movie"></i>
+																				<i class="fas fa-caret-circle-right"></i>
 																				${timetableVO.timetableDate}
 																				<input class="videoname" type="hidden" name="videoName" value="${videoSvc.getOneVideoWithTimetableNo(timetableVO.timetableNo).videoName}">
 																				<input type="hidden" name="timetablePeriod" value="${timetableVO.timetablePeriod}">
