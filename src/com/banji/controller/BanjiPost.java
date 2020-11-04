@@ -149,6 +149,13 @@ public class BanjiPost extends HttpServlet {
 				banjiPostVO = banjiPostSvc.updateBanjiPost(banjiPostNo, banjiNo, title, banjiPostContent, updateTime,
 						status);
 
+				StudentService studentService=new StudentService();
+				List<StudentVO> stulList= studentService.getAllWithBanji(banjiNo);
+				for(StudentVO stuVO:stulList) {
+					NotifyServlet notifyServlet =new NotifyServlet();
+					notifyServlet.broadcast(stuVO.getUserNo(), "變更班級公告", "班級公告已變更!!");
+				}
+				
 				req.setAttribute("list", new BanjiPostService().getAllWhitBanjiNo(banjiNo));
 				req.setAttribute("banjiVO", banjiVO);
 				String url = "/back-end/banji/banjiPost/listAllBanjiPost.jsp";

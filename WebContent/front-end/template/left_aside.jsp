@@ -21,7 +21,7 @@
             <li>
                 <a href="<%=request.getContextPath()%>/front-end/index/index.jsp" title="前台首頁">
                     <i class="fal fa-chart-area"></i>
-                    <span class="nav-link-text">後台首頁</span>
+                    <span class="nav-link-text">前台首頁</span>
                 </a>
             </li>
             <li>
@@ -32,7 +32,7 @@
             </li>
             <li>
                 <a href="<%=request.getContextPath() %>/front-end/forumpost/forumPost_index.jsp" title="班級討論區">
-                    <i class="fal fa-book"></i>
+                    <i class="fal fa-gamepad-alt"></i>
                     <span class="nav-link-text">班級討論區</span>
                 </a>
             </li>
