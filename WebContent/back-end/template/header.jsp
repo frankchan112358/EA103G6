@@ -41,7 +41,7 @@
         </a>
         <!-- app notification -->
         <div>
-            <a href="javascript:void(0)" class="header-icon" data-toggle="dropdown" title="You got 2 notifications">
+            <a href="javascript:void(0)" class="header-icon" data-toggle="dropdown">
                 <i class="fal fa-bell"></i>
                 <span class="badge badge-icon" id="noReadPic"></span>
             </a>
