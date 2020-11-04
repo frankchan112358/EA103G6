@@ -46,13 +46,13 @@ pageContext.setAttribute("teachingFileList", teachingFileList);
 				<main id="js-page-content" role="main" class="page-content">
 					<ol class="breadcrumb page-breadcrumb">
 						<li class="breadcrumb-item">
-							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">前台首頁 ${courseNo}</a>
+							<a href="<%=request.getContextPath()%>/back-end/index/index.jsp">前台首頁</a>
 						</li>
 						<li class="breadcrumb-item">
 							<a id="aListAllCourse" banjiNo="${courseSvc.getOneCourse(courseNo).banjiNo}" href="javascript:void(0)">課程總覽</a>
 						</li>
 						<li class="breadcrumb-item">
-							教材管理 ${courseSvc.getOneCourse(courseNo).banjiNo} 嗨嗨
+							教材管理
 						</li>
 					</ol>
 					<div class="subheader">

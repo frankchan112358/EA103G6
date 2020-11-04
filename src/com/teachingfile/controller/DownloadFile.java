@@ -43,7 +43,7 @@ public class DownloadFile extends HttpServlet {
 			ByteArrayInputStream bis = new ByteArrayInputStream(teachingFileVO.getTeachingFile());
 			String str = java.net.URLEncoder.encode(teachingFileVO.getTeachingFileName(), "UTF-8");
 			str = str.replace("+", "%20");
-			res.setHeader("content-disposition", "attachment;filename=" + str);
+			res.setHeader("content-disposition", "attachment;filename=" + str+".pdf");
 			ServletOutputStream sos = res.getOutputStream();
 			byte[] loadFile = new byte[bis.available()];
 			bis.read(loadFile);
