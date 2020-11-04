@@ -73,21 +73,17 @@ session.setAttribute("courseWork", "teachingFile");
 									
 										<!-- datatable start -->
 										<table id="coursetable" class="table table-bordered table-hover table-striped w-100">
-											<thead style="background-color:#E5F4FF;">
+											<thead style="background-color:#B7D197;">
 
 												<tr>
-													<th width="15%">課程編號</th>
-													<th width="15%">教材編號</th>
-													<th width="15%">教材名稱</th>
-													<th width="10%">下載</th>
+													<th width="20%">教材名稱</th>
+													<th >操作</th>
 												</tr>
 											</thead>
 											<tbody>
 														<c:forEach var="teachingFileVO" items="${teachingFileSvc.getAllWithCourseNo(courseNo)}">
 															<c:if test="${courseNo == teachingFileVO.courseNo}">
 																		<tr>
-																			<td>${courseNo}</td>
-																			<td>${teachingFileVO.teachingFileNo}</td>
 																			<td>${teachingFileVO.teachingFileName}</td>
 																			<td class="d-flex p-1 justify-content-center">
 																			
@@ -97,7 +93,6 @@ session.setAttribute("courseWork", "teachingFile");
 																					<span>預覽</span>
 																				</button>
 																				<input type="hidden" name="courseNo" value="${courseNo}">
-																				<input type="hidden" name="timetableNo" value="${timetableVO.timetableNo}">
 																				<input type="hidden" name="teachingFileNo" value="${teachingFileVO.teachingFileNo}">
 																				<input type="hidden" name="action" value="preRead">
 																			</FORM>

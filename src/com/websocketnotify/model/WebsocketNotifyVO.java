@@ -7,12 +7,17 @@ public class WebsocketNotifyVO implements java.io.Serializable{
 	private String title;
 	private String content;
 	private Long time;
+	private String status;
+	private Long index;
 	
-	public WebsocketNotifyVO(String title,String content,Long time) {
+
+	public WebsocketNotifyVO(String title,String content,Long time,String status,Long index) {
 		super();
 		this.title=title;
 		this.content=content;
 		this.time=time;
+		this.status=status;
+		this.index=index;
 	}
 	
 	public String getTitle() {
@@ -32,5 +37,21 @@ public class WebsocketNotifyVO implements java.io.Serializable{
 	}
 	public void setTime(long time) {
 		this.time = time;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Long getIndex() {
+		return index;
+	}
+
+	public void setIndex(Long index) {
+		this.index = index;
 	}
 }

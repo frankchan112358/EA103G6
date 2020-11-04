@@ -38,6 +38,7 @@ import com.user.model.UserRedisVO;
 import com.user.model.UserService;
 import com.user.model.UserVO;
 import com.userpermission.model.UserPermissionService;
+import com.websocketnotify.controller.NotifyServlet;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 
@@ -311,6 +312,7 @@ public class UserServlet extends HttpServlet {
 						return;
 					// 錯誤導導師頁面
 					} else {
+						
 						req.setAttribute("userVOForInsert", userVO);
 						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/empList.jsp");
 						failureView.forward(req, res);
