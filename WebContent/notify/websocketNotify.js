@@ -64,7 +64,7 @@
 						
 						
 						if("已讀"==detailJson.status){
-							$("#decorateForNotification").prepend(`<li class="unread" name=${jsonObjForName}>
+							$("#decorateForNotification").prepend(`<li class="unread">
 		                            <div class="d-flex align-items-center show-child-on-hover">
 		                            <span class="d-flex flex-column flex-1">
 		                                <span class="name d-flex align-items-center"> ${notifyTitle} <span class="badge badge-success fw-n ml-1">NOTIFY</span></span>
@@ -74,11 +74,12 @@
 		                                <span class="fs-nano text-muted mt-1">${showNotifyDay}</span>
 		                            </span>
 		                        </div>
+		                        <div class="jsonObjForName" style="display:none">${jsonObjForName}</div>
 		                    </li>`);
 						}
 						
 						if("未讀"==detailJson.status){
-							$("#decorateForNotification_noRead").prepend(`<li class="unread" name=${jsonObjForName}>
+							$("#decorateForNotification_noRead").prepend(`<li class="unread">
 		                            <div class="d-flex align-items-center show-child-on-hover">
 		                            <span class="d-flex flex-column flex-1">
 		                                <span class="name d-flex align-items-center"> ${notifyTitle} <span class="badge badge-success fw-n ml-1">NOTIFY</span></span>
@@ -88,6 +89,7 @@
 		                                <span class="fs-nano text-muted mt-1">${showNotifyDay}</span>
 		                            </span>
 		                        </div>
+		                        <div class="jsonObjForName" style="display:none">${jsonObjForName}</div>
 		                    </li>`);
 							noReadCount++;
 						}
@@ -108,7 +110,7 @@
 					let notifyContent=jsonObj.content;
 					let countTimeForShow="剛剛";
 										
-					$("#decorateForNotification_noRead").prepend(`<li class="unread" name=${event.data}>
+					$("#decorateForNotification_noRead").prepend(`<li class="unread">
                             <div class="d-flex align-items-center show-child-on-hover">
                             <span class="d-flex flex-column flex-1">
                                 <span class="name d-flex align-items-center"> ${notifyTitle} <span class="badge badge-success fw-n ml-1">NOTIFY</span></span>
@@ -118,6 +120,7 @@
                                 <span class="fs-nano text-muted mt-1">${countTimeForShow}</span>
                             </span>
                         </div>
+                        <div class="jsonObjForName" style="display:none">${jsonObjForName}</div>
                     </li>`);
 					//收到即時提醒時未讀加一
 					if($("#noReadPic").text()!=0){
@@ -160,7 +163,7 @@
 		$("#decorateForNotification_noRead").on('click',".unread", function(event) {
 			//狀態改已讀右上小鈴鐺數字改變
 			var noReadCount=parseInt($("#noReadPic").text());
-			webSocketForNotify.send($(this).attr("name"));
+			webSocketForNotify.send($(this).find('div.jsonObjForName').html());
 			$(this).insertBefore("#decorateForNotification li:eq(0)");
 			noReadCount=noReadCount-1;
 			$("#noReadPic").text(noReadCount.toString());
