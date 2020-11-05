@@ -104,7 +104,7 @@
 				}
 			}else{
 				if(jsonObj !== null){ 
-
+					let jsonObjForDiv=event.data;
 					let dateForNow=new Date().getTime();				
 					let notifyTitle=jsonObj.title;
 					let notifyContent=jsonObj.content;
@@ -120,7 +120,7 @@
                                 <span class="fs-nano text-muted mt-1">${countTimeForShow}</span>
                             </span>
                         </div>
-                        <div class="jsonObjForName" style="display:none">${jsonObjForName}</div>
+                        <div class="jsonObjForName" style="display:none">${jsonObjForDiv}</div>
                     </li>`);
 					//收到即時提醒時未讀加一
 					if($("#noReadPic").text()!=0){
