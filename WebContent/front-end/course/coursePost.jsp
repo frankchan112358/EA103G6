@@ -5,13 +5,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
-
-<%
-%>
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,7 +72,7 @@
 													<div class="card-header">
 														<a href="javascript:void(0);" class="card-title collapsed" data-toggle="collapse" data-target="#coursePost${coursePostVO.coursePostNo}" aria-expanded="false">
 															<i class="fal fa-comment-alt-smile mr-3 fa-2x"></i>
-															<span> 
+															<span>
 																<b>【${coursePostVO.title}】</b>
 															</span>
 															<span class="ml-auto">
@@ -114,22 +107,12 @@
 		</div>
 	</div>
 
-
-
-
 	<div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
 
 	<%@ include file="/front-end/template/footer.jsp"%>
-
-
 	<%@ include file="/front-end/template/quick_menu.jsp"%>
 	<%@ include file="/front-end/template/messager.jsp"%>
 	<%@ include file="/front-end/template/basic_js.jsp"%>
 
-
-
-	<script>
-		
-	</script>
 </body>
 </html>
