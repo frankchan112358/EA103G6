@@ -256,7 +256,7 @@
 			$(document).on('click', 'button.update', function (e) {
 				_videoNo = this.getAttribute('videoNo');
 				_todo = 'update';
-				$('#videoViewer').attr('src', `<%=request.getContextPath()%>/videos/${'${_videoNo}'}.mp4`);
+				$('#videoViewer').attr('src', `<%=request.getContextPath()%>/videos/${'${_videoNo}'}.mp4?_=${'${Math.random()}'}`);
 				$('h4.modal-title').text('重新上傳');
 				$('#videoModal').modal('show');
 			});

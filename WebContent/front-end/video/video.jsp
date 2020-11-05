@@ -262,7 +262,7 @@ video {
 				let _videoPlayer = $('#videoPlayer');
 				_videoPlayer.attr('src', '');
 				if (_videoNo != '') {
-					_videoPlayer.attr('src', `<%=request.getContextPath()%>/videos/${'${_videoNo}'}.mp4`);
+					_videoPlayer.attr('src', `<%=request.getContextPath()%>/videos/${'${_videoNo}'}.mp4?_=${'${Math.random()}'}`);
 					_videoPlayer.prop("controls", true);
 				}else{
 					$("video").prop("controls", false);
