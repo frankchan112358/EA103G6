@@ -135,7 +135,7 @@ session.setAttribute("courseWork", "finalScore");
 					responsive: true,
 					language: { url: '<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json' },
 					"columnDefs": [{
-						"targets": [-1, -2],
+						"targets": [-3],
 						"orderable": false,
 
 					}]

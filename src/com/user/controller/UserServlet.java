@@ -780,7 +780,14 @@ public class UserServlet extends HttpServlet {
 				if (type.equals(0)) {
 					StudentService studentSvc = new StudentService();
 					studentVO = studentSvc.updateStudent(studentNo, userNo, name, banjiNo, description, studentStatus);
-
+					if (!studentStatus.equals(2)) {
+						UserService userSvcEnable = new UserService();
+						userSvcEnable.studentEnable(userNo);	
+					}
+					if (studentStatus.equals(2)) {
+						UserService userSvcNoEnable = new UserService();
+						userSvcNoEnable.studentNoEnable(userNo);	
+					}	
 				} else if (type.equals(1)) {
 					// 修改講師資料
 
@@ -951,7 +958,8 @@ public class UserServlet extends HttpServlet {
 				session.setAttribute("userVO", userVO);
 
 				if (type.equals(0)) {
-					RequestDispatcher successView = req.getRequestDispatcher("/front-end/index/index.jsp");
+					req.setAttribute("enableUpdate", "firstTime");
+					RequestDispatcher successView = req.getRequestDispatcher("/front-end/accountmanager/updateStu.jsp");
 					successView.forward(req, res);
 
 				} else {
@@ -1243,7 +1251,7 @@ public class UserServlet extends HttpServlet {
 				if (form.contains("image") && errorMsgs.isEmpty()) {
 					photo = part.getInputStream();
 				}
-
+				
 				/********************* 2.錯誤裝箱導回修改畫面 *********************/
 				//直接從session取不改變的資料再覆蓋進資料庫，就無需再創建新的方法(DAO)
 				Integer type =userVO.getType();

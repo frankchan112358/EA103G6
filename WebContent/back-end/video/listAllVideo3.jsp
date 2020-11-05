@@ -28,6 +28,10 @@
 	#film video {
 		width: 100%;
 	}
+
+	.swal2-container {
+		z-index: 9999;
+	}
 </style>
 
 </head>
@@ -259,29 +263,53 @@
 
 			$(document).on('click', 'button.delete', function (e) {
 				_videoNo = this.getAttribute('videoNo');
-				if (workStatus == 'none') {
-					$.ajax({
-						beforeSend() {
-							workStatus = 'delete';
-						},
-						type: 'POST',
-						url: `<%=request.getContextPath()%>/video/video.ajax`,
-						data: {
-							action: "delete",
-							videoNo: _videoNo
-						},
-						success(res) {
-							coursetable.ajax.reload(null, false);
-							$('#videoModal').modal('hide');
-						},
-						complete() {
-							workStatus = 'none';
+				Swal.fire({
+					type: "warning",
+					icon: "warning",
+					title: "確定下架影片嗎?",
+					showCancelButton: true,
+					cancelButtonText:"取消",
+					confirmButtonText: "確定",
+				}).then((result) => {
+					if (result.value) {
+						if (workStatus == 'none') {
+							$.ajax({
+								beforeSend() {
+									workStatus = 'delete';
+								},
+								type: 'POST',
+								url: `<%=request.getContextPath()%>/video/video.ajax`,
+								data: {
+									action: "delete",
+									videoNo: _videoNo
+								},
+								success(res) {
+									coursetable.ajax.reload(null, false);
+									$('#videoModal').modal('hide');
+								},
+								complete() {
+									workStatus = 'none';
+								}
+							});
 						}
-					});
-				}
-			});
+					} else {
+						return;
+					}
+				});
+			})
 
 			$('#uploadVideo').click(function () {
+				if ($('#videoFile').val() == '') {
+					Swal.fire({
+						position: "top-end",
+						type: "danger",
+						title: "請選擇上傳檔案",
+						showConfirmButton: false,
+						timer: 1000,
+					});
+					return;
+				}
+
 				if (workStatus == 'none') {
 					if (_todo == 'insert') {
 						let form = new FormData();
@@ -300,8 +328,8 @@
 							success(res) {
 								if (res == 'ok') {
 									coursetable.ajax.reload(null, false);
-									$('#videoModal').modal('hide');		
-								}else{
+									$('#videoModal').modal('hide');
+								} else {
 									alert(res);
 								}
 							},
@@ -325,10 +353,10 @@
 							contentType: false,
 							data: form,
 							success(res) {
-									if (res == 'ok') {
+								if (res == 'ok') {
 									coursetable.ajax.reload(null, false);
-									$('#videoModal').modal('hide');		
-								}else{
+									$('#videoModal').modal('hide');
+								} else {
 									alert(res);
 								}
 							},
