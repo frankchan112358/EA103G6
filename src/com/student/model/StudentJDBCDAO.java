@@ -300,14 +300,14 @@ public class StudentJDBCDAO implements StudentDAO_interface{
 //		System.out.println(studentVO3.getStudentStatus());
 //		System.out.println("---------------------");
 		
-		StudentVO studentVO4 = new StudentVO();
-		studentVO4.setStudentNo("S000002");
-		studentVO4.setUserNo("吳永志2");
-		studentVO4.setBanjiNo("MANAGER2");
-		studentVO4.setStudentName("123");
-		studentVO4.setStudentDescription("456ssssssssssssssss");
-		studentVO4.setStudentStatus(1);
-		dao.update(studentVO4);
+//		StudentVO studentVO4 = new StudentVO();
+//		studentVO4.setStudentNo("S000002");
+//		studentVO4.setUserNo("吳永志2");
+//		studentVO4.setBanjiNo("MANAGER2");
+//		studentVO4.setStudentName("123");
+//		studentVO4.setStudentDescription("456ssssssssssssssss");
+//		studentVO4.setStudentStatus(1);
+//		dao.update(studentVO4);
 //		
 //		System.out.println("---------------------");
 		

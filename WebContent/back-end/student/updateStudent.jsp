@@ -119,10 +119,10 @@
                                                         </div>
                                                         <div class="col-md-6 mb-3">
                                                          <div class="form-group">
-                                                    	<label class="form-label" for="enable">學員狀態 <span class="text-danger">*</span></label>
+                                                    	<label class="form-label" for="enable">退訓 <span class="text-danger">*</span></label>
                                                             <select class="custom-select" id="studentStatus" name="studentStatus" required >
-                                                                <option value="1" ${studentVOForUpdate.studentStatus eq 1?"selected":""}>在訓中</option>
-                                                                <option value="2" ${studentVOForUpdate.studentStatus eq 2?"selected":""}>退訓</option>
+                                                                <option value="1" ${studentVOForUpdate.studentStatus eq 1?"selected":""}>否</option>
+                                                                <option value="2" ${studentVOForUpdate.studentStatus eq 2?"selected":""}>是</option>
                                                             </select>
                                                 	</div></div>  
                                                         

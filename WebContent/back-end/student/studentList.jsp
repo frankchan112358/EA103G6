@@ -68,7 +68,7 @@
                                                         <th>電話</th>
                                                         <th>敘述</th>                                                       
                                                         <th>班級狀態</th>
-                                                        <th>學員狀態</th>
+                                                        <th>退訓</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -95,7 +95,7 @@
                                                     			<c:when test="${banjiSvc.getOneBanji(studentVO.banjiNo).status==3}">未開課</c:when>
                                                     		</c:choose>	</td>
                                                     		
-                                                    		<td>${studentVO.studentStatus == 2?"退訓":"在訓中"}</td>
+                                                    		<td>${studentVO.studentStatus == 2?"是":"否"}</td>
                                                     		</tr>
                                                     	</c:if>
                                                     </c:forEach>
@@ -152,7 +152,8 @@
 									<label class="form-label " for="banji">班級<span class="text-danger">*</span></label> 
 									<select class="custom-select" id="banjiNo" name="banjiNo"  required>
 									<c:forEach var="banjiVO" items="${banjiSvc.all}">
-									<c:if test="${banjiVO.status==1}">
+									<c:if test="${banjiVO.status>0}">
+
 									<option value="${banjiVO.banjiNo}"
 									${(banjiVO.banjiNo==banjiVO.banjiNo)? 'selected':'' } >${banjiVO.banjiName}
 									</c:if>
