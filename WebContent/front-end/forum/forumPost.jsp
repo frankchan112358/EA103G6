@@ -25,12 +25,21 @@
             <div class="page-content-wrapper">
                 <%@ include file="/front-end/template/header.jsp" %>
                 <main id="js-page-content" role="main" class="page-content">
-                    <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a></li>
-                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/forum/forum.do">班級討論區</a></li>
-                        <li class="breadcrumb-item"><a id="gotoForumTopic" forumTopicNo="${forumPostVO.forumTopicVO.forumTopicNo}" href="javascript:void(0)">${forumPostVO.forumTopicVO.forumTopicName}</a></li>
-                        <li class="breadcrumb-item">${forumPostVO.title}</li>
-                    </ol>
+                    <c:if test="${mode!='student'}">
+                        <ol class="breadcrumb page-breadcrumb">
+                            <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a></li>
+                            <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/forum/forum.do">班級討論區</a></li>
+                            <li class="breadcrumb-item"><a id="gotoForumTopic" forumTopicNo="${forumPostVO.forumTopicVO.forumTopicNo}" href="javascript:void(0)">${forumPostVO.forumTopicVO.forumTopicName}</a></li>
+                            <li class="breadcrumb-item">${forumPostVO.title}</li>
+                        </ol>
+                    </c:if>
+                    <c:if test="${mode=='student'}">
+                        <ol class="breadcrumb page-breadcrumb">
+                            <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a></li>
+                            <li class="breadcrumb-item"><a id="gotoForumStudent" href="javascript:void(0)">討論區發文紀錄</a></li>
+                            <li class="breadcrumb-item">${forumPostVO.title}</li>
+                        </ol>
+                    </c:if>
                     <div class="subheader">
                         <h1 class="subheader-title">
                             <i class='subheader-icon fal fa-comments-alt'></i>
@@ -98,26 +107,6 @@
                                     </div>
                                 </div>
                             </c:forEach>
-                            <ul class="pagination mt-3">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="javascript:void(0)" aria-label="Previous">
-                                        <span aria-hidden="true"><i class="fal fa-chevron-left"></i></span>
-                                    </a>
-                                </li>
-                                <li class="page-item active" aria-current="page">
-                                    <span class="page-link">
-                                        1
-                                        <span class="sr-only">(current)</span>
-                                    </span>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="javascript:void(0)" aria-label="Next">
-                                        <span aria-hidden="true"><i class="fal fa-chevron-right"></i></span>
-                                    </a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </main>
@@ -133,16 +122,6 @@
         'use strict';
 
         $(document).ready(function () {
-            $('#gotoForumTopic').click(function (e) {
-                let _this = $(this);
-                let forumTopicNo = _this.attr('forumTopicNo');
-                let myForm = createMyFrom('<%=request.getContextPath()%>/forum/forum.do');
-                document.body.appendChild(myForm);
-                myForm.append(createFormInput('hidden', 'action', 'forumTopicHomePage'));
-                myForm.append(createFormInput('hidden', 'forumTopicNo', forumTopicNo));
-                myForm.submit();
-            });
-
             function createMyFrom(url) {
                 let myForm = document.createElement('form');
                 myForm.action = url;
@@ -157,6 +136,36 @@
                 formInput.value = value;
                 return formInput;
             }
+
+
+
+
+
+
+
+
+
+
+            <c:if test="${mode!='student'}">
+            $('#gotoForumTopic').click(function (e) {
+                    let _this = $(this);
+                let forumTopicNo = _this.attr('forumTopicNo');
+                let myForm = createMyFrom('<%=request.getContextPath()%>/forum/forum.do');
+                document.body.appendChild(myForm);
+                myForm.append(createFormInput('hidden', 'action', 'forumTopicHomePage'));
+                myForm.append(createFormInput('hidden', 'forumTopicNo', forumTopicNo));
+                myForm.submit();
+            });
+            </c:if>
+            <c:if test="${mode=='student'}">
+            $('#gotoForumStudent').click(function (e) {
+                let _this = $(this);
+                let myForm = createMyFrom('<%=request.getContextPath()%>/forum/forum.do');
+                document.body.appendChild(myForm);
+                myForm.append(createFormInput('hidden', 'action', 'forumStudentHomePage'));
+                myForm.submit();
+            });
+            </c:if>
         });
     </script>
 </body>

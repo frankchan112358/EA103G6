@@ -61,7 +61,7 @@
                                                 <textarea id="forumPostContent" class="js-summernote" name="content" required></textarea>
                                                 <div class="invalid-feedback">請勿空白.</div>
                                             </div>
-                                            <input type="hidden" name="forumPostNo" value="${forumPost.forumPostNo}">
+                                            <input type="hidden" name="forumPostNo" value="${forumPostVO.forumPostNo}">
                                             <input type="hidden" name="studentNo" value="${studentVO.studentNo}" />
                                             <input type="hidden" name="action" value="forumPostUpdate">
                                             <button type="submit" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">送出</button>

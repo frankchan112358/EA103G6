@@ -86,26 +86,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <ul class="pagination mt-3">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="javascript:void(0)" aria-label="Previous">
-                                        <span aria-hidden="true"><i class="fal fa-chevron-left"></i></span>
-                                    </a>
-                                </li>
-                                <li class="page-item active" aria-current="page">
-                                    <span class="page-link">
-                                        1
-                                        <span class="sr-only">(current)</span>
-                                    </span>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="javascript:void(0)" aria-label="Next">
-                                        <span aria-hidden="true"><i class="fal fa-chevron-right"></i></span>
-                                    </a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </main>
@@ -137,6 +117,16 @@
                 return formInput;
             }
 
+            $(document).on('click', 'a.forumPost', function (e) {
+                let _this = $(this);
+                let forumPostNo = _this.attr('forumPostNo');
+                let myForm = createMyFrom('<%=request.getContextPath()%>/forum/forum.do');
+                document.body.appendChild(myForm);
+                myForm.append(createFormInput('hidden', 'action', 'forumPostStudentHomePage'));
+                myForm.append(createFormInput('hidden', 'forumPostNo', forumPostNo));
+                myForm.submit();
+            });
+
             $(document).on('click', 'button.update', function (e) {
                 let _this = $(this);
                 let forumPostNo = _this.attr('forumPostNo');
@@ -146,7 +136,16 @@
                 myForm.append(createFormInput('hidden', 'action', 'forumPostUpdatePage'));
                 myForm.submit();
             });
-
+            
+            $(document).on('click', 'button.delete', function (e) {
+                let _this = $(this);
+                let forumPostNo = _this.attr('forumPostNo');
+                let myForm = createMyFrom('<%=request.getContextPath()%>/forum/forum.do');
+                document.body.appendChild(myForm);
+                myForm.append(createFormInput('hidden', 'forumPostNo', forumPostNo));
+                myForm.append(createFormInput('hidden', 'action', 'forumPostDelete'));
+                myForm.submit();
+            });
         });
     </script>
 </body>

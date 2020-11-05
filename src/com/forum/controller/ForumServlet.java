@@ -87,6 +87,18 @@ public class ForumServlet extends HttpServlet {
 			successView.forward(req, res);
 			return;
 		}
+		if ("forumPostStudentHomePage".equals(action)) {
+			res.setContentType("text/html;");
+			String forumPostNo = req.getParameter("forumPostNo");
+			new ForumPostService().addForumPostViews2(forumPostNo);
+			req.setAttribute("mode", "student");
+			req.setAttribute("forumPostVO", new ForumPostService().getOneForumPost(forumPostNo));
+			req.setAttribute("forumCommentList", new ForumCommentService().getOneFpFc(forumPostNo));
+			String url = "/front-end/forum/forumPost.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			return;
+		}
 		if ("forumPostNewPage".equals(action)) {
 			res.setContentType("text/html;");
 			String forumTopicNo = req.getParameter("forumTopicNo");
@@ -172,15 +184,13 @@ public class ForumServlet extends HttpServlet {
 			res.setContentType("text/html;");
 			Part part = req.getPart("content");
 			String title = req.getParameter("title");
-			String forumTopicNo = req.getParameter("forumTopicNo");
-			String studentNo = req.getParameter("studentNo");
 			String forumPostNo = req.getParameter("forumPostNo");
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			try {
 				Class.forName(driver);
 				con = DriverManager.getConnection(url, userid, passwd);
-				pstmt = con.prepareStatement("UPDATE forumpost set forumtopicno=?, studentno=?, title=?, content=?, updatetime=? where forumpostno = ?");
+				pstmt = con.prepareStatement("UPDATE forumpost set title=?, content=?, updatetime=? where forumpostno = ?");
 				part.getInputStream();
 				InputStream in = part.getInputStream();
 				ByteArrayOutputStream bao = new ByteArrayOutputStream();
@@ -188,22 +198,17 @@ public class ForumServlet extends HttpServlet {
 				in.read(notes);
 				bao.write(notes);
 				Reader reader = new InputStreamReader(new ByteArrayInputStream(notes), "UTF-8");
-				pstmt.setString(1, forumTopicNo);
-				pstmt.setString(2, studentNo);
-				pstmt.setString(3, title);
-				pstmt.setCharacterStream(4, reader);
-				pstmt.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
-				pstmt.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
+				pstmt.setString(1, title);
+				pstmt.setCharacterStream(2, reader);
+				pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+				pstmt.setString(4, forumPostNo);
 				bao.close();
 				in.close();
 				pstmt.executeUpdate();
-				ResultSet rs = pstmt.getGeneratedKeys();
-				if (rs.next()) {
-					forumPostNo = rs.getString(1);
-				}
 			} catch (ClassNotFoundException e) {
 				throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			} catch (SQLException se) {
+				se.printStackTrace();
 				throw new RuntimeException("A database error occured. " + se.getMessage());
 			} finally {
 				if (pstmt != null) {
@@ -221,6 +226,7 @@ public class ForumServlet extends HttpServlet {
 					}
 				}
 			}
+			req.setAttribute("mode", "student");
 			req.setAttribute("forumPostVO", new ForumPostService().getOneForumPost(forumPostNo));
 			req.setAttribute("forumCommentList", new ForumCommentService().getOneFpFc(forumPostNo));
 			String url = "/front-end/forum/forumPost.jsp";
@@ -229,6 +235,15 @@ public class ForumServlet extends HttpServlet {
 			return;
 		}
 		if ("forumPostDelete".equals(action)) {
+			res.setContentType("text/html;");
+			String forumPostNo = req.getParameter("forumPostNo");
+			new ForumPostService().deleteForumPost(forumPostNo);
+			HttpSession session = req.getSession();
+			StudentVO studentVO = (StudentVO) session.getAttribute("studentVO");		
+			req.setAttribute("forumPostList", new ForumPostService().getOneSTUDENT(studentVO.getStudentNo()));
+			String url = "/front-end/forum/forumStudent.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
 			return;
 		}
 		if ("forumCommentNewPage".equals(action)) {
