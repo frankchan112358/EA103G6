@@ -119,6 +119,17 @@ input[type=search]::-webkit-search-cancel-button {
 								<div class="panel-hdr bg-primary-800 bg-success-gradient ">
 									<h2 class="text-white">我的課程總覽</h2>
 								</div>
+								<div class="panel-container show" style="margin: 20px 20px;">
+								<div style="text-align: center;">
+										<c:if test="${empty studentVO.courseList}">
+											<h2>
+												<i class="fal fa-book-dead"></i>
+												目前尚無任何課程
+												<i class="fal fa-book-dead"></i>
+											</h2>
+											<h4>敬請期待</h4>
+										</c:if>
+									</div>
 								<div class="container-fluid ">
 									<div class="card-columns">
 										<div class="row justify-content-center">
@@ -153,6 +164,7 @@ input[type=search]::-webkit-search-cancel-button {
 											</div>
 										</div>
 									</div>
+								</div>
 								</div>
 							</div>
 						</div>

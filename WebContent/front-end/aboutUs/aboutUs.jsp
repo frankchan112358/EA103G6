@@ -84,12 +84,12 @@
 							</div>
 							<h3  style="margin:50px;">
 								<i class="fal fa-users fa-lg mr-1"></i>
-								<strong style="font-size: 1.3em;"> Work Join Learn 團隊 </strong>
+								<strong style="font-size: 1.3em;"> Work Join Learn 團隊</strong>
 								<i class="ml-1 fal fa-users fa-lg"></i>
 							</h3>
 							<div class="d-flex flex-wrap demo demo-h-spacing mt-3 mb-3 align-items-center justify-content-center">
 								<div class="rounded-pill bg-white shadow-sm p-2 border-faded mr-3 d-flex flex-row align-items-center justify-content-center flex-shrink-0">
-									<img src="<%=request.getContextPath()%>/images/logo.jpg" alt="詹詠琪" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;">
+									<img src="<%=request.getContextPath()%>/images/test/詹詠琪.png" alt="詹詠琪" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;">
 									<div class="ml-2 mr-3">
 										<h5 class="m-0">
 											詹詠琪 (執行長)
@@ -98,7 +98,7 @@
 									</div>
 								</div>
 								<div class="rounded-pill bg-white shadow-sm p-2 border-faded mr-3 d-flex flex-row align-items-center justify-content-center flex-shrink-0">
-									<img src="<%=request.getContextPath()%>/images/logo.jpg" alt="卓宜潔" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;">
+									<img src="<%=request.getContextPath()%>/images/test/卓宜潔.jpg" alt="卓宜潔" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;">
 									<div class="ml-2 mr-3">
 										<h5 class="m-0">
 											卓宜潔 (營運長)
@@ -107,7 +107,7 @@
 									</div>
 								</div>
 								<div class="rounded-pill bg-white shadow-sm p-2 border-faded mr-3 d-flex flex-row align-items-center justify-content-center flex-shrink-0">
-									<img src="<%=request.getContextPath()%>/images/logo.jpg" alt="葉泓翔" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;">
+									<img src="<%=request.getContextPath()%>/images/test/葉泓翔.png" alt="葉泓翔" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;">
 									<div class="ml-2 mr-3">
 										<h5 class="m-0">
 											葉泓翔 (工程師)
@@ -116,7 +116,7 @@
 									</div>
 								</div>
 								<div class="rounded-pill bg-white shadow-sm p-2 border-faded mr-3 d-flex flex-row align-items-center justify-content-center flex-shrink-0">
-									<img src="<%=request.getContextPath()%>/images/logo.jpg" alt="陳浩偉" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;">
+									<img src="<%=request.getContextPath()%>/images/test/陳浩偉.jpg" alt="陳浩偉" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;">
 									<div class="ml-2 mr-3">
 										<h5 class="m-0">
 											陳浩偉 (工程師)
@@ -125,7 +125,7 @@
 									</div>
 								</div>
 								<div class="rounded-pill bg-white shadow-sm p-2 border-faded mr-3 d-flex flex-row align-items-center justify-content-center flex-shrink-0">
-									<img src="<%=request.getContextPath()%>/images/logo.jpg" alt="陳怡秀" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;">
+									<img src="<%=request.getContextPath()%>/images/test/陳怡秀.jpg" alt="陳怡秀" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;">
 									<div class="ml-2 mr-3">
 										<h5 class="m-0">
 											陳怡秀 (工程師)
@@ -134,7 +134,7 @@
 									</div>
 								</div>
 								<div class="rounded-pill bg-white shadow-sm p-2 border-faded mr-3 d-flex flex-row align-items-center justify-content-center flex-shrink-0">
-									<img src="<%=request.getContextPath()%>/images/logo.jpg" alt="何丞祐" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;">
+									<img src="<%=request.getContextPath()%>/images/test/何丞祐.jpg" alt="何丞祐" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;">
 									<div class="ml-2 mr-3">
 										<h5 class="m-0">
 											何丞祐 (工程師)
@@ -143,7 +143,7 @@
 									</div>
 								</div>
 								<div class="rounded-pill bg-white shadow-sm p-2 border-faded mr-3 d-flex flex-row align-items-center justify-content-center flex-shrink-0">
-									<img src="<%=request.getContextPath()%>/images/logo.jpg" alt="王靖芳" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;">
+									<img src="<%=request.getContextPath()%>/images/test/王靖芳.png" alt="王靖芳" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;">
 									<div class="ml-2 mr-3">
 										<h5 class="m-0">
 											王靖芳 (工程師)
