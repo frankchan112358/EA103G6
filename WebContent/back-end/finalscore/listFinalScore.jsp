@@ -218,7 +218,6 @@
 							$('button.submit').hide();
 							$('button.cancel').hide();
 
-
 							let scorelist = $('input.score');
 							let spanlist = $('span.score');
 							for (let i = 0; i < scorelist.length; i++) {

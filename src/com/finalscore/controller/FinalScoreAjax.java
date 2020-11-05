@@ -8,11 +8,15 @@ import javax.servlet.http.*;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import com.course.model.CourseService;
 import com.finalscore.model.FinalScoreService;
 import com.finalscore.model.FinalScoreVO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.student.model.StudentService;
+import com.student.model.StudentVO;
+import com.websocketnotify.controller.NotifyServlet;
 
 public class FinalScoreAjax extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -25,7 +29,6 @@ public class FinalScoreAjax extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		res.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		System.out.println(action);
 		if ("update".equals(action)) {
 			res.setContentType("text/html;");
 			String jsonStr = req.getParameter("scoreList");
@@ -42,6 +45,14 @@ public class FinalScoreAjax extends HttpServlet {
 				FinalScoreService finalScoreSvc = new FinalScoreService();
 				if (finalScoreSvc.getScore(courseNo, studentNo) == null) {
 					finalScoreSvc.addFinalScore(courseNo, studentNo, score);
+					CourseService courseSvc = new CourseService();
+					String banjiNo = courseSvc.getOneCourse(courseNo).getBanjiNo();
+					StudentService studentService = new StudentService();
+					List<StudentVO> stulList = studentService.getAllWithBanji(banjiNo);
+					for (StudentVO stuVO : stulList) {
+						NotifyServlet notifyServlet = new NotifyServlet();
+						notifyServlet.broadcast(stuVO.getUserNo(), "影片公告", "導師上傳了一堂課程影片!!");
+					}
 				}else {
 					finalScoreSvc.updateScore(courseNo, studentNo, score);
 				}
