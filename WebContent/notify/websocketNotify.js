@@ -133,9 +133,10 @@
                     {
                         position: "top-end",
                         type: "success",
+                        width:300,
                         title: "您有一則新通知",
                         showConfirmButton: false,
-                        timer: 3000
+                        timer: 2000
                     });
 					
 					
