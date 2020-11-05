@@ -156,7 +156,7 @@ StudentVO studentVOForShow = (StudentVO) request.getAttribute("studentVOForShow"
                                             	<input type="hidden" name="action" value="delete">
                                             	<input type="hidden" name="userNo" value="<%=userVOForShow.getUserNo()%>"> 
                                             </form>
-                                              <form method="post" action="<%=request.getContextPath()%>/user.do">
+                                              <form method="post" action="<%=request.getContextPath()%>/user.do" id="updateStudent">
                                             	<input type="hidden" name="userNo" value="<%=userVOForShow.getUserNo()%>"> 
 												<input type="hidden" name="action" value="getOne_For_Update">
                                             	<button id="submitUpdateStudent" class="btn btn-primary ml-auto" >修改</button>
@@ -244,6 +244,13 @@ $("#deleteStudent").on("click", function(event)
                 });
         }); // A message with a custom image and CSS animation disabled
         
+</script>
+
+<script>
+<c:if test="${empVO.empStatus eq 2}">
+$("#updateStudent").empty();
+$("#deleteStudent").empty();
+</c:if>
 </script>
 </body>
 </html>
