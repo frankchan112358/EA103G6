@@ -56,6 +56,43 @@ public class ForumServlet extends HttpServlet {
 			successView.forward(req, res);
 			return;
 		}
+		if ("forumPostNewPage".equals(action)) {
+			res.setContentType("text/html;");
+			String forumTopicNo = req.getParameter("forumTopicNo");
+			req.setAttribute("mode", "new");
+			req.setAttribute("forumTopicNo", forumTopicNo);
+			String url = "/front-end/forum/forumPostEditor.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			return;
+		}
+		if ("forumPostUpdatePage".equals(action)) {
+			return;
+		}
+		if ("forumPostInsert".equals(action)) {
+			return;
+		}
+		if ("forumPostUpdate".equals(action)) {
+			return;
+		}
+		if ("forumPostDelete".equals(action)) {
+			return;
+		}
+		if ("forumCommentNewPage".equals(action)) {
+			return;
+		}
+		if ("forumCommentUpdatePage".equals(action)) {
+			return;
+		}
+		if ("forumCommentInsert".equals(action)) {
+			return;
+		}
+		if ("forumCommentUpdate".equals(action)) {
+			return;
+		}
+		if ("forumCommentDelete".equals(action)) {
+			return;
+		}
 	}
 
 }

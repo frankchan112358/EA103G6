@@ -9,6 +9,8 @@ import com.course.model.CourseService;
 import com.course.model.CourseVO;
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
+import com.forumtopic.model.ForumTopicService;
+import com.forumtopic.model.ForumTopicVO;
 import com.student.model.StudentService;
 import com.student.model.StudentVO;
 import com.timetable.model.TimetableService;
@@ -141,5 +143,9 @@ public class BanjiVO implements java.io.Serializable {
 	
 	public String getStatusText() {
 		return BanjiStatus.findByNum(this.status).getText();
+	}
+	
+	public List<ForumTopicVO> getForumTopicList() {
+		return new ForumTopicService().getAllWithBanji(this.banjiNo);
 	}
 }

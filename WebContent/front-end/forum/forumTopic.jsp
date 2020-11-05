@@ -39,7 +39,7 @@
                                             <span class="h6 font-weight-bold text-uppercase">${forumTopicVO.forumTopicName}</span>
                                         </div>
                                         <div class="col d-flex align-items-center">
-                                            <a href="javascript:void(0);" class="btn btn-success shadow-0 btn-sm ml-auto flex-shrink-0">新增貼文</a>
+                                            <a id="addNewForumPost" href="javascript:void(0);" class="btn btn-success shadow-0 btn-sm ml-auto flex-shrink-0">新增貼文</a>
                                         </div>
                                     </div>
                                 </div>
@@ -144,6 +144,14 @@
                 myForm.submit();
             });
 
+            $('#addNewForumPost').click(function(){
+                let _this = $(this);
+                let myForm = createMyFrom('<%=request.getContextPath()%>/forum/forum.do');
+                document.body.appendChild(myForm);
+                myForm.append(createFormInput('hidden', 'action', 'forumPostNewPage'));
+                myForm.submit();
+            });
+
             function createMyFrom(url) {
                 let myForm = document.createElement('form');
                 myForm.action = url;
@@ -158,6 +166,8 @@
                 formInput.value = value;
                 return formInput;
             }
+
+
         });
     </script>
 </body>
