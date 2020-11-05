@@ -102,6 +102,7 @@ div.dataTables_wrapper div.dataTables_info {
 												<span class="far fa-plus-circle mr-1"></span>
 												<span>新增</span>
 											</button>
+											<input type="hidden" name="courseNo" value="${coursePostVO.courseNo}">
 											<input type="hidden" name="coursePostNo" value="${coursePostVO.coursePostNo}">
 											<input type="hidden" name="action" value="insert">
 										</FORM>

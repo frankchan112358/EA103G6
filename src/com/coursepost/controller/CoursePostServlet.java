@@ -9,6 +9,9 @@ import javax.servlet.http.*;
 import com.course.model.CourseService;
 import com.course.model.CourseVO;
 import com.coursepost.model.*;
+import com.student.model.StudentService;
+import com.student.model.StudentVO;
+import com.websocketnotify.controller.NotifyServlet;
 
 public class CoursePostServlet extends HttpServlet {
 
@@ -169,6 +172,17 @@ public class CoursePostServlet extends HttpServlet {
 				CoursePostService coursePostSvc = new CoursePostService();
 				coursePostVO = coursePostSvc.updateCoursePost(coursePostNo, courseNo, title, postContent);
 				req.setAttribute("coursePostVO", coursePostVO);
+				
+				CourseService courseSvc = new CourseService();
+				String banjiNo = courseSvc.getOneCourse(coursePostVO.getCourseNo()).getBanjiNo();
+				StudentService studentService=new StudentService();
+				List<StudentVO> stulList= studentService.getAllWithBanji(banjiNo);
+				for(StudentVO stuVO:stulList) {
+					NotifyServlet notifyServlet =new NotifyServlet();
+					String courseName=courseSvc.getOneCourse(courseNo).getCourseName();
+					notifyServlet.broadcast(stuVO.getUserNo(), "課程公告", "有一筆 "+courseName+" 課程公告被修改囉!快去查看~");
+				}
+				
 				alert.put("updateOK", "修改成功");
 				String url = "/back-end/coursepost/listAllCoursePost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -215,6 +229,17 @@ public class CoursePostServlet extends HttpServlet {
 
 				CoursePostService coursePostSvc = new CoursePostService();
 				coursePostVO = coursePostSvc.addCoursePost(courseNo, title, postContent);
+				
+				CourseService courseSvc = new CourseService();
+				String banjiNo = courseSvc.getOneCourse(coursePostVO.getCourseNo()).getBanjiNo();
+				StudentService studentService=new StudentService();
+				List<StudentVO> stulList= studentService.getAllWithBanji(banjiNo);
+				for(StudentVO stuVO:stulList) {
+					NotifyServlet notifyServlet =new NotifyServlet();
+					String courseName=courseSvc.getOneCourse(courseNo).getCourseName();
+					notifyServlet.broadcast(stuVO.getUserNo(), "課程公告", "有一筆 "+courseName+" 課程公告被新增囉!快去查看~");
+				}
+				
 				alert.put("insertOK", "新增成功");
 				String url = "/back-end/coursepost/listAllCoursePost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
