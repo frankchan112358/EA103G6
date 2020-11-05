@@ -47,6 +47,13 @@ if(userVO!=null){
             padding: 20px 40px 20px 40px;
             opacity: 0.3
         }
+        
+         
+/*         #SeperationLine{ */
+/*     height:1px; */
+   
+/*     margin:10px 0px; */
+/* } */
     </style>
 </head>
 
@@ -71,26 +78,39 @@ if(userVO!=null){
                     <form id="js-login" method="post" action="<%=request.getContextPath() %>/login.do">
                         <div class="container py-4 py-lg-5 my-lg-5 px-4 px-sm-0">
                             <div class="row">
-                                <div class="col col-md-6 col-lg-7 hidden-sm-down">
+                                <div class="col col-md-4 col-lg-7 ">
                                     <div class="abgne-menu-20140101-1">
-                                        <span class="m-1 span-change" person="emp">
+                                     <div class="row">
+                                     <div>
+                                      <div class="row">
+                                        <span class="m-1 span-change" person="emp" >
                                             <input type="radio" id="emp" name="type" value="emp" onclick="javascript:document.getElementById('mytheme').href='';javascript:document.getElementById('img').src='<%=request.getContextPath() %>/images/emp.png'">
                                             <label style="cursor: pointer;" for="emp" style="border:200px">我是導師</label>
                                         </span>
-                                        <span class="m-1 span-change" person="teacher">
+                                        
+                                        
+                                        <span class="m-1 span-change" person="teacher" >
                                             <input type="radio" id="teacher" name="type" value="teacher" onclick="javascript:document.getElementById('mytheme').href='<%=request.getContextPath() %>/SmartAdmin4/css/themes/cust-theme-14.css';javascript:document.getElementById('img').src='<%=request.getContextPath() %>/images/teacher.png'">
                                             <label style="cursor: pointer;" for="teacher">我是講師</label>
                                         </span>
+                                       
+                                        
                                         <span class="m-1 span-change" person="student">
                                             <input type="radio" id="student" name="type" value="student" checked onclick="javascript:document.getElementById('mytheme').href='<%=request.getContextPath() %>/SmartAdmin4/css/themes/cust-theme-2.css';javascript:document.getElementById('img').src='<%=request.getContextPath() %>/images/stu.png'">
-                                            <label style="cursor: pointer;" for="student">我是學生</label>
+                                            <label style="cursor: pointer;" for="student"  style="border:200px">我是學生</label>
                                         </span>
-                                        <div class="mt-6">
-                                            <img src="" id="img" style=" margin-left:120px;" />
                                         </div>
+                                        
+                                         <div class="col col-lg-6   hidden-md-down hidden-sm-down">
+                                        <div class="mt-6">
+                                            <img class="img" src="" id="img" style="margin-left:100px;" />
+                                        </div>
+                                        </div></div>
+                                         </div>
+                                        
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4 ml-auto">
+                                <div class="col-sm-12 col-md-8 col-lg-5 col-xl-4 ml-auto">
                                     <div id="div1" class="card p-4 rounded-plus bg-faded">
                                         <div class="form-group">
                                             <%-- 註解 <label class="form-label" for="username">帳號</label>--%>
