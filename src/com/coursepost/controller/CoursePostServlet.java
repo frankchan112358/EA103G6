@@ -180,7 +180,7 @@ public class CoursePostServlet extends HttpServlet {
 				for(StudentVO stuVO:stulList) {
 					NotifyServlet notifyServlet =new NotifyServlet();
 					String courseName=courseSvc.getOneCourse(courseNo).getCourseName();
-					notifyServlet.broadcast(stuVO.getUserNo(), "課程公告", "有一筆 "+courseName+" 課程公告被修改囉!快去查看~");
+					notifyServlet.broadcast(stuVO.getUserNo(), "課程公告", "有一筆"+courseName+"課程公告被修改囉!快去查看~");
 				}
 				
 				alert.put("updateOK", "修改成功");
@@ -237,7 +237,7 @@ public class CoursePostServlet extends HttpServlet {
 				for(StudentVO stuVO:stulList) {
 					NotifyServlet notifyServlet =new NotifyServlet();
 					String courseName=courseSvc.getOneCourse(courseNo).getCourseName();
-					notifyServlet.broadcast(stuVO.getUserNo(), "課程公告", "有一筆 "+courseName+" 課程公告被新增囉!快去查看~");
+					notifyServlet.broadcast(stuVO.getUserNo(), "課程公告", "有一筆"+courseName+"課程公告被新增囉!快去查看~");
 				}
 				
 				alert.put("insertOK", "新增成功");
