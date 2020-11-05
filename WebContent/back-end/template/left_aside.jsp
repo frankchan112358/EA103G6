@@ -49,7 +49,7 @@
                 </ul>
             </li>
             <li id="banjiManage">
-                <c:if test="${userVO!=null && userVO.type==2}">
+                <c:if test="${userVO!=null && userVO.type==2 && empVO!=null}">
                     <a href="<%=request.getContextPath()%>/banji/banji.manage" title="養成班管理">
                         <i class="fal fa-users-class"></i>
                         <span class="nav-link-text">養成班管理</span>
@@ -80,7 +80,7 @@
                     </c:if>
                 </c:if>
             </li>
-            <li>
+            <li id="courseManage">
                 <a href="<%=request.getContextPath()%>/course/course.do"" title="課程管理">
                     <i class="fal fa-book"></i>
                     <span class="nav-link-text">課程管理</span>
