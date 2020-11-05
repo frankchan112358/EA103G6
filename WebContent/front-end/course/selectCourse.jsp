@@ -15,9 +15,11 @@
 	margin: 0;
 	color: #617A28;
 }
+
 .card-img-top {
 	object-fit: cover;
 }
+
 @media ( min-width : 576px) {
 	.card-columns {
 		column-count: 2;
@@ -26,6 +28,7 @@
 		height: 19vw;
 	}
 }
+
 @media ( min-width : 768px) {
 	.card-columns {
 		column-count: 3;
@@ -34,6 +37,7 @@
 		height: 16vw;
 	}
 }
+
 @media ( min-width : 992px) {
 	.card-columns {
 		column-count: 3;
@@ -42,6 +46,7 @@
 		height: 14vw;
 	}
 }
+
 @media ( min-width : 1200px) {
 	.card-columns {
 		column-count: 4;
@@ -54,21 +59,23 @@
 .img {
 	overflow: hidden;
 }
+
 .img img {
 	transform: scale(1, 1);
 	transition: all 0.8s ease-out;
 }
 
 .fa-search {
-    position: absolute;
-    right: 0;
-    top: 12px;
-    display: block;
-    padding: 0 7px;
-    color: #a4a3a4;
+	position: absolute;
+	right: 0;
+	top: 12px;
+	display: block;
+	padding: 0 7px;
+	color: #a4a3a4;
 }
-input[type=search]::-webkit-search-cancel-button{
-    -webkit-appearance: none;
+
+input[type=search]::-webkit-search-cancel-button {
+	-webkit-appearance: none;
 }
 </style>
 </head>
@@ -94,57 +101,57 @@ input[type=search]::-webkit-search-cancel-button{
 							我的課程
 						</h1>
 						<div class="row">
-						<div class="col-12">
-                             <div class="input-group mb-g">
-							<input type="search" id="search" placeholder="輸入課程關鍵字" name="search" class="searchbox-input form-control form-control-lg" required>
-							<div class="input-group-append">
-							<div class="input-group-text" style="width:40px;">
-							<i class="fal fa-search fa-2x"></i>
-						 </div>
-						 </div>
-						 </div>
-						 </div>
+							<div class="col-12">
+								<div class="input-group mb-g">
+									<input type="search" id="search" placeholder="輸入課程關鍵字" name="search" class="searchbox-input form-control form-control-lg" required>
+									<div class="input-group-append">
+										<div class="input-group-text" style="width: 40px;">
+											<i class="fal fa-search fa-2x"></i>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-						<div class="row  align-items-center justify-content-center">
-							<div class="col-12">
-								<div id="panel-1" class="panel">
-									<div class="panel-hdr bg-primary-800 bg-success-gradient ">
-										<h2 class="text-white">我的課程總覽</h2>
-									</div>
-									<div class="container-fluid ">
-										<div class="card-columns">
-											<div class="row justify-content-center">
-												<div class="col">
-													<c:forEach var="courseVO" items="${studentVO.courseList}">
-														<div class="card border my-3 course" style="cursor: pointer;" courseNo="${courseVO.courseNo}" >
-															<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
-															<c:if test="${courseVO.courseImg eq null}">
-																<div class="img">
-																	<img src="<%=request.getContextPath()%>/images/尚無圖片.jpg" class="card-img-top img-fluid" alt="課程封面圖">
-																</div>
-															</c:if>
+					<div class="row  align-items-center justify-content-center">
+						<div class="col-12">
+							<div id="panel-1" class="panel">
+								<div class="panel-hdr bg-primary-800 bg-success-gradient ">
+									<h2 class="text-white">我的課程總覽</h2>
+								</div>
+								<div class="container-fluid ">
+									<div class="card-columns">
+										<div class="row justify-content-center">
+											<div class="col">
+												<c:forEach var="courseVO" items="${studentVO.courseList}">
+													<div class="card border my-3 course" style="cursor: pointer;" courseNo="${courseVO.courseNo}">
+														<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
+														<c:if test="${courseVO.courseImg eq null}">
+															<div class="img">
+																<img src="<%=request.getContextPath()%>/images/尚無圖片.jpg" class="card-img-top img-fluid" alt="課程封面圖">
+															</div>
+														</c:if>
 
-															<c:if test="${courseVO.courseImg ne null}">
-																<div class="img">
-																	<img src="<%=request.getContextPath() %>/course/course.do?action=getCourseImg&courseNo=${courseVO.courseNo}" class="card-img-top img-fluid" alt="課程封面圖">
-																</div>
-															</c:if>
-															<div class="card-body">
-																<h5 class="card-title">
-																	【${courseVO.banjiVO.banjiName}】
-																	<i class="fal fa-hand-point-right"></i>
-																	${courseVO.courseName}
-																</h5>
+														<c:if test="${courseVO.courseImg ne null}">
+															<div class="img">
+																<img src="<%=request.getContextPath() %>/course/course.do?action=getCourseImg&courseNo=${courseVO.courseNo}" class="card-img-top img-fluid" alt="課程封面圖">
 															</div>
-															<div class="card-footer">
-																<i class="fal fa-smile"></i>
-																	${courseVO.teacherVO.teacherName}
-															</div>
+														</c:if>
+														<div class="card-body">
+															<h5 class="card-title">
+																【${courseVO.banjiVO.banjiName}】
+																<i class="fal fa-hand-point-right"></i>
+																${courseVO.courseName}
+															</h5>
 														</div>
-													</c:forEach>
-												</div>
+														<div class="card-footer">
+															<i class="fal fa-smile"></i>
+															${courseVO.teacherVO.teacherName}
+														</div>
+													</div>
+												</c:forEach>
 											</div>
+										</div>
 									</div>
 								</div>
 							</div>

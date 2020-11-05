@@ -291,6 +291,12 @@
 <c:if test="${userVOForShow.userNo eq userVO.userNo}">
 	$("#deleteEmp").empty();
 </c:if>
+
+<c:if test="${empVO.empStatus eq 2}">
+$("#deleteEmp").empty();
+$("#updateEmp").empty();
+</c:if>
+
 </script>
 
 </body>

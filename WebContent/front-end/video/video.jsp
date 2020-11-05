@@ -22,12 +22,10 @@ session.setAttribute("courseWork", "courseVideo");
 		.panel .panel-container .panel-content {
 			padding: 0;
 		}
-
 		.player {
 			width: 100%;
 			background-color: #000;
 		}
-
 video {
 	display: block;
 	width: 100%;
@@ -41,43 +39,34 @@ video {
 			padding-right: 0;
 			padding-left: 0;
 		}
-
 		.bg-light {
 			background-color: #000 !important;
 		}
-
 		.border-right {
 			border-right: 3px solid #2d3947 !important;
 		}
-
 		.border-bottom {
 			border-bottom: none !important;
 		}
-
 		.border-left {
 			border-bottom: none !important;
 		}
-
 		.in-sb{
 			font-size: 1.6em;
 			color : white;
 			/* 	margin-left: 40px; */
 		}
-
 		a[target]:not(.btn) {
 			text-decoration: none !important;
 		}
-
 		.sb1 {
 			padding: 15px;
 			border-bottom: 1px solid #666 !important;
 		}
-
 		.btn1{
 			/* 	margin-left: 80px; */
 			margin-top: 10px;
 		}
-
 		.btn2 {
 			background-color: #252f3b;
 			border-color: #2d3947;
@@ -90,7 +79,6 @@ video {
 			box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
 			font-size: 23px;
 		}
-
 		.btn2:hover {
 			color: #212529;
 			background-color: #2d3947;
@@ -98,8 +86,6 @@ video {
 			-webkit-box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
 			box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
 		}
-
-
 		.btn2:focus {
 			color: #212529;
 			background-color: #2d3947;
@@ -107,28 +93,22 @@ video {
 			-webkit-box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
 			box-shadow: inset 0 0px 0 rgba(255, 255, 255, 0.15), 0 0px 0px rgba(0, 0, 0, 0.075);
 		}
-
 		.fa-list-ul:before {
 			color: #82a82d;
 			;
 		}
-
 		.videoname {
 			margin-left: 10px;
 			margin-top: 5px;
 		}
-
-
 		#sbLog{
 			font-size: 1.3em;
 			color: #FFFAE6;
 			background-color: #658F4B;
 		}
-
 		#wrapper {
 			overflow: hidden;
 		}
-
 		#sidebar-wrapper {
 			background-color: #2d3947 !important;
 			min-height: 100vh;
@@ -138,13 +118,11 @@ video {
 			-o-transition: margin .25s ease-out;
 			transition: margin .25s ease-out;
 		}
-
 			#sidebar-wrapper .list-group {
 			width: 20rem;
 			height: 55em;
 			overflow-y: scroll;
 		}
-
 		#page-content-wrapper {
 			min-width: 100%;
 			background-color: #000;
@@ -153,24 +131,19 @@ video {
 		#wrapper.toggled #sidebar-wrapper {
 			margin-left: 0;
 		}
-
 		@media (min-width: 768px) {
  		 #sidebar-wrapper {
 			margin-left: 0;
   		}
-
   		#page-content-wrapper {
   			min-width: 0;
   			width: 100%;
   			background-color: #000;
   		}
-
-
   		#wrapper.toggled #sidebar-wrapper {
 			margin-left: -20rem;
   		}
 }
-
 	</style>
 </head>
 
@@ -280,8 +253,6 @@ video {
 			// 				function () {
 			// 					$(this).css("background-color", " #c3dbaa");
 			// 				})
-
-
 			var vIndex = 1000;
 			var path = null;
 			$('.vpath').click(function (e) {
@@ -298,7 +269,6 @@ video {
 				}
 				$('h1.videoname').html(_this.find('span.video-title').html());
 			});
-
 			//這裡是click(in-sb-log)可以查看日誌
 			$(document).on('click', '.in-sb-log button', function (event) {
 				let timeteableNo = this.getAttribute('timeteableNo');
@@ -319,7 +289,6 @@ video {
 				});
 			});
 		});
-
 		$("#menu-toggle").click(function (e) {
 			e.preventDefault();
 			$("#wrapper").toggleClass("toggled");

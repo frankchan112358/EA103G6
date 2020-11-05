@@ -61,13 +61,19 @@
                 <div class="tab-content tab-notification">
                     <div class="tab-pane" id="tab-2" role="tabpanel">
                         <div class="custom-scroll h-100">
-                            <ul class="notification">
+                            <ul class="notification" id="decorateForNotification_noRead">
+                           		 <li class="unread">
+                                    
+                                </li>
                             </ul>
                         </div>
                     </div>
                     <div class="tab-pane" id="tab-3" role="tabpanel">
                         <div class="custom-scroll h-100">
-                            <ul class="notification">
+                            <ul class="notification" id="decorateForNotification">
+                           		 <li class="unread">
+                                    
+                                </li>
                             </ul>
                         </div>
                     </div>

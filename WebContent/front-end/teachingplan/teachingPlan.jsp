@@ -1,7 +1,5 @@
 <%@page import="com.teachingplan.model.*"%>
 <%@page import="com.course.model.*"%>
-
-
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/front-end/template/check.jsp"%>
@@ -17,9 +15,6 @@
 	List<TeachingPlanVO> list = (List<TeachingPlanVO>) session.getAttribute("teachingPlanVO");
 	session.setAttribute("list", list);
 %>
-
-
-
 
 
 <!DOCTYPE html>
@@ -69,6 +64,7 @@ div.dataTables_wrapper div.dataTables_info {
 }
 </style>
 </head>
+
 <body class="mod-bg-1 mod-nav-link header-function-fixed nav-function-top nav-mobile-push nav-function-fixed mod-panel-icon">
 	<script>
 		var classHolder = document.getElementsByTagName("BODY")[0];
@@ -107,8 +103,6 @@ div.dataTables_wrapper div.dataTables_info {
 											<i class="fal fa-plus-circle m-1"></i>
 											查看課程介紹
 											<i class="m-1 fal fa-plus-circle"></i>
-
-
 										</span>
 										<span class="collapsed-reveal" style="font-size: 1.1em">
 											<i class="fal fa-minus-circle m-1"></i>
@@ -156,7 +150,6 @@ div.dataTables_wrapper div.dataTables_info {
 														</button>
 													</div>
 													<div class="modal-body">
-
 														<div class="form-group">
 															<label class="form-label" style="font-size: 1.5em">週次</label>
 															<input type="text" name="week" class="form-control" style="font-size: 15px" value="第${teachingPlanVO.week}週" readonly />
@@ -169,7 +162,6 @@ div.dataTables_wrapper div.dataTables_info {
 															<label class="form-label" style="font-size: 1.5em">教學內容</label>
 															<textarea class="form-control" name="planContent" rows="7" style="font-size: 15px" readonly>${teachingPlanVO.planContent}</textarea>
 														</div>
-
 														<div class="modal-footer">
 															<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 														</div>
@@ -190,45 +182,43 @@ div.dataTables_wrapper div.dataTables_info {
 	<div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
 
 	<%@ include file="/front-end/template/footer.jsp"%>
-
-
 	<%@ include file="/front-end/template/quick_menu.jsp"%>
 	<%@ include file="/front-end/template/messager.jsp"%>
 	<%@ include file="/front-end/template/basic_js.jsp"%>
-	<script>
-				$(document).ready(function() {
-					$('#teachingPlan').dataTable({
-						responsive : true,
-	                    language:{
-	                        "emptyTable": 
-	                        	"<h2>目前尚無任何教學計劃</h2><div><h4>講師將會在這發佈與課程相關的教學計劃。</h4></div>",
-	                        "processing": "處理中...",
-	                        "loadingRecords": "載入中...",
-	                        "lengthMenu": "顯示 _MENU_ 項結果",
-	                        "zeroRecords": "沒有符合的結果",
-	                        "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
-	                        "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
-	                        "infoFiltered": "(從 _MAX_ 項結果中過濾)",
-	                        "infoPostFix": "",
-	                        "paginate": {
-	                          "first": "第一頁",
-	                          "previous": "上一頁",
-	                          "next": "下一頁",
-	                          "last": "最後一頁"
-	                        },
-	                        "aria": {
-	                          "sortAscending": ": 升冪排列",
-	                          "sortDescending": ": 降冪排列"
-	                        }
-	                    },
-						pageLength : 25,
-						rowGroup : {
-							dataSrc : 0
-						}
-					});
-					
-					
-				});
-	</script>
+<script>
+
+$(document).ready(function() {
+	$('#teachingPlan').dataTable({
+		responsive : true,
+        language:{
+            "emptyTable": 
+            	"<h2>目前尚無任何教學計劃</h2><div><h4>講師將會在這發佈與課程相關的教學計劃。</h4></div>",
+            "processing": "處理中...",
+            "loadingRecords": "載入中...",
+            "lengthMenu": "顯示 _MENU_ 項結果",
+            "zeroRecords": "沒有符合的結果",
+            "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+            "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+            "infoFiltered": "(從 _MAX_ 項結果中過濾)",
+            "infoPostFix": "",
+            "paginate": {
+              "first": "第一頁",
+              "previous": "上一頁",
+              "next": "下一頁",
+              "last": "最後一頁"
+            },
+            "aria": {
+              "sortAscending": ": 升冪排列",
+              "sortDescending": ": 降冪排列"
+            }
+        },
+		pageLength : 25,
+		rowGroup : {
+			dataSrc : 0
+		}
+	});
+});				
+</script>
+
 </body>
 </html>
