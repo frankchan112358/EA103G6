@@ -139,8 +139,8 @@ StudentVO studentVOForShow = (StudentVO) request.getAttribute("studentVOForShow"
 													</td>
 												</tr>	
 												<tr>	
-													<th>學員狀態</th>
-													<td>${studentVOForShow.studentStatus == 2?"退訓":"在訓中"}</td>									
+													<th>退訓</th>
+													<td>${studentVOForShow.studentStatus == 2?"是":"否"}</td>									
 												</tr>
                                                 <tr>
 													<th>地址</th>

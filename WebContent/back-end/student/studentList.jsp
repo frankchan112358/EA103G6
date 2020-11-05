@@ -68,7 +68,7 @@
                                                         <th>電話</th>
                                                         <th>敘述</th>                                                       
                                                         <th>班級狀態</th>
-                                                        <th>學員狀態</th>
+                                                        <th>退訓</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -95,7 +95,7 @@
                                                     			<c:when test="${banjiSvc.getOneBanji(studentVO.banjiNo).status==3}">未開課</c:when>
                                                     		</c:choose>	</td>
                                                     		
-                                                    		<td>${studentVO.studentStatus == 2?"退訓":"在訓中"}</td>
+                                                    		<td>${studentVO.studentStatus == 2?"是":"否"}</td>
                                                     		</tr>
                                                     	</c:if>
                                                     </c:forEach>
