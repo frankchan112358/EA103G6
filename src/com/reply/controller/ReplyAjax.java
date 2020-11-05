@@ -9,9 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.courseask.model.CourseAskService;
+import com.courseask.model.CourseAskVO;
 import com.reply.model.ReplyService;
 import com.reply.model.ReplyVO;
+import com.student.model.StudentService;
 import com.user.model.UserVO;
+import com.websocketnotify.controller.NotifyServlet;
 
 public class ReplyAjax extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -42,10 +46,24 @@ public class ReplyAjax extends HttpServlet {
 		if ("insertWithStudent".equals(action)) {
 			res.setContentType("application/json;");
 			String courseAskNo = req.getParameter("courseAskNo");
+			UserVO userVO=(UserVO) session.getAttribute("userVO");
 			String userNo = ((UserVO) session.getAttribute("userVO")).getUserNo();
 			String replyContent = req.getParameter("replyContent");
 			java.sql.Timestamp updateTime = new java.sql.Timestamp((new java.util.Date()).getTime());
 			new ReplyService().addReply(courseAskNo, replyContent, updateTime, userNo);
+			
+			if(userVO.getType().equals(2)) {
+				CourseAskService courseAskService =new CourseAskService();
+				CourseAskVO courseAskVO=courseAskService.getOneCourseAsk(courseAskNo);
+				
+				StudentService studentService =new StudentService();
+				String userNoForNotify=studentService.getOneStudent(courseAskVO.getStudentNo()).getUserNo();
+				NotifyServlet notifyServlet =new NotifyServlet();
+				notifyServlet.broadcast(userNoForNotify, "回覆通知", "你有一則新的回覆");
+				
+			}
+			
+			
 			PrintWriter out = res.getWriter();
 			out.print(new ReplyService().getAllJsonWithCourseAskNo(courseAskNo));
 			return;
