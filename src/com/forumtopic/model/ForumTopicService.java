@@ -3,10 +3,6 @@ package com.forumtopic.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.banji.model.BanjiService;
-import com.banji.model.BanjiVO;
-
-
 public class ForumTopicService {
 
 	private ForumTopicDAO_interface dao;
@@ -54,14 +50,17 @@ public class ForumTopicService {
 	public List<ForumTopicVO> getAll() {
 		return dao.getAll();
 	}
-	
+
 	public List<ForumTopicVO> getByBanJiNo(String banJiNo) {
 		return dao.getByBanJiNo(banJiNo);
 	}
+
 	public List<ForumTopicVO> getAllWithBanji(String banjiNo) {
-		List<ForumTopicVO>list = new ArrayList<ForumTopicVO>();
-		BanjiVO banjiVO = new BanjiService().getOneBanji(banjiNo);
-		
+		List<ForumTopicVO> list = new ArrayList<ForumTopicVO>();
+		for (ForumTopicVO forumTopicVO : getAll()) {
+			if (banjiNo.equals(forumTopicVO.getBanjiNo()))
+				list.add(forumTopicVO);
+		}
 		return list;
 	}
 }

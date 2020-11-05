@@ -3,6 +3,11 @@ package com.forumcomment.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import com.forumpost.model.ForumPostService;
+import com.forumpost.model.ForumPostVO;
+import com.student.model.StudentService;
+import com.student.model.StudentVO;
+
 public class ForumCommentVO implements java.io.Serializable{
 	private String forumCommentNo;
 	private String forumPostNo;
@@ -49,4 +54,11 @@ public class ForumCommentVO implements java.io.Serializable{
 		this.createTime = createTime;
 	}
 
+	public ForumPostVO getForumPostVO() {
+		return new ForumPostService().getOneForumPost(this.forumPostNo);
+	}
+	
+	public StudentVO getStudentVO() {
+		return new StudentService().getOneStudent(this.studentNo);
+	}
 }

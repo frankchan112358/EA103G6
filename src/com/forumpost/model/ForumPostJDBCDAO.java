@@ -23,7 +23,7 @@ public  class ForumPostJDBCDAO implements ForumPostDAO_interface {
 	private static final String UPDATE_STMT = "UPDATE forumpost SET title = ? , content = ? WHERE forumpostno=?";
 	private static final String ADD_VIEWS = "UPDATE forumpost SET forumpostviews = ? WHERE forumpostno=?";
 	private static final String RESEARCH_STMT = "SELECT * FROM forumpost WHERE title like ? and isDelete = 0";
-	private static final String GETBYTOPIC = "SELECT * FROM forumpost WHERE forumtopicno = ? order by forumpostviews DESC";
+	private static final String GETBYTOPIC = "SELECT * FROM forumpost WHERE forumtopicno = ? order by to_number(forumpostno) DESC";
 
 
 

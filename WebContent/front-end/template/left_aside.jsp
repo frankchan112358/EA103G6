@@ -31,8 +31,14 @@
                 </a>
             </li>
             <li>
-                <a href="<%=request.getContextPath() %>/front-end/forumpost/forumPost_index.jsp" title="班級討論區">
-                    <i class="fal fa-gamepad-alt"></i>
+                <a href="<%=request.getContextPath() %>/front-end/forumpost/forumPost_index.jsp" title="班級討論區(舊)">
+                    <i class="fal fa-comments-alt"></i>
+                    <span class="nav-link-text">班級討論區(舊)</span>
+                </a>
+            </li>
+            <li>
+                <a href="<%=request.getContextPath() %>/forum/forum.do" title="班級討論區">
+                    <i class="fal fa-comments-alt"></i>
                     <span class="nav-link-text">班級討論區</span>
                 </a>
             </li>

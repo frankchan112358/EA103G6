@@ -2,6 +2,14 @@ package com.forumpost.model;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
+
+import com.forumcomment.model.ForumCommentService;
+import com.forumcomment.model.ForumCommentVO;
+import com.forumtopic.model.ForumTopicService;
+import com.forumtopic.model.ForumTopicVO;
+import com.student.model.StudentService;
+import com.student.model.StudentVO;
 
 public class ForumPostVO implements java.io.Serializable {
 	private String forumPostNo;
@@ -78,6 +86,15 @@ public class ForumPostVO implements java.io.Serializable {
 		this.createTime = createTime;
 	}
 
-	
+	public StudentVO getStudentVO() {
+		return new StudentService().getOneStudent(this.studentNo);
+	}
 
+	public ForumTopicVO getForumTopicVO() {
+		return new ForumTopicService().getOneForumTopic(this.forumTopicNo);
+	}
+	
+	public List<ForumCommentVO> getForumCommentList() {
+		return new ForumCommentService().getOneFpFc(this.forumPostNo);
+	}
 }
