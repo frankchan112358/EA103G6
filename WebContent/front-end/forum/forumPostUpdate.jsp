@@ -23,38 +23,37 @@
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a></li>
-                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/forum/forum.do">班級討論區</a></li>
-                        <li class="breadcrumb-item"><a id="gotoForumTopic" forumTopicNo="${forumTopicVO.forumTopicNo}" href="javascript:void(0)">${forumTopicVO.forumTopicName}</a></li>
-                        <li class="breadcrumb-item">新增貼文</li>
+                        <li class="breadcrumb-item"><a id="gotoForumStudent" href="javascript:void(0)">討論區發文紀錄</a></li>
+                        <li class="breadcrumb-item">修改貼文</li>
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
                             <i class='subheader-icon fal fa-comments-alt'></i>
-                            新增貼文
+                            修改貼文
                         </h1>
                     </div>
                     <div class="row align-items-center justify-content-center">
                         <div class="col-xl-9 col-lg-10">
                             <div id="panel-1" class="panel">
                                 <div class="panel-hdr bg-primary-800 bg-gradient-info">
-                                    <h2>新增貼文</h2>
+                                    <h2>修改貼文</h2>
                                 </div>
                                 <div class="panel-container show">
                                     <div class="panel-content">
-                                        <form method="post" action="<%=request.getContextPath() %>/forum/forum.do"  enctype="multipart/form-data" class="needs-validation" novalidate>
+                                        <form method="post" action="<%=request.getContextPath() %>/forum/forum.do" enctype="multipart/form-data" class="needs-validation" novalidate>
                                             <div class="form-group">
                                                 <label class="form-label">討論版<span class="text-danger">*</span></label>
                                                 <select class="custom-select form-control" disabled required>
                                                     <c:forEach var="pageForumTopicVO" items="${studentVO.banjiVO.forumTopicList}">
-                                                        <option value="${pageForumTopicVO.forumTopicNo}" ${(pageForumTopicVO.forumTopicNo==forumTopicVO.forumTopicNo)?'selected':'' }>${pageForumTopicVO.forumTopicName}</option>
+                                                        <option value="${pageForumTopicVO.forumTopicNo}" ${(pageForumTopicVO.forumTopicNo==forumPostVO.forumTopicNo)?'selected':'' }>${pageForumTopicVO.forumTopicName}</option>
                                                     </c:forEach>
                                                 </select>
                                                 <div class="invalid-feedback">請選擇討論版.</div>
-                                                <input type="hidden" name="forumTopicNo" value="${forumTopicVO.forumTopicNo}">
+                                                <input type="hidden" name="forumTopicNo" value="${forumPostVO.forumTopicNo}">
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label">貼文標題<span class="text-danger">*</span></label>
-                                                <input type="text" name="title" class="form-control" value="" required placeholder="貼文標題" />
+                                                <input type="text" name="title" class="form-control" value="${forumPostVO.title}" required placeholder="貼文標題" />
                                                 <div class="invalid-feedback">請填寫貼文名稱.</div>
                                             </div>
                                             <div class="form-group">
@@ -62,8 +61,9 @@
                                                 <textarea id="forumPostContent" class="js-summernote" name="content" required></textarea>
                                                 <div class="invalid-feedback">請勿空白.</div>
                                             </div>
+                                            <input type="hidden" name="forumPostNo" value="${forumPost.forumPostNo}">
                                             <input type="hidden" name="studentNo" value="${studentVO.studentNo}" />
-                                            <input type="hidden" name="action" value="forumPostInsert">
+                                            <input type="hidden" name="action" value="forumPostUpdate">
                                             <button type="submit" class="mb-3 mt-3 btn btn-info waves-effect waves-themed float-left">送出</button>
                                         </form>
                                     </div>
@@ -115,18 +115,28 @@
                     ['view', ['fullscreen', 'codeview', 'help']]
                 ],
                 callbacks: {
-                    onInit: function (e) {},
+                    onInit: function (e) {
+                        $.ajax({
+                            url: '<%=request.getContextPath() %>/forum/forum.do',
+                            type: 'get',
+                            data:{
+                                action:'forumPostContent',
+                                forumPostNo:'${forumPostVO.forumPostNo}'
+                            },
+                            success(res) {
+                                $('#forumPostContent').summernote('code', res);
+                            }
+                        });
+                     },
                     onChange: function (contents, $editable) { }
                 }
             });
 
-            $('#gotoForumTopic').click(function (e) {
+            $('#gotoForumStudent').click(function (e) {
                 let _this = $(this);
-                let forumTopicNo = _this.attr('forumTopicNo');
                 let myForm = createMyFrom('<%=request.getContextPath()%>/forum/forum.do');
                 document.body.appendChild(myForm);
-                myForm.append(createFormInput('hidden', 'action', 'forumTopicHomePage'));
-                myForm.append(createFormInput('hidden', 'forumTopicNo', forumTopicNo));
+                myForm.append(createFormInput('hidden', 'action', 'forumStudentHomePage'));
                 myForm.submit();
             });
 

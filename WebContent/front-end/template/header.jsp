@@ -110,19 +110,22 @@
                 </div>
                 <div class="dropdown-divider m-0"></div>                                    
                  <a href="<%=request.getContextPath() %>/front-end/accountmanager/listOneStu.jsp" class="dropdown-item fw-500 pt-3 pb-3">
-                    <span data-i18n="drpdwn.settings">帳號設定</span>
+                    <span>帳號設定</span>
                 </a>
                 
                 <div class="dropdown-divider m-0"></div>
                 <a href="<%=request.getContextPath() %>/front-end/forumpost/studentCenter_forum.jsp" class="dropdown-item fw-500 pt-3 pb-3">
-                    <span data-i18n="drpdwn.post-record">討論區發文紀錄</span>
+                    <span>討論區發文紀錄(舊)</span>
                 </a>
-<%--                <a class="submenu-item" href="<%= request.getContextPath()%>/front-end/forumpost/studentCenter_forum.jsp"></a> --%>
-                
-                
+
+                <div class="dropdown-divider m-0"></div>
+                <a href="<%=request.getContextPath() %>/forum/forum.do?action=forumStudentHomePage" class="dropdown-item fw-500 pt-3 pb-3">
+                    <span>討論區發文紀錄</span>
+                </a>
+
                 <div class="dropdown-divider m-0"></div>
                 <a href="<%=request.getContextPath() %>/logout/logout.do" class="dropdown-item fw-500 pt-3 pb-3">
-                    <span data-i18n="drpdwn.page-logout">登出</span>
+                    <span>登出</span>
                 </a>
             </div>
         </div>

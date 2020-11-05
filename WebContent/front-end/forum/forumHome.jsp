@@ -1,3 +1,4 @@
+<%@page import="com.forumtopic.model.ForumTopicVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/front-end/template/check.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -80,18 +81,22 @@
                                                     <div class="col-8 col-md-3 hidden-md-down">
                                                         <div class="p-3 p-md-3">
                                                             <c:if test="${forumTopicVO.forumPostList.size()>0}" var="checkForumPostListSize" scope="page">
+                                                                <% 
+                                                                ForumTopicVO _forumTopicVO = (ForumTopicVO)pageContext.getAttribute("forumTopicVO");
+                                                                pageContext.setAttribute("newestForumPost", _forumTopicVO.getForumPostList().get(0)); 
+                                                                %>
                                                                 <div class="d-flex align-items-center">
                                                                     <div class="d-inline-block align-middle mr-2">
-                                                                        <span class="profile-image rounded-circle d-block" style="background-image:url('<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${forumTopicVO.forumPostList.get(0).studentVO.userNo}'); background-size: cover;"></span>
+                                                                        <span class="profile-image rounded-circle d-block" style="background-image:url('<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${newestForumPost.studentVO.userNo}'); background-size: cover;"></span>
                                                                     </div>
                                                                     <div class="flex-1 min-width-0">
                                                                         <a href="javascript:void(0)" class="d-block text-truncate">
-                                                                            ${forumTopicVO.forumPostList.get(0).title}
+                                                                            ${newestForumPost.title}
                                                                         </a>
                                                                         <div class="text-muted small text-truncate">
-                                                                            <a href="javascript:void(0)" class="text-info">${forumTopicVO.forumPostList.get(0).studentVO.studentName}</a>
+                                                                            <a href="javascript:void(0)" class="text-info">${newestForumPost.studentVO.studentName}</a>
                                                                             <br>
-                                                                            <fmt:formatDate value="${forumTopicVO.forumPostList.get(0).createTime}" pattern="yyyy-MM-dd HH:mm" />
+                                                                            <fmt:formatDate value="${newestForumPost.createTime}" pattern="yyyy-MM-dd HH:mm" />
                                                                         </div>
                                                                     </div>
                                                                 </div>

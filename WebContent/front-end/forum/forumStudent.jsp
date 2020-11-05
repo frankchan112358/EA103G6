@@ -21,13 +21,12 @@
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/index/index.jsp">前台首頁</a></li>
-                        <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/forum/forum.do">班級討論區</a></li>
-                        <li class="breadcrumb-item">${forumTopicVO.forumTopicName}</li>
+                        <li class="breadcrumb-item">討論區發文紀錄</li>
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
                             <i class='subheader-icon fal fa-comments-alt'></i>
-                            ${forumTopicVO.forumTopicName}
+                            討論區發文紀錄
                         </h1>
                     </div>
                     <div class="row align-items-center justify-content-center">
@@ -36,10 +35,7 @@
                                 <div class="card-header">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col">
-                                            <span class="h6 font-weight-bold text-uppercase">${forumTopicVO.forumTopicName}</span>
-                                        </div>
-                                        <div class="col d-flex align-items-center">
-                                            <a forumTopicNo="${forumTopicVO.forumTopicNo}" id="addNewForumPost" href="javascript:void(0);" class="btn btn-success shadow-0 btn-sm ml-auto flex-shrink-0">新增貼文</a>
+                                            <span class="h6 font-weight-bold text-uppercase">討論區發文紀錄</span>
                                         </div>
                                     </div>
                                 </div>
@@ -52,7 +48,7 @@
                                             <div class="text-uppercase text-muted py-2 px-3">回覆狀態</div>
                                         </div>
                                         <div class="col-sm-6 col-md-3 hidden-md-down">
-                                            <div class="text-uppercase text-muted py-2 px-3">發文者</div>
+                                            <div class="text-uppercase text-muted py-2 px-3">操作</div>
                                         </div>
                                     </div>
                                 </div>
@@ -79,17 +75,8 @@
                                                     <div class="col-8 col-md-3 hidden-md-down">
                                                         <div class="p-3 p-md-3">
                                                             <div class="d-flex align-items-center">
-                                                                <div class="d-inline-block align-middle mr-2">
-                                                                    <span class="profile-image-md rounded-circle d-block" style="background-image:url('<%=request.getContextPath() %>/user.do?action=getPhoto&userNo=${forumPostVO.studentVO.userNo}'); background-size: cover;"></span>
-                                                                </div>
-                                                                <div class="flex-1 min-width-0">
-                                                                    <div class="text-muted fs-xl text-truncate">
-                                                                        <a href="javascript:void(0)" class="text-info">${forumPostVO.studentVO.studentName}</a>
-                                                                        <span>
-                                                                            <fmt:formatDate value="${forumPostVO.updateTime}" pattern="yyyy-MM-dd HH:mm" />
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
+                                                                <button forumPostNo="${forumPostVO.forumPostNo}" type="button" class="update btn btn-info mr-1"><span class="fal fa-edit mr-1"></span><span>修改</span></button>
+                                                                <button forumPostNo="${forumPostVO.forumPostNo}" type="button" class="delete btn btn-danger mr-1"><span class="fal fa-times mr-1"></span><span>刪除</span></button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -134,25 +121,6 @@
         'use strict';
 
         $(document).ready(function () {
-            $(document).on('click', 'a.forumPost', function (e) {
-                let _this = $(this);
-                let forumPostNo = _this.attr('forumPostNo');
-                let myForm = createMyFrom('<%=request.getContextPath()%>/forum/forum.do');
-                document.body.appendChild(myForm);
-                myForm.append(createFormInput('hidden', 'action', 'forumPostHomePage'));
-                myForm.append(createFormInput('hidden', 'forumPostNo', forumPostNo));
-                myForm.submit();
-            });
-
-            $('#addNewForumPost').click(function () {
-                let _this = $(this);
-                let forumTopicNo = _this.attr('forumTopicNo');
-                let myForm = createMyFrom('<%=request.getContextPath()%>/forum/forum.do');
-                document.body.appendChild(myForm);
-                myForm.append(createFormInput('hidden', 'action', 'forumPostNewPage'));
-                myForm.append(createFormInput('hidden', 'forumTopicNo', forumTopicNo));
-                myForm.submit();
-            });
 
             function createMyFrom(url) {
                 let myForm = document.createElement('form');
@@ -169,6 +137,15 @@
                 return formInput;
             }
 
+            $(document).on('click', 'button.update', function (e) {
+                let _this = $(this);
+                let forumPostNo = _this.attr('forumPostNo');
+                let myForm = createMyFrom('<%=request.getContextPath()%>/forum/forum.do');
+                document.body.appendChild(myForm);
+                myForm.append(createFormInput('hidden', 'forumPostNo', forumPostNo));
+                myForm.append(createFormInput('hidden', 'action', 'forumPostUpdatePage'));
+                myForm.submit();
+            });
 
         });
     </script>
