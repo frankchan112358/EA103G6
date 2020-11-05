@@ -362,18 +362,18 @@ public class UserServlet extends HttpServlet {
 				}
 
 				/*******************新增提醒給其他導師******************/
-				
-				EmpService empService =new EmpService();
-				List<EmpVO> empList=empService.getAll();
-				for(EmpVO empVO:empList) {
-					NotifyServlet notifyServlet =new NotifyServlet();
-					notifyServlet.broadcast(empVO.getUserNo(), "新增新同仁", "讓我們一起歡迎「"+name+"」的加入");
+				if (type.equals(2)) {
+					EmpService empService =new EmpService();
+					List<EmpVO> empList=empService.getAll();
+					for(EmpVO empVO:empList) {
+						NotifyServlet notifyServlet =new NotifyServlet();
+						notifyServlet.broadcast(empVO.getUserNo(), "新增新同仁", "讓我們一起歡迎「"+name+"」的加入");
+						
+					}
 					
 				}
 				
-				
 				/*******************新增提醒給其他導師******************/
-
 				
 				
 				/********************** 4.新增完成,準備寄email ******************/
