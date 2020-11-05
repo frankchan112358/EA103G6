@@ -87,6 +87,7 @@
 								<strong style="font-size: 1.3em;"> Work Join Learn 團隊</strong>
 								<i class="ml-1 fal fa-users fa-lg"></i>
 							</h3>
+							<div class="col-8" style="margin:auto;">
 							<div class="d-flex flex-wrap demo demo-h-spacing mt-3 mb-3 align-items-center justify-content-center">
 								<div class="rounded-pill bg-white shadow-sm p-2 border-faded mr-3 d-flex flex-row align-items-center justify-content-center flex-shrink-0">
 									<img src="<%=request.getContextPath()%>/images/test/詹詠琪.png" alt="詹詠琪" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;">
@@ -149,6 +150,7 @@
 											王靖芳 (工程師)
 											<small class="m-0 fw-300"> Software Engineer </small>
 										</h5>
+										</div>
 									</div>
 								</div>
 							</div>
