@@ -127,7 +127,7 @@
             $(document).on('click', 'a.forumTopic', function (e) {
                 let _this = $(this);
                 let forumTopicNo = _this.attr('forumTopicNo');
-                let myForm = createMyFrom('<%=request.getContextPath()%>/forum/forum.topic');
+                let myForm = createMyFrom('<%=request.getContextPath()%>/forum/forum.do');
                 document.body.appendChild(myForm);
                 myForm.append(createFormInput('hidden', 'action', 'forumTopicHomePage'));
                 myForm.append(createFormInput('hidden', 'forumTopicNo', forumTopicNo));
