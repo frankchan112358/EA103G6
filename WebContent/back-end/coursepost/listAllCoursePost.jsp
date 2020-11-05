@@ -215,6 +215,7 @@ div.dataTables_wrapper div.dataTables_info {
                     responsive: true,
                     language:{url:'<%=request.getContextPath()%>/SmartAdmin4/js/datatable/lang/tw.json'
 					},
+					 "order": [[ 3, "desc" ]]
 					});
 
 					document.getElementById('aListAllCourse').addEventListener('click',function(e){
