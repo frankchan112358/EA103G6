@@ -26,6 +26,7 @@ import javax.servlet.http.Part;
 
 import com.forumcomment.model.ForumCommentService;
 import com.forumpost.model.ForumPostService;
+import com.forumpost.model.ForumPostVO;
 import com.forumtopic.model.ForumTopicService;
 import com.student.model.StudentVO;
 
@@ -90,7 +91,6 @@ public class ForumServlet extends HttpServlet {
 		if ("forumPostStudentHomePage".equals(action)) {
 			res.setContentType("text/html;");
 			String forumPostNo = req.getParameter("forumPostNo");
-			new ForumPostService().addForumPostViews2(forumPostNo);
 			req.setAttribute("mode", "student");
 			req.setAttribute("forumPostVO", new ForumPostService().getOneForumPost(forumPostNo));
 			req.setAttribute("forumCommentList", new ForumCommentService().getOneFpFc(forumPostNo));
@@ -247,18 +247,140 @@ public class ForumServlet extends HttpServlet {
 			return;
 		}
 		if ("forumCommentNewPage".equals(action)) {
+			res.setContentType("text/html;");
+			String forumPostNo = req.getParameter("forumPostNo");
+			req.setAttribute("forumPostVO", new ForumPostService().getOneForumPost(forumPostNo));
+			String url = "/front-end/forum/ForumCommentEditor.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
 			return;
 		}
 		if ("forumCommentUpdatePage".equals(action)) {
+			res.setContentType("text/html;");
+			String forumPostNo = req.getParameter("forumPostNo");
+			String forumCommentNo = req.getParameter("forumCommentNo");
+			req.setAttribute("mode", "update");
+			req.setAttribute("forumPostVO", new ForumPostService().getOneForumPost(forumPostNo));
+			req.setAttribute("forumCommentVO", new ForumCommentService().getOneForumComment(forumCommentNo));
+			String url = "/front-end/forum/ForumCommentEditor.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
 			return;
 		}
 		if ("forumCommentInsert".equals(action)) {
+			res.setContentType("text/html;");
+			Part part = req.getPart("content");
+			String forumPostNo = req.getParameter("forumPostNo");
+			String studentNo = req.getParameter("studentNo");
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			try {
+				Class.forName(driver);
+				con = DriverManager.getConnection(url, userid, passwd);
+				pstmt = con.prepareStatement("INSERT INTO forumcomment (forumcommentno,forumpostno,studentno, content ,updatetime,createtime) VALUES (forumcomment_seq.NEXTVAL,?, ?,?, ?, ?)");
+				part.getInputStream();
+				InputStream in = part.getInputStream();
+				ByteArrayOutputStream bao = new ByteArrayOutputStream();
+				byte[] notes = new byte[in.available()];
+				in.read(notes);
+				bao.write(notes);
+				Reader reader = new InputStreamReader(new ByteArrayInputStream(notes), "UTF-8");
+				pstmt.setString(1, forumPostNo);
+				pstmt.setString(2, studentNo);
+				pstmt.setCharacterStream(3, reader);
+				pstmt.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
+				pstmt.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+				bao.close();
+				in.close();
+				pstmt.executeUpdate();
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. " + se.getMessage());
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			req.setAttribute("forumPostVO", new ForumPostService().getOneForumPost(forumPostNo));
+			req.setAttribute("forumCommentList", new ForumCommentService().getOneFpFc(forumPostNo));
+			String url = "/front-end/forum/forumPost.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
 			return;
 		}
 		if ("forumCommentUpdate".equals(action)) {
+			res.setContentType("text/html;");
+			Part part = req.getPart("content");
+			String forumPostNo = req.getParameter("forumPostNo");
+			String forumCommentNo = req.getParameter("forumCommentNo");
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			try {
+				Class.forName(driver);
+				con = DriverManager.getConnection(url, userid, passwd);
+				pstmt = con.prepareStatement("UPDATE forumcomment set content=?,updatetime=? where forumcommentno = ?");
+				part.getInputStream();
+				InputStream in = part.getInputStream();
+				ByteArrayOutputStream bao = new ByteArrayOutputStream();
+				byte[] notes = new byte[in.available()];
+				in.read(notes);
+				bao.write(notes);
+				Reader reader = new InputStreamReader(new ByteArrayInputStream(notes), "UTF-8");
+				pstmt.setCharacterStream(1, reader);
+				pstmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+				pstmt.setString(3, forumCommentNo);
+				bao.close();
+				in.close();
+				pstmt.executeUpdate();
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. " + se.getMessage());
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			req.setAttribute("forumPostVO", new ForumPostService().getOneForumPost(forumPostNo));
+			req.setAttribute("forumCommentList", new ForumCommentService().getOneFpFc(forumPostNo));
+			String url = "/front-end/forum/forumPost.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
 			return;
 		}
 		if ("forumCommentDelete".equals(action)) {
+			res.setContentType("text/html;");
+			String forumPostNo = req.getParameter("forumPostNo");
+			String forumCommentNo = req.getParameter("forumCommentNo");
+			new ForumCommentService().deleteForumComment(forumCommentNo);
+			req.setAttribute("forumPostVO", new ForumPostService().getOneForumPost(forumPostNo));
+			req.setAttribute("forumCommentList", new ForumCommentService().getOneFpFc(forumPostNo));
+			String url = "/front-end/forum/forumPost.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
 			return;
 		}
 		if("forumPostContent".equals(action)) {
@@ -273,6 +395,55 @@ public class ForumServlet extends HttpServlet {
 				con = DriverManager.getConnection(url, userid, passwd);
 				pstmt = con.prepareStatement("SELECT content FROM forumpost WHERE forumPostNo=?");
 				pstmt.setString(1, forumPostNo);
+				rs = pstmt.executeQuery();
+				if (rs.next() && rs.getString("content") != null) {
+					Reader reader = rs.getCharacterStream("content");
+					BufferedReader br = new BufferedReader(reader);
+					String str;
+					while ((str = br.readLine()) != null)
+						out.print(str);
+					br.close();
+				}
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. " + se.getMessage());
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+		}
+		if("forumCommentContent".equals(action)) {
+			res.setContentType("text/html;");
+			String forumCommentNo = req.getParameter("forumCommentNo");
+			PrintWriter out = res.getWriter();
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				Class.forName(driver);
+				con = DriverManager.getConnection(url, userid, passwd);
+				pstmt = con.prepareStatement("SELECT content FROM forumComment WHERE forumCommentNo=?");
+				pstmt.setString(1, forumCommentNo);
 				rs = pstmt.executeQuery();
 				if (rs.next() && rs.getString("content") != null) {
 					Reader reader = rs.getCharacterStream("content");

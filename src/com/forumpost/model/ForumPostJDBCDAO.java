@@ -309,7 +309,6 @@ public  class ForumPostJDBCDAO implements ForumPostDAO_interface {
 			pstmt = con.prepareStatement(GET_ONE_STUDENT_STMT);
 			pstmt.setString(1, studentNo);
 			rs = pstmt.executeQuery();
-System.out.println(studentNo);
 			while (rs.next()) {
 				if (rs.getInt("isDelete") == 0) {
 					forumPostVO = new ForumPostVO();
@@ -324,7 +323,6 @@ System.out.println(studentNo);
 					list.add(forumPostVO);
 				}
 			}
-System.out.println("test");
 			// Handle any driver errors ( JDBC 驅動 )
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
