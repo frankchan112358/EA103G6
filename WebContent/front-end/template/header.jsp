@@ -112,17 +112,10 @@
                  <a href="<%=request.getContextPath() %>/front-end/accountmanager/listOneStu.jsp" class="dropdown-item fw-500 pt-3 pb-3">
                     <span>帳號設定</span>
                 </a>
-                
-                <div class="dropdown-divider m-0"></div>
-                <a href="<%=request.getContextPath() %>/front-end/forumpost/studentCenter_forum.jsp" class="dropdown-item fw-500 pt-3 pb-3">
-                    <span>討論區發文紀錄(舊)</span>
-                </a>
-
                 <div class="dropdown-divider m-0"></div>
                 <a href="<%=request.getContextPath() %>/forum/forum.do?action=forumStudentHomePage" class="dropdown-item fw-500 pt-3 pb-3">
                     <span>討論區發文紀錄</span>
                 </a>
-
                 <div class="dropdown-divider m-0"></div>
                 <a href="<%=request.getContextPath() %>/logout/logout.do" class="dropdown-item fw-500 pt-3 pb-3">
                     <span>登出</span>

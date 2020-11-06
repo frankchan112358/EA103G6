@@ -152,7 +152,7 @@
                         <c:if test="${mode=='update'}">
                         $.ajax({
                             url: '<%=request.getContextPath() %>/forum/forum.do',
-                            type: 'get',
+                            type: 'POST',
                             data:{
                                 action:'forumCommentContent',
                                 forumCommentNo:'${forumCommentVO.forumCommentNo}'
