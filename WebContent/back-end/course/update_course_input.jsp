@@ -179,7 +179,7 @@ img {
 													<label class="custom-file-label" for="customFile">Choose Image</label>
 													<div id="showphoto2">
 														<c:if test="${courseVO.courseImg eq null}">
-															<img src="<%=request.getContextPath()%>/images/default.png">
+															<img src="<%=request.getContextPath()%>/images/尚無圖片.jpg">
 														</c:if>
 														<c:if test="${courseVO.courseImg ne null}">
 															<img src="<%=request.getContextPath() %>/course/course.do?action=getCourseImg&courseNo=${courseVO.courseNo}">
