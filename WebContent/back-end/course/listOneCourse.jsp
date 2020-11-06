@@ -263,7 +263,7 @@ img {
 		swalWithBootstrapButtons.fire({
 			icon:'success',
 			title:'修改成功',
-			text:"課程公告已修改完成"
+			text:"課程已修改完成"
 			});
 		<%request.removeAttribute("updateOK");%>
 		</c:if>

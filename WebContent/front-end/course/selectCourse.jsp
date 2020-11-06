@@ -119,6 +119,22 @@ input[type=search]::-webkit-search-cancel-button {
 								<div class="panel-hdr bg-primary-800 bg-success-gradient ">
 									<h2 class="text-white">我的課程總覽</h2>
 								</div>
+								<div class="panel-container show" style="margin: 20px 20px;">
+								<div style="text-align: center;">
+										<c:if test="${empty studentVO.courseList}">
+											<h2>
+												<i class="fal fa-book-dead"></i>
+												目前尚無任何課程
+												<i class="fal fa-book-dead"></i>
+											</h2>
+											<h4>敬請期待</h4>
+										</c:if>
+									</div>
+									<div class="not-found" style="display:none; text-align: center;">
+								<img style="width: 30%;" src="<%=request.getContextPath()%>/images/404.jpg" alt="課程封面圖">	
+								<h3><strong>同學，您輸入的關鍵字沒有搜尋到相關課程</strong></h3>
+								<h3><strong>請再次確認是否報錯班別</strong></h3>
+								</div>
 								<div class="container-fluid ">
 									<div class="card-columns">
 										<div class="row justify-content-center">
@@ -137,14 +153,14 @@ input[type=search]::-webkit-search-cancel-button {
 																<img src="<%=request.getContextPath() %>/course/course.do?action=getCourseImg&courseNo=${courseVO.courseNo}" class="card-img-top img-fluid" alt="課程封面圖">
 															</div>
 														</c:if>
-														<div class="card-body">
-															<h5 class="card-title">
+														<div class="card-body" >
+															<h5 class="card-title" style="font-size: 1.7em;">
 																【${courseVO.banjiVO.banjiName}】
 																<i class="fal fa-hand-point-right"></i>
 																${courseVO.courseName}
 															</h5>
 														</div>
-														<div class="card-footer">
+														<div class="card-footer" style="font-size: 1.3em;">
 															<i class="fal fa-smile"></i>
 															${courseVO.teacherVO.teacherName}
 														</div>
@@ -153,6 +169,7 @@ input[type=search]::-webkit-search-cancel-button {
 											</div>
 										</div>
 									</div>
+								</div>
 								</div>
 							</div>
 						</div>
@@ -176,6 +193,23 @@ input[type=search]::-webkit-search-cancel-button {
 					$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 				});
 			});
+			var $block = $('.not-found');
+			$(".searchbox-input").keyup(function() {
+			    var val = $(this).val();
+			    var isMatch = false;
+
+			$(".card").each(function(i) {
+			        var content = $(this).html();
+			        if(content.toLowerCase().indexOf(val) == -1) {
+			           $(this).hide();           
+			        } else {
+			            isMatch = true;
+			            $(this).show();
+			        }
+			    });
+			    $block.toggle(!isMatch);
+			});
+			
 			$(document).on('click', 'div.course[courseNo]', function (e) {
 				let _courseNo = this.getAttribute('courseNo');
 				let myForm = document.createElement('form');
