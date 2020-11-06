@@ -120,7 +120,7 @@ video {
 		}
 			#sidebar-wrapper .list-group {
 			width: 20rem;
-			height: 55em;
+			height: 80em;
 			overflow-y: scroll;
 		}
 		#page-content-wrapper {
