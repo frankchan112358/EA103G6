@@ -5,7 +5,7 @@
     </div>
     <div>
         <ul class="list-table m-0">
-            <li><a href="<%=request.getContextPath() %>/SmartAdmin4/intel_introduction.html" class="text-secondary fw-700">關於我們</a></li>
+            <li><a href="<%=request.getContextPath() %>/front-end/aboutUs/aboutUs.jsp" class="text-secondary fw-700">關於我們</a></li>
         </ul>
     </div>
 </footer>

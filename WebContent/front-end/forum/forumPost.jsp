@@ -103,10 +103,17 @@
                                             <span class="text-sm text-muted font-italic"><label class="mr-2">更新時間</label><i class="fal fa-clock mr-1"></i>
                                                 <fmt:formatDate value="${forumCommentVO.updateTime}" pattern="yyyy-MM-dd HH:mm" />
                                             </span>
+                                            <c:if test="${forumCommentVO.studentNo==studentVO.studentNo}">
+                                                <button forumCommentNo="${forumCommentVO.forumCommentNo}"  forumPostNo="${forumPostVO.forumPostNo}" class="btnForumCommentUpdate ml-2 btn btn-xs btn-info waves-effect waves-themed" type="button">修改</button>
+                                                <button forumCommentNo="${forumCommentVO.forumCommentNo}"  forumPostNo="${forumPostVO.forumPostNo}" class="btnForumCommentDelete ml-2 btn btn-xs btn-danger waves-effect waves-themed" type="button">刪除</button>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
                             </c:forEach>
+                            <c:if test="${mode!='student'}">
+                                <button id="newForumComment" forumPostNo="${forumPostVO.forumPostNo}" type="button" class="mt-3 btn-lg btn-primary text-white">我要回覆</button>
+                            </c:if>
                         </div>
                     </div>
                 </main>
@@ -122,6 +129,17 @@
         'use strict';
 
         $(document).ready(function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+
             function createMyFrom(url) {
                 let myForm = document.createElement('form');
                 myForm.action = url;
@@ -137,6 +155,39 @@
                 return formInput;
             }
 
+            $('#newForumComment').click(function (e) {
+                let _this = $(this);
+                let forumPostNo = _this.attr('forumPostNo');
+                let myForm = createMyFrom('<%=request.getContextPath()%>/forum/forum.do');
+                document.body.appendChild(myForm);
+                myForm.append(createFormInput('hidden', 'action', 'forumCommentNewPage'));
+                myForm.append(createFormInput('hidden', 'forumPostNo', forumPostNo));
+                myForm.submit();
+            });
+
+            $(document).on('click','button.btnForumCommentUpdate',function(e){
+                let _this = $(this);
+                let forumPostNo = _this.attr('forumPostNo');
+                let forumCommentNo = _this.attr('forumCommentNo');
+                let myForm = createMyFrom('<%=request.getContextPath()%>/forum/forum.do');
+                document.body.appendChild(myForm);
+                myForm.append(createFormInput('hidden', 'action', 'forumCommentUpdatePage'));
+                myForm.append(createFormInput('hidden', 'forumCommentNo', forumCommentNo));
+                myForm.append(createFormInput('hidden', 'forumPostNo', forumPostNo));
+                myForm.submit();
+            });
+
+            $(document).on('click','button.btnForumCommentDelete',function(e){
+                let _this = $(this);
+                let forumPostNo = _this.attr('forumPostNo');
+                let forumCommentNo = _this.attr('forumCommentNo');
+                let myForm = createMyFrom('<%=request.getContextPath()%>/forum/forum.do');
+                document.body.appendChild(myForm);
+                myForm.append(createFormInput('hidden', 'action', 'forumCommentDelete'));
+                myForm.append(createFormInput('hidden', 'forumCommentNo', forumCommentNo));
+                myForm.append(createFormInput('hidden', 'forumPostNo', forumPostNo));
+                myForm.submit();
+            });
 
 
 
@@ -148,7 +199,7 @@
 
             <c:if test="${mode!='student'}">
             $('#gotoForumTopic').click(function (e) {
-                    let _this = $(this);
+                let _this = $(this);
                 let forumTopicNo = _this.attr('forumTopicNo');
                 let myForm = createMyFrom('<%=request.getContextPath()%>/forum/forum.do');
                 document.body.appendChild(myForm);

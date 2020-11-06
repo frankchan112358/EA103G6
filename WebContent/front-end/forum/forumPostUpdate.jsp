@@ -118,7 +118,7 @@
                     onInit: function (e) {
                         $.ajax({
                             url: '<%=request.getContextPath() %>/forum/forum.do',
-                            type: 'get',
+                            type: 'POST',
                             data:{
                                 action:'forumPostContent',
                                 forumPostNo:'${forumPostVO.forumPostNo}'
