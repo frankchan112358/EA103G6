@@ -144,7 +144,7 @@ input[type=search]::-webkit-search-cancel-button {
 														<input type="hidden" name="courseNo" value="${courseVO.courseNo}">
 														<c:if test="${courseVO.courseImg eq null}">
 															<div class="img">
-																<img src="<%=request.getContextPath()%>/images/尚無圖片.jpg" class="card-img-top img-fluid" alt="課程封面圖">
+																<img src="<%=request.getContextPath()%>/images/default.png" class="card-img-top img-fluid" alt="課程封面圖">
 															</div>
 														</c:if>
 

@@ -193,10 +193,10 @@ video {
 																				${timetableVO.periodText}
 																			</span>
 																		</a>
-																		<span class="in-sb-log">
+																		<div class="in-sb-log">
 																			<button timeteableNo="${timetableVO.timetableNo}" type="button"
 																							class="btn btn-primary btn-pills waves-effect waves-themed btn1" style="font-size: 13px;"><i class="fal fa-book-spells"></i>教學筆記</button>
-																		</span>
+																		</div>
 																	</div>
 															</c:forEach>
 												</div>
