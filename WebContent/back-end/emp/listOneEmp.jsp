@@ -119,7 +119,13 @@
 												</tr>
                                                 <tr>
 													<th>帳號狀態</th>
-													<td>${userVOForShow.enable==0?"停用中":"啟用中"}</td>									
+													<td>
+              										<c:choose>
+                                                       <c:when test="${userVOForShow.enable==0}">未啟用</c:when>
+                                                       <c:when test="${userVOForShow.enable==1}">啟用中</c:when>
+                                                       <c:when test="${userVOForShow.enable==2}">停用中</c:when>
+                                                    </c:choose>
+													</td>									
 												</tr>
                                                 <tr>
 													<th>導師狀態</th>

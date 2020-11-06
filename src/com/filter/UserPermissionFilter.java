@@ -99,10 +99,24 @@ public class UserPermissionFilter implements Filter {
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
 				failureView.forward(req, res);
 				return;
-			} else {
-				chain.doFilter(request, response);
-				return;
+			} else if (userVO.getType().equals(2)) {
+
+				// 測導師的權限若可讀就導向
+				if (checkPermission.getOneUserPermission(userVO.getUserNo(), "4").getPermissionEdit().equals(1)) {
+					chain.doFilter(request, response);
+					return;
+				} else {
+					req.setAttribute("permission", "forbid");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
 			}
+//			else {
+//				chain.doFilter(request, response);
+//				return;
+//			}
 		}
 		
 		/*********************學生管理的權限篩選*********************/
@@ -118,10 +132,24 @@ public class UserPermissionFilter implements Filter {
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
 				failureView.forward(req, res);
 				return;
-			} else {
-				chain.doFilter(request, response);
-				return;
+			} else if (userVO.getType().equals(2)) {
+
+				// 測導師的權限若可讀就導向
+				if (checkPermission.getOneUserPermission(userVO.getUserNo(), "4").getPermissionEdit().equals(1)) {
+					chain.doFilter(request, response);
+					return;
+				} else {
+					req.setAttribute("permission", "forbid");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/index.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
 			}
+//			else {
+//				chain.doFilter(request, response);
+//				return;
+//			}
 		}
 		
 		//只要filter註冊沒有跑到上面就全擋
