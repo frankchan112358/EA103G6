@@ -50,17 +50,17 @@
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">後台首頁</a></li>
-                        <li class="breadcrumb-item">Democrat</li>
+                       
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-democrat'></i> Democrat
+                            修改學員
                         </h1>
                     </div>
            					<div id="panel-2" class="panel">
                                     <div class="panel-hdr">
                                         <h2>
-                                            Update <span class="fw-300"><i>Student</i></span>
+                                            ${userVOForUpdate.name}
                                         </h2>
                                     </div>
                                     <div class="panel-container show">
