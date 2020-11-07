@@ -795,10 +795,6 @@ public class UserServlet extends HttpServlet {
 				if (type.equals(0)) {
 					StudentService studentSvc = new StudentService();
 					studentVO = studentSvc.updateStudent(studentNo, userNo, name, banjiNo, description, studentStatus);
-					if (!studentStatus.equals(2)) {
-						UserService userSvcEnable = new UserService();
-						userSvcEnable.studentEnable(userNo);	
-					}
 					if (studentStatus.equals(2)) {
 						UserService userSvcNoEnable = new UserService();
 						userSvcNoEnable.studentNoEnable(userNo);	
