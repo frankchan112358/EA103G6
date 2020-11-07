@@ -7,6 +7,7 @@
 	StudentVO studentVOForUpdate = (StudentVO) request.getAttribute("studentVOForUpdate");
 %>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,16 +84,7 @@
 																請輸入姓名
                                                             </div>
                                                         </div>
-                                                                                                          
-														<div class="col-md-6 mb-3">
-														<label class="form-label " for="banji">班級<span class="text-danger">*</span></label> 
-														<select class="custom-select" id="banjiNo" name="banjiNo"  required>
-														<c:forEach var="banjiVO" items="${banjiSvc.all}">
-														<option value="${banjiVO.banjiNo}" ${(studentVOForUpdate.banjiNo==banjiVO.banjiNo)? 'selected':'' } > 
-														${banjiVO.banjiName}
-														</c:forEach>
-														</select>
-														</div>
+                                                                                                         
                                                         
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label" for="phone">手機號碼 </label>
@@ -117,10 +109,15 @@
 																請輸入電子郵件
                                                             </div>
                                                         </div>
+                                                        
+  
+								
+															
+                                                        
                                                         <div class="col-md-6 mb-3">
                                                          <div class="form-group">
                                                     	<label class="form-label" for="enable">退訓 <span class="text-danger">*</span></label>
-                                                            <select class="custom-select" id="studentStatus" name="studentStatus" required >
+                                                            <select class="custom-select" id="studentStatus" name="studentStatus" >
                                                                 <option value="1" ${studentVOForUpdate.studentStatus eq 1?"selected":""}>否</option>
                                                                 <option value="2" ${studentVOForUpdate.studentStatus eq 2?"selected":""}>是</option>
                                                             </select>
@@ -175,6 +172,8 @@
 												<input type="hidden" name="userNo" value="${userVOForUpdate.userNo}"> 
 												<input type="hidden" name="type" value="${userVOForUpdate.type}"> 
 												<input type="hidden" name="studentNo" value="${studentVOForUpdate.studentNo}">
+												<input type="hidden" name="banjiNo" value="${studentVOForUpdate.banjiNo}">
+												
                                             </form>
                                             
                                             <script>
