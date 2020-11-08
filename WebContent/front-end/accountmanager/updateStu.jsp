@@ -42,7 +42,7 @@
                 <main id="js-page-content" role="main" class="page-content">
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-democrat'></i>${userVO.name}
+                            ${userVO.name}
                         </h1>
                     </div>
                     <div id="panel-2" class="panel">

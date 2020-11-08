@@ -48,7 +48,7 @@ StudentVO studentVOForShow = (StudentVO) request.getAttribute("studentVOForShow"
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-democrat'></i> 學員管理
+                             學員管理
                         </h1>
                     </div>
                     <div class="row">
