@@ -33,6 +33,12 @@
             background-color: #FAFCFD;
             background-size: 1rem 1rem;
         }
+        
+        .fc-after-course-start {
+            background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.02) 50%, rgba(0, 0, 0, 0.02) 75%, transparent 75%, transparent);
+            background-color: #FAFCFD;
+            background-size: 1rem 1rem;
+        }
     </style>
 </head>
 
@@ -458,15 +464,19 @@
             });
 
             function renderFcBeforeCourseEnd() {
+            	$('.fc-after-course-start').removeClass('fc-after-course-start');
                 $('.fc-before-course-end').removeClass('fc-before-course-end');
                 if (_courseVO != null) {
+                    let start = new Date(_courseVO.startDate);
+                    let end = new Date(_courseVO.endDate);
                     let array = $('.fc-future[data-date]');
                     for (let index = 0; index < array.length; index++) {
                         let element = array[index];
-                        let end = new Date(_courseVO.endDate);
                         let date = new Date(element.getAttribute('data-date'));
                         if (date > end)
                             $(element).addClass('fc-before-course-end');
+                        if (date < start)
+                            $(element).addClass('fc-after-course-start');
                     }
                 }
             }

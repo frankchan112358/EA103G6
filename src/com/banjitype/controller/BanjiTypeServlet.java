@@ -188,10 +188,9 @@ public class BanjiTypeServlet extends HttpServlet {
 			
 			try {
 				String banjiTypeName = req.getParameter("banjiTypeName");
-				String banjiTypeNameReg = "^[(\u4e00-\u9fd5)(a-zA-Z0-9_)]{2,10}$";
 				if (banjiTypeName == null || banjiTypeName.trim().length() == 0) {
 					errorMsgs.put("banjiTypeName","班種名稱:請勿空白");
-				} else if (!banjiTypeName.trim().matches(banjiTypeNameReg)) {
+				} else if (!banjiTypeName.trim().matches(banjiTypeName)) {
 					errorMsgs.put("banjiTypeName","班種只能是中英數字");
 				}
 

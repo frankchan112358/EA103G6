@@ -99,7 +99,7 @@
 									</div>
 								</div>
 								<div class="rounded-pill bg-white shadow-sm p-2 border-faded mr-3 d-flex flex-row align-items-center justify-content-center flex-shrink-0">
-									<img src="<%=request.getContextPath()%>/images/test/卓宜潔.jpg" alt="卓宜潔" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;">
+									<img src="<%=request.getContextPath()%>/images/test/卓宜潔.jpg" alt="卓宜潔" class="img-thumbnail img-responsive rounded-circle" style="width: 5rem; height: 5rem;object-fit: cover; object-position: top;">
 									<div class="ml-2 mr-3">
 										<h5 class="m-0">
 											卓宜潔 (營運長)
