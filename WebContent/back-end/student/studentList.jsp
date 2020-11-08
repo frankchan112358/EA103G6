@@ -152,7 +152,7 @@
 									<label class="form-label " for="banji">班級<span class="text-danger">*</span></label> 
 									<select class="custom-select" id="banjiNo" name="banjiNo"  required>
 									<c:forEach var="banjiVO" items="${banjiSvc.all}">
-									<c:if test="${banjiVO.status>0}">
+									<c:if test="${banjiVO.status>1}">
 
 									<option value="${banjiVO.banjiNo}"
 									${(banjiVO.banjiNo==banjiVO.banjiNo)? 'selected':'' } >${banjiVO.banjiName}
