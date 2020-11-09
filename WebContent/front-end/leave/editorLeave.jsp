@@ -148,7 +148,7 @@
                         position: "top-center",
                         title: info.event.extendedProps.timetableInfo,
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 500
                     });
                 },
                 eventRender: function (event) {
