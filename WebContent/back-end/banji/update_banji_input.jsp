@@ -76,17 +76,17 @@
 
                                             <div class="form-group">
                                                 <label class="form-label" for="example-date">開訓日:</label>
-                                                <input class="form-control" name="startDay" id="f_date1" onfocus="this.blur()">
+                                                <input class="form-control" name="startDay" id="f_date1" readonly onfocus="this.blur()">
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="form-label" for="example-date">結訓日:</label>
-                                                <input class="form-control" name="endDay" id="f_date2" onfocus="this.blur()">
+                                                <input class="form-control" name="endDay" id="f_date2" readonly onfocus="this.blur()">
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="form-label" for="simpleinput">班級名稱:</label>
-                                                <input type="text" id="simpleinput" class="form-control" name="banjiName" required value="${banjiVO.banjiName}">
+                                                <input type="text" id="simpleinput" class="form-control" name="banjiName" readonly required value="${banjiVO.banjiName}">
                                                 <div class="invalid-feedback">
                                                     班級名稱請勿空白且只能是中、英文字母、數字，其他不行。
                                                 </div>
@@ -94,7 +94,7 @@
 
                                             <div class="form-group">
                                                 <label class="form-label" for="simpleinput">上課時數:</label>
-                                                <input type="text" id="simpleinput" class="form-control" name="classHours" required value="${banjiVO.classHours}">
+                                                <input type="text" id="simpleinput" class="form-control" name="classHours"  readonly required value="${banjiVO.classHours}">
                                                 <div class="invalid-feedback">
                                                     請填寫上課時數.
                                                 </div>
