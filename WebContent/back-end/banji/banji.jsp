@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="hidden-lg-down col-xl-2 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="hidden-lg-down col-xl-3 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div id="panel-0" class="panel" data-panel-sortable data-panel-fullscreen data-panel-close data-panel-locked data-panel-refresh data-panel-reset data-panel-color>
                                 <div class="panel-hdr bg-info-500">
                                     <h2>班級管理功能</h2>
@@ -84,7 +84,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-7 col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-xl-9 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div id="panel-1" class="panel">
                                 <div class="panel-hdr bg-info-300 bg-info-gradient">
                                     <h2></h2>
@@ -92,86 +92,6 @@
                                 <div class="panel-container show">
                                     <div class="panel-content">
                                         <div id="calendar"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                            <div id="panel-2" class="panel">
-                                <div class="panel-hdr bg-fusion-300 bg-info-gradient ">
-                                    <h2 class="text-white">班級公告</h2>
-                                </div>
-                                <div class="panel-container show">
-                                    <div class="panel-content p-0">
-                                        <ul class="list-group">
-                                            <li class="list-group-item">
-                                                <a href="javascript:void(0)" title="班級公告">
-                                                    <span class="nav-link-text">班級公告</span>
-                                                </a>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <a href="javascript:void(0)" title="班級公告">
-                                                    <span class="nav-link-text">班級公告</span>
-                                                </a>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <a href="javascript:void(0)" title="班級公告">
-                                                    <span class="nav-link-text">班級公告</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="panel-3" class="panel">
-                                <div class="panel-hdr bg-success-300 bg-info-gradient">
-                                    <h2 class="text-white">待審核假單</h2>
-                                </div>
-                                <div class="panel-container show">
-                                    <div class="panel-content p-0">
-                                        <ul class="list-group">
-                                            <li class="list-group-item">
-                                                <a href="javascript:void(0)" title="請假核准">
-                                                    <span class="nav-link-text">請假核准</span>
-                                                </a>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <a href="javascript:void(0)" title="請假核准">
-                                                    <span class="nav-link-text">請假核准</span>
-                                                </a>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <a href="javascript:void(0)" title="請假核准">
-                                                    <span class="nav-link-text">請假核准</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="panel-4" class="panel">
-                                <div class="panel-hdr bg-danger-300 bg-info-gradient ">
-                                    <h2 class="text-white">待審核檢舉</h2>
-                                </div>
-                                <div class="panel-container show">
-                                    <div class="panel-content p-0">
-                                        <ul class="list-group">
-                                            <li class="list-group-item">
-                                                <a href="javascript:void(0)" title="檢舉審核">
-                                                    <span class="nav-link-text">檢舉審核</span>
-                                                </a>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <a href="javascript:void(0)" title="檢舉審核">
-                                                    <span class="nav-link-text">檢舉審核</span>
-                                                </a>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <a href="javascript:void(0)" title="檢舉審核">
-                                                    <span class="nav-link-text">檢舉審核</span>
-                                                </a>
-                                            </li>
-                                        </ul>
                                     </div>
                                 </div>
                             </div>
