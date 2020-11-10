@@ -6,6 +6,7 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import com.banji.model.BanjiService;
 import com.banjipost.model.*;
 
 public class BanjiPostServlet extends HttpServlet {
@@ -18,6 +19,7 @@ public class BanjiPostServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
 		if ("getOne_For_Display".equals(action)) {
@@ -235,6 +237,13 @@ public class BanjiPostServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/banjiPost/listAllBanjiPost.jsp");
 				failureView.forward(req, res);
 			}
+		}
+		
+		if("readBanjiPostContent".equals(action)) {
+			String banjiPostNo = req.getParameter("banjiPostNo");
+			BanjiPostVO banjiPostVO = new BanjiPostService().getOneBanjiPost(banjiPostNo);
+			PrintWriter out = res.getWriter();
+			out.print(banjiPostVO.getBanjiPostContent());
 		}
 	}
 }
